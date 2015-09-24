@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="canvas_title_home">Cửa hàng</string>
+    <string name="canvas_title_personal">Cá nhân</string>
+    <string name="canvas_title_loyaltycard">Thẻ tích điểm</string>
+    <string name="canvas_title_notifications">Thông báo</string>
+    <string name="canvas_title_setting">Cài đặt</string>
+    
+	<!-- APPLICATION -->
+    <string name="app_name">Buy Plus</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    
+    <!-- BLE -->
+    <string name="ble_not_support">Sorry, your device not support BLE.</string>
+	<string name="ble_paired">Paired.</string>
+	
+	<!-- PULL TO REFRESH -->
+	<string name="pull_to_refresh_pull_label">Pull to refresh…</string>
+    <string name="pull_to_refresh_release_label">Release to refresh…</string>
+    <string name="pull_to_refresh_refreshing_label">Loading…</string>
+
+    <!-- Just use standard Pull Down String when pulling up. These can be set for languages which require it -->
+    <string name="pull_to_refresh_from_bottom_pull_label">@string/pull_to_refresh_pull_label</string>
+    <string name="pull_to_refresh_from_bottom_release_label">@string/pull_to_refresh_release_label</string>
+    <string name="pull_to_refresh_from_bottom_refreshing_label">@string/pull_to_refresh_refreshing_label</string>
+    
+    <string name="facebook_app_id">474226309417351</string>
+</resources>
