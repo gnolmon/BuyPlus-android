@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/profilePic"
+                android:layout_width="@dimen/avatar_height"
+                android:layout_height="@dimen/avatar_width"
+                android:scaleType="fitCenter" >
+            </com.android.volley.toolbox.NetworkImageView>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/tvNameStore"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:text="BuyPlus"
+                    android:textColor="@color/timestamp"
+                    android:textSize="@dimen/title_name"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/timestamp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/timestamp"
+                    android:textSize="@dimen/timestamp" />
+
+                <TextView
+                    android:id="@+id/txtStatusMsg"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:textColor="@color/timestamp" />
+
+                <TextView
+                    android:id="@+id/txtUrl"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:linksClickable="true"
+                    android:paddingBottom="10dp"
+                    android:textColorLink="@color/blue_light" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <!-- Like -->
+
+            <ImageView
+                android:id="@+id/imLike"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/like" />
+
+            <TextView
+                android:id="@+id/storeLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Like"
+                android:textColor="@color/like_comment"
+                android:textSize="15dp" />
+            <!-- Comment -->
+
+            <ImageView
+                android:id="@+id/imComment"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/comment" />
+
+            <TextView
+                android:id="@+id/storeComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Comment"
+                android:textColor="@color/like_comment"
+                android:textSize="15dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
