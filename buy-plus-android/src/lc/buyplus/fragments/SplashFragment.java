@@ -21,7 +21,7 @@ public class SplashFragment extends CoreFragment {
 			@Override
 			public void run() {
 				try {
-					Thread.sleep(5000);
+					Thread.sleep(3000);
 //					switchFragmentWithAnimation(CanvasFragment.getInstance(mActivity), 100, 200);
 					mFragmentManager.beginTransaction().replace(R.id.canvas, LoginFragment.getInstance(mActivity)).commit();
 				} catch (InterruptedException e) {

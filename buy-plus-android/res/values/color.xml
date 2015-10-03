@@ -15,6 +15,9 @@
     <color name="pink">#ff2d2d</color>
     <color name="gray">#3EA99F </color>
     
+    
+    <color name="press_button">#1E9B67</color>
+    <color name="normal_button">#51CE9A</color>
     <color name="floating_button">#ed7d31</color>
     <color name="green">#00FF00</color>
     <color name="tab_selected">#F6E3FF</color>
