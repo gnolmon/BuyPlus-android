@@ -12,8 +12,8 @@
         android:orientation="vertical" >
 
         <ImageView
-            android:layout_width="130dp"
-            android:layout_height="130dp"
+            android:layout_width="@dimen/person_ava_width"
+            android:layout_height="@dimen/person_ava_height"
             android:layout_centerInParent="true"
             android:src="@drawable/buyplusicon" />
     </RelativeLayout>
