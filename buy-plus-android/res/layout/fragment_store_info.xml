@@ -27,8 +27,7 @@
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/isJoin"
-            android:background="@drawable/isjoin" />
+            android:layout_toRightOf="@id/isJoin"/>
 
         <Button
             android:id="@+id/btnJoin"
@@ -48,8 +47,7 @@
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:progressDrawable="@drawable/progressbar_color" />
+            android:layout_centerVertical="true"/>
 
         <TextView
             android:id="@+id/tvScore"
@@ -140,7 +138,6 @@
             android:layout_width="@dimen/feed_item_profile_pic"
             android:layout_height="@dimen/feed_item_profile_pic"
             android:layout_margin="10dp"
-            android:background="@drawable/logojacklane"
             android:scaleType="fitCenter" >
         </ImageView>
 
