@@ -58,7 +58,7 @@ public class PersonalFragment extends CoreFragment {
 	    int height = point.y;
 	    int smallerDimension = width < height ? width : height;
 	    smallerDimension = smallerDimension * 3/4;
-	 
+	    
 	    //Encode with a QR Code image
 	    QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(qrInputText, 
 	             null, 
@@ -69,6 +69,7 @@ public class PersonalFragment extends CoreFragment {
 	    Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
 	    ImageView myImage = (ImageView) v.findViewById(R.id.QR_code);
 	    myImage.setImageBitmap(bitmap);
+	    Log.d("QRCODE","asdsd");
 	 
 	    } catch (WriterException e) {
 	     e.printStackTrace();

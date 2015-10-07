@@ -349,6 +349,7 @@ public abstract class CoreActivity extends FragmentActivity implements Serializa
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 		DarkmoonApplication.getInstance().addToRequestQueue(jsonObjRequest, TAG_JSONOBJ_REQUEST);
 	}
+	
 	protected void makeJsonArrayRequest(String url, int timeOut, final JSONArrayRequestListener mListener){
 		mListener.onBefore();
 		JsonArrayRequest jsonArrRequest = new JsonArrayRequest(url,

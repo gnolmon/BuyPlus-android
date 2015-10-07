@@ -7,14 +7,14 @@ public class UserAccount {
 	private String email;
 	private String username;
 	private String imageUrl, imageThumbnail;
-	private boolean active;
-	private String name;
+	private int active;
+	private String login_name;
 	public UserAccount() {
 		super();
 	}
 	public UserAccount(String accessToken, int id, String phonenumbers,
 			String email, String username, String imageUrl,
-			String imageThumbnail, boolean active, String name) {
+			String imageThumbnail, String name, int active) {
 		super();
 		this.accessToken = accessToken;
 		this.id = id;
@@ -24,7 +24,7 @@ public class UserAccount {
 		this.imageUrl = imageUrl;
 		this.imageThumbnail = imageThumbnail;
 		this.active = active;
-		this.name = name;
+		this.login_name = name;
 	}
 	public String getAccessToken() {
 		return accessToken;
@@ -68,16 +68,16 @@ public class UserAccount {
 	public void setImageThumbnail(String imageThumbnail) {
 		this.imageThumbnail = imageThumbnail;
 	}
-	public boolean isActive() {
+	public int isActive() {
 		return active;
 	}
-	public void setActive(boolean active) {
+	public void setActive(int active) {
 		this.active = active;
 	}
 	public String getName() {
-		return name;
+		return login_name;
 	}
 	public void setName(String name) {
-		this.name = name;
+		this.login_name = name;
 	}
 }

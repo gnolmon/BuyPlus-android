@@ -1,12 +1,26 @@
 package lc.buyplus.fragments;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import lc.buyplus.R;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
+import lc.buyplus.cores.HandleRequest;
 
 public class HomeFragment extends CoreFragment {
 	@Override
@@ -15,8 +29,7 @@ public class HomeFragment extends CoreFragment {
 		initViews(view);
 		initModels();
 		initAnimations();
-		
-		
+		api_get_shop_info(2);
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -53,6 +66,236 @@ public class HomeFragment extends CoreFragment {
 		
 	}
 	
+	public void api_join_shop(int shop_id){
+	 	
+    	Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		params.put("shop_id", String.valueOf(shop_id));
+			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(
+					HandleRequest.JOIN_SHOP, params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("api_join_shop",response.toString());
+						// code here
+					}
+					}, 
+					new Response.ErrorListener() {
+						@Override
+						public void onErrorResponse(VolleyError error) {
+						}
+					});
+			requestQueue.add(jsObjRequest);
+	}
+	
+	public void api_leave_shop(int shop_id){
+	 	
+    	Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		params.put("shop_id", String.valueOf(shop_id));
+			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(
+					HandleRequest.LEAVE_SHOP, params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("api_leave_shop",response.toString());
+						// code here
+					}
+					}, 
+					new Response.ErrorListener() {
+						@Override
+						public void onErrorResponse(VolleyError error) {
+						}
+					});
+			requestQueue.add(jsObjRequest);
+	}
+	
+	public void api_get_shop_info(int shop_id){
+	 	
+    	Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		params.put("shop_id", String.valueOf(shop_id));
+			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(
+					HandleRequest.GET_MY_SHOP, params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("api_get_shop_info",response.toString());
+						try {
+									 
+							JSONObject data = response.getJSONObject("data");
+                            
+							int id = Integer.parseInt(data.getString("id"));
+							String name = data.getString("phone");
+							String address = data.getString("email");
+							String description = data.getString("description");
+							String email = data.getString("email");
+							String phone = data.getString("phone");
+							String website = data.getString("website");
+							String allow_circle = data.getString("allow_circle");
+							String max_friend_in_circle = data.getString("max_friend_in_circle");
+							String facebook_id = data.getString("facebook_id");
+							String lat = data.getString("lat");
+							String lng = data.getString("lng");
+							String image = data.getString("image");
+							String image_thumbnail = data.getString("image_thumbnail");
+							Log.d("api_get_shop_info",image_thumbnail);
+							JSONObject current_customer_shop = data.getJSONObject("current_customer_shop");
+							String current_customer_shop_id = data.getString("id");
+							String current_customer_shop_point = data.getString("point");
+							String current_customer_shop_created_time = data.getString("created_time");
+							// code here
+							
+							JSONArray friends = response.getJSONArray("friends");
+							for (int i = 0; i < friends.length(); i++) {								 
+	                            JSONObject friend = (JSONObject) friends.get(i);
+								JSONObject lowest_point_gift = friend.getJSONObject("lowest_point_gift");
+								String friend_id = friend.getString("id");
+								String friend_active = friend.getString("active");
+								String friend_name = friend.getString("name");
+								String friend_image = friend.getString("image");
+								String friend_image_thumbnail = friend.getString("image_thumbnail");
+								// code here
+							}
+						} catch (JSONException e) {
+
+							e.printStackTrace();
+						}	
+					}
+				}, 
+				new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+					}
+				});
+			requestQueue.add(jsObjRequest);
+	}
+	
+	public void api_get_my_shop(){
+	 	
+    	Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(
+					HandleRequest.GET_MY_SHOP, params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("api_get_my_shop",response.toString());
+						try {
+							JSONArray data_aray = response.getJSONArray("data");
+							for (int i = 0; i < data_aray.length(); i++) {								 
+	                            JSONObject data = (JSONObject) data_aray.get(i);
+	                            
+								int id = Integer.parseInt(data.getString("id"));
+								String name = data.getString("phone");
+								String address = data.getString("email");
+								String description = data.getString("description");
+								String email = data.getString("email");
+								String phone = data.getString("phone");
+								String website = data.getString("website");
+								String allow_circle = data.getString("allow_circle");
+								String max_friend_in_circle = data.getString("max_friend_in_circle");
+								String facebook_id = data.getString("facebook_id");
+								String lat = data.getString("lat");
+								String lng = data.getString("lng");
+								String image = data.getString("image");
+								String image_thumbnail = data.getString("image_thumbnail");
+								// code here
+								
+								Log.d("api_get_my_shop",image_thumbnail);
+								JSONObject current_customer_shop = data.getJSONObject("current_customer_shop");
+								String current_customer_shop_id = data.getString("id");
+								String current_customer_shop_point = data.getString("point");
+								String current_customer_shop_created_time = data.getString("created_time");
+								// code here
+								
+								JSONObject lowest_point_gift = data.getJSONObject("lowest_point_gift");
+								String lowest_point_gift_id = data.getString("id");
+								String lowest_point_gift_name = data.getString("name");
+								String lowest_point_gift_point = data.getString("point");
+								String lowest_point_gift_image = data.getString("image");
+								String lowest_point_gift_image_thumbnail = data.getString("image_thumbnail");
+								// code here
+	                        }
+						} catch (JSONException e) {
+
+							e.printStackTrace();
+						}	
+					}
+				}, 
+				new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+					}
+				});
+			requestQueue.add(jsObjRequest);
+	}
+
+	public void api_get_all_shop(int latest_id, int oldest_id){
+	 	
+    	Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		params.put("latest_id", String.valueOf(latest_id));
+		params.put("oldest_id", String.valueOf(oldest_id));
+			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(
+					HandleRequest.GET_ALL_SHOP, params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						try {
+							JSONArray data_aray = response.getJSONArray("data");
+							for (int i = 0; i < data_aray.length(); i++) {								 
+	                            JSONObject data = (JSONObject) data_aray.get(i);
+	                            
+								int id = Integer.parseInt(data.getString("id"));
+								String name = data.getString("phone");
+								String address = data.getString("email");
+								String description = data.getString("description");
+								String email = data.getString("email");
+								String phone = data.getString("phone");
+								String website = data.getString("website");
+								String allow_circle = data.getString("allow_circle");
+								String max_friend_in_circle = data.getString("max_friend_in_circle");
+								String facebook_id = data.getString("facebook_id");
+								String lat = data.getString("lat");
+								String lng = data.getString("lng");
+								String image = data.getString("image");
+								String image_thumbnail = data.getString("image_thumbnail");
+								// code here
+								
+								JSONObject current_customer_shop = data.getJSONObject("current_customer_shop");
+								String current_customer_shop_id = data.getString("id");
+								String current_customer_shop_point = data.getString("point");
+								String current_customer_shop_created_time = data.getString("created_time");
+								// code here
+								
+								JSONObject lowest_point_gift = data.getJSONObject("lowest_point_gift");
+								String lowest_point_gift_id = data.getString("id");
+								String lowest_point_gift_name = data.getString("name");
+								String lowest_point_gift_point = data.getString("point");
+								String lowest_point_gift_image = data.getString("image");
+								String lowest_point_gift_image_thumbnail = data.getString("image_thumbnail");
+								// code here
+	                        }
+						} catch (JSONException e) {
+
+							e.printStackTrace();
+						}	
+					}
+				}, 
+				new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+					}
+				});
+			requestQueue.add(jsObjRequest);
+	}
+
 	public static final long serialVersionUID = 6036846677812555352L;
 	
 	public static CoreActivity mActivity;

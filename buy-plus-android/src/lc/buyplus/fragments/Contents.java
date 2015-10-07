@@ -5,7 +5,7 @@ import android.provider.ContactsContract;
 public final class Contents {
     private Contents() {
     }
- 
+     
     public static final class Type {
          
      // Plain text. Use Intent.putExtra(DATA, string). This can be used for URLs too, but string

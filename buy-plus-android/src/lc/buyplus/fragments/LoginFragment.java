@@ -1,12 +1,20 @@
 package lc.buyplus.fragments;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import lc.buyplus.R;
 import lc.buyplus.activities.MainActivity;
+import lc.buyplus.application.DarkmoonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
+import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.customizes.ProgressDialog;
+import lc.buyplus.interfaces.JSONObjectRequestListener;
 import lc.buyplus.models.UserAccount;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +29,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request.Method;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -35,9 +52,6 @@ public class LoginFragment extends CoreFragment {
 	private TextView info;
 	private LoginButton loginButton;
 	private CallbackManager callbackManager;
-	private String user_id;
-	private String user_name;
-	private String user_profilepic_url;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +63,7 @@ public class LoginFragment extends CoreFragment {
 		initAnimations();
 		info = (TextView)view.findViewById(R.id.info);
 		loginButton = (LoginButton)view.findViewById(R.id.login_button);
+		api_user_login( "long@gmail.com","f5bb0c8de146c67b44babbf4e6584cc0");
 		loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 			
 			@Override
@@ -66,37 +81,22 @@ public class LoginFragment extends CoreFragment {
                         Log.e("JSON:", object.toString());
 
                         try {
-                             user_id = object.getString("id");
-                             user_name = object.getString("name");
-                             user_profilepic_url = object.getString("link");
+                             String user_id = object.getString("id");
+                             String user_name = object.getString("name");
+                             String user_profilepic_url = object.getString("link");
                              
                              
-             				info.setText(
-             		    		    "User ID: "
-             		    		    + user_id
-             		    		    + "\n" 
-             		    		    + "name: "
-             		    		    + user_name
-             		    		    + "\n" 
-             		    		    + "Link: "
-             		    		    + user_profilepic_url
-             		    		);
-             		    		
+                             //api_user_login_facebook( "long@gmail.com","f5bb0c8de146c67b44babbf4e6584cc0");            		
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        
                     }
                 });
                 Bundle parameters = new Bundle();
                 parameters.putString("fields", "id,name,link");
                 request.setParameters(parameters);
-                //Log.e(" About to Graph Call", " ");
                 request.executeAsync();
-                //Log.e(" Finished Graph Call", " ");
-                
-                //String token = result.getAccessToken().getToken();
-                //UserAccount user = new UserAccount(token,1,"","","","","",true,user_name);
-				//mFragmentManager.beginTransaction().replace(R.id.canvas, CanvasFragment.getInstance(mActivity, user)).commit();
 			}
 			
 			@Override
@@ -108,23 +108,10 @@ public class LoginFragment extends CoreFragment {
 			public void onCancel() {
 				info.setText("Login attempt failed.");
 			}
-		});
-		
-		/*
-		Button x = (Button) view.findViewById(R.id.button);
-		x.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// Call it when login success
-				UserAccount user = new UserAccount(token,1,"","","","","",true,"long");
-				mFragmentManager.beginTransaction().replace(R.id.canvas, CanvasFragment.getInstance(mActivity, user)).commit();
-			}
-		});
-		*/
-		
+		});	
 		return view;
 	}	
-	
+		
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    callbackManager.onActivityResult(requestCode, resultCode, data);
@@ -149,6 +136,90 @@ public class LoginFragment extends CoreFragment {
 	@Override
 	protected void initAnimations() {
 		
+	}
+	
+
+
+	public void api_user_login(String name, String password){
+	 	
+    	Map<String, String> params = new HashMap<String, String>();
+		params.put("login_name", name);
+		params.put("password", password);
+			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(
+					HandleRequest.USER_LOGIN, params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						try {
+							JSONObject data = response.getJSONObject("data");
+							String accessToken = data.getString("access_token");
+							int id = Integer.parseInt(data.getString("id"));
+							String phone = data.getString("phone");
+							String email = data.getString("email");
+							String login_name = data.getString("login_name");
+							String imageUrl = data.getString("image");
+							String imageThumbnail = data.getString("image_thumbnail");
+							String username = data.getString("name");
+							int active = Integer.parseInt(data.getString("active"));
+							
+							UserAccount user = new UserAccount(accessToken,id,phone,email,login_name,imageUrl,imageThumbnail,username,active);
+							mFragmentManager.beginTransaction().replace(R.id.canvas, CanvasFragment.getInstance(mActivity, user)).commit();
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}	
+					}
+				}, 
+				new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+					}
+				});
+			requestQueue.add(jsObjRequest);
+	}
+	
+	public void api_user_login_facebook(String facebook_access_token, String email, String phone, String name, String facebook_id){
+	 	
+    	Map<String, String> params = new HashMap<String, String>();
+		params.put("facebook_access_token", facebook_access_token);
+		params.put("email", email);
+		params.put("phone", phone);
+		params.put("name", name);
+		params.put("facebook_id", facebook_id);
+			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(
+					HandleRequest.LOGIN_FACEBOOK, params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						try {
+							JSONObject data = response.getJSONObject("data");
+							String accessToken = data.getString("access_token");
+							int id = Integer.parseInt(data.getString("id"));
+							String phone = data.getString("phone");
+							String email = data.getString("email");
+							String login_name = data.getString("login_name");
+							String imageUrl = data.getString("image");
+							String imageThumbnail = data.getString("image_thumbnail");
+							String username = data.getString("name");
+							int active = Integer.parseInt(data.getString("active"));
+							
+							
+							UserAccount user = new UserAccount(accessToken,id,phone,email,login_name,imageUrl,imageThumbnail,username,active);
+							mFragmentManager.beginTransaction().replace(R.id.canvas, CanvasFragment.getInstance(mActivity, user)).commit();
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}	
+					}
+				}, 
+				new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+					}
+				});
+			requestQueue.add(jsObjRequest);
 	}
 	
 	public static final long serialVersionUID = 6036846677812555352L;
