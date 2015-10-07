@@ -1,6 +1,7 @@
 package lc.buyplus.customizes;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.EditText;
@@ -29,5 +30,6 @@ public class MyEditText extends EditText {
 			setTypeface(tf);
 		}
 	}
+	
 
 }

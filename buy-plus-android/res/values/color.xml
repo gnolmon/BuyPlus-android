@@ -15,6 +15,9 @@
     <color name="pink">#ff2d2d</color>
     <color name="gray">#3EA99F </color>
     
+    
+    <color name="press_button">#1E9B67</color>
+    <color name="normal_button">#51CE9A</color>
     <color name="floating_button">#ed7d31</color>
     <color name="green">#00FF00</color>
     <color name="tab_selected">#F6E3FF</color>
@@ -23,4 +26,7 @@
     <color name="canvas">#F2F2F2</color>
     <color name="actionbar">#26c281</color>
     <color name="actionbar_search">#29cf8a</color>
+    <color name="timestamp">#999999</color>
+    <color name="like_comment">#B2B2B2</color>
+    <color name="background_gray">#999999</color>
 </resources>
