@@ -31,7 +31,7 @@ public class HandleRequest extends Request<JSONObject>{
     public static final String USER_LOGIN = "http://buyplus.vn/api/login/";
     public static final String LOGOUT = "http://buyplus.vn/api/logout/";
     public static final String AUTHENTICATE_FORGET_PASSWORD = "http://buyplus.vn/api/authenticate_forget_pass/";
-    public static final String PORGET_PASSWORD = "http://buyplus.vn/api/forget_password/";
+    public static final String FORGET_PASSWORD = "http://buyplus.vn/api/forget_password/";
     public static final String GET_ALL_SHOP = "http://buyplus.vn/api/get_all_shop/";
     public static final String GET_MY_SHOP = "http://buyplus.vn/api/get_my_shop/";
     public static final String GET_SHOP_INFO = "http://buyplus.vn/api/get_shop_info/";

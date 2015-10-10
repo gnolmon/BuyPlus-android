@@ -8,35 +8,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import lc.buyplus.R;
-import lc.buyplus.activities.MainActivity;
-import lc.buyplus.application.DarkmoonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
-import lc.buyplus.customizes.ProgressDialog;
-import lc.buyplus.interfaces.JSONObjectRequestListener;
 import lc.buyplus.models.UserAccount;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -138,7 +124,28 @@ public class LoginFragment extends CoreFragment {
 		
 	}
 	
-
+	public void api_user_register(String login_name, String password){
+	 	
+    	Map<String, String> params = new HashMap<String, String>();
+		params.put("login_name", login_name);
+		params.put("password", password);
+			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(
+					HandleRequest.USER_REGISTER, params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("api_user_register",response.toString());
+						// code here
+					}
+					}, 
+					new Response.ErrorListener() {
+						@Override
+						public void onErrorResponse(VolleyError error) {
+						}
+					});
+			requestQueue.add(jsObjRequest);
+	}
 
 	public void api_user_login(String name, String password){
 	 	
@@ -163,7 +170,7 @@ public class LoginFragment extends CoreFragment {
 							String username = data.getString("name");
 							int active = Integer.parseInt(data.getString("active"));
 							
-							UserAccount user = new UserAccount(accessToken,id,phone,email,login_name,imageUrl,imageThumbnail,username,active);
+							UserAccount user = new UserAccount(accessToken,id,phone,email,login_name,imageUrl,imageThumbnail,username,active);;
 							mFragmentManager.beginTransaction().replace(R.id.canvas, CanvasFragment.getInstance(mActivity, user)).commit();
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
@@ -221,6 +228,75 @@ public class LoginFragment extends CoreFragment {
 				});
 			requestQueue.add(jsObjRequest);
 	}
+	
+	public void api_logout(){
+	 	
+    	Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(
+					HandleRequest.LOGOUT, params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("api_logout",response.toString());
+						// code here
+					}
+					}, 
+					new Response.ErrorListener() {
+						@Override
+						public void onErrorResponse(VolleyError error) {
+						}
+					});
+			requestQueue.add(jsObjRequest);
+	}
+	
+	public void api_authenticate_forget_password(){
+	 	
+    	Map<String, String> params = new HashMap<String, String>();
+			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(
+					HandleRequest.AUTHENTICATE_FORGET_PASSWORD, params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("api_authenticate_forget_password",response.toString());
+						// code here
+					}
+					}, 
+					new Response.ErrorListener() {
+						@Override
+						public void onErrorResponse(VolleyError error) {
+						}
+					});
+			requestQueue.add(jsObjRequest);
+	}
+
+	public void api_forget_password(String token, String email, String password){
+	 	
+    	Map<String, String> params = new HashMap<String, String>();
+    	params.put("token", token);
+    	params.put("email", email);
+    	params.put("password", password);
+			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(
+					HandleRequest.FORGET_PASSWORD, params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("api_authenticate_forget_password",response.toString());
+						// code here
+					}
+					}, 
+					new Response.ErrorListener() {
+						@Override
+						public void onErrorResponse(VolleyError error) {
+						}
+					});
+			requestQueue.add(jsObjRequest);
+	}
+	
+	
 	
 	public static final long serialVersionUID = 6036846677812555352L;
 	
