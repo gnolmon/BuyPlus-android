@@ -1,9 +1,11 @@
 package lc.buyplus.fragments;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,6 +20,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -35,10 +40,12 @@ import com.facebook.login.widget.LoginButton;
 
 public class LoginFragment extends CoreFragment {
 	
-	private TextView info;
+	private EditText editName;
+	private EditText editPass;
+	private Button loginbtn;
 	private LoginButton loginButton;
 	private CallbackManager callbackManager;
-	
+	private String faceBookAccessToken;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		FacebookSdk.sdkInitialize(mActivity.getApplicationContext());
@@ -47,14 +54,14 @@ public class LoginFragment extends CoreFragment {
 		initViews(view);
 		initModels();
 		initAnimations();
-		info = (TextView)view.findViewById(R.id.info);
+		
 		loginButton = (LoginButton)view.findViewById(R.id.login_button);
-		api_user_login( "long@gmail.com","f5bb0c8de146c67b44babbf4e6584cc0");
+		loginButton.setReadPermissions(Arrays.asList("public_profile","email"));
 		loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 			
 			@Override
 			public void onSuccess(LoginResult result) {
-				
+				faceBookAccessToken = result.getAccessToken().toString();
 				GraphRequest request = GraphRequest.newMeRequest(
                 result.getAccessToken(),
                 new GraphRequest.GraphJSONObjectCallback() {
@@ -63,16 +70,16 @@ public class LoginFragment extends CoreFragment {
                             JSONObject object,
                             GraphResponse response) {
                         // Application code
+                    	 
                         response.getError();
-                        Log.e("JSON:", object.toString());
-
+                        //Log.e("JSON:", object.toString());
+                        //Log.d("accessToken", faceBookAccessToken);
                         try {
                              String user_id = object.getString("id");
                              String user_name = object.getString("name");
-                             String user_profilepic_url = object.getString("link");
+                             String email = object.getString("email");
                              
-                             
-                             //api_user_login_facebook( "long@gmail.com","f5bb0c8de146c67b44babbf4e6584cc0");            		
+                             api_user_login_facebook(faceBookAccessToken, email, "", user_name, user_id);            		
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -80,19 +87,17 @@ public class LoginFragment extends CoreFragment {
                     }
                 });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,link");
+                parameters.putString("fields", "id,name,email");
                 request.setParameters(parameters);
                 request.executeAsync();
 			}
 			
 			@Override
 			public void onError(FacebookException error) {
-				info.setText("Login attempt canceled.");;
 			}
 			
 			@Override
 			public void onCancel() {
-				info.setText("Login attempt failed.");
 			}
 		});	
 		return view;
@@ -116,12 +121,47 @@ public class LoginFragment extends CoreFragment {
 
 	@Override
 	protected void initViews(View v) {
-	
+		editName = (EditText)v.findViewById(R.id.edNameLogin);
+		editPass = (EditText)v.findViewById(R.id.edPass);
+		loginbtn = (Button)v.findViewById(R.id.btnLogin);
+		
+		loginbtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				String name = editName.getText().toString();
+				String password = editPass.getText().toString();
+				api_user_login( name,md5(password));
+			}
+		});
 	}
 
 	@Override
 	protected void initAnimations() {
 		
+	}
+	
+	public String md5(final String s) {
+	    try {
+	        // Create MD5 Hash
+	        MessageDigest digest = java.security.MessageDigest
+	                .getInstance("MD5");
+	        digest.update(s.getBytes());
+	        byte messageDigest[] = digest.digest();
+	 
+	        // Create Hex String
+	        StringBuffer hexString = new StringBuffer();
+	        for (int i = 0; i < messageDigest.length; i++) {
+	            String h = Integer.toHexString(0xFF & messageDigest[i]);
+	            while (h.length() < 2)
+	                h = "0" + h;
+	            hexString.append(h);
+	        }
+	        return hexString.toString();
+	 
+	    } catch (NoSuchAlgorithmException e) {
+	        e.printStackTrace();
+	    }
+	    return "";
 	}
 	
 	public void api_user_register(String login_name, String password){
@@ -136,7 +176,7 @@ public class LoginFragment extends CoreFragment {
 					@Override
 					public void onResponse(JSONObject response) {
 						Log.d("api_user_register",response.toString());
-						// code here
+						
 					}
 					}, 
 					new Response.ErrorListener() {
@@ -191,7 +231,7 @@ public class LoginFragment extends CoreFragment {
     	Map<String, String> params = new HashMap<String, String>();
 		params.put("facebook_access_token", facebook_access_token);
 		params.put("email", email);
-		params.put("phone", phone);
+		//params.put("phone", phone);
 		params.put("name", name);
 		params.put("facebook_id", facebook_id);
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
@@ -201,6 +241,7 @@ public class LoginFragment extends CoreFragment {
 					@Override
 					public void onResponse(JSONObject response) {
 						try {
+							Log.d("api_user_login_facebook",response.toString());
 							JSONObject data = response.getJSONObject("data");
 							String accessToken = data.getString("access_token");
 							int id = Integer.parseInt(data.getString("id"));
