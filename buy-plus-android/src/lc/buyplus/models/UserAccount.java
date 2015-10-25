@@ -1,7 +1,7 @@
 package lc.buyplus.models;
 
 public class UserAccount {
-	private String accessToken;
+	String accessToken;
 	private int id;
 	private String phonenumbers;
 	private String email;
@@ -9,9 +9,11 @@ public class UserAccount {
 	private String imageUrl, imageThumbnail;
 	private int active;
 	private String login_name;
+	
 	public UserAccount() {
 		super();
 	}
+	
 	public UserAccount(String accessToken, int id, String phonenumbers,
 			String email, String username, String imageUrl,
 			String imageThumbnail, String name, int active) {
@@ -26,6 +28,8 @@ public class UserAccount {
 		this.active = active;
 		this.login_name = name;
 	}
+	
+	
 	public String getAccessToken() {
 		return accessToken;
 	}
@@ -68,16 +72,16 @@ public class UserAccount {
 	public void setImageThumbnail(String imageThumbnail) {
 		this.imageThumbnail = imageThumbnail;
 	}
-	public int isActive() {
+	public int getActive() {
 		return active;
 	}
 	public void setActive(int active) {
 		this.active = active;
 	}
-	public String getName() {
+	public String getLogin_name() {
 		return login_name;
 	}
-	public void setName(String name) {
-		this.login_name = name;
+	public void setLogin_name(String login_name) {
+		this.login_name = login_name;
 	}
 }

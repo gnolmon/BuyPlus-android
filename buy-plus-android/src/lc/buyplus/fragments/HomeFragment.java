@@ -1,5 +1,6 @@
 package lc.buyplus.fragments;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,15 +22,21 @@ import lc.buyplus.R;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.models.Announcement;
+import lc.buyplus.models.LowestPointGift;
+import lc.buyplus.models.Photo;
+import lc.buyplus.models.Shop;
+import lc.buyplus.models.Store;
 
 public class HomeFragment extends CoreFragment {
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
 		initViews(view);
 		initModels();
 		initAnimations();
-		
+		api_get_all_shop(0,0);
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -66,7 +73,6 @@ public class HomeFragment extends CoreFragment {
 		
 	}
 	
-	
 	public void api_get_all_shop(int latest_id, int oldest_id){
 	 	
     	Map<String, String> params = new HashMap<String, String>();
@@ -80,40 +86,45 @@ public class HomeFragment extends CoreFragment {
 					@Override
 					public void onResponse(JSONObject response) {
 						try {
+							Log.d("api_get_all_shop",response.toString());
 							JSONArray data_aray = response.getJSONArray("data");
 							for (int i = 0; i < data_aray.length(); i++) {								 
 	                            JSONObject data = (JSONObject) data_aray.get(i);
-	                            
-								int id = Integer.parseInt(data.getString("id"));
-								String name = data.getString("name");
-								String address = data.getString("email");
-								String description = data.getString("description");
-								String email = data.getString("email");
-								String phone = data.getString("phone");
-								String website = data.getString("website");
-								String allow_circle = data.getString("allow_circle");
-								String max_friend_in_circle = data.getString("max_friend_in_circle");
-								String facebook_id = data.getString("facebook_id");
-								String lat = data.getString("lat");
-								String lng = data.getString("lng");
-								String image = data.getString("image");
-								String image_thumbnail = data.getString("image_thumbnail");
-								// code here
-								
+	                            Shop shop = new Shop();
+	                            shop.id = Integer.parseInt(data.getString("id"));
+	                            shop.name = data.getString("name");
+	                            shop.address = data.getString("email");
+	                            shop.description = data.getString("description");
+	                            shop.email = data.getString("email");
+	                            shop.phone = data.getString("phone");
+	                            shop.website = data.getString("website");
+	                            shop.allow_circle = data.getString("allow_circle");
+	                            shop.max_friend_in_circle = data.getString("max_friend_in_circle");
+	                            shop.facebook_id = data.getString("facebook_id");
+	                            shop.lat = data.getString("lat");
+	                            shop.lng = data.getString("lng");
+	                            shop.image = data.getString("image");
+	                            shop.image_thumbnail = data.getString("image_thumbnail");
+
 								JSONObject current_customer_shop = data.getJSONObject("current_customer_shop");
-								String current_customer_shop_id = data.getString("id");
-								String current_customer_shop_point = data.getString("point");
-								String current_customer_shop_created_time = data.getString("created_time");
-								// code here
+								shop.current_customer_shop_id = current_customer_shop.getString("id");
+								shop.current_customer_shop_point = current_customer_shop.getString("point");
+								shop.current_customer_shop_created_time = current_customer_shop.getString("created_time");
 								
+								LowestPointGift lowestPointGift = new LowestPointGift();
 								JSONObject lowest_point_gift = data.getJSONObject("lowest_point_gift");
-								String lowest_point_gift_id = data.getString("id");
-								String lowest_point_gift_name = data.getString("name");
-								String lowest_point_gift_point = data.getString("point");
-								String lowest_point_gift_image = data.getString("image");
-								String lowest_point_gift_image_thumbnail = data.getString("image_thumbnail");
-								// code here
+								lowestPointGift.id = Integer.parseInt(lowest_point_gift.getString("id"));
+								lowestPointGift.name = lowest_point_gift.getString("name");
+								lowestPointGift.point = lowest_point_gift.getString("point");
+								lowestPointGift.image = lowest_point_gift.getString("image");
+								lowestPointGift.image_thumbnail = lowest_point_gift.getString("image_thumbnail");
+								shop.lowestPointGift = lowestPointGift;
+								
+								Store.ShopsList.add(shop);
 	                        }
+							/////////////////////////////////////////////////////////////
+							//code here
+							/////////////////////////////////////////////////////////////
 						} catch (JSONException e) {
 
 							e.printStackTrace();
@@ -268,40 +279,47 @@ public class HomeFragment extends CoreFragment {
 						try {
 							Log.d("api_get_all_announcements",response.toString());
 							JSONArray data_aray = response.getJSONArray("data");
-							for (int i = 0; i < data_aray.length(); i++) {								 
+							for (int i = 0; i < data_aray.length(); i++) {
+								Announcement announcement = new Announcement();
 	                            JSONObject data = (JSONObject) data_aray.get(i);
 	                            
-								int id = Integer.parseInt(data.getString("id"));
-								int shop_id = Integer.parseInt(data.getString("shop_id"));
-								String content = data.getString("content");
-								int type = Integer.parseInt(data.getString("type"));
-								String created_time = data.getString("created_time");
-								String updated_time = data.getString("updated_time");
-								int active = Integer.parseInt(data.getString("active"));
+	                            announcement.id = Integer.parseInt(data.getString("id"));
+	                            announcement.shop_id = Integer.parseInt(data.getString("shop_id"));
+	                            announcement.content = data.getString("content");
+	                            announcement.type = Integer.parseInt(data.getString("type"));
+	                            announcement.created_time = data.getString("created_time");
+	                            announcement.updated_time = data.getString("updated_time");
+	                            announcement.active = Integer.parseInt(data.getString("active"));
+								
+								ArrayList<Photo> photosList = new ArrayList<Photo>();
 								
 								JSONArray photos = data.getJSONArray("photos");
-								for (int j = 0; j < photos.length(); j++) {								 
-		                            JSONObject photo = (JSONObject) photos.get(i);
-									String photo_id = photo.getString("id");							
-									int photo_active = Integer.parseInt(photo.getString("active"));
-									String photo_caption = photo.getString("caption");
-									String photo_image = photo.getString("image");
+								for (int j = 0; j < photos.length(); j++) {
+									Photo photo = new Photo();
+		                            JSONObject photo_json = (JSONObject) photos.get(i);
+		                            photo.id = Integer.parseInt(photo_json.getString("id"));						
+		                            photo.active = Integer.parseInt(photo_json.getString("active"));
+		                            photo.caption = photo_json.getString("caption");
+		                            photo.image = photo_json.getString("image");
+		                            photosList.add(photo);
 								}
-								// code here
+								announcement.photos = photosList;
 								
+								Shop shop = new Shop();
 								JSONObject shop_announcements = data.getJSONObject("shop");
-								String shop_announcements_id = shop_announcements.getString("id");							
-								int shop_announcements_active = Integer.parseInt(shop_announcements.getString("active"));
-								String shop_announcements_name = shop_announcements.getString("name");
-								String shop_announcements_image_thumbnail = shop_announcements.getString("image_thumbnail");
-								String shop_announcements_image = shop_announcements.getString("image");
-								String shop_announcements_address = shop_announcements.getString("address");
+								shop.id = Integer.parseInt(shop_announcements.getString("id"));						
+								//shop.active = Integer.parseInt(shop_announcements.getString("active"));
+								shop.name = shop_announcements.getString("name");
+								shop.image_thumbnail = shop_announcements.getString("image_thumbnail");
+								shop.image = shop_announcements.getString("image");
+								shop.address = shop_announcements.getString("address");
 								// code here
 								
-								String start_time = data.getString("start_time");
-								String end_time = data.getString("end_time");
+								announcement.start_time = data.getString("start_time");
+								announcement.end_time = data.getString("end_time");
 								
-								Log.d("api_get_all_announcements",end_time);
+								Store.AnnouncementsList.add(announcement);
+								
 	                        }
 						} catch (JSONException e) {
 

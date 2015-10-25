@@ -63,6 +63,7 @@
             android:hint="Nhập mật khẩu"
             android:textColorHint="#D2EBE1"
             android:textColor="@color/white"
+            android:password="true"
             android:textSize="20dp" />
     </RelativeLayout>
 
@@ -114,14 +115,6 @@
             android:textColor="@color/white"
             android:textSize="15dp" />
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:textSize="18sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
