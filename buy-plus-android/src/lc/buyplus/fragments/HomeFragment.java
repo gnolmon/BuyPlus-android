@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
 
 import android.os.Bundle;
@@ -36,7 +37,9 @@ public class HomeFragment extends CoreFragment {
 		initViews(view);
 		initModels();
 		initAnimations();
+		Log.d("api_get_all_shop","ass");
 		api_get_all_shop(0,0);
+		api_get_all_announcements(2,0,0);
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -80,7 +83,7 @@ public class HomeFragment extends CoreFragment {
 		params.put("latest_id", String.valueOf(latest_id));
 		params.put("oldest_id", String.valueOf(oldest_id));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(
+			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 					HandleRequest.GET_ALL_SHOP, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
@@ -134,6 +137,7 @@ public class HomeFragment extends CoreFragment {
 				new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
+						Log.d("api_get_all_shop",error.toString());
 					}
 				});
 			requestQueue.add(jsObjRequest);
@@ -144,7 +148,7 @@ public class HomeFragment extends CoreFragment {
     	Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(
+			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 					HandleRequest.GET_MY_SHOP, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
@@ -206,7 +210,7 @@ public class HomeFragment extends CoreFragment {
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(
+			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 					HandleRequest.GET_MY_SHOP, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
@@ -271,7 +275,7 @@ public class HomeFragment extends CoreFragment {
 		params.put("latest_id", String.valueOf(latest_id));
 		params.put("oldest_id", String.valueOf(oldest_id));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(
+			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 					HandleRequest.GET_SHOP_ANNOUNCEMENTS, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
@@ -344,7 +348,7 @@ public class HomeFragment extends CoreFragment {
 		params.put("latest_id", String.valueOf(latest_id));
 		params.put("oldest_id", String.valueOf(oldest_id));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(
+			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 					HandleRequest.GET_SHOP_ANNOUNCEMENTS, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
@@ -408,7 +412,7 @@ public class HomeFragment extends CoreFragment {
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(
+			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 					HandleRequest.GET_SHOP_GIFTS, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
@@ -451,7 +455,7 @@ public class HomeFragment extends CoreFragment {
 		params.put("latest_id", String.valueOf(latest_id));
 		params.put("oldest_id", String.valueOf(oldest_id));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(
+			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 					HandleRequest.GET_NOTIFICATIONS, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
@@ -492,7 +496,7 @@ public class HomeFragment extends CoreFragment {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(
+			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.READ_NOTIFICATIONS, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
@@ -516,7 +520,7 @@ public class HomeFragment extends CoreFragment {
 		params.put("shop_id", String.valueOf(shop_id));
 		params.put("temp_id", String.valueOf(temp_id));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(
+			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.SEND_REQUEST_JOIN_SHOP_TO_FRIEND, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
@@ -541,7 +545,7 @@ public class HomeFragment extends CoreFragment {
 		params.put("request_id", String.valueOf(request_id));
 		params.put("accept_type", accept_type);
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(
+			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.RESPONSE_REQUEST__JOIN_SHOP, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
@@ -564,7 +568,7 @@ public class HomeFragment extends CoreFragment {
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(
+			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.JOIN_SHOP, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
@@ -587,7 +591,7 @@ public class HomeFragment extends CoreFragment {
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(
+			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.LEAVE_SHOP, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
@@ -610,7 +614,7 @@ public class HomeFragment extends CoreFragment {
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(
+			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.GET_ADDED_POINT_IN_SHOP, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
@@ -633,7 +637,7 @@ public class HomeFragment extends CoreFragment {
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(
+			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.GET_ADDED_POINT_HISTORY, params, 
 					new Response.Listener<JSONObject>() {
 					@Override

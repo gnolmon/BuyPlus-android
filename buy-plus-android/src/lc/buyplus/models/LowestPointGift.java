@@ -16,7 +16,7 @@ public class LowestPointGift {
 		super();
 	}
 
-	public LowestPointGift(String id, String active, String created_time,
+	public LowestPointGift(int id, String active, String created_time,
 			String updated_time, String name, String image,
 			String image_thumbnail, String point, String description) {
 		super();
