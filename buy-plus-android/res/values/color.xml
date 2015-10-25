@@ -29,4 +29,5 @@
     <color name="timestamp">#999999</color>
     <color name="like_comment">#B2B2B2</color>
     <color name="background_gray">#999999</color>
+    <color name="list_divider">#999999</color>
 </resources>
