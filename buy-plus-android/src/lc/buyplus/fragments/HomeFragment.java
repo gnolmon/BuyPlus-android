@@ -28,6 +28,7 @@ import lc.buyplus.models.LowestPointGift;
 import lc.buyplus.models.Photo;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
+import lc.buyplus.models.UserAccount;
 
 public class HomeFragment extends CoreFragment {
 	
@@ -37,9 +38,8 @@ public class HomeFragment extends CoreFragment {
 		initViews(view);
 		initModels();
 		initAnimations();
-		Log.d("api_get_all_shop","ass");
-		api_get_all_shop(0,0);
-		api_get_all_announcements(2,0,0);
+		
+		api_get_all_announcements(2,0,0,0,0);
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -75,16 +75,30 @@ public class HomeFragment extends CoreFragment {
 	protected void initAnimations() {
 		
 	}
-	
-	public void api_get_all_shop(int latest_id, int oldest_id){
+
+	public void api_get_all_shop(int latest_id, int oldest_id, int search){
 	 	
     	Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("latest_id", String.valueOf(latest_id));
 		params.put("oldest_id", String.valueOf(oldest_id));
+		params.put("search", String.valueOf(search));
+		String builder = "";
+		for (String key : params.keySet())
+	    {
+	        Object value = params.get(key);
+	        if (value != null)
+	        {
+	        	 builder += "&";
+	        	 builder = builder + key.toString() + "="+ value.toString();
+	        }
+	    }
+		char[] tmp = builder.toCharArray();
+		tmp[0] = '?';
+		builder = HandleRequest.GET_ALL_SHOP+String.valueOf(tmp);
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
 			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					HandleRequest.GET_ALL_SHOP, params, 
+					builder, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
@@ -110,18 +124,24 @@ public class HomeFragment extends CoreFragment {
 	                            shop.image_thumbnail = data.getString("image_thumbnail");
 
 								JSONObject current_customer_shop = data.getJSONObject("current_customer_shop");
-								shop.current_customer_shop_id = current_customer_shop.getString("id");
-								shop.current_customer_shop_point = current_customer_shop.getString("point");
-								shop.current_customer_shop_created_time = current_customer_shop.getString("created_time");
+								if (current_customer_shop != null){
+									shop.current_customer_shop_id = current_customer_shop.getString("id");
+									shop.current_customer_shop_point = current_customer_shop.getString("point");
+									shop.current_customer_shop_created_time = current_customer_shop.getString("created_time");
+								}
+								
 								
 								LowestPointGift lowestPointGift = new LowestPointGift();
-								JSONObject lowest_point_gift = data.getJSONObject("lowest_point_gift");
-								lowestPointGift.id = Integer.parseInt(lowest_point_gift.getString("id"));
-								lowestPointGift.name = lowest_point_gift.getString("name");
-								lowestPointGift.point = lowest_point_gift.getString("point");
-								lowestPointGift.image = lowest_point_gift.getString("image");
-								lowestPointGift.image_thumbnail = lowest_point_gift.getString("image_thumbnail");
-								shop.lowestPointGift = lowestPointGift;
+								if (current_customer_shop != null){
+									JSONObject lowest_point_gift = data.getJSONObject("lowest_point_gift");
+									lowestPointGift.id = Integer.parseInt(lowest_point_gift.getString("id"));
+									lowestPointGift.name = lowest_point_gift.getString("name");
+									lowestPointGift.point = lowest_point_gift.getString("point");
+									lowestPointGift.image = lowest_point_gift.getString("image");
+									lowestPointGift.image_thumbnail = lowest_point_gift.getString("image_thumbnail");
+									shop.lowestPointGift = lowestPointGift;
+								}
+								
 								
 								Store.ShopsList.add(shop);
 	                        }
@@ -267,16 +287,31 @@ public class HomeFragment extends CoreFragment {
 			requestQueue.add(jsObjRequest);
 	}
 
-	public void api_get_all_announcements(int type, int latest_id, int oldest_id){
+	public void api_get_all_announcements(int type, int latest_id, int oldest_id, int mode, int search){
 	 	
     	Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("type", String.valueOf(type));
 		params.put("latest_id", String.valueOf(latest_id));
 		params.put("oldest_id", String.valueOf(oldest_id));
+		params.put("mode", String.valueOf(mode));
+		params.put("search", String.valueOf(search));
+		String builder = "";
+		for (String key : params.keySet())
+	    {
+	        Object value = params.get(key);
+	        if (value != null)
+	        {
+	        	 builder += "&";
+	        	 builder = builder + key.toString() + "="+ value.toString();
+	        }
+	    }
+		char[] tmp = builder.toCharArray();
+		tmp[0] = '?';
+		builder = HandleRequest.GET_SHOP_ANNOUNCEMENTS+String.valueOf(tmp);
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
 			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					HandleRequest.GET_SHOP_ANNOUNCEMENTS, params, 
+					builder, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
@@ -298,25 +333,32 @@ public class HomeFragment extends CoreFragment {
 								ArrayList<Photo> photosList = new ArrayList<Photo>();
 								
 								JSONArray photos = data.getJSONArray("photos");
-								for (int j = 0; j < photos.length(); j++) {
-									Photo photo = new Photo();
-		                            JSONObject photo_json = (JSONObject) photos.get(i);
-		                            photo.id = Integer.parseInt(photo_json.getString("id"));						
-		                            photo.active = Integer.parseInt(photo_json.getString("active"));
-		                            photo.caption = photo_json.getString("caption");
-		                            photo.image = photo_json.getString("image");
-		                            photosList.add(photo);
-								}
-								announcement.photos = photosList;
+								if (photos != null){
+									for (int j = 0; j < photos.length(); j++) {
+										Photo photo = new Photo();
+			                            JSONObject photo_json = (JSONObject) photos.get(i);
+			                            photo.id = Integer.parseInt(photo_json.getString("id"));						
+			                            photo.active = Integer.parseInt(photo_json.getString("active"));
+			                            photo.caption = photo_json.getString("caption");
+			                            photo.image = photo_json.getString("image");
+			                            photosList.add(photo);
+									}
+									announcement.photos = photosList;
+									api_get_all_shop(0,0,0);
+								}						
+								
 								
 								Shop shop = new Shop();
 								JSONObject shop_announcements = data.getJSONObject("shop");
-								shop.id = Integer.parseInt(shop_announcements.getString("id"));						
-								//shop.active = Integer.parseInt(shop_announcements.getString("active"));
-								shop.name = shop_announcements.getString("name");
-								shop.image_thumbnail = shop_announcements.getString("image_thumbnail");
-								shop.image = shop_announcements.getString("image");
-								shop.address = shop_announcements.getString("address");
+								if (shop_announcements != null){
+									shop.id = Integer.parseInt(shop_announcements.getString("id"));						
+									//shop.active = Integer.parseInt(shop_announcements.getString("active"));
+									shop.name = shop_announcements.getString("name");
+									shop.image_thumbnail = shop_announcements.getString("image_thumbnail");
+									shop.image = shop_announcements.getString("image");
+									shop.address = shop_announcements.getString("address");
+								}
+								
 								// code here
 								
 								announcement.start_time = data.getString("start_time");
@@ -369,13 +411,12 @@ public class HomeFragment extends CoreFragment {
 								
 								JSONArray photos = data.getJSONArray("photos");
 								for (int j = 0; j < photos.length(); j++) {								 
-		                            //JSONObject photo = (JSONObject) photos.get(i);
-									//String photo_id = photo.getString("id");							
-									//int photo_active = Integer.parseInt(photo.getString("active"));
-									//String photo_caption = photo.getString("caption");
-									//String photo_image = photo.getString("image");
+		                            JSONObject photo = (JSONObject) photos.get(i);
+									String photo_id = photo.getString("id");							
+									int photo_active = Integer.parseInt(photo.getString("active"));
+									String photo_caption = photo.getString("caption");
+									String photo_image = photo.getString("image");
 								}
-								// code here
 								
 								JSONObject shop_announcements = data.getJSONObject("shop");
 								String shop_announcements_id = shop_announcements.getString("id");							
