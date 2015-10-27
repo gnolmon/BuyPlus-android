@@ -18,7 +18,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import lc.buyplus.R;
+import lc.buyplus.adapter.StoreAdapter;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
@@ -29,7 +31,8 @@ import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
 
 public class HomeFragment extends CoreFragment {
-	
+	private ListView listView;
+	private StoreAdapter storeAdapter;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -122,11 +125,10 @@ public class HomeFragment extends CoreFragment {
 								
 								Store.ShopsList.add(shop);
 	                        }
-							/////////////////////////////////////////////////////////////
-							//code here
-							/////////////////////////////////////////////////////////////
+							storeAdapter = new StoreAdapter(Store.ShopsList);
+							storeAdapter.notifyDataSetChanged();
+							
 						} catch (JSONException e) {
-
 							e.printStackTrace();
 						}	
 					}

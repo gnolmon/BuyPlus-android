@@ -20,7 +20,7 @@ public class LowestPointGift {
 			String updated_time, String name, String image,
 			String image_thumbnail, String point, String description) {
 		super();
-		this.id = id;
+		//this.id = id;
 		this.active = active;
 		this.created_time = created_time;
 		this.updated_time = updated_time;
