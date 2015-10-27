@@ -32,8 +32,8 @@ public class HandleRequest extends Request<JSONObject>{
     public static final String LOGOUT = "http://buyplus.vn/api/logout/";
     public static final String AUTHENTICATE_FORGET_PASSWORD = "http://buyplus.vn/api/authenticate_forget_pass/";
     public static final String FORGET_PASSWORD = "http://buyplus.vn/api/forget_password/";
-    public static final String GET_ALL_SHOP = "http://buyplus.vn/api/get_all_shop/";
-    public static final String GET_MY_SHOP = "http://buyplus.vn/api/get_my_shop/";
+    public static final String GET_ALL_SHOP = "http://buyplus.vn/api/get_all_shops/";
+    public static final String GET_MY_SHOP = "http://buyplus.vn/api/get_my_shops/";
     public static final String GET_SHOP_INFO = "http://buyplus.vn/api/get_shop_info/";
     public static final String GET_ALL_ANNOUNCEMENTS = "http://buyplus.vn/api/get_all_announcements/";
     public static final String GET_SHOP_ANNOUNCEMENTS = "http://buyplus.vn/api/get_shop_announcements/";
@@ -49,10 +49,10 @@ public class HandleRequest extends Request<JSONObject>{
     
     private Listener<JSONObject> listener;
     private Map<String, String> params;
-
-    public HandleRequest(String url, Map<String, String> params,
+    
+    public HandleRequest(int method, String url, Map<String, String> params,
             Listener<JSONObject> reponseListener, ErrorListener errorListener) {
-        super(Method.POST, url, errorListener);
+        super(method, url, errorListener);
         this.listener = reponseListener;
         this.params = params;
     }

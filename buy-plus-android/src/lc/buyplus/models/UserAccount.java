@@ -1,5 +1,7 @@
 package lc.buyplus.models;
 
+import android.util.Log;
+
 public class UserAccount {
 	String accessToken;
 	private int id;

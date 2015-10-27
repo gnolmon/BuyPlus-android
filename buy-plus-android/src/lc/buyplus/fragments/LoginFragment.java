@@ -13,6 +13,7 @@ import lc.buyplus.R;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.customizes.MyTextView;
 import lc.buyplus.models.UserAccount;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -43,6 +45,7 @@ public class LoginFragment extends CoreFragment {
 	private EditText editName;
 	private EditText editPass;
 	private Button loginbtn;
+	private MyTextView registerbtn;
 	private LoginButton loginButton;
 	private CallbackManager callbackManager;
 	private String faceBookAccessToken;
@@ -124,13 +127,20 @@ public class LoginFragment extends CoreFragment {
 		editName = (EditText)v.findViewById(R.id.edNameLogin);
 		editPass = (EditText)v.findViewById(R.id.edPass);
 		loginbtn = (Button)v.findViewById(R.id.btnLogin);
-		
+		registerbtn = (MyTextView)v.findViewById(R.id.btnRegister);
 		loginbtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				String name = editName.getText().toString();
 				String password = editPass.getText().toString();
 				api_user_login( name,md5(password));
+			}
+		});
+
+		registerbtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				mFragmentManager.beginTransaction().replace(R.id.canvas, RegisterFragment.getInstance(mActivity)).commit();
 			}
 		});
 	}
@@ -164,36 +174,13 @@ public class LoginFragment extends CoreFragment {
 	    return "";
 	}
 	
-	public void api_user_register(String login_name, String password){
-	 	
-    	Map<String, String> params = new HashMap<String, String>();
-		params.put("login_name", login_name);
-		params.put("password", password);
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(
-					HandleRequest.USER_REGISTER, params, 
-					new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_user_register",response.toString());
-						
-					}
-					}, 
-					new Response.ErrorListener() {
-						@Override
-						public void onErrorResponse(VolleyError error) {
-						}
-					});
-			requestQueue.add(jsObjRequest);
-	}
-
 	public void api_user_login(String name, String password){
 	 	
     	Map<String, String> params = new HashMap<String, String>();
 		params.put("login_name", name);
 		params.put("password", password);
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(
+			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.USER_LOGIN, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
@@ -235,7 +222,7 @@ public class LoginFragment extends CoreFragment {
 		params.put("name", name);
 		params.put("facebook_id", facebook_id);
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(
+			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.LOGIN_FACEBOOK, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
@@ -275,7 +262,7 @@ public class LoginFragment extends CoreFragment {
     	Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(
+			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.LOGOUT, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
@@ -296,7 +283,7 @@ public class LoginFragment extends CoreFragment {
 	 	
     	Map<String, String> params = new HashMap<String, String>();
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(
+			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.AUTHENTICATE_FORGET_PASSWORD, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
@@ -320,7 +307,7 @@ public class LoginFragment extends CoreFragment {
     	params.put("email", email);
     	params.put("password", password);
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(
+			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.FORGET_PASSWORD, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
