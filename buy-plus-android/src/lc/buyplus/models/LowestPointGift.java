@@ -30,4 +30,76 @@ public class LowestPointGift {
 		this.point = point;
 		this.description = description;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getActive() {
+		return active;
+	}
+
+	public void setActive(String active) {
+		this.active = active;
+	}
+
+	public String getCreated_time() {
+		return created_time;
+	}
+
+	public void setCreated_time(String created_time) {
+		this.created_time = created_time;
+	}
+
+	public String getUpdated_time() {
+		return updated_time;
+	}
+
+	public void setUpdated_time(String updated_time) {
+		this.updated_time = updated_time;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getImage_thumbnail() {
+		return image_thumbnail;
+	}
+
+	public void setImage_thumbnail(String image_thumbnail) {
+		this.image_thumbnail = image_thumbnail;
+	}
+
+	public String getPoint() {
+		return point;
+	}
+
+	public void setPoint(String point) {
+		this.point = point;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }
