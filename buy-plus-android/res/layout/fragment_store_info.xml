@@ -5,202 +5,156 @@
     tools:context="com.lc.buyplus.tab.HomeActivity" >
 
     <RelativeLayout
-        android:id="@+id/rlproperty"
+        android:id="@+id/rlbanner"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#ecebeb" >
+        android:layout_height="@dimen/person_ava_height"
+        android:layout_below="@id/rlheader"
+        android:background="@color/background_gray" >
 
-        <TextView
-            android:id="@+id/isJoin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:clickable="true"
-            android:text="Đã tham gia"
-            android:textColor="@color/timestamp"
-            android:textSize="@dimen/feed_item_profile_name"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnJoined"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/isJoin"/>
-
-        <Button
-            android:id="@+id/btnJoin"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/isJoin"
-            android:background="#26C281"
-            android:text="Tham gia"
-            android:textColor="#FFFFFF"
-            android:textSize="13dp" />
-
-        <ProgressBar
-            android:id="@+id/pbScore"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
-
-        <TextView
-            android:id="@+id/tvScore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/pbScore"
-            android:text="70%"
-            android:textColor="#bf1616"
-            android:textSize="@dimen/feed_item_profile_name"
-            android:textStyle="bold"
-            android:visibility="invisible" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rlTab"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rlproperty"
-        android:background="#ecebeb" >
-
-        <Button
-            android:id="@+id/btnMainScreen"
-            android:layout_width="90dp"
-            android:layout_height="30dp"
-            android:layout_margin="1dp"
-            android:background="#26C281"
-            android:text="Trang chủ"
-            android:textColor="#FFFFFF"
-            android:textSize="13dp" />
-
-        <Button
-            android:id="@+id/btnInfo"
-            android:layout_width="90dp"
-            android:layout_height="30dp"
-            android:layout_margin="1dp"
-            android:layout_toRightOf="@id/btnMainScreen"
-            android:background="#26C281"
-            android:text="Thông tin"
-            android:textColor="#FFFFFF"
-            android:textSize="13dp" />
-
-        <Button
-            android:id="@+id/btnImage"
-            android:layout_width="90dp"
-            android:layout_height="30dp"
-            android:layout_margin="1dp"
-            android:layout_toRightOf="@id/btnInfo"
-            android:background="#26C281"
-            android:text="Hình ảnh"
-            android:textColor="#FFFFFF"
-            android:textSize="13dp" />
-
-        <!--
-             <Button
-            android:id="@+id/btnMsg"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_margin="1dp"
-            android:layout_toRightOf="@id/btnImage"
-            android:background="#025702"
-            android:text="Tin nhắn"
-            android:textColor="#FFFFFF"
-            android:textSize="13dp" />
-        -->
-
-        <Button
-            android:id="@+id/btnFriend"
-            android:layout_width="90dp"
-            android:layout_height="30dp"
-            android:layout_margin="1dp"
-            android:layout_toRightOf="@id/btnImage"
-            android:background="#26C281"
-            android:text="Bạn bè"
-            android:textColor="#FFFFFF"
-            android:textSize="13dp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/tabInfo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/rlTab"
-        android:background="#ecebeb" >
-
-        <ImageView
-            android:id="@+id/imLogoStore"
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/imbannerStore"
             android:layout_width="@dimen/feed_item_profile_pic"
             android:layout_height="@dimen/feed_item_profile_pic"
-            android:layout_margin="10dp"
-            android:scaleType="fitCenter" >
-        </ImageView>
+            android:scaleType="fitXY" />
 
         <TextView
-            android:id="@+id/name"
-            android:layout_width="fill_parent"
+            android:id="@+id/storeName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20px"
-            android:layout_toRightOf="@id/imLogoStore"
-            android:clickable="true"
-            android:text="Jack Lane"
-            android:textColor="@color/timestamp"
-            android:textSize="@dimen/feed_item_profile_name"
-            android:textStyle="bold" />
+            android:layout_centerInParent="true"
+            android:text="Cửa hàng"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp" />
+    </RelativeLayout>
 
-        <TextView
-            android:id="@+id/field"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/name"
-            android:layout_toRightOf="@id/imLogoStore"
-            android:clickable="true"
-            android:text="Lĩnh vực : Quần áo "
-            android:textColor="@color/timestamp"
-            android:textSize="@dimen/feed_item_profile_name"
-            android:textStyle="bold" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/rlbanner"
+        android:background="@color/background_gray" >
 
-        <TextView
-            android:id="@+id/adress"
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/field"
-            android:layout_toRightOf="@id/imLogoStore"
-            android:clickable="true"
-            android:maxLines="10"
-            android:text="Địa chỉ  : \n		   1. 308 Bà Triệu\n		   2. 84 Hàng Điếu\n		   3. 42C Lý Thường Kiệt\n		   4. 173 Cầu Giấy\n		   5. 212B Melinh Plaza, Hà Đông"
-            android:textColor="@color/timestamp"
-            android:textSize="@dimen/feed_item_profile_name"
-            android:textStyle="bold" />
+            android:background="#ecebeb"
+            android:layout_centerInParent="true"
+            android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/phone"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/adress"
-            android:layout_toRightOf="@id/imLogoStore"
-            android:clickable="true"
-            android:text="Phone	 : 093 630 3632"
-            android:textColor="@color/timestamp"
-            android:textSize="@dimen/feed_item_profile_name"
-            android:textStyle="bold" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/background_gray"
+                android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/website"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/phone"
-            android:layout_toRightOf="@id/imLogoStore"
-            android:clickable="true"
-            android:text="Website  : http://www.jacklane.vn"
-            android:textColor="@color/timestamp"
-            android:textSize="@dimen/feed_item_profile_name"
-            android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/personal_white" />
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="210dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:hint="91 Chùa Láng, Đống Đa, Hà Nội "
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/background_gray"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/personal_white" />
+
+                <TextView
+                    android:id="@+id/tvField"
+                    android:layout_width="210dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:hint="thời trang nam"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/background_gray"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/personal_white" />
+
+                <TextView
+                    android:id="@+id/tvPhone"
+                    android:layout_width="210dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:hint="0906 8888 8888"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/background_gray"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/personal_white" />
+
+                <TextView
+                    android:id="@+id/tvWeb"
+                    android:layout_width="210dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:hint="www.jacklane.com.vn"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/background_gray"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/personal_white" />
+
+                <TextView
+                    android:id="@+id/tvFb"
+                    android:layout_width="210dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:hint="fb.com/jacklane"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+            </RelativeLayout>
+        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>
