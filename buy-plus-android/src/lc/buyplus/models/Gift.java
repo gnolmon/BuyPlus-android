@@ -1,26 +1,25 @@
 package lc.buyplus.models;
 
-public class LowestPointGift {
-	public int id;
-	public String active;
-	public String created_time;
-	public String updated_time;
-	public String name;
-	public String image;
-	public String image_thumbnail;
-	public String point;
-	public String	description;
+public class Gift {
+	private int id;
+	private int active;
+	private String created_time;
+	private String updated_time;
+	private String name;
+	private String image;
+	private String image_thumbnail;
+	private int point;
+	private String description;
 	
-	
-	public LowestPointGift() {
+	public Gift() {
 		super();
 	}
-
-	public LowestPointGift(int id, String active, String created_time,
-			String updated_time, String name, String image,
-			String image_thumbnail, String point, String description) {
+	
+	public Gift(int id, int active, String created_time, String updated_time,
+			String name, String image, String image_thumbnail, int point,
+			String description) {
 		super();
-		//this.id = id;
+		this.id = id;
 		this.active = active;
 		this.created_time = created_time;
 		this.updated_time = updated_time;
@@ -39,11 +38,11 @@ public class LowestPointGift {
 		this.id = id;
 	}
 
-	public String getActive() {
+	public int getActive() {
 		return active;
 	}
 
-	public void setActive(String active) {
+	public void setActive(int active) {
 		this.active = active;
 	}
 
@@ -87,11 +86,11 @@ public class LowestPointGift {
 		this.image_thumbnail = image_thumbnail;
 	}
 
-	public String getPoint() {
+	public int getPoint() {
 		return point;
 	}
 
-	public void setPoint(String point) {
+	public void setPoint(int point) {
 		this.point = point;
 	}
 

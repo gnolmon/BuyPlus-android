@@ -38,6 +38,7 @@ public class HandleRequest extends Request<JSONObject>{
     public static final String GET_ALL_ANNOUNCEMENTS = "http://buyplus.vn/api/get_all_announcements/";
     public static final String GET_SHOP_ANNOUNCEMENTS = "http://buyplus.vn/api/get_shop_announcements/";
     public static final String GET_SHOP_GIFTS = "http://buyplus.vn/api/get_shop_gifts/";
+    public static final String GET_SHOP_FRIENDS = "http://buyplus.vn/api/get_shop_friends/";
     public static final String GET_NOTIFICATIONS = "http://buyplus.vn/api/get_notifications/";
     public static final String READ_NOTIFICATIONS = "http://buyplus.vn/api/read_notifications/";
     public static final String SEND_REQUEST_JOIN_SHOP_TO_FRIEND = "http://buyplus.vn/api/send_request_join_shop_to_friend/";
@@ -46,7 +47,7 @@ public class HandleRequest extends Request<JSONObject>{
     public static final String LEAVE_SHOP = "http://buyplus.vn/api/leave_shop/";
     public static final String GET_ADDED_POINT_HISTORY = "http://buyplus.vn/api/get_added_point_history/";
     public static final String GET_ADDED_POINT_IN_SHOP = "API URL: http://buyplus.vn/api/get_added_point_in_shop/";
-    
+   
     private Listener<JSONObject> listener;
     private Map<String, String> params;
     
@@ -82,4 +83,20 @@ public class HandleRequest extends Request<JSONObject>{
         listener.onResponse(response);
     }
     
+    public static String build_link(String url, Map<String, String> params){
+    	String builder = "";
+		for (String key : params.keySet())
+	    {
+	        Object value = params.get(key);
+	        if (value != null)
+	        {
+	        	 builder += "&";
+	        	 builder = builder + key.toString() + "="+ value.toString();
+	        }
+	    }
+		char[] tmp = builder.toCharArray();
+		tmp[0] = '?';
+		builder = url+String.valueOf(tmp);
+		return builder;
+    }
 }

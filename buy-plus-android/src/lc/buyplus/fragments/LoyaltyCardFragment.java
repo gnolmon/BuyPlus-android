@@ -15,21 +15,7 @@ public class LoyaltyCardFragment extends CoreFragment {
 		initViews(view);
 		initModels();
 		initAnimations();
-		
-		
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					Thread.sleep(500);
-					// load data
-//					switchFragmentWithAnimation(CanvasFragment.getInstance(mActivity), 100, 200);
-					mFragmentManager.beginTransaction().replace(R.id.canvas, LoginFragment.getInstance(mActivity)).commit();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}).start();
+	
 		return view;
 	}
 	@Override

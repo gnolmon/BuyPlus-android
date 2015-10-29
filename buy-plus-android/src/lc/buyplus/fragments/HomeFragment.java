@@ -26,7 +26,8 @@ import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.models.Announcement;
-import lc.buyplus.models.LowestPointGift;
+import lc.buyplus.models.Gift;
+import lc.buyplus.models.Notification;
 import lc.buyplus.models.Photo;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
@@ -43,19 +44,19 @@ public class HomeFragment extends CoreFragment {
 		initAnimations();
 		
 		api_get_all_announcements(2,0,0,0,0);
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					Thread.sleep(500);
-					// load data
-//					switchFragmentWithAnimation(CanvasFragment.getInstance(mActivity), 100, 200);
-					mFragmentManager.beginTransaction().replace(R.id.canvas, LoginFragment.getInstance(mActivity)).commit();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}).start();
+//		new Thread(new Runnable() {
+//			@Override
+//			public void run() {
+//				try {
+//					Thread.sleep(500);
+//					// load data
+////					switchFragmentWithAnimation(CanvasFragment.getInstance(mActivity), 100, 200);
+//					mFragmentManager.beginTransaction().replace(R.id.canvas, LoginFragment.getInstance(mActivity)).commit();
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}).start();
 		return view;
 	}
 	@Override
@@ -86,22 +87,9 @@ public class HomeFragment extends CoreFragment {
 		params.put("latest_id", String.valueOf(latest_id));
 		params.put("oldest_id", String.valueOf(oldest_id));
 		params.put("search", String.valueOf(search));
-		String builder = "";
-		for (String key : params.keySet())
-	    {
-	        Object value = params.get(key);
-	        if (value != null)
-	        {
-	        	 builder += "&";
-	        	 builder = builder + key.toString() + "="+ value.toString();
-	        }
-	    }
-		char[] tmp = builder.toCharArray();
-		tmp[0] = '?';
-		builder = HandleRequest.GET_ALL_SHOP+String.valueOf(tmp);
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
 			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					builder, params, 
+					HandleRequest.build_link(HandleRequest.GET_ALL_SHOP, params), params, 
 					new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
@@ -134,14 +122,14 @@ public class HomeFragment extends CoreFragment {
 								}
 								
 								
-								LowestPointGift lowestPointGift = new LowestPointGift();
+								Gift lowestPointGift = new Gift();
 								if (current_customer_shop != null){
 									JSONObject lowest_point_gift = data.getJSONObject("lowest_point_gift");
-									lowestPointGift.id = Integer.parseInt(lowest_point_gift.getString("id"));
-									lowestPointGift.name = lowest_point_gift.getString("name");
-									lowestPointGift.point = lowest_point_gift.getString("point");
-									lowestPointGift.image = lowest_point_gift.getString("image");
-									lowestPointGift.image_thumbnail = lowest_point_gift.getString("image_thumbnail");
+									lowestPointGift.setId(Integer.parseInt(lowest_point_gift.getString("id")));
+									lowestPointGift.setName(lowest_point_gift.getString("name"));
+									lowestPointGift.setPoint(Integer.parseInt(lowest_point_gift.getString("point")));
+									lowestPointGift.setImage(lowest_point_gift.getString("image"));
+									lowestPointGift.setImage_thumbnail(lowest_point_gift.getString("image_thumbnail"));
 									shop.lowestPointGift = lowestPointGift;
 								}
 								
@@ -165,13 +153,14 @@ public class HomeFragment extends CoreFragment {
 			requestQueue.add(jsObjRequest);
 	}
 
-	public void api_get_my_shop(){
+	public void api_get_my_shop(int mode){
 	 	
     	Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		//params.put("mode", String.valueOf(mode));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
 			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					HandleRequest.GET_MY_SHOP, params, 
+					HandleRequest.build_link(HandleRequest.GET_MY_SHOP, params), params, 
 					new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
@@ -233,7 +222,7 @@ public class HomeFragment extends CoreFragment {
 		params.put("shop_id", String.valueOf(shop_id));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
 			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					HandleRequest.GET_MY_SHOP, params, 
+					HandleRequest.build_link(HandleRequest.GET_SHOP_INFO, params), params, 
 					new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
@@ -298,22 +287,9 @@ public class HomeFragment extends CoreFragment {
 		params.put("oldest_id", String.valueOf(oldest_id));
 		params.put("mode", String.valueOf(mode));
 		params.put("search", String.valueOf(search));
-		String builder = "";
-		for (String key : params.keySet())
-	    {
-	        Object value = params.get(key);
-	        if (value != null)
-	        {
-	        	 builder += "&";
-	        	 builder = builder + key.toString() + "="+ value.toString();
-	        }
-	    }
-		char[] tmp = builder.toCharArray();
-		tmp[0] = '?';
-		builder = HandleRequest.GET_SHOP_ANNOUNCEMENTS+String.valueOf(tmp);
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
 			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					builder, params, 
+					HandleRequest.build_link(HandleRequest.GET_ALL_ANNOUNCEMENTS, params), params, 
 					new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
@@ -393,7 +369,7 @@ public class HomeFragment extends CoreFragment {
 		params.put("oldest_id", String.valueOf(oldest_id));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
 			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					HandleRequest.GET_SHOP_ANNOUNCEMENTS, params, 
+					HandleRequest.build_link(HandleRequest.GET_SHOP_ANNOUNCEMENTS, params), params, 
 					new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
@@ -456,7 +432,7 @@ public class HomeFragment extends CoreFragment {
 		params.put("shop_id", String.valueOf(shop_id));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
 			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					HandleRequest.GET_SHOP_GIFTS, params, 
+					HandleRequest.build_link(HandleRequest.GET_SHOP_GIFTS, params), params, 
 					new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
@@ -491,6 +467,44 @@ public class HomeFragment extends CoreFragment {
 			requestQueue.add(jsObjRequest);
 	}
 
+public void api_get_shop_friends(int shop_id){
+	 	
+    	Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		params.put("shop_id", String.valueOf(shop_id));
+			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
+					HandleRequest.build_link(HandleRequest.GET_SHOP_FRIENDS, params), params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("api_get_shop_gifts",response.toString());
+						try {
+							JSONArray data_aray = response.getJSONArray("data");
+							for (int i = 0; i < data_aray.length(); i++) {			 
+								JSONObject data = response.getJSONObject("data");
+								
+								int id = Integer.parseInt(data.getString("id"));
+								int active = Integer.parseInt(data.getString("active"));						
+								String name = data.getString("name");
+								String image = data.getString("image");
+								String image_thumbnail = data.getString("image_thumbnail");
+							}
+						} catch (JSONException e) {
+
+							e.printStackTrace();
+						}	
+						//code here
+					}
+				}, 
+				new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+					}
+				});
+			requestQueue.add(jsObjRequest);
+	}
+
 	public void api_get_notifications(int latest_id, int oldest_id){
 	 	
 		Map<String, String> params = new HashMap<String, String>();
@@ -499,31 +513,32 @@ public class HomeFragment extends CoreFragment {
 		params.put("oldest_id", String.valueOf(oldest_id));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
 			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					HandleRequest.GET_NOTIFICATIONS, params, 
+					HandleRequest.build_link(HandleRequest.GET_NOTIFICATIONS, params), params, 
 					new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
 						Log.d("api_get_notifications",response.toString());
 						try {
 							JSONArray data_aray = response.getJSONArray("data");
-							for (int i = 0; i < data_aray.length(); i++) {								 
+							for (int i = 0; i < data_aray.length(); i++) {	
+								Notification nitofication = new Notification();
 	                            JSONObject data = (JSONObject) data_aray.get(i);
 	                            
-								int id = Integer.parseInt(data.getString("id"));
-								int active = Integer.parseInt(data.getString("active"));
-								String created_time = data.getString("created_time");
-								String updated_time = data.getString("updated_time");
-								int customer_id = Integer.parseInt(data.getString("customer_id"));
-								int type = Integer.parseInt(data.getString("type"));
-								String params = data.getString("params");
-								String is_read = data.getString("is_read");
-								
-								Log.d("api_get_notifications",is_read);
+	                            nitofication.setId(Integer.parseInt(data.getString("id")));
+	                            nitofication.setActive(Integer.parseInt(data.getString("active")));
+	                            nitofication.setCreated_time(data.getString("created_time"));
+	                            nitofication.setUpdated_time(data.getString("updated_time"));
+	                            nitofication.setCustomer_id(Integer.parseInt(data.getString("customer_id")));
+	                            nitofication.setIs_read(data.getString("is_read"));
+	                            nitofication.setParams(data.getString("params"));
+	                            nitofication.setType(Integer.parseInt(data.getString("type")));
+	                            Store.NotificationsList.add(nitofication);
 	                        }
 						} catch (JSONException e) {
 
 							e.printStackTrace();
 						}	
+						//code here
 					}
 					}, 
 					new Response.ErrorListener() {

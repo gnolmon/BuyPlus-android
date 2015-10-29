@@ -1,5 +1,7 @@
 package lc.buyplus.models;
 
+import java.util.ArrayList;
+
 public class Shop {
 	public int id;
 	public String name;
@@ -20,8 +22,11 @@ public class Shop {
 	public String current_customer_shop_point;
 	public String current_customer_shop_created_time;
 	
-	public LowestPointGift lowestPointGift;
+	public Gift lowestPointGift;
 	
+	public ArrayList<Gift> GiftsList = new ArrayList<Gift>();
+	public ArrayList<Friend> FriendsList = new ArrayList<Friend>();
+	public ArrayList<Announcement> AnnouncementsList = new ArrayList<Announcement>();
 	public Shop() {
 		super();
 	}
@@ -33,7 +38,7 @@ public class Shop {
 			String current_customer_shop_id,
 			String current_customer_shop_point,
 			String current_customer_shop_created_time,
-			LowestPointGift lowestPointGift) {
+			Gift lowestPointGift) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -191,11 +196,11 @@ public class Shop {
 		this.current_customer_shop_created_time = current_customer_shop_created_time;
 	}
 
-	public LowestPointGift getLowestPointGift() {
+	public Gift getLowestPointGift() {
 		return lowestPointGift;
 	}
 
-	public void setLowestPointGift(LowestPointGift lowestPointGift) {
+	public void setLowestPointGift(Gift lowestPointGift) {
 		this.lowestPointGift = lowestPointGift;
 	}
 	
