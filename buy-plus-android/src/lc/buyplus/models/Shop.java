@@ -2,6 +2,9 @@ package lc.buyplus.models;
 
 import java.util.ArrayList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Shop {
 	public int id;
 	public String name;
@@ -27,10 +30,36 @@ public class Shop {
 	public ArrayList<Gift> GiftsList = new ArrayList<Gift>();
 	public ArrayList<Friend> FriendsList = new ArrayList<Friend>();
 	public ArrayList<Announcement> AnnouncementsList = new ArrayList<Announcement>();
+	
 	public Shop() {
 		super();
 	}
+	
+	public Shop(JSONObject data) {
+		try {
+			id = Integer.parseInt(data.getString("id"));
+			name = data.getString("name");
+	       address = data.getString("email");
+	        description = data.getString("description");
+	        email = data.getString("email");
+	        phone = data.getString("phone");
+	        website = data.getString("website");
+	        allow_circle = data.getString("allow_circle");
+	        max_friend_in_circle = data.getString("max_friend_in_circle");
+	        facebook_id = data.getString("facebook_id");
+	        lat = data.getString("lat");
+	        lng = data.getString("lng");
+	        image = data.getString("image");
+	        image_thumbnail = data.getString("image_thumbnail");
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 
+	}
+	
+	 
 	public Shop(int id, String name, String address, String description,
 			String email, String phone, String website, String allow_circle,
 			String max_friend_in_circle, String facebook_id, String lat,

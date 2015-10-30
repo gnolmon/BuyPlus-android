@@ -2,6 +2,9 @@ package lc.buyplus.models;
 
 import java.util.ArrayList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Announcement {
 	public int id;
 	public int shop_id;
@@ -36,6 +39,30 @@ public class Announcement {
 		this.shop = shop;
 		this.start_time = start_time;
 		this.end_time = end_time;
+	}
+	
+	public Announcement(JSONObject data) {
+        try {
+			shop.id = Integer.parseInt(data.getString("id"));
+			shop.name = data.getString("name");
+	        shop.address = data.getString("email");
+	        shop.description = data.getString("description");
+	        shop.email = data.getString("email");
+	        shop.phone = data.getString("phone");
+	        shop.website = data.getString("website");
+	        shop.allow_circle = data.getString("allow_circle");
+	        shop.max_friend_in_circle = data.getString("max_friend_in_circle");
+	        shop.facebook_id = data.getString("facebook_id");
+	        shop.lat = data.getString("lat");
+	        shop.lng = data.getString("lng");
+	        shop.image = data.getString("image");
+	        shop.image_thumbnail = data.getString("image_thumbnail");
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+       
 	}
 
 	public int getId() {

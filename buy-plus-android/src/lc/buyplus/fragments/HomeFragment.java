@@ -98,42 +98,14 @@ public class HomeFragment extends CoreFragment {
 							JSONArray data_aray = response.getJSONArray("data");
 							for (int i = 0; i < data_aray.length(); i++) {								 
 	                            JSONObject data = (JSONObject) data_aray.get(i);
-	                            Shop shop = new Shop();
-	                            shop.id = Integer.parseInt(data.getString("id"));
-	                            shop.name = data.getString("name");
-	                            shop.address = data.getString("email");
-	                            shop.description = data.getString("description");
-	                            shop.email = data.getString("email");
-	                            shop.phone = data.getString("phone");
-	                            shop.website = data.getString("website");
-	                            shop.allow_circle = data.getString("allow_circle");
-	                            shop.max_friend_in_circle = data.getString("max_friend_in_circle");
-	                            shop.facebook_id = data.getString("facebook_id");
-	                            shop.lat = data.getString("lat");
-	                            shop.lng = data.getString("lng");
-	                            shop.image = data.getString("image");
-	                            shop.image_thumbnail = data.getString("image_thumbnail");
-
-								JSONObject current_customer_shop = data.getJSONObject("current_customer_shop");
-								if (current_customer_shop != null){
-									shop.current_customer_shop_id = current_customer_shop.getString("id");
-									shop.current_customer_shop_point = current_customer_shop.getString("point");
-									shop.current_customer_shop_created_time = current_customer_shop.getString("created_time");
-								}
-								
-								
-								Gift lowestPointGift = new Gift();
-								if (current_customer_shop != null){
-									JSONObject lowest_point_gift = data.getJSONObject("lowest_point_gift");
-									lowestPointGift.setId(Integer.parseInt(lowest_point_gift.getString("id")));
-									lowestPointGift.setName(lowest_point_gift.getString("name"));
-									lowestPointGift.setPoint(Integer.parseInt(lowest_point_gift.getString("point")));
-									lowestPointGift.setImage(lowest_point_gift.getString("image"));
-									lowestPointGift.setImage_thumbnail(lowest_point_gift.getString("image_thumbnail"));
-									shop.lowestPointGift = lowestPointGift;
-								}
-								
-								
+	                            Shop shop = new Shop(data);	                    
+	                            shop.lowestPointGift = new Gift(data.getJSONObject("lowest_point_gift"));
+//								JSONObject current_customer_shop = data.getJSONObject("current_customer_shop");
+//								if (current_customer_shop != null){
+//									shop.current_customer_shop_id = current_customer_shop.getString("id");
+//									shop.current_customer_shop_point = current_customer_shop.getString("point");
+//									shop.current_customer_shop_created_time = current_customer_shop.getString("created_time");
+//								}								
 								Store.ShopsList.add(shop);
 	                        }
 							storeAdapter = new StoreAdapter(Store.ShopsList);

@@ -1,5 +1,7 @@
 package lc.buyplus.models;
 
+import org.json.JSONObject;
+
 public class Gift {
 	private int id;
 	private int active;
@@ -13,6 +15,14 @@ public class Gift {
 	
 	public Gift() {
 		super();
+	}
+	
+	public Gift(JSONObject gift) {
+		id = Integer.parseInt(gift.getString("id"));
+		name = gift.getString("name");
+		point = Integer.parseInt(gift.getString("point"));
+		image = gift.getString("image");
+		image_thumbnail = gift.getString("image_thumbnail");
 	}
 	
 	public Gift(int id, int active, String created_time, String updated_time,
