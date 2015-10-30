@@ -2,6 +2,7 @@ package lc.buyplus.models;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,6 +19,7 @@ public class Announcement {
 	public Shop shop;
 	public String start_time;
 	public String end_time;
+	
 	public Announcement() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -43,26 +45,54 @@ public class Announcement {
 	
 	public Announcement(JSONObject data) {
         try {
-			shop.id = Integer.parseInt(data.getString("id"));
-			shop.name = data.getString("name");
-	        shop.address = data.getString("email");
-	        shop.description = data.getString("description");
-	        shop.email = data.getString("email");
-	        shop.phone = data.getString("phone");
-	        shop.website = data.getString("website");
-	        shop.allow_circle = data.getString("allow_circle");
-	        shop.max_friend_in_circle = data.getString("max_friend_in_circle");
-	        shop.facebook_id = data.getString("facebook_id");
-	        shop.lat = data.getString("lat");
-	        shop.lng = data.getString("lng");
-	        shop.image = data.getString("image");
-	        shop.image_thumbnail = data.getString("image_thumbnail");
+            if (data.optString ("id") != "") {
+				id = Integer.parseInt(data.getString("id"));
+	        }
+			if (data.optString ("shop_id") != "") {
+				shop_id = Integer.parseInt(data.getString("shop_id"));
+			if (data.optString ("active") != "") {
+				active = Integer.parseInt(data.getString("active"));
+	        }
+			if (data.optString ("type") != "") {
+				type = Integer.parseInt(data.getString("type"));
+	        }
+			if (data.optString ("created_time") != "") {
+				created_time = data.getString("created_time");
+	        }
+			if (data.optString ("updated_time") != "") {
+				updated_time = data.getString("updated_time");
+	        }	
+			if (data.optString ("content") != "") {
+				content = data.getString("content");
+	        }
+			JSONArray photo_array = data.getJSONArray("photos");
+			if (photo_array != null){
+				for (int j = 0; j < photo_array.length(); j++) {
+					Photo photo = new Photo((JSONObject) photo_array.get(j));
+                    photos.add(photo);
+				}			
+			}						
+			
+			
+			shop = new Shop();
+			JSONObject shop_announcements = data.getJSONObject("shop");
+			if (shop_announcements != null){
+				shop.id = Integer.parseInt(shop_announcements.getString("id"));						
+				shop.name = shop_announcements.getString("name");
+				shop.image_thumbnail = shop_announcements.getString("image_thumbnail");
+				shop.image = shop_announcements.getString("image");
+				shop.address = shop_announcements.getString("address");
+			}
+			
+			// code here
+			
+			start_time = data.getString("start_time");
+			end_time = data.getString("end_time");
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-       
 	}
 
 	public int getId() {

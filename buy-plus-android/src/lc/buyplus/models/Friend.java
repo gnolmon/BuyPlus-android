@@ -1,5 +1,8 @@
 package lc.buyplus.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Friend {
 		int id;
 		int active;
@@ -8,6 +11,30 @@ public class Friend {
 		String image_thumbnail;
 		public Friend() {
 			super();
+		}
+		
+		public Friend(JSONObject data) {
+			try {
+				if (data.optString ("id") != "") {
+					id = Integer.parseInt(data.getString("id"));
+		        }
+				if (data.optString ("name") != "") {
+					name = data.getString("name");
+		        }
+				if (data.optString ("image") != "") {
+					image = data.getString("image");
+		        }
+				if (data.optString ("image_thumbnail") != "") {
+					image_thumbnail = data.getString("image_thumbnail");
+		        }
+				if (data.optString ("active") != "") {
+					active = Integer.parseInt(data.getString("active"));
+		        }
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		public Friend(int id, int active, String name, String image,

@@ -1,5 +1,6 @@
 package lc.buyplus.models;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Gift {
@@ -17,12 +18,40 @@ public class Gift {
 		super();
 	}
 	
-	public Gift(JSONObject gift) {
-		id = Integer.parseInt(gift.getString("id"));
-		name = gift.getString("name");
-		point = Integer.parseInt(gift.getString("point"));
-		image = gift.getString("image");
-		image_thumbnail = gift.getString("image_thumbnail");
+	public Gift(JSONObject data) {
+		try {
+			if (data.optString ("id") != "") {
+				id = Integer.parseInt(data.getString("id"));
+	        }
+			if (data.optString ("name") != "") {
+				name = data.getString("name");
+	        }
+			if (data.optString ("image") != "") {
+				image = data.getString("image");
+	        }
+			if (data.optString ("image_thumbnail") != "") {
+				image_thumbnail = data.getString("image_thumbnail");
+	        }
+			if (data.optString ("active") != "") {
+				active = Integer.parseInt(data.getString("active"));
+	        }
+			if (data.optString ("point") != "") {
+				point = Integer.parseInt(data.getString("point"));
+	        }
+			if (data.optString ("created_time") != "") {
+				created_time = data.getString("created_time");
+	        }
+			if (data.optString ("updated_time") != "") {
+				updated_time = data.getString("updated_time");
+	        }	
+			if (data.optString ("description") != "") {
+				description = data.getString("description");
+	        }
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public Gift(int id, int active, String created_time, String updated_time,

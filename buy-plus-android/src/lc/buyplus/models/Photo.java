@@ -1,5 +1,8 @@
 package lc.buyplus.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Photo {
 
 	public int id;							
@@ -9,6 +12,28 @@ public class Photo {
 	
 	public Photo() {
 		super();
+	}
+	
+	public Photo(JSONObject data) {
+		try {
+			
+			if (data.optString ("active") != "") {
+				active = Integer.parseInt(data.getString("active"));
+	        }
+			if (data.optString ("id") != "") {
+				id = Integer.parseInt(data.getString("id"));
+	        }
+			if (data.optString ("image") != "") {
+				image = data.getString("image");
+	        }
+			if (data.optString ("caption") != "") {
+				caption = data.getString("caption");
+	        }
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public Photo(int id, int active, String caption, String image) {

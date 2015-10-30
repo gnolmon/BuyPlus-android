@@ -2,8 +2,11 @@ package lc.buyplus.models;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.util.Log;
 
 public class Shop {
 	public int id;
@@ -37,25 +40,79 @@ public class Shop {
 	
 	public Shop(JSONObject data) {
 		try {
-			id = Integer.parseInt(data.getString("id"));
-			name = data.getString("name");
-	       address = data.getString("email");
-	        description = data.getString("description");
-	        email = data.getString("email");
-	        phone = data.getString("phone");
-	        website = data.getString("website");
-	        allow_circle = data.getString("allow_circle");
-	        max_friend_in_circle = data.getString("max_friend_in_circle");
-	        facebook_id = data.getString("facebook_id");
-	        lat = data.getString("lat");
-	        lng = data.getString("lng");
-	        image = data.getString("image");
-	        image_thumbnail = data.getString("image_thumbnail");
+			
+			if (data.optString ("id") != "") {
+				id = Integer.parseInt(data.getString("id"));
+			}
+			
+			if (data.optString ("name") != "") {
+				name = data.getString("name");
+			}
+			if (data.optString ("email") != "") {
+				address = data.getString("email");
+			}
+			if (data.optString ("description") != "") {
+				description = data.getString("description");
+			}
+			if (data.optString ("email") != "") {
+				email = data.getString("email");
+			}
+			if (data.optString ("phone") != "") {
+				phone = data.getString("phone");
+			}
+			if (data.optString ("website") != "") {
+				website = data.getString("website");
+			}
+			if (data.optString ("allow_circle") != "") {
+				allow_circle = data.getString("allow_circle");
+			}
+			if (data.optString ("max_friend_in_circle") != "") {
+				max_friend_in_circle = data.getString("max_friend_in_circle");
+			}
+			if (data.optString ("facebook_id") != "") {
+				facebook_id = data.getString("facebook_id");
+			}
+			if (data.optString ("lat") != "") {
+				lat = data.getString("lat");
+			}
+			if (data.optString ("lat") != "") {
+				image = data.getString("image");
+			}
+			if (data.optString ("lng") != "") {
+				lng = data.getString("lng");
+			}
+			if (data.optString ("current_customer_shop") != "") {
+				image_thumbnail = data.getString("image_thumbnail");
+			}
+			
+			if (data.optJSONObject("lowest_point_gift") != null) {
+        	lowestPointGift = new Gift(data.getJSONObject("lowest_point_gift"));
+	        }
+	        
+			if (data.optJSONObject("current_customer_shop") != null) {
+	        	JSONObject current_customer_shop = data.getJSONObject("current_customer_shop");
+				current_customer_shop_id = current_customer_shop.getString("id");
+				current_customer_shop_point = current_customer_shop.getString("point");
+				current_customer_shop_created_time = current_customer_shop.getString("created_time");
+	        }
+	        
+			
+			if (data.optJSONArray("friends") != null) {
+				JSONArray friends = data.getJSONArray("friends");
+				for (int i = 0; i < friends.length(); i++) {								 
+	                Friend friend = new Friend((JSONObject) friends.get(i));
+	                FriendsList.add(friend);
+				}
+			}
+
+					
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		
+								
 
 	}
 	

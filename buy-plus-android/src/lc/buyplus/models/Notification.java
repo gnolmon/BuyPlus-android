@@ -1,5 +1,8 @@
 package lc.buyplus.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Notification {
 	private int id;
 	private int active;
@@ -12,6 +15,39 @@ public class Notification {
 	
 	public Notification() {
 		super();
+	}
+	
+	public Notification(JSONObject data) {
+		try {          
+			if (data.optString ("id") != "") {
+				id = Integer.parseInt(data.getString("id"));
+	        }
+			if (data.optString ("is_read") != "") {
+				is_read = data.getString("is_read");
+	        }
+			if (data.optString ("params") != "") {
+				params = data.getString("params");
+	        }
+			if (data.optString ("active") != "") {
+				active = Integer.parseInt(data.getString("active"));
+	        }
+			if (data.optString ("customer_id") != "") {
+				customer_id = Integer.parseInt(data.getString("customer_id"));
+	        }
+			if (data.optString ("created_time") != "") {
+				created_time = data.getString("created_time");
+	        }
+			if (data.optString ("updated_time") != "") {
+				updated_time = data.getString("updated_time");
+	        }	
+			if (data.optString ("type") != "") {
+				type = Integer.parseInt(data.getString("type"));
+	        }       					
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public Notification(int id, int active, String created_time,
