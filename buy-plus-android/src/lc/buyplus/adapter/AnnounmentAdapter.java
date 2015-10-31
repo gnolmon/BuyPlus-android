@@ -21,11 +21,12 @@ public class AnnounmentAdapter extends BaseAdapter {
 
 	private Activity activity;
 	private LayoutInflater inflater;
+	private LayoutInflater inflaterActivity;
 	ArrayList<Announcement> announcementList;
 	ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
-	public AnnounmentAdapter(ArrayList<Announcement> announcementList) {
-		this.activity = activity;
+	public AnnounmentAdapter(ArrayList<Announcement> announcementList, LayoutInflater inflaterActivity) {
+		this.inflaterActivity = inflaterActivity;
 		this.announcementList = announcementList;
 	}
 
@@ -47,7 +48,7 @@ public class AnnounmentAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (inflater == null)
-			inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			inflater = inflaterActivity;
 		if (convertView == null)
 			convertView = inflater.inflate(R.layout.item_announment, null);
 

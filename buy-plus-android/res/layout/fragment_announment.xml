@@ -8,18 +8,38 @@
         android:id="@+id/rlheader"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#26C281" >
+        android:background="@color/timestamp" >
 
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Tin tức"
-            android:textColor="#FFFFFF"
-            android:textSize="20dp" />
-        
-    </RelativeLayout>
+            android:orientation="horizontal" >
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cửa hàng"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Tin tức"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="Sắp xếp"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp" />
+        </RelativeLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rlList"
