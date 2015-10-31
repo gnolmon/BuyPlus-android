@@ -14,21 +14,19 @@ public class Announcement {
 	public String created_time;
 	public String updated_time;
 	public int active;
-	
+
 	public ArrayList<Photo> photos = new ArrayList<Photo>();
 	public Shop shop;
 	public String start_time;
 	public String end_time;
-	
+
 	public Announcement() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	public Announcement(int id, int shop_id, String content, int type,
-			String created_time, String updated_time, int active,
-			ArrayList<Photo> photos, Shop shop, String start_time,
-			String end_time) {
+
+	public Announcement(int id, int shop_id, String content, int type, String created_time, String updated_time,
+			int active, ArrayList<Photo> photos, Shop shop, String start_time, String end_time) {
 		super();
 		this.id = id;
 		this.shop_id = shop_id;
@@ -42,50 +40,50 @@ public class Announcement {
 		this.start_time = start_time;
 		this.end_time = end_time;
 	}
-	
+
 	public Announcement(JSONObject data) {
-        try {
-            if (data.optString ("id") != "") {
+		try {
+			if (data.optString("id") != "") {
 				id = Integer.parseInt(data.getString("id"));
-	        }
-			if (data.optString ("shop_id") != "") {
+			}
+			if (data.optString("shop_id") != "") {
 				shop_id = Integer.parseInt(data.getString("shop_id"));
-			if (data.optString ("active") != "") {
-				active = Integer.parseInt(data.getString("active"));
-	        }
-			if (data.optString ("type") != "") {
+				if (data.optString("active") != "") {
+					active = Integer.parseInt(data.getString("active"));
+				}
+			}
+			if (data.optString("type") != "") {
 				type = Integer.parseInt(data.getString("type"));
-	        }
-			if (data.optString ("created_time") != "") {
+			}
+			if (data.optString("created_time") != "") {
 				created_time = data.getString("created_time");
-	        }
-			if (data.optString ("updated_time") != "") {
+			}
+			if (data.optString("updated_time") != "") {
 				updated_time = data.getString("updated_time");
-	        }	
-			if (data.optString ("content") != "") {
+			}
+			if (data.optString("content") != "") {
 				content = data.getString("content");
-	        }
+			}
 			JSONArray photo_array = data.getJSONArray("photos");
-			if (photo_array != null){
+			if (photo_array != null) {
 				for (int j = 0; j < photo_array.length(); j++) {
 					Photo photo = new Photo((JSONObject) photo_array.get(j));
-                    photos.add(photo);
-				}			
-			}						
-			
-			
+					photos.add(photo);
+				}
+			}
+
 			shop = new Shop();
 			JSONObject shop_announcements = data.getJSONObject("shop");
-			if (shop_announcements != null){
-				shop.id = Integer.parseInt(shop_announcements.getString("id"));						
+			if (shop_announcements != null) {
+				shop.id = Integer.parseInt(shop_announcements.getString("id"));
 				shop.name = shop_announcements.getString("name");
 				shop.image_thumbnail = shop_announcements.getString("image_thumbnail");
 				shop.image = shop_announcements.getString("image");
 				shop.address = shop_announcements.getString("address");
 			}
-			
+
 			// code here
-			
+
 			start_time = data.getString("start_time");
 			end_time = data.getString("end_time");
 		} catch (NumberFormatException e) {

@@ -81,7 +81,7 @@ public class Shop {
 			if (data.optString ("lng") != "") {
 				lng = data.getString("lng");
 			}
-			if (data.optString ("current_customer_shop") != "") {
+			/*if (data.optString ("current_customer_shop") != "") {
 				image_thumbnail = data.getString("image_thumbnail");
 			}
 			
@@ -104,7 +104,7 @@ public class Shop {
 	                FriendsList.add(friend);
 				}
 			}
-
+*/
 					
 		} catch (NumberFormatException e) {
 			e.printStackTrace();

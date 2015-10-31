@@ -13,7 +13,7 @@
   	<uses-permission android:name="android.permission.INTERNET"/>
   		
     <application
-        android:name="lc.buyplus.application.DarkmoonApplication"
+        android:name="lc.buyplus.application.MonApplication"
         android:allowBackup="true"
         android:icon="@drawable/buyplusicon"
         android:label="@string/app_name"

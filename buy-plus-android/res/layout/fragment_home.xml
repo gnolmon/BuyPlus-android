@@ -29,7 +29,7 @@
         android:background="#ecebeb" >
 
         <ListView
-            android:id="@+id/listStorePromo"
+            android:id="@+id/listStore"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:divider="@color/list_divider"

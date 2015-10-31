@@ -44,7 +44,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
-import lc.buyplus.application.DarkmoonApplication;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.configs.NetworkConfig;
 import lc.buyplus.dialogs.DialogProgress;
 import lc.buyplus.dialogs.DialogYesNo;
@@ -311,7 +311,7 @@ public abstract class CoreActivity extends FragmentActivity implements Serializa
 	protected String TAG_JSONARR_REQUEST = "jsonarrayobject_request";
 	protected String TAG_STRING_REQUEST = "string_request";
 	protected void cancelAllRequestWithTag(String tag) {
-		DarkmoonApplication.getInstance().getRequestQueue().cancelAll(tag);
+		MonApplication.getInstance().getRequestQueue().cancelAll(tag);
 	}
 	protected void makeJsonObjectRequest(String url, int timeOut, final JSONObjectRequestListener mListener){
 		mListener.onBefore();
@@ -347,7 +347,7 @@ public abstract class CoreActivity extends FragmentActivity implements Serializa
 		jsonObjRequest.setRetryPolicy(new DefaultRetryPolicy(timeOut, 
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES, 
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-		DarkmoonApplication.getInstance().addToRequestQueue(jsonObjRequest, TAG_JSONOBJ_REQUEST);
+		MonApplication.getInstance().addToRequestQueue(jsonObjRequest, TAG_JSONOBJ_REQUEST);
 	}
 	
 	protected void makeJsonArrayRequest(String url, int timeOut, final JSONArrayRequestListener mListener){
@@ -367,7 +367,7 @@ public abstract class CoreActivity extends FragmentActivity implements Serializa
 		jsonArrRequest.setRetryPolicy(new DefaultRetryPolicy(timeOut, 
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES, 
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-		DarkmoonApplication.getInstance().addToRequestQueue(jsonArrRequest, TAG_JSONARR_REQUEST);
+		MonApplication.getInstance().addToRequestQueue(jsonArrRequest, TAG_JSONARR_REQUEST);
 	}
 	protected void makeStringRequest(String url, int timeOut, final StringRequestListener mListener){
 		mListener.onBefore();
@@ -386,11 +386,11 @@ public abstract class CoreActivity extends FragmentActivity implements Serializa
 		stringRequest.setRetryPolicy(new DefaultRetryPolicy(timeOut, 
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES, 
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-		DarkmoonApplication.getInstance().addToRequestQueue(stringRequest, TAG_STRING_REQUEST);
+		MonApplication.getInstance().addToRequestQueue(stringRequest, TAG_STRING_REQUEST);
 	}
 	protected void makeImageRequest(String url, final ImageRequestListener mListener){
 		mListener.onBefore();
-		ImageLoader imageLoader = DarkmoonApplication.getInstance().getImageLoader();
+		ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
 		imageLoader.get(url, new ImageListener() {
 			@Override
 			public void onErrorResponse(VolleyError error) {

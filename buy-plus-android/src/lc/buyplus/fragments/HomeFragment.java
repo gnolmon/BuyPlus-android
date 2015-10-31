@@ -37,12 +37,15 @@ import lc.buyplus.models.UserAccount;
 public class HomeFragment extends CoreFragment {
 	private ListView listView;
 	private StoreAdapter storeAdapter;
+	private LayoutInflater inflaterActivity;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
 		initViews(view);
 		initModels();
 		initAnimations();
+		listView = (ListView) view.findViewById(R.id.listStore);
+		inflaterActivity = inflater;
 		api_get_all_shop(0,0,0);
 		//api_get_all_announcements(2,0,0,0,0);
 		return view;
@@ -86,9 +89,13 @@ public class HomeFragment extends CoreFragment {
 							JSONArray data_aray = response.getJSONArray("data");
 							for (int i = 0; i < data_aray.length(); i++) {								 
 	                            Shop shop = new Shop((JSONObject) data_aray.get(i));
-								Store.ShopsList.add(shop);
+	                            	if (shop != null){
+	                            		Store.ShopsList.add(shop);
+	                            	}
 	                        }
-							storeAdapter = new StoreAdapter(Store.ShopsList);
+							storeAdapter = new StoreAdapter(Store.ShopsList, inflaterActivity);
+							
+							listView.setAdapter(storeAdapter);
 							storeAdapter.notifyDataSetChanged();
 							
 						} catch (JSONException e) {

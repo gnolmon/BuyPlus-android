@@ -8,14 +8,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
-public class DarkmoonApplication extends MultiDexApplication  {
+public class MonApplication extends MultiDexApplication  {
 	
-	public static final String LOG_TAG = DarkmoonApplication.class.getSimpleName();
+	public static final String LOG_TAG = MonApplication.class.getSimpleName();
 	
 	private RequestQueue mRequestQueue;
 	private ImageLoader mImageLoader;
 	
-	private static DarkmoonApplication mInstance;
+	private static MonApplication mInstance;
 	
 //	@Override 
 //	protected void attachBaseContext(Context base) {
@@ -29,7 +29,7 @@ public class DarkmoonApplication extends MultiDexApplication  {
 		mInstance = this;
 	}
 	
-	public static synchronized DarkmoonApplication getInstance(){
+	public static synchronized MonApplication getInstance(){
 		return mInstance;
 	}
 	

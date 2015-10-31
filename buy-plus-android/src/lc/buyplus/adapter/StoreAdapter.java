@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.AppController;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
@@ -21,11 +22,12 @@ import lc.buyplus.models.Store;
 public class StoreAdapter extends BaseAdapter{
 	private Activity activity;
 	private LayoutInflater inflater;
+	private LayoutInflater inflaterActivity;
 	ArrayList<Shop> storeList;
-	ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
 	
-	public StoreAdapter(ArrayList<Shop> shopsList) {
-		this.activity = activity;
+	public StoreAdapter(ArrayList<Shop> shopsList, LayoutInflater inflaterActivity) {
+		this.inflaterActivity = inflaterActivity;
 		this.storeList = shopsList;
 	}
 	
@@ -47,13 +49,12 @@ public class StoreAdapter extends BaseAdapter{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (inflater == null)
-			inflater = (LayoutInflater) activity
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			inflater = inflaterActivity;
 		if (convertView == null)
 			convertView = inflater.inflate(R.layout.item_store_home, null);
 
 		if (imageLoader == null)
-			imageLoader = AppController.getInstance().getImageLoader();
+			imageLoader = MonApplication.getInstance().getImageLoader();
 
 		TextView tvNameStore = (TextView) convertView.findViewById(R.id.tvNameStore);
 		TextView tvAddressStore = (TextView) convertView.findViewById(R.id.tvAddressStore);
@@ -65,7 +66,8 @@ public class StoreAdapter extends BaseAdapter{
 
 		tvNameStore.setText(item.getName());
 		tvAddressStore.setText(item.getAddress());
-		avaStore.setImageUrl(item.getImage_thumbnail(), imageLoader);
+		
+		avaStore.setImageUrl(item.getImage(), imageLoader);
 		
 		return convertView;
 	}
