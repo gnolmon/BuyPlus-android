@@ -11,7 +11,7 @@
         android:background="@color/actionbar"
         android:orientation="vertical" >
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/imAvaUser"
             android:layout_width="@dimen/person_ava_width"
             android:layout_height="@dimen/person_ava_height"

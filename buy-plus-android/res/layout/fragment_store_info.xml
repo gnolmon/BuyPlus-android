@@ -7,23 +7,26 @@
     <RelativeLayout
         android:id="@+id/rlbanner"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/person_ava_height"
+        android:layout_height="wrap_content"
         android:layout_below="@id/rlheader"
-        android:background="@color/background_gray" >
+        android:background="@color/background_gray"
+        android:orientation="vertical" >
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/imbannerStore"
-            android:layout_width="@dimen/feed_item_profile_pic"
-            android:layout_height="@dimen/feed_item_profile_pic"
+            android:layout_width="@dimen/person_ava_width"
+            android:layout_height="@dimen/person_ava_width"
+            android:layout_centerInParent="true"
             android:scaleType="fitXY" />
 
         <TextView
             android:id="@+id/storeName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_below="@id/imbannerStore"
             android:text="Cửa hàng"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
             android:textSize="20dp" />
     </RelativeLayout>
 
@@ -36,8 +39,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ecebeb"
             android:layout_centerInParent="true"
+            android:background="#ecebeb"
             android:orientation="vertical" >
 
             <RelativeLayout
@@ -51,7 +54,7 @@
                     android:layout_height="25dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
-                    android:src="@drawable/personal_white" />
+                    android:src="@drawable/location_black" />
 
                 <TextView
                     android:id="@+id/tvName"
@@ -74,7 +77,7 @@
                     android:layout_height="25dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
-                    android:src="@drawable/personal_white" />
+                    android:src="@drawable/fashion" />
 
                 <TextView
                     android:id="@+id/tvField"
@@ -97,7 +100,7 @@
                     android:layout_height="25dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
-                    android:src="@drawable/personal_white" />
+                    android:src="@drawable/phonestore" />
 
                 <TextView
                     android:id="@+id/tvPhone"
@@ -120,7 +123,7 @@
                     android:layout_height="25dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
-                    android:src="@drawable/personal_white" />
+                    android:src="@drawable/website" />
 
                 <TextView
                     android:id="@+id/tvWeb"
@@ -143,7 +146,7 @@
                     android:layout_height="25dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
-                    android:src="@drawable/personal_white" />
+                    android:src="@drawable/facebook" />
 
                 <TextView
                     android:id="@+id/tvFb"
