@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10px" >
+
+        <com.lc.buyplus.model.FeedImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="120dp"
+            android:layout_height="80dp"
+            android:layout_marginRight="8dp" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/tvTitleShop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jack Lane"
+                        android:textColor="@color/actionbar"
+                        android:textSize="30px"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvNoti"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvTitleShop"
+                        android:text="Số điểm tích"
+                        android:textColor="@color/black"
+                        android:textSize="30px" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/tvChange"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/imNoti"
+                        android:text="Có thể đổi quà"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/timestamp" />
+
+                    <ImageView
+                        android:id="@+id/imIsExchange"
+                        android:layout_width="@dimen/icon_small"
+                        android:layout_height="@dimen/icon_small"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="@dimen/feed_item_profile_info_padd" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
