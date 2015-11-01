@@ -12,7 +12,7 @@
         android:background="#ecebeb" >
 
         <ListView
-            android:id="@+id/listRedeem"
+            android:id="@+id/listShopRedeem"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:divider="@color/list_divider"

@@ -22,6 +22,7 @@
 
     <!-- Size of items -->
     <dimen name="avatar_width">150dp</dimen>
+     <dimen name="width_row">100dp</dimen>
     <dimen name="avatar_height">150dp</dimen>
     <dimen name="title_name">20dp</dimen>
     <dimen name="timestamp">14dp</dimen>
@@ -31,7 +32,7 @@
     <dimen name="person_ava_height">120dp</dimen>
     <dimen name="term_size">220dp</dimen>
     <dimen name="QR_size">220dp</dimen>
-    <dimen name="icon">20dp</dimen>
+    <dimen name="icon">50dp</dimen>
     <dimen name="icon_small">20dp</dimen>
 
     <!-- Older dimens -->

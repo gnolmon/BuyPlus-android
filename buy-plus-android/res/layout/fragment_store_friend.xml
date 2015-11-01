@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lc.buyplus.tab.HomeActivity" >
+
+    <RelativeLayout
+        android:id="@+id/rlList"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:background="#ecebeb" >
+
+        <RelativeLayout
+            android:id="@+id/rladdFriend"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white" >
+
+            <TextView
+                android:id="@+id/tvAddFriend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Thêm bạn vào vòng tròn mua sắm"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+            <ImageView
+                android:id="@+id/imEdit"
+                android:layout_width="@dimen/icon"
+                android:layout_height="@dimen/icon"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/feed_item_profile_info_padd" />
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/listRedeem"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/rladdFriend"
+            android:divider="@color/list_divider"
+            android:dividerHeight="1dp" />
+    </RelativeLayout>
+
+</RelativeLayout>
