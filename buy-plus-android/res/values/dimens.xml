@@ -31,6 +31,7 @@
     <dimen name="person_ava_height">120dp</dimen>
     <dimen name="term_size">220dp</dimen>
     <dimen name="QR_size">220dp</dimen>
+    <dimen name="icon">50dp</dimen>
 
     <!-- Older dimens -->
     <dimen name="feed_item_margin">10dp</dimen>
