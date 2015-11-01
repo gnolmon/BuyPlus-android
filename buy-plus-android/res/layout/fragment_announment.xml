@@ -1,59 +1,13 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.lc.buyplus.tab.HomeActivity" >
+    android:layout_height="match_parent" >
 
-    <RelativeLayout
-        android:id="@+id/rlheader"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/timestamp" >
+    <ListView
+        android:id="@+id/listAnnounment"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/list_divider"
+        android:dividerHeight="1dp" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cửa hàng"
-                android:textColor="#FFFFFF"
-                android:textSize="20dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="Tin tức"
-                android:textColor="#FFFFFF"
-                android:textSize="20dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="Sắp xếp"
-                android:textColor="#FFFFFF"
-                android:textSize="20dp" />
-        </RelativeLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rlList"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@id/rlheader"
-        android:background="#ecebeb" >
-
-        <ListView
-            android:id="@+id/listAnnounment"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:divider="@color/list_divider"
-            android:dividerHeight="1dp" />
-    </RelativeLayout>
-
-</RelativeLayout>
+</LinearLayout>

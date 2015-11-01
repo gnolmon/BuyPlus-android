@@ -65,11 +65,8 @@
             android:id="@+id/imEdit"
             android:layout_width="@dimen/icon"
             android:layout_height="@dimen/icon"
-            android:layout_marginRight="@dimen/feed_item_profile_info_padd"
-            android:layout_alignParentRight="true" />
-    </RelativeLayout>
-
-    <RelativeLayout>
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/feed_item_profile_info_padd" />
     </RelativeLayout>
 
 </LinearLayout>
