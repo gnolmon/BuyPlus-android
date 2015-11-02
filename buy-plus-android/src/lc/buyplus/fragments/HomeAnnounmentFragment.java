@@ -493,19 +493,19 @@ public class HomeAnnounmentFragment extends CoreFragment {
 	public static final long serialVersionUID = 6036846677812555352L;
 
 	public static CoreActivity mActivity;
-	public static HomeFragment mInstance;
+	public static HomeAnnounmentFragment mInstance;
 
-	public static HomeFragment getInstance(CoreActivity activity) {
+	public static HomeAnnounmentFragment getInstance(CoreActivity activity) {
 		if (mInstance == null) {
-			mInstance = new HomeFragment();
+			mInstance = new HomeAnnounmentFragment();
 		}
 		mActivity = activity;
 		return mInstance;
 	}
 
-	public static HomeFragment getInstance() {
+	public static HomeAnnounmentFragment getInstance() {
 		if (mInstance == null) {
-			mInstance = new HomeFragment();
+			mInstance = new HomeAnnounmentFragment();
 		}
 		return mInstance;
 	}

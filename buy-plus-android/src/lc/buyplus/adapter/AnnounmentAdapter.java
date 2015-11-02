@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import lc.buyplus.R;
-import lc.buyplus.cores.AppController;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.FeedImageView;
 import lc.buyplus.models.Announcement;
 
@@ -23,7 +23,7 @@ public class AnnounmentAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private LayoutInflater inflaterActivity;
 	ArrayList<Announcement> announcementList;
-	ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
 
 	public AnnounmentAdapter(ArrayList<Announcement> announcementList, LayoutInflater inflaterActivity) {
 		this.inflaterActivity = inflaterActivity;
@@ -53,7 +53,7 @@ public class AnnounmentAdapter extends BaseAdapter {
 			convertView = inflater.inflate(R.layout.item_announment, null);
 
 		if (imageLoader == null)
-			imageLoader = AppController.getInstance().getImageLoader();
+			imageLoader = MonApplication.getInstance().getImageLoader();
 
 		TextView name = (TextView) convertView.findViewById(R.id.tvNameStore);
 
@@ -72,7 +72,7 @@ public class AnnounmentAdapter extends BaseAdapter {
 		avaStore.setImageUrl(item.getShop().getImage_thumbnail(), imageLoader);
 
 		// Feed image
-		if (item.getPhotos() != null) {
+		if (item.getPhotos().size() > 0) {
 			feedImageView.setImageUrl(item.getPhotos().get(0).getImage(), imageLoader);
 			feedImageView.setVisibility(View.VISIBLE);
 			feedImageView.setResponseObserver(new FeedImageView.ResponseObserver() {

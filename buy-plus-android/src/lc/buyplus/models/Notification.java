@@ -12,6 +12,8 @@ public class Notification {
 	private int type;
 	private String params;
 	private String is_read;
+	private String message;
+	private String image;
 	
 	public Notification() {
 		super();
@@ -42,7 +44,13 @@ public class Notification {
 	        }	
 			if (data.optString ("type") != "") {
 				type = Integer.parseInt(data.getString("type"));
-	        }       					
+	        } 
+			if (data.optString ("message") != "") {
+				message = data.getString("message");
+	        }
+			if (data.optString ("image") != "") {
+				image = data.getString("image");
+	        }
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {
@@ -111,5 +119,21 @@ public class Notification {
 	}
 	public void setIs_read(String is_read) {
 		this.is_read = is_read;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 }

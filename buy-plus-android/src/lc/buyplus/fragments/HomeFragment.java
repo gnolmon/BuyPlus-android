@@ -47,7 +47,6 @@ public class HomeFragment extends CoreFragment {
 		listView = (ListView) view.findViewById(R.id.listStore);
 		inflaterActivity = inflater;
 		api_get_all_shop(0,0,0);
-		//api_get_all_announcements(2,0,0,0,0);
 		return view;
 	}
 	@Override

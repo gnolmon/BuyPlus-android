@@ -21,7 +21,7 @@ public class NotificationAdapter extends BaseAdapter {
 	List<Notification> notiList;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
 
-	public NotificationAdapter(LayoutInflater inflaterActivity, List<Notification> notiList) {
+	public NotificationAdapter( List<Notification> notiList,LayoutInflater inflaterActivity) {
 		this.inflaterActivity = inflaterActivity;
 		this.notiList = notiList;
 	}
@@ -56,20 +56,19 @@ public class NotificationAdapter extends BaseAdapter {
 		Notification item = notiList.get(position);
 
 		TextView noti = (TextView) convertView.findViewById(R.id.tvNoti);
-		// noti.setText(item.getStatus());
+		noti.setText(item.getMessage());
 
 		TextView timeStamp = (TextView) convertView.findViewById(R.id.tvTimeStamp);
 		timeStamp.setText(item.getCreated_time());
 
 		TextView name = (TextView) convertView.findViewById(R.id.tvTitleNoti);
 
-		NetworkImageView profilePic = (NetworkImageView) convertView.findViewById(R.id.imNoti);
+		NetworkImageView imNoti = (NetworkImageView) convertView.findViewById(R.id.imNoti);
 
-		// scoreSave.setText(item.getId());
 		// name.setText(item.getName());
 
 		// user profile pic
-		// profilePic.setImageUrl(item, imageLoader);
+		imNoti.setImageUrl(item.getImage(), imageLoader);
 
 		return convertView;
 	}
