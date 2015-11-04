@@ -1,41 +1,46 @@
 package lc.buyplus.adapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.application.MonApplication;
+import lc.buyplus.cores.FeedImageView;
+import lc.buyplus.models.Announcement;
+import lc.buyplus.models.Gift;
 import lc.buyplus.models.Shop;
 
-public class StoreAdapter extends BaseAdapter{
+public class RedeemAdapter extends BaseAdapter {
 	private Activity activity;
 	private LayoutInflater inflater;
 	private LayoutInflater inflaterActivity;
-	ArrayList<Shop> storeList;
+	List<Shop> giftItems;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
-	
-	public StoreAdapter(ArrayList<Shop> shopsList, LayoutInflater inflaterActivity) {
+
+	public RedeemAdapter(ArrayList<Shop> giftItems, LayoutInflater inflaterActivity) {
 		this.inflaterActivity = inflaterActivity;
-		this.storeList = shopsList;
+		this.giftItems = giftItems;
 	}
-	
+
 	@Override
 	public int getCount() {
-		return storeList.size();
+		return 1;
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return storeList.get(position);
+		return giftItems.get(position);
 	}
 
 	@Override
@@ -48,33 +53,30 @@ public class StoreAdapter extends BaseAdapter{
 		if (inflater == null)
 			inflater = inflaterActivity;
 		if (convertView == null)
-			convertView = inflater.inflate(R.layout.item_store_home, null);
+			convertView = inflater.inflate(R.layout.item_redeem, null);
 
 		if (imageLoader == null)
 			imageLoader = MonApplication.getInstance().getImageLoader();
 
-		TextView tvNameStore = (TextView) convertView.findViewById(R.id.tvNameStore);
-		tvNameStore.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		TextView tvAddressStore = (TextView) convertView.findViewById(R.id.tvAddressStore);
-		
-		NetworkImageView avaStore = (NetworkImageView) convertView
-				.findViewById(R.id.avaStore);
+		TextView name = (TextView) convertView.findViewById(R.id.tvTitleShop);
 
-		Shop item = storeList.get(position);
+		NetworkImageView imShop = (NetworkImageView) convertView.findViewById(R.id.imShop);
 
-		tvNameStore.setText(item.getName());
-		tvAddressStore.setText(item.getAddress());
-		
-		avaStore.setImageUrl(item.getImage(), imageLoader);
-		
+		Shop item = giftItems.get(position);
+
+		TextView scoreTotal = (TextView) convertView.findViewById(R.id.tvScore);
+
+		if (item.getCurrent_customer_shop_point() != null) {
+			scoreTotal.setText("Số điểm tích: " + item.getCurrent_customer_shop_point());
+		} else {
+			scoreTotal.setText("Số điểm tích: 0");
+		}
+
+		name.setText(item.getName());
+		imShop.setImageUrl(item.getImage(), imageLoader);
+
 		return convertView;
+
 	}
+
 }

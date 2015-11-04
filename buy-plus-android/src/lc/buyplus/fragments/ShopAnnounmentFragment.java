@@ -22,7 +22,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import lc.buyplus.R;
 import lc.buyplus.adapter.AnnounmentAdapter;
-import lc.buyplus.adapter.StoreAdapter;
+import lc.buyplus.adapter.ShopAnnounmentAdapter;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
@@ -33,9 +33,9 @@ import lc.buyplus.models.Notification;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
 
-public class HomeAnnounmentFragment extends CoreFragment {
+public class ShopAnnounmentFragment extends CoreFragment {
 	private ListView listView;
-	private AnnounmentAdapter newsAdapter;
+	private ShopAnnounmentAdapter newsAdapter;
 	private LayoutInflater inflaterActivity;
 
 	@Override
@@ -46,7 +46,7 @@ public class HomeAnnounmentFragment extends CoreFragment {
 		initAnimations();
 		listView = (ListView) view.findViewById(R.id.listAnnounment);
 		inflaterActivity = inflater;
-		api_get_all_announcements(2, 0, 0, 0, 0);
+		api_get_shop_announcements(2, 0, 0, 0);
 		return view;
 	}
 
@@ -191,9 +191,6 @@ public class HomeAnnounmentFragment extends CoreFragment {
 								Store.AnnouncementsList.add(announcement);
 
 							}
-							newsAdapter = new AnnounmentAdapter(Store.AnnouncementsList, inflaterActivity, listView, mActivity);
-							listView.setAdapter(newsAdapter);
-							newsAdapter.notifyDataSetChanged();
 						} catch (JSONException e) {
 
 							e.printStackTrace();
@@ -229,6 +226,9 @@ public class HomeAnnounmentFragment extends CoreFragment {
 								Announcement announcement = new Announcement((JSONObject) data_aray.get(i));
 								AnnouncementsList.add(announcement);
 							}
+							newsAdapter = new ShopAnnounmentAdapter(Store.AnnouncementsList, inflaterActivity);
+							listView.setAdapter(newsAdapter);
+							newsAdapter.notifyDataSetChanged();
 						} catch (JSONException e) {
 
 							e.printStackTrace();
@@ -493,19 +493,19 @@ public class HomeAnnounmentFragment extends CoreFragment {
 	public static final long serialVersionUID = 6036846677812555352L;
 
 	public static CoreActivity mActivity;
-	public static HomeAnnounmentFragment mInstance;
+	public static ShopAnnounmentFragment mInstance;
 
-	public static HomeAnnounmentFragment getInstance(CoreActivity activity) {
+	public static ShopAnnounmentFragment getInstance(CoreActivity activity) {
 		if (mInstance == null) {
-			mInstance = new HomeAnnounmentFragment();
+			mInstance = new ShopAnnounmentFragment();
 		}
 		mActivity = activity;
 		return mInstance;
 	}
 
-	public static HomeAnnounmentFragment getInstance() {
+	public static ShopAnnounmentFragment getInstance() {
 		if (mInstance == null) {
-			mInstance = new HomeAnnounmentFragment();
+			mInstance = new ShopAnnounmentFragment();
 		}
 		return mInstance;
 	}

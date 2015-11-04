@@ -10,6 +10,21 @@ import android.view.View.OnClickListener;
 
 public abstract class CoreFragment extends Fragment implements OnClickListener, Serializable {
 
+	public FragmentManager getmFragmentManager() {
+		return mFragmentManager;
+	}
+
+	public void setmFragmentManager(FragmentManager mFragmentManager) {
+		this.mFragmentManager = mFragmentManager;
+	}
+
+	public CoreActivity getmContext() {
+		return mContext;
+	}
+
+	public void setmContext(CoreActivity mContext) {
+		this.mContext = mContext;
+	}
 	private static final long serialVersionUID = 7080889824192321168L;
 	protected FragmentManager mFragmentManager;
 	protected CoreActivity mContext;

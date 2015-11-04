@@ -1,52 +1,32 @@
 package lc.buyplus.adapter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.Volley;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.FeedImageView;
-import lc.buyplus.cores.HandleRequest;
-import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.models.Announcement;
-import lc.buyplus.models.Store;
 
-public class AnnounmentAdapter extends BaseAdapter {
+public class ShopAnnounmentAdapter extends BaseAdapter {
 
-	public Activity activity;
+	private Activity activity;
 	private LayoutInflater inflater;
 	private LayoutInflater inflaterActivity;
 	ArrayList<Announcement> announcementList;
-	public ListView listview;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
 
-	public AnnounmentAdapter(ArrayList<Announcement> announcementList, LayoutInflater inflaterActivity, ListView listview, Activity activity) {
+	public ShopAnnounmentAdapter(ArrayList<Announcement> announcementList, LayoutInflater inflaterActivity) {
 		this.inflaterActivity = inflaterActivity;
 		this.announcementList = announcementList;
-		this.listview = listview;
-		this.activity = activity;
 	}
 
 	@Override
@@ -85,15 +65,6 @@ public class AnnounmentAdapter extends BaseAdapter {
 		Announcement item = announcementList.get(position);
 
 		name.setText(item.getShop().getName());
-		name.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-				
-			}
-		});
-		
 		timestamp.setText(item.getStart_time());
 		tvStatus.setText(item.getContent());
 
@@ -119,40 +90,4 @@ public class AnnounmentAdapter extends BaseAdapter {
 		return convertView;
 	}
 
-	
-	public void api_get_shop_announcements(int shop_id, int type, int latest_id, int oldest_id) {
-
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("shop_id", String.valueOf(shop_id));
-		params.put("type", String.valueOf(type));
-		params.put("latest_id", String.valueOf(latest_id));
-		params.put("oldest_id", String.valueOf(oldest_id));
-		RequestQueue requestQueue = Volley.newRequestQueue(this.activity);
-		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-				HandleRequest.build_link(HandleRequest.GET_SHOP_ANNOUNCEMENTS, params), params,
-				new Response.Listener<JSONObject>() {
-
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_get_shop_announcements", response.toString());
-						try {
-							ArrayList<Announcement> AnnouncementsList = new ArrayList<Announcement>();
-							JSONArray data_aray = response.getJSONArray("data");
-							for (int i = 0; i < data_aray.length(); i++) {
-								Announcement announcement = new Announcement((JSONObject) data_aray.get(i));
-								AnnouncementsList.add(announcement);
-							}
-						} catch (JSONException e) {
-
-							e.printStackTrace();
-						}
-					}
-				}, new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-					}
-				});
-		requestQueue.add(jsObjRequest);
-	}
 }
