@@ -15,6 +15,7 @@ import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,7 @@ public class HomeAnnounmentFragment extends CoreFragment {
 	private ListView listView;
 	private AnnounmentAdapter newsAdapter;
 	private LayoutInflater inflaterActivity;
+	FragmentManager mFragmentManager;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class HomeAnnounmentFragment extends CoreFragment {
 		initViews(view);
 		initModels();
 		initAnimations();
+		mFragmentManager = getFragmentManager();
 		listView = (ListView) view.findViewById(R.id.listAnnounment);
 		inflaterActivity = inflater;
 		api_get_all_announcements(2, 0, 0, 0, 0);
@@ -191,7 +194,7 @@ public class HomeAnnounmentFragment extends CoreFragment {
 								Store.AnnouncementsList.add(announcement);
 
 							}
-							newsAdapter = new AnnounmentAdapter(Store.AnnouncementsList, inflaterActivity, listView, mActivity);
+							newsAdapter = new AnnounmentAdapter(Store.AnnouncementsList, inflaterActivity, mActivity, mFragmentManager);
 							listView.setAdapter(newsAdapter);
 							newsAdapter.notifyDataSetChanged();
 						} catch (JSONException e) {

@@ -8,15 +8,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,26 +29,29 @@ import android.widget.ListView;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.application.MonApplication;
+import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.FeedImageView;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.fragments.CanvasFragment;
+import lc.buyplus.fragments.LoginFragment;
+import lc.buyplus.fragments.ShopAnnounmentFragment;
+import lc.buyplus.fragments.ShopDetailCanvasFragment;
 import lc.buyplus.models.Announcement;
-import lc.buyplus.models.Store;
 
 public class AnnounmentAdapter extends BaseAdapter {
 
-	public Activity activity;
+	public CoreActivity activity;
 	private LayoutInflater inflater;
 	private LayoutInflater inflaterActivity;
 	ArrayList<Announcement> announcementList;
-	public ListView listview;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
+	FragmentManager mFragmentManager;
 
-	public AnnounmentAdapter(ArrayList<Announcement> announcementList, LayoutInflater inflaterActivity, ListView listview, Activity activity) {
+	public AnnounmentAdapter(ArrayList<Announcement> announcementList, LayoutInflater inflaterActivity, CoreActivity activity, FragmentManager mFragmentManager) {
 		this.inflaterActivity = inflaterActivity;
 		this.announcementList = announcementList;
-		this.listview = listview;
 		this.activity = activity;
+		this.mFragmentManager = mFragmentManager;
 	}
 
 	@Override
@@ -89,8 +94,7 @@ public class AnnounmentAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {
-				
-				
+				mFragmentManager.beginTransaction().replace(R.id.canvas, ShopDetailCanvasFragment.getInstance(activity, CanvasFragment.mUser)).commit();
 			}
 		});
 		

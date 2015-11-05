@@ -32,7 +32,7 @@ import lc.buyplus.models.Notification;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
 
-public class ShopImageFragment  extends CoreFragment {
+public class ShopFriendFragment  extends CoreFragment {
 	private ListView listView;
 	private ShopAnnounmentAdapter newsAdapter;
 	private LayoutInflater inflaterActivity;
@@ -492,19 +492,19 @@ public class ShopImageFragment  extends CoreFragment {
 	public static final long serialVersionUID = 6036846677812555352L;
 
 	public static CoreActivity mActivity;
-	public static ShopImageFragment mInstance;
+	public static ShopFriendFragment mInstance;
 
-	public static ShopImageFragment getInstance(CoreActivity activity) {
+	public static ShopFriendFragment getInstance(CoreActivity activity) {
 		if (mInstance == null) {
-			mInstance = new ShopImageFragment();
+			mInstance = new ShopFriendFragment();
 		}
 		mActivity = activity;
 		return mInstance;
 	}
 
-	public static ShopImageFragment getInstance() {
+	public static ShopFriendFragment getInstance() {
 		if (mInstance == null) {
-			mInstance = new ShopImageFragment();
+			mInstance = new ShopFriendFragment();
 		}
 		return mInstance;
 	}

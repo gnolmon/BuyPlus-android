@@ -40,13 +40,13 @@ public class ShopAnnounmentFragment extends CoreFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_announment, container, false);
+		View view = inflater.inflate(R.layout.fragment_shop_announment, container, false);
 		initViews(view);
 		initModels();
 		initAnimations();
-		listView = (ListView) view.findViewById(R.id.listAnnounment);
+		listView = (ListView) view.findViewById(R.id.listShopAnnounment);
 		inflaterActivity = inflater;
-		api_get_shop_announcements(2, 0, 0, 0);
+		api_get_shop_announcements(1, 0, 0, 0);
 		return view;
 	}
 
@@ -220,13 +220,15 @@ public class ShopAnnounmentFragment extends CoreFragment {
 					public void onResponse(JSONObject response) {
 						Log.d("api_get_shop_announcements", response.toString());
 						try {
-							ArrayList<Announcement> AnnouncementsList = new ArrayList<Announcement>();
+							ArrayList<Announcement> ShopAnnouncementsList = new ArrayList<Announcement>();
 							JSONArray data_aray = response.getJSONArray("data");
 							for (int i = 0; i < data_aray.length(); i++) {
 								Announcement announcement = new Announcement((JSONObject) data_aray.get(i));
-								AnnouncementsList.add(announcement);
+								if (announcement != null){
+									ShopAnnouncementsList.add(announcement);
+								}
 							}
-							newsAdapter = new ShopAnnounmentAdapter(Store.AnnouncementsList, inflaterActivity);
+							newsAdapter = new ShopAnnounmentAdapter(ShopAnnouncementsList, inflaterActivity);
 							listView.setAdapter(newsAdapter);
 							newsAdapter.notifyDataSetChanged();
 						} catch (JSONException e) {

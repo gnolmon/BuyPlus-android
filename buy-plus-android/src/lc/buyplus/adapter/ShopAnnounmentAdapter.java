@@ -31,7 +31,7 @@ public class ShopAnnounmentAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return announcementList.size();
+		return 1	;
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class ShopAnnounmentAdapter extends BaseAdapter {
 		if (inflater == null)
 			inflater = inflaterActivity;
 		if (convertView == null)
-			convertView = inflater.inflate(R.layout.item_announment, null);
+			convertView = inflater.inflate(R.layout.item_shop_announment, null);
 
 		if (imageLoader == null)
 			imageLoader = MonApplication.getInstance().getImageLoader();
