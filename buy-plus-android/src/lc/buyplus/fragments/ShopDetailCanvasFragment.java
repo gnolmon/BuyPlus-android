@@ -32,7 +32,7 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_canvas, container, false);
+		View view = inflater.inflate(R.layout.fragment_shop_canvas, container, false);
 		initViews(view);
 		initModels();
 		initListener();
@@ -87,7 +87,7 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 		}
 	}
 
-	public static final int NUM_PAGES = 1;
+	public static final int NUM_PAGES = 2;
 	public static ViewPager mPager;
 	public PagerAdapter mPagerAdapter;
 
@@ -100,9 +100,9 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 		public CoreFragment getItem(int position) {
 			switch (position) {
 			case 0:
-				return ShopAnnounmentFragment.getInstance(mActivity);/*
+				return ShopAnnounmentFragment.getInstance(mActivity);
 			case 1:
-				return ShopInfoFragment.getInstance(mActivity);
+				return ShopInfoFragment.getInstance(mActivity);/*
 			case 2:
 				return ShopImageFragment.getInstance(mActivity);
 			case 3:

@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.adapter.ShopAnnounmentAdapter;
 import lc.buyplus.cores.CoreActivity;
@@ -36,16 +37,15 @@ public class ShopInfoFragment   extends CoreFragment {
 	private ListView listView;
 	private ShopAnnounmentAdapter newsAdapter;
 	private LayoutInflater inflaterActivity;
+	private TextView tvName, tvField, tvPhone, tvWeb, tvFb;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_announment, container, false);
+		View view = inflater.inflate(R.layout.fragment_store_info, container, false);
 		initViews(view);
 		initModels();
 		initAnimations();
-		listView = (ListView) view.findViewById(R.id.listAnnounment);
-		inflaterActivity = inflater;
-		api_get_shop_announcements(2, 0, 0, 0);
+		api_get_shop_info(1);
 		return view;
 	}
 
