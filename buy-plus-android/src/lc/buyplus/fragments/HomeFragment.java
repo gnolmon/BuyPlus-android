@@ -46,7 +46,7 @@ public class HomeFragment extends CoreFragment {
 		initAnimations();
 		listView = (ListView) view.findViewById(R.id.listStore);
 		inflaterActivity = inflater;
-		api_get_all_shop(0,0,0);
+		api_get_shop_announcement_images(1,0,0);
 		return view;
 	}
 	@Override
@@ -245,7 +245,42 @@ public class HomeFragment extends CoreFragment {
 					}
 				});
 			requestQueue.add(jsObjRequest);
-	}	
+	}
+	
+public void api_get_shop_announcement_images(int shop_id, int latest_id, int oldest_id){
+	 	
+    	Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		params.put("shop_id", String.valueOf(shop_id));
+		params.put("latest_id", String.valueOf(latest_id));
+		params.put("oldest_id", String.valueOf(oldest_id));
+			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
+					HandleRequest.build_link(HandleRequest.GET_SHOP_ANNOUNCEMENT_IMAGES, params), params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("api_get_shop_announcement_images",response.toString());
+						try {
+							ArrayList<Photo> PhotosList = new ArrayList<Photo>();
+							JSONArray data_aray = response.getJSONArray("data");
+							for (int i = 0; i < data_aray.length(); i++) {
+								Photo photo = new Photo((JSONObject) data_aray.get(i));
+								PhotosList.add(photo);
+	                        }
+						} catch (JSONException e) {
+
+							e.printStackTrace();
+						}	
+					}
+				}, 
+				new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+					}
+				});
+			requestQueue.add(jsObjRequest);
+	}
 
 	public void api_get_shop_gifts(int shop_id){
 	 	
@@ -370,7 +405,7 @@ public class HomeFragment extends CoreFragment {
 					});
 			requestQueue.add(jsObjRequest);
 	}
-
+	
 	public void api_send_request_join_shop_to_friend(int shop_id, int temp_id){
 	 	
 		Map<String, String> params = new HashMap<String, String>();
@@ -495,8 +530,8 @@ public class HomeFragment extends CoreFragment {
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
-					HandleRequest.GET_ADDED_POINT_HISTORY, params, 
+			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
+					HandleRequest.build_link(HandleRequest.GET_ADDED_POINT_HISTORY, params), params, 
 					new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
