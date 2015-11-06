@@ -23,7 +23,7 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 	private static final long serialVersionUID = 1L;
 	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab;
 	private RelativeLayout rHomeTab;
-	private LinearLayout mSearchTab, mSortTab;
+	private LinearLayout mBack, mSortTab;
 	private LinearLayout mSearchBlock, mTitleBlock;
 	private LinearLayout mSearchBlockCancel;
 	private MyEditText mSearchEdittext;
@@ -58,8 +58,8 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
-		case R.id.fragnemt_canvas_search_cancel:
-			hideSearchBlock();
+		case R.id.fragment_canvas_back:
+			mFragmentManager.beginTransaction().replace(R.id.canvas, CanvasFragment.getInstance(mActivity, mUser)).detach(this).attach(this).commit();
 			break;
 		case R.id.fragment_canvas_search:
 			showSearchBlock();
@@ -125,7 +125,6 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 
 	public void changeTabState(boolean home, boolean homenews, boolean personal, boolean loyaltycard, boolean noti,
 			boolean setting) {
-		hideSearchBlock();
 		mTitle.startAnimation(MyAnimations.fadeId(1000));
 		if (home) {
 			rHomeTab.setVisibility(View.VISIBLE);
@@ -212,7 +211,7 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 		mPager.setCurrentItem(firstTab);
 		changeTabState(true, true, false, false, false, false);
 
-		mSearchEdittext.setHintTextColor(getResources().getColor(R.color.white));
+
 	}
 
 	@Override
@@ -224,14 +223,10 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 		mNotiTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_notifications_tab);
 		mSettingTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_setting_tab);
 		mTitle = (MyTextView) v.findViewById(R.id.fragment_canvas_title);
-		mSettingTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_setting_tab);
-		mSearchTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_search);
-		mSortTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_sort);
-		mSearchBlock = (LinearLayout) v.findViewById(R.id.fragment_canvas_search_block);
-		mTitleBlock = (LinearLayout) v.findViewById(R.id.fragment_canvas_title_block);
-		mSearchBlockCancel = (LinearLayout) v.findViewById(R.id.fragnemt_canvas_search_cancel);
-		mSearchEdittext = (MyEditText) v.findViewById(R.id.fragment_canvas_search_edittext);
+		mBack = (LinearLayout) v.findViewById(R.id.fragment_canvas_back);
+		
 		rHomeTab = (RelativeLayout) v.findViewById(R.id.rhomeTab);
+		mTitleBlock = (LinearLayout) v.findViewById(R.id.fragment_canvas_title_block);
 	}
 
 	@Override
@@ -241,9 +236,7 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 		mLoyaltyCardTab.setOnClickListener(this);
 		mNotiTab.setOnClickListener(this);
 		mSettingTab.setOnClickListener(this);
-		mSearchTab.setOnClickListener(this);
-		mSortTab.setOnClickListener(this);
-		mSearchBlockCancel.setOnClickListener(this);
+		mBack.setOnClickListener(this);
 	}
 
 	@Override
