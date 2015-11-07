@@ -15,6 +15,7 @@ import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ public class HomeAnnounmentFragment extends CoreFragment {
 	private AnnounmentAdapter newsAdapter;
 	private LayoutInflater inflaterActivity;
 	FragmentManager mFragmentManager;
+	public static Fragment homeFrg;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,6 +68,7 @@ public class HomeAnnounmentFragment extends CoreFragment {
 
 	@Override
 	protected void initViews(View v) {
+		homeFrg = this.getTargetFragment();
 
 	}
 

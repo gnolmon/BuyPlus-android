@@ -7,6 +7,10 @@ import lc.buyplus.customizes.MyAnimations;
 import lc.buyplus.customizes.MyEditText;
 import lc.buyplus.customizes.MyTextView;
 import lc.buyplus.models.UserAccount;
+
+import com.facebook.CallbackManager;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
@@ -32,24 +36,27 @@ public class CanvasFragment extends CoreFragment {
 	private LinearLayout mSearchBlock, mTitleBlock;
 	private LinearLayout mSearchBlockCancel;
 	private MyEditText mSearchEdittext;
+	private CallbackManager callbackManager;
 
 	private MyTextView mTitle;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		callbackManager = CallbackManager.Factory.create();
 		View view = inflater.inflate(R.layout.fragment_canvas, container, false);
+		
 		initViews(view);
+		
 		initModels();
 		initListener();
 		initAnimations();
-
 		mActivity.showToastLong(mUser.toString());
 
 		return view;
 	}
 
 	public void hideSearchBlock() {
-		mTitleBlock.setVisibility(View.VISIBLE);
+		mTitleBlock.setVisibility(View.VISIBLE);	
 		mSearchBlock.setVisibility(View.GONE);
 		mSearchBlock.clearAnimation();
 	}
@@ -59,6 +66,12 @@ public class CanvasFragment extends CoreFragment {
 		mSearchBlock.setVisibility(View.VISIBLE);
 		mSearchBlock.startAnimation(MyAnimations.fromLeft(800, 200));
 	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    callbackManager.onActivityResult(requestCode, resultCode, data);
+	}
+	
 
 	@Override
 	public void onClick(View view) {
@@ -174,7 +187,7 @@ public class CanvasFragment extends CoreFragment {
 		}
 	}
 
-	protected void initModels() {
+	public void initModels() {
 		mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
 		mPager.setOffscreenPageLimit(NUM_PAGES);
 		mPager.setAdapter(mPagerAdapter);
@@ -273,7 +286,7 @@ public class CanvasFragment extends CoreFragment {
 	public static CanvasFragment getInstance() {
 		if (mInstance == null) {
 			mInstance = new CanvasFragment();
-		}
+		} 
 		return mInstance;
 	}
 }

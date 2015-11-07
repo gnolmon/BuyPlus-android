@@ -2,6 +2,7 @@ package lc.buyplus.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -59,7 +60,10 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.fragment_canvas_back:
-			mFragmentManager.beginTransaction().replace(R.id.canvas, CanvasFragment.getInstance(mActivity, mUser)).detach(this).attach(this).commit();
+			FragmentTransaction ft = mFragmentManager.beginTransaction();
+			ft.replace(R.id.canvas, CanvasFragment.getInstance());
+			ft.addToBackStack(null);
+			ft.commit();
 			break;
 		case R.id.fragment_canvas_search:
 			showSearchBlock();
@@ -172,6 +176,7 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 		mPagerAdapter = new ShopSlidePagerAdapter(getFragmentManager());
 		mPager.setOffscreenPageLimit(NUM_PAGES);
 		mPager.setAdapter(mPagerAdapter);
+		mPagerAdapter.notifyDataSetChanged();
 		mPager.setOnPageChangeListener(new OnPageChangeListener() {
 			@Override
 			public void onPageSelected(int arg0) {

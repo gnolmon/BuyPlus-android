@@ -16,8 +16,6 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 
-import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +23,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.application.MonApplication;
@@ -33,8 +30,7 @@ import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.FeedImageView;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.fragments.CanvasFragment;
-import lc.buyplus.fragments.LoginFragment;
-import lc.buyplus.fragments.ShopAnnounmentFragment;
+import lc.buyplus.fragments.HomeAnnounmentFragment;
 import lc.buyplus.fragments.ShopDetailCanvasFragment;
 import lc.buyplus.models.Announcement;
 
@@ -94,7 +90,11 @@ public class AnnounmentAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {
-				mFragmentManager.beginTransaction().replace(R.id.canvas, ShopDetailCanvasFragment.getInstance(activity, CanvasFragment.mUser)).commit();
+				android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
+				ft.replace(R.id.canvas, ShopDetailCanvasFragment.getInstance(activity, CanvasFragment.mUser));
+				mFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+				ft.addToBackStack(null);
+				ft.commit();
 			}
 		});
 		

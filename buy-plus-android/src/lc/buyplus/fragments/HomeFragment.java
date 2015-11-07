@@ -520,7 +520,7 @@ public class HomeFragment extends CoreFragment {
 	public static HomeFragment getInstance(CoreActivity activity) {
 		if (mInstance == null) {
 			mInstance = new HomeFragment();
-		}
+		} 
 		mActivity = activity;
 		return mInstance;
 	}
