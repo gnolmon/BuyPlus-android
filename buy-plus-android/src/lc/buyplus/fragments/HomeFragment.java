@@ -14,13 +14,16 @@ import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import lc.buyplus.R;
+import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.StoreAdapter;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
@@ -33,6 +36,7 @@ import lc.buyplus.models.Photo;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
 import lc.buyplus.models.UserAccount;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class HomeFragment extends CoreFragment {
 	private ListView listView;
@@ -46,7 +50,7 @@ public class HomeFragment extends CoreFragment {
 		initAnimations();
 		listView = (ListView) view.findViewById(R.id.listStore);
 		inflaterActivity = inflater;
-		api_get_shop_announcement_images(1,0,0);
+		api_get_all_shop(1,0,0);
 		return view;
 	}
 	@Override
@@ -95,6 +99,13 @@ public class HomeFragment extends CoreFragment {
 							storeAdapter = new StoreAdapter(Store.ShopsList, inflaterActivity);
 							
 							listView.setAdapter(storeAdapter);
+							listView.setOnItemClickListener(new OnItemClickListener() {
+							      public void onItemClick(AdapterView<?> parent, View view,
+							          int position, long id) {
+							             Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);     
+							             startActivity(shopInfoActivity);
+							      }
+							    });
 							storeAdapter.notifyDataSetChanged();
 							
 						} catch (JSONException e) {

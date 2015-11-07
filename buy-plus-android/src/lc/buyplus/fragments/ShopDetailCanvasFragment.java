@@ -60,10 +60,7 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.fragment_canvas_back:
-			FragmentTransaction ft = mFragmentManager.beginTransaction();
-			ft.replace(R.id.canvas, CanvasFragment.getInstance());
-			ft.addToBackStack(null);
-			ft.commit();
+			mActivity.finish();
 			break;
 		case R.id.fragment_canvas_search:
 			showSearchBlock();
