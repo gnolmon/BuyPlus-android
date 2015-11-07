@@ -16,6 +16,7 @@ import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.MyTextView;
 import lc.buyplus.models.UserAccount;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -128,6 +129,12 @@ public class LoginFragment extends CoreFragment {
 		editPass = (EditText)v.findViewById(R.id.edPass);
 		loginbtn = (Button)v.findViewById(R.id.btnLogin);
 		registerbtn = (MyTextView)v.findViewById(R.id.btnRegister);
+		
+		SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
+		String login_name = pre.getString("login_name", "");
+		String password = pre.getString("password", "");
+		editName.setText(login_name);
+		editPass.setText(password);
 		loginbtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -197,6 +204,13 @@ public class LoginFragment extends CoreFragment {
 							String username = data.getString("name");
 							int active = Integer.parseInt(data.getString("active"));
 							
+							
+							SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
+							SharedPreferences.Editor editor=pre.edit();
+							editor.clear();
+							editor.putString("login_name", editName.getText().toString());
+							editor.putString("password", editPass.getText().toString());
+							editor.commit();
 							UserAccount user = new UserAccount(accessToken,id,phone,email,login_name,imageUrl,imageThumbnail,username,active);;
 							mFragmentManager.beginTransaction().replace(R.id.canvas, CanvasFragment.getInstance(mActivity, user)).commit();
 						} catch (JSONException e) {

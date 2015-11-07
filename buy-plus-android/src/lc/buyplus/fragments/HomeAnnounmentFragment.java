@@ -14,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,8 +22,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import lc.buyplus.R;
+import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.AnnounmentAdapter;
 import lc.buyplus.adapter.StoreAdapter;
 import lc.buyplus.cores.CoreActivity;
@@ -199,6 +203,13 @@ public class HomeAnnounmentFragment extends CoreFragment {
 							}
 							newsAdapter = new AnnounmentAdapter(Store.AnnouncementsList, inflaterActivity, mActivity, mFragmentManager);
 							listView.setAdapter(newsAdapter);
+							listView.setOnItemClickListener(new OnItemClickListener() {
+							      public void onItemClick(AdapterView<?> parent, View view,
+							          int position, long id) {
+							             Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);     
+							             startActivity(shopInfoActivity);
+							      }
+							    });
 							newsAdapter.notifyDataSetChanged();
 						} catch (JSONException e) {
 
