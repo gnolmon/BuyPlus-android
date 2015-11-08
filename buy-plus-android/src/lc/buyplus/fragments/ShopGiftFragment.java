@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import lc.buyplus.R;
 import lc.buyplus.adapter.ShopFriendAdapter;
+import lc.buyplus.adapter.ShopGiftAdapter;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
@@ -32,20 +33,20 @@ import lc.buyplus.models.Notification;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
 
-public class ShopFriendFragment  extends CoreFragment {
+public class ShopGiftFragment extends CoreFragment {
 	private ListView listView;
-	private ShopFriendAdapter friendAdapter;
+	private ShopGiftAdapter giftAdapter;
 	private LayoutInflater inflaterActivity;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_store_friend, container, false);
+		View view = inflater.inflate(R.layout.fragment_store_redeem, container, false);
 		initViews(view);
 		initModels();
 		initAnimations();
-		listView = (ListView) view.findViewById(R.id.listFriend);
+		listView = (ListView) view.findViewById(R.id.listRedeem);
 		inflaterActivity = inflater;
-		api_get_shop_friends(1);
+		api_get_shop_gifts(1);
 		return view;
 	}
 
@@ -257,7 +258,9 @@ public class ShopFriendFragment  extends CoreFragment {
 								Gift gift = new Gift((JSONObject) data_aray.get(i));
 								GiftsList.add(gift);
 							}
-
+							giftAdapter = new ShopGiftAdapter(GiftsList, inflaterActivity);
+							listView.setAdapter(giftAdapter);
+							giftAdapter.notifyDataSetChanged();
 						} catch (JSONException e) {
 
 							e.printStackTrace();
@@ -290,9 +293,6 @@ public class ShopFriendFragment  extends CoreFragment {
 								Friend friend = new Friend((JSONObject) data_aray.get(i));
 								FriendsList.add(friend);
 							}
-							friendAdapter = new ShopFriendAdapter(FriendsList, inflaterActivity);
-							listView.setAdapter(friendAdapter);
-							friendAdapter.notifyDataSetChanged();
 						} catch (JSONException e) {
 
 							e.printStackTrace();
@@ -492,19 +492,19 @@ public class ShopFriendFragment  extends CoreFragment {
 	public static final long serialVersionUID = 6036846677812555352L;
 
 	public static CoreActivity mActivity;
-	public static ShopFriendFragment mInstance;
+	public static ShopGiftFragment mInstance;
 
-	public static ShopFriendFragment getInstance(CoreActivity activity) {
+	public static ShopGiftFragment getInstance(CoreActivity activity) {
 		if (mInstance == null) {
-			mInstance = new ShopFriendFragment();
+			mInstance = new ShopGiftFragment();
 		}
 		mActivity = activity;
 		return mInstance;
 	}
 
-	public static ShopFriendFragment getInstance() {
+	public static ShopGiftFragment getInstance() {
 		if (mInstance == null) {
-			mInstance = new ShopFriendFragment();
+			mInstance = new ShopGiftFragment();
 		}
 		return mInstance;
 	}

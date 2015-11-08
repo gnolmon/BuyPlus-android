@@ -16,6 +16,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.FeedImageView;
@@ -90,11 +92,8 @@ public class AnnounmentAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {
-				android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
-				ft.replace(R.id.canvas, ShopDetailCanvasFragment.getInstance(activity, CanvasFragment.mUser));
-				mFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-				ft.addToBackStack(null);
-				ft.commit();
+				 Intent shopInfoActivity = new Intent(activity,ShopInfoActivity.class);     
+				 activity.startActivity(shopInfoActivity);
 			}
 		});
 		

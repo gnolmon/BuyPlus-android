@@ -8,10 +8,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
 
 import android.content.Intent;
@@ -28,7 +28,6 @@ import android.widget.ListView;
 import lc.buyplus.R;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.AnnounmentAdapter;
-import lc.buyplus.adapter.StoreAdapter;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;

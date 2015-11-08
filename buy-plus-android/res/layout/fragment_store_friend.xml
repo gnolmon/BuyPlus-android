@@ -36,7 +36,7 @@
         </RelativeLayout>
 
         <ListView
-            android:id="@+id/listRedeem"
+            android:id="@+id/listFriend"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_above="@id/rladdFriend"

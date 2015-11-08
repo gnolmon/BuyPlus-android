@@ -8,8 +8,9 @@ import lc.buyplus.R;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.fragments.ShopDetailCanvasFragment;
+import lc.buyplus.fragments.ShopFriendRedeemFragment;
 
-public class ShopInfoActivity extends CoreActivity {
+public class ShopFriendActivity extends CoreActivity {
 	
 	private static final long serialVersionUID = 250212518535755420L;
 //	private ImageView image;
@@ -23,7 +24,7 @@ public class ShopInfoActivity extends CoreActivity {
 		initListeners();
 		initAnimations();
 		FragmentManager mFragmentManager = getSupportFragmentManager();
-		mFragmentManager.beginTransaction().add(R.id.canvas, ShopDetailCanvasFragment.getInstance(ShopInfoActivity.this,CanvasFragment.mUser)).commit();
+		mFragmentManager.beginTransaction().add(R.id.canvas, ShopFriendRedeemFragment.getInstance(ShopFriendActivity.this,CanvasFragment.mUser)).commit();
 	}
 		
 //		makeJsonArrayRequest(NetworkConfig.URL_JSON_ARRAY_REQUEST, new JSONArrayRequestListener() {

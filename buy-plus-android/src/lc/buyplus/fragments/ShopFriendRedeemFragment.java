@@ -1,6 +1,5 @@
 package lc.buyplus.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
@@ -8,13 +7,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import lc.buyplus.R;
-import lc.buyplus.activities.ShopFriendActivity;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.customizes.MyAnimations;
@@ -22,7 +18,7 @@ import lc.buyplus.customizes.MyEditText;
 import lc.buyplus.customizes.MyTextView;
 import lc.buyplus.models.UserAccount;
 
-public class ShopDetailCanvasFragment extends CoreFragment {
+public class ShopFriendRedeemFragment extends CoreFragment {
 
 	private static final long serialVersionUID = 1L;
 	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab;
@@ -31,13 +27,12 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 	private LinearLayout mSearchBlock, mTitleBlock;
 	private LinearLayout mSearchBlockCancel;
 	private MyEditText mSearchEdittext;
-	private TextView tvPoint;
 
 	private MyTextView mTitle;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_shop_canvas, container, false);
+		View view = inflater.inflate(R.layout.fragment_shop_friend, container, false);
 		initViews(view);
 		initModels();
 		initListener();
@@ -92,12 +87,12 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 		}
 	}
 
-	public static final int NUM_PAGES = 2;
+	public static final int NUM_PAGES = 1;
 	public static ViewPager mPager;
 	public PagerAdapter mPagerAdapter;
 
-	public class ShopSlidePagerAdapter extends FragmentStatePagerAdapter {
-		public ShopSlidePagerAdapter(android.support.v4.app.FragmentManager fm) {
+	public class ShopFriendSlidePagerAdapter extends FragmentStatePagerAdapter {
+		public ShopFriendSlidePagerAdapter(android.support.v4.app.FragmentManager fm) {
 			super(fm);
 		}
 
@@ -105,16 +100,16 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 		public CoreFragment getItem(int position) {
 			switch (position) {
 			case 0:
-				return ShopAnnounmentFragment.getInstance(mActivity);
+				return ShopFriendFragment.getInstance(mActivity);/*
 			case 1:
-				return ShopInfoFragment.getInstance(mActivity);
-			case 2:
-				return ShopImageFragment.getInstance(mActivity);
-			/*
-			 * case 3: return LoyaltyCardFragment.getInstance(mActivity); case
-			 * 4: return NotificationsFragment.getInstance(mActivity); case 5:
-			 * return SettingFragment.getInstance(mActivity);
-			 */
+				return ShopGiftFragment.getInstance(mActivity);*/
+				/*
+			case 3:
+				return LoyaltyCardFragment.getInstance(mActivity);
+			case 4:
+				return NotificationsFragment.getInstance(mActivity);
+			case 5:
+				return SettingFragment.getInstance(mActivity);*/
 			default:
 				break;
 			}
@@ -173,7 +168,7 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 	}
 
 	protected void initModels() {
-		mPagerAdapter = new ShopSlidePagerAdapter(getFragmentManager());
+		mPagerAdapter = new ShopFriendSlidePagerAdapter(getFragmentManager());
 		mPager.setOffscreenPageLimit(NUM_PAGES);
 		mPager.setAdapter(mPagerAdapter);
 		mPagerAdapter.notifyDataSetChanged();
@@ -216,6 +211,7 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 		mPager.setCurrentItem(firstTab);
 		changeTabState(true, true, false, false, false, false);
 
+
 	}
 
 	@Override
@@ -228,19 +224,9 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 		mSettingTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_setting_tab);
 		mTitle = (MyTextView) v.findViewById(R.id.fragment_canvas_title);
 		mBack = (LinearLayout) v.findViewById(R.id.fragment_canvas_back);
-
+		
 		rHomeTab = (RelativeLayout) v.findViewById(R.id.rhomeTab);
 		mTitleBlock = (LinearLayout) v.findViewById(R.id.fragment_canvas_title_block);
-
-		tvPoint = (TextView) v.findViewById(R.id.tvPoint);
-		tvPoint.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Intent shopFriendActivity = new Intent(mActivity, ShopFriendActivity.class);
-				startActivity(shopFriendActivity);
-			}
-		});
 	}
 
 	@Override
@@ -261,20 +247,20 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 	public static int firstTab = 0;
 	public static UserAccount mUser;
 	public static CoreActivity mActivity;
-	public static ShopDetailCanvasFragment mInstance;
+	public static ShopFriendRedeemFragment mInstance;
 
-	public static ShopDetailCanvasFragment getInstance(CoreActivity activity, UserAccount user) {
+	public static ShopFriendRedeemFragment getInstance(CoreActivity activity, UserAccount user) {
 		if (mInstance == null) {
-			mInstance = new ShopDetailCanvasFragment();
+			mInstance = new ShopFriendRedeemFragment();
 		}
 		mActivity = activity;
 		mUser = user;
 		return mInstance;
 	}
 
-	public static ShopDetailCanvasFragment getInstance() {
+	public static ShopFriendRedeemFragment getInstance() {
 		if (mInstance == null) {
-			mInstance = new ShopDetailCanvasFragment();
+			mInstance = new ShopFriendRedeemFragment();
 		}
 		return mInstance;
 	}
