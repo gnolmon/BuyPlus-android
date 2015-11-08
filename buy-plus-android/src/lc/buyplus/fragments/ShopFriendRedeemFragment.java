@@ -87,7 +87,7 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 		}
 	}
 
-	public static final int NUM_PAGES = 1;
+	public static final int NUM_PAGES = 2;
 	public static ViewPager mPager;
 	public PagerAdapter mPagerAdapter;
 
@@ -100,9 +100,9 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 		public CoreFragment getItem(int position) {
 			switch (position) {
 			case 0:
-				return ShopFriendFragment.getInstance(mActivity);/*
+				return ShopFriendFragment.getInstance(mActivity);
 			case 1:
-				return ShopGiftFragment.getInstance(mActivity);*/
+				return ShopGiftFragment.getInstance(mActivity);
 				/*
 			case 3:
 				return LoyaltyCardFragment.getInstance(mActivity);

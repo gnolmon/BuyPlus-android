@@ -29,7 +29,7 @@ public class ShopGiftAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 1;
+		return 5;
 	}
 
 	@Override
@@ -48,6 +48,7 @@ public class ShopGiftAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (inflater == null)
 			inflater = (LayoutInflater) inflaterActivity;
+		
 		if (convertView == null)
 			convertView = inflater.inflate(R.layout.item_store_redeem, null);
 
@@ -56,20 +57,20 @@ public class ShopGiftAdapter extends BaseAdapter {
 		Gift item = giftList.get(position);
 
 		TextView storeName = (TextView) convertView.findViewById(R.id.tvstoreTitle);
-		storeName.setText(item.getName());
+		storeName.setText("" + item.getName());
 
 		TextView tvContentRedeem = (TextView) convertView.findViewById(R.id.tvContentRedeem);
-		tvContentRedeem.setText(item.getDescription());
+		tvContentRedeem.setText("" + item.getDescription());
 
 		TextView tvPoint = (TextView) convertView.findViewById(R.id.tvPoint);
 		tvPoint.setText("Diem: " + item.getPoint());
 
-		NetworkImageView imNoti = (NetworkImageView) convertView.findViewById(R.id.imRedeem);
+		NetworkImageView imRedeem = (NetworkImageView) convertView.findViewById(R.id.imRedeem);
 
 		// name.setText(item.getName());
 
 		// user profile pic
-		imNoti.setImageUrl(item.getImage(), imageLoader);
+		imRedeem.setImageUrl(item.getImage(), imageLoader);
 
 		return convertView;
 	}
