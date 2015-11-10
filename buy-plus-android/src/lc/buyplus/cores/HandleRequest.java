@@ -48,6 +48,7 @@ public class HandleRequest extends Request<JSONObject>{
     public static final String GET_ADDED_POINT_HISTORY = "http://buyplus.vn/api/get_added_point_history/";
     public static final String GET_ADDED_POINT_IN_SHOP = "API URL: http://buyplus.vn/api/get_added_point_in_shop/";
     public static final String GET_SHOP_ANNOUNCEMENT_IMAGES = "http://buyplus.vn/api/get_shop_announcement_images/";
+    public static final String REMOVE_FRIEND_FROM_CIRCLE = "http://buyplus.vn/api/remove_friend_from_circle/";
     
     private Listener<JSONObject> listener;
     private Map<String, String> params;

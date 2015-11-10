@@ -6,14 +6,20 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import lc.buyplus.R;
+import lc.buyplus.activities.ShopInfoActivity;
+import lc.buyplus.adapter.StoreAdapter;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.MyTextView;
+import lc.buyplus.models.FacebookFriend;
+import lc.buyplus.models.Shop;
+import lc.buyplus.models.Store;
 import lc.buyplus.models.UserAccount;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,21 +29,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -60,12 +70,13 @@ public class LoginFragment extends CoreFragment {
 		initAnimations();
 		
 		loginButton = (LoginButton)view.findViewById(R.id.login_button);
-		loginButton.setReadPermissions(Arrays.asList("public_profile","email"));
+		loginButton.setReadPermissions(Arrays.asList("public_profile","email", "user_friends"));
 		loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 			
 			@Override
 			public void onSuccess(LoginResult result) {
 				faceBookAccessToken = result.getAccessToken().toString();
+				
 				GraphRequest request = GraphRequest.newMeRequest(
                 result.getAccessToken(),
                 new GraphRequest.GraphJSONObjectCallback() {
@@ -77,13 +88,38 @@ public class LoginFragment extends CoreFragment {
                     	 
                         response.getError();
                         //Log.e("JSON:", object.toString());
-                        //Log.d("accessToken", faceBookAccessToken);
+                        Log.d("accessToken", faceBookAccessToken);
                         try {
                              String user_id = object.getString("id");
                              String user_name = object.getString("name");
                              String email = object.getString("email");
                              
-                             api_user_login_facebook(faceBookAccessToken, email, "", user_name, user_id);            		
+                             api_user_login_facebook(faceBookAccessToken, email, "", user_name, user_id);
+                             new GraphRequest(
+                            		    AccessToken.getCurrentAccessToken(),
+                            		    "/529272263907292/taggable_friends",
+                            		    null,
+                            		    HttpMethod.GET,
+                            		    new GraphRequest.Callback() {
+                            		        public void onCompleted(GraphResponse response) {
+                            		        	try {
+                            		        		JSONObject jobj = new JSONObject(response.getRawResponse());
+                        							JSONArray data_aray = jobj.getJSONArray("data");
+                        							for (int i = 0; i < data_aray.length(); i++) {
+                        								
+                        								FacebookFriend facebookFriend = new FacebookFriend((JSONObject) data_aray.get(i));
+                        	                            	if (facebookFriend != null){
+                        	                            		Store.FacebookFriendsList.add(facebookFriend);
+                        	                            	}
+                        	                        }
+      
+                        							
+                        						} catch (JSONException e) {
+                        							e.printStackTrace();
+                        						}	
+                            		        }
+                            		    }
+                            		).executeAsync();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -94,6 +130,8 @@ public class LoginFragment extends CoreFragment {
                 parameters.putString("fields", "id,name,email");
                 request.setParameters(parameters);
                 request.executeAsync();
+                
+                
 			}
 			
 			@Override

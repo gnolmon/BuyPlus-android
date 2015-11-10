@@ -441,6 +441,30 @@ public void api_get_shop_announcement_images(int shop_id, int latest_id, int old
 			requestQueue.add(jsObjRequest);
 	}
 	
+	public void api_remove_friend_from_circle(int shop_id, int friend_id){
+	 	
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		params.put("shop_id", String.valueOf(shop_id));
+		params.put("friend_id", String.valueOf(friend_id));
+			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
+					HandleRequest.REMOVE_FRIEND_FROM_CIRCLE, params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("api_remove_friend_from_circle",response.toString());
+						// code here
+					}
+					}, 
+					new Response.ErrorListener() {
+						@Override
+						public void onErrorResponse(VolleyError error) {
+						}
+					});
+			requestQueue.add(jsObjRequest);
+	}
+
 	//accept_type:  accept, deny, deny_forever	
 	public void api_response_join_shop(int request_id, String accept_type){
 	 	
