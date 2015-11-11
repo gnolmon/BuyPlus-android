@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/canvas"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        android:background="@color/actionbar"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <LinearLayout
+                android:id="@+id/fragment_canvas_search_block"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bound_action_bar"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone" >
+
+                <lc.buyplus.customizes.MyEditText
+                    android:id="@+id/fragment_canvas_search_edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/actionbar_search"
+                    android:gravity="center_vertical"
+                    android:hint="Tìm kiếm"
+                    android:lines="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+
+                <LinearLayout
+                    android:id="@+id/fragnemt_canvas_search_cancel"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:src="@drawable/c" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fragment_canvas_title_block"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:id="@+id/fragment_canvas_search"
+                    android:layout_width="@dimen/actionbar_height"
+                    android:layout_height="match_parent"
+                    android:gravity="center" >
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/search" />
+                </LinearLayout>
+
+                <lc.buyplus.customizes.MyTextView
+                    android:id="@+id/fragment_canvas_title"
+                    android:layout_width="@dimen/zero"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:text="Thêm bạn"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/canvas_title_text_size" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/fragment_canvas_sort"
+            android:layout_width="@dimen/actionbar_height"
+            android:layout_height="match_parent"
+            android:gravity="center" >
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/sort" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlList"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:background="#ecebeb" >
+
+        <RelativeLayout
+            android:id="@+id/rhomeTab"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/feed_item_padding_left_right"
+            android:paddingRight="@dimen/feed_item_padding_left_right" >
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:id="@+id/tvTimban"
+                android:text="Tìm bạn"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+            <EditText
+                android:layout_toEndOf="@id/tvTimban"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Nhập email, ID hoặc tên bạn bè"
+                android:textColor="@color/black"
+                android:textSize="10dp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/tab"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tabbar_height"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:id="@+id/fragment_canvas_home_tab"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/home_ennable" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fragment_canvas_personal_tab"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/personal_ennable" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fragment_canvas_loyaltycard_tab"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/card_ennable" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fragment_canvas_notifications_tab"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ring_ennable" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fragment_canvas_setting_tab"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/setting_ennable" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rladdFriend"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_above="@id/tab"
+            android:background="@color/white" >
+
+            <TextView
+                android:id="@+id/tvAddFriend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Tìm kiếm bạn bè "
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+            <ImageView
+                android:id="@+id/imFb"
+                android:layout_width="@dimen/icon"
+                android:layout_height="@dimen/icon"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/facebook"
+                android:layout_marginRight="@dimen/feed_item_profile_info_padd" />
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/listAddFriend"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/rladdFriend"
+            android:layout_below="@id/rhomeTab"
+            android:divider="@color/list_divider"
+            android:dividerHeight="1dp" />
+    </RelativeLayout>
+
+</LinearLayout>

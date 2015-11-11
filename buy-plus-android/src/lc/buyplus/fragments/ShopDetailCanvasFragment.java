@@ -43,8 +43,6 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 		initListener();
 		initAnimations();
 
-		mActivity.showToastLong(mUser.toString());
-
 		return view;
 	}
 

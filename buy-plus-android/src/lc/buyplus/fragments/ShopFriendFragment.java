@@ -14,13 +14,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import lc.buyplus.R;
+import lc.buyplus.activities.AddFriendActivity;
 import lc.buyplus.adapter.ShopFriendAdapter;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
@@ -36,6 +40,7 @@ public class ShopFriendFragment  extends CoreFragment {
 	private ListView listView;
 	private ShopFriendAdapter friendAdapter;
 	private LayoutInflater inflaterActivity;
+	private ImageView imAdd;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,7 +67,15 @@ public class ShopFriendFragment  extends CoreFragment {
 
 	@Override
 	protected void initViews(View v) {
+		imAdd = (ImageView) v.findViewById(R.id.imAdd);
+		imAdd.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				Intent addFriendActivity = new Intent(mActivity, AddFriendActivity.class);
+				startActivity(addFriendActivity);
+			}
+		});
 	}
 
 	@Override

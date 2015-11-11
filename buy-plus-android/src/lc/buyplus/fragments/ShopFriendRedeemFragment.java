@@ -1,5 +1,6 @@
 package lc.buyplus.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
@@ -7,10 +8,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import lc.buyplus.R;
+import lc.buyplus.activities.AddFriendActivity;
+import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.customizes.MyAnimations;
@@ -27,6 +32,7 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 	private LinearLayout mSearchBlock, mTitleBlock;
 	private LinearLayout mSearchBlockCancel;
 	private MyEditText mSearchEdittext;
+	private ImageView imAdd;
 
 	private MyTextView mTitle;
 
@@ -103,13 +109,11 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 				return ShopFriendFragment.getInstance(mActivity);
 			case 1:
 				return ShopGiftFragment.getInstance(mActivity);
-				/*
-			case 3:
-				return LoyaltyCardFragment.getInstance(mActivity);
-			case 4:
-				return NotificationsFragment.getInstance(mActivity);
-			case 5:
-				return SettingFragment.getInstance(mActivity);*/
+			/*
+			 * case 3: return LoyaltyCardFragment.getInstance(mActivity); case
+			 * 4: return NotificationsFragment.getInstance(mActivity); case 5:
+			 * return SettingFragment.getInstance(mActivity);
+			 */
 			default:
 				break;
 			}
@@ -211,7 +215,6 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 		mPager.setCurrentItem(firstTab);
 		changeTabState(true, true, false, false, false, false);
 
-
 	}
 
 	@Override
@@ -237,6 +240,7 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 		mNotiTab.setOnClickListener(this);
 		mSettingTab.setOnClickListener(this);
 		mBack.setOnClickListener(this);
+
 	}
 
 	@Override

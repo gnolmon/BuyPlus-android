@@ -12,16 +12,17 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.application.MonApplication;
+import lc.buyplus.models.FacebookFriend;
 import lc.buyplus.models.Friend;
 
-public class ShopFriendAdapter extends BaseAdapter {
+public class FriendAdapter extends BaseAdapter {
 
 	private LayoutInflater inflaterActivity;
 	private LayoutInflater inflater;
-	List<Friend> friendList;
+	List<FacebookFriend> friendList;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
 
-	public ShopFriendAdapter( List<Friend> friendList,LayoutInflater inflaterActivity) {
+	public FriendAdapter( List<FacebookFriend> friendList,LayoutInflater inflaterActivity) {
 		this.inflaterActivity = inflaterActivity;
 		this.friendList = friendList;
 	}
@@ -29,7 +30,7 @@ public class ShopFriendAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 1;
+		return 3;
 	}
 
 	@Override
@@ -49,11 +50,11 @@ public class ShopFriendAdapter extends BaseAdapter {
 		if (inflater == null)
 			inflater = (LayoutInflater) inflaterActivity;
 		if (convertView == null)
-			convertView = inflater.inflate(R.layout.item_store_friend, null);
+			convertView = inflater.inflate(R.layout.item_add_friend, null);
 
 		if (imageLoader == null)
 			imageLoader = MonApplication.getInstance().getImageLoader();
-		Friend item = friendList.get(position);
+		FacebookFriend item = friendList.get(position);
 
 		TextView nameFriend = (TextView) convertView.findViewById(R.id.tvFriendName);
 		nameFriend.setText(item.getName());
@@ -68,7 +69,7 @@ public class ShopFriendAdapter extends BaseAdapter {
 		// name.setText(item.getName());
 
 		// user profile pic
-		imNoti.setImageUrl(item.getImage(), imageLoader);
+		imNoti.setImageUrl(item.getPicture(), imageLoader);
 
 		return convertView;
 	}

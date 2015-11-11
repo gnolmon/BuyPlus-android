@@ -27,11 +27,12 @@
                 android:textSize="15dp" />
 
             <ImageView
-                android:id="@+id/imEdit"
+                android:id="@+id/imAdd"
                 android:layout_width="@dimen/icon"
                 android:layout_height="@dimen/icon"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:src="@drawable/add_green"
                 android:layout_marginRight="@dimen/feed_item_profile_info_padd" />
         </RelativeLayout>
 
