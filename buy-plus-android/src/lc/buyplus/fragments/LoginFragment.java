@@ -97,12 +97,13 @@ public class LoginFragment extends CoreFragment {
                              api_user_login_facebook(faceBookAccessToken, email, "", user_name, user_id);
                              new GraphRequest(
                             		    AccessToken.getCurrentAccessToken(),
-                            		    "/529272263907292/taggable_friends",
+                            		    "/"+user_id+"/taggable_friends",
                             		    null,
                             		    HttpMethod.GET,
                             		    new GraphRequest.Callback() {
                             		        public void onCompleted(GraphResponse response) {
                             		        	try {
+                            		        		Log.e("JSON:", response.toString());
                             		        		JSONObject jobj = new JSONObject(response.getRawResponse());
                         							JSONArray data_aray = jobj.getJSONArray("data");
                         							for (int i = 0; i < data_aray.length(); i++) {
