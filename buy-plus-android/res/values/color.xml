@@ -3,6 +3,7 @@
      <!-- BASE COLOR -->
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="title">#6E6E6E</color>
     <color name="red">#FF0000</color>
     <color name="gray_dark">#808080</color>
     <color name="gray_light">#C0C0C0</color>

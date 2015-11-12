@@ -106,33 +106,89 @@
         android:layout_height="@dimen/hometab_height"
         android:layout_centerInParent="true"
         android:background="@color/white"
-        android:paddingLeft="@dimen/feed_item_padding_left_right"
-        android:paddingRight="@dimen/feed_item_padding_left_right"
         android:orientation="horizontal" >
 
-        <TextView
+        <View
+            android:id="@+id/separator"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0.1dp"
+            android:layout_alignParentBottom="true"
             android:layout_centerVertical="true"
-            android:text="Cửa hàng"
-            android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:background="@color/title" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/feed_item_padding_left_right" >
+
+            <ImageView
+                android:id="@+id/imStore"
+                android:layout_width="@dimen/icon_title"
+                android:layout_height="@dimen/icon_title"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/store" />
+
+            <TextView
+                android:id="@+id/tvStore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/imStore"
+                android:text="Cửa hàng"
+                android:textColor="@color/title"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:text="Tin tức"
-            android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:gravity="center"
+            android:orientation="horizontal" >
 
-        <TextView
+            <ImageView
+                android:id="@+id/imNews"
+                android:layout_width="@dimen/icon_title"
+                android:layout_height="@dimen/icon_title"
+                android:layout_margin="5dp"
+                android:src="@drawable/news" />
+
+            <TextView
+                android:id="@+id/tvNews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Tin tức"
+                android:textColor="@color/title"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:text="Sắp xếp"
-            android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/feed_item_padding_left_right" >
+
+            <ImageView
+                android:id="@+id/imSort"
+                android:layout_width="@dimen/icon_title"
+                android:layout_height="@dimen/icon_title"
+                android:layout_margin="5dp"
+                android:src="@drawable/sort_gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="Sắp xếp"
+                android:textColor="@color/title"
+                android:textSize="15dp" />
+        </LinearLayout>
     </RelativeLayout>
 
     <android.support.v4.view.ViewPager
@@ -163,8 +219,8 @@
             android:orientation="vertical" >
 
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="@dimen/icon_title"
+                android:layout_height="@dimen/icon_title"
                 android:src="@drawable/home_ennable" />
         </LinearLayout>
 
@@ -177,8 +233,8 @@
             android:orientation="vertical" >
 
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="@dimen/icon_title"
+                android:layout_height="@dimen/icon_title"
                 android:src="@drawable/personal_ennable" />
         </LinearLayout>
 
@@ -205,8 +261,8 @@
             android:orientation="vertical" >
 
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="@dimen/icon_title"
+                android:layout_height="@dimen/icon_title"
                 android:src="@drawable/ring_ennable" />
         </LinearLayout>
 
@@ -219,8 +275,8 @@
             android:orientation="vertical" >
 
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="@dimen/icon_title"
+                android:layout_height="@dimen/icon_title"
                 android:src="@drawable/setting_ennable" />
         </LinearLayout>
     </LinearLayout>

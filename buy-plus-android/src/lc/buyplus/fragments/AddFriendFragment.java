@@ -68,10 +68,7 @@ public class AddFriendFragment extends CoreFragment {
 			@Override
 			public void onClick(View v) {
 				api_send_request_join_shop_to_friend(1,1);
-				Store store = new Store();
-				FriendAdapter friendAdapter = new FriendAdapter(store.FacebookFriendsList, inflaterActivity);
-				listFriendFb.setAdapter(friendAdapter);
-				friendAdapter.notifyDataSetChanged();
+				
 			}
 		});
 	}
