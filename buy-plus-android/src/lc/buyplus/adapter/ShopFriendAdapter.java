@@ -29,7 +29,7 @@ public class ShopFriendAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 1;
+		return friendList.size();
 	}
 
 	@Override

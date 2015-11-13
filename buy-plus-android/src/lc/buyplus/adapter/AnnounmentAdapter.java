@@ -66,6 +66,10 @@ public class AnnounmentAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		return position;
 	}
+	
+	public int getItem_id(int position){
+		return announcementList.get(position).getId();
+	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {

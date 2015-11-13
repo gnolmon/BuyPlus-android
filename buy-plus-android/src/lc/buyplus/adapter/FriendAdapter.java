@@ -30,7 +30,7 @@ public class FriendAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 3;
+		return friendList.size();
 	}
 
 	@Override

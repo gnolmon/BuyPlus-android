@@ -31,7 +31,7 @@ public class ShopAnnounmentAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return 1	;
+		return announcementList.size();
 	}
 
 	@Override

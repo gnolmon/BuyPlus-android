@@ -29,6 +29,7 @@ import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.models.Announcement;
+import lc.buyplus.models.FacebookFriend;
 import lc.buyplus.models.Friend;
 import lc.buyplus.models.Gift;
 import lc.buyplus.models.Notification;
@@ -51,6 +52,7 @@ public class HomeFragment extends CoreFragment {
 		listView = (ListView) view.findViewById(R.id.listStore);
 		inflaterActivity = inflater;
 		api_get_all_shop(1,0,0);
+		api_search_friends_for_shop(1,"");
 		return view;
 	}
 	@Override
@@ -102,7 +104,10 @@ public class HomeFragment extends CoreFragment {
 							listView.setOnItemClickListener(new OnItemClickListener() {
 							      public void onItemClick(AdapterView<?> parent, View view,
 							          int position, long id) {
-							             Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);     
+							             Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);
+							             Bundle b = new Bundle();
+							             b.putInt("shop_id", storeAdapter.getItem_id(position)); //Your id
+							             shopInfoActivity.putExtras(b); //Put your id to your next Intent
 							             startActivity(shopInfoActivity);
 							      }
 							    });
@@ -121,95 +126,45 @@ public class HomeFragment extends CoreFragment {
 				});
 			requestQueue.add(jsObjRequest);
 	}
-
-	public void api_get_my_shop(int mode){
-	 	
-    	Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		//params.put("mode", String.valueOf(mode));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					HandleRequest.build_link(HandleRequest.GET_MY_SHOP, params), params, 
-					new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_get_my_shop",response.toString());
-						try {
-							JSONArray data_aray = response.getJSONArray("data");
-							for (int i = 0; i < data_aray.length(); i++) {								 
-								Shop shop = new Shop((JSONObject) data_aray.get(i));
-	                        }
-							///////////////////////////
-							//code here
-							//////////////////////////
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-					}
-				}, 
-				new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-					}
-				});
-			requestQueue.add(jsObjRequest);
-	}
-
-	public void api_get_shop_info(int shop_id){
+	
+public void api_search_friends_for_shop(int shop_id, String search){
 	 	
     	Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					HandleRequest.build_link(HandleRequest.GET_SHOP_INFO, params), params, 
-					new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_get_shop_info",response.toString());
-						try {
-							Shop shop = new Shop(response.getJSONObject("data"));	
-							///////////////////////////
-							//code here
-							//////////////////////////
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}	
-					}
-				}, 
-				new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-					}
-				});
-			requestQueue.add(jsObjRequest);
-	}
-
-	public void api_get_all_announcements(int type, int latest_id, int oldest_id, int mode, int search){
-	 	
-    	Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("type", String.valueOf(type));
-		params.put("latest_id", String.valueOf(latest_id));
-		params.put("oldest_id", String.valueOf(oldest_id));
-		params.put("mode", String.valueOf(mode));
 		params.put("search", String.valueOf(search));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
 			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					HandleRequest.build_link(HandleRequest.GET_ALL_ANNOUNCEMENTS, params), params, 
+					HandleRequest.build_link(HandleRequest.SEARCH_FRIENDS_FOR_SHOP, params), params, 
 					new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
 						try {
-							Log.d("api_get_all_announcements",response.toString());
+							Log.d("api_search_friends_for_shop",response.toString());
 							JSONArray data_aray = response.getJSONArray("data");
-							for (int i = 0; i < data_aray.length(); i++) {
-								Announcement announcement = new Announcement((JSONObject) data_aray.get(i));
-								Store.AnnouncementsList.add(announcement);
-								
+							ArrayList<Friend> FriendsList = new ArrayList<Friend>();
+							for (int i = 0; i < data_aray.length(); i++) {								 
+	                            Friend friend = new Friend((JSONObject) data_aray.get(i));
+	                            	if (friend != null){
+	                            		FriendsList.add(friend);
+	                            	}
 	                        }
+							storeAdapter = new StoreAdapter(Store.ShopsList, inflaterActivity);
+							
+							listView.setAdapter(storeAdapter);
+							listView.setOnItemClickListener(new OnItemClickListener() {
+							      public void onItemClick(AdapterView<?> parent, View view,
+							          int position, long id) {
+							             Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);
+							             Bundle b = new Bundle();
+							             b.putInt("shop_id", storeAdapter.getItem_id(position)); //Your id
+							             shopInfoActivity.putExtras(b); //Put your id to your next Intent
+							             startActivity(shopInfoActivity);
+							      }
+							    });
+							storeAdapter.notifyDataSetChanged();
+							
 						} catch (JSONException e) {
-
 							e.printStackTrace();
 						}	
 					}
@@ -217,371 +172,11 @@ public class HomeFragment extends CoreFragment {
 				new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-					}
-				});
-			requestQueue.add(jsObjRequest);
-	}	
-	
-	public void api_get_shop_announcements(int shop_id, int type, int latest_id, int oldest_id){
-	 	
-    	Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("shop_id", String.valueOf(shop_id));
-		params.put("type", String.valueOf(type));
-		params.put("latest_id", String.valueOf(latest_id));
-		params.put("oldest_id", String.valueOf(oldest_id));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					HandleRequest.build_link(HandleRequest.GET_SHOP_ANNOUNCEMENTS, params), params, 
-					new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_get_shop_announcements",response.toString());
-						try {
-							ArrayList<Announcement> AnnouncementsList = new ArrayList<Announcement>();
-							JSONArray data_aray = response.getJSONArray("data");
-							for (int i = 0; i < data_aray.length(); i++) {
-								Announcement announcement = new Announcement((JSONObject) data_aray.get(i));
-								AnnouncementsList.add(announcement);
-	                        }
-						} catch (JSONException e) {
-
-							e.printStackTrace();
-						}	
-					}
-				}, 
-				new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
+						Log.d("api_get_all_shop",error.toString());
 					}
 				});
 			requestQueue.add(jsObjRequest);
 	}
-	
-public void api_get_shop_announcement_images(int shop_id, int latest_id, int oldest_id){
-	 	
-    	Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("shop_id", String.valueOf(shop_id));
-		params.put("latest_id", String.valueOf(latest_id));
-		params.put("oldest_id", String.valueOf(oldest_id));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					HandleRequest.build_link(HandleRequest.GET_SHOP_ANNOUNCEMENT_IMAGES, params), params, 
-					new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_get_shop_announcement_images",response.toString());
-						try {
-							ArrayList<Photo> PhotosList = new ArrayList<Photo>();
-							JSONArray data_aray = response.getJSONArray("data");
-							for (int i = 0; i < data_aray.length(); i++) {
-								Photo photo = new Photo((JSONObject) data_aray.get(i));
-								PhotosList.add(photo);
-	                        }
-						} catch (JSONException e) {
-
-							e.printStackTrace();
-						}	
-					}
-				}, 
-				new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-					}
-				});
-			requestQueue.add(jsObjRequest);
-	}
-
-	public void api_get_shop_gifts(int shop_id){
-	 	
-    	Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("shop_id", String.valueOf(shop_id));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					HandleRequest.build_link(HandleRequest.GET_SHOP_GIFTS, params), params, 
-					new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_get_shop_gifts",response.toString());
-						try {
-							ArrayList<Gift> GiftsList = new ArrayList<Gift>();
-							JSONArray data_aray = response.getJSONArray("data");
-							for (int i = 0; i < data_aray.length(); i++) {
-								Gift gift = new Gift((JSONObject) data_aray.get(i));
-								GiftsList.add(gift);
-	                        }
-
-						} catch (JSONException e) {
-
-							e.printStackTrace();
-						}	
-					}
-				}, 
-				new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-					}
-				});
-			requestQueue.add(jsObjRequest);
-	}
-
-	public void api_get_shop_friends(int shop_id){
-	 	
-    	Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("shop_id", String.valueOf(shop_id));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					HandleRequest.build_link(HandleRequest.GET_SHOP_FRIENDS, params), params, 
-					new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_get_shop_gifts",response.toString());
-						try {
-							ArrayList<Friend>FriendsList = new ArrayList<Friend>();
-							JSONArray data_aray = response.getJSONArray("data");
-							for (int i = 0; i < data_aray.length(); i++) {
-								Friend friend = new Friend((JSONObject) data_aray.get(i));
-								FriendsList.add(friend);
-							}
-						} catch (JSONException e) {
-
-							e.printStackTrace();
-						}	
-						//code here
-					}
-				}, 
-				new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-					}
-				});
-			requestQueue.add(jsObjRequest);
-	}
-
-	public void api_get_notifications(int latest_id, int oldest_id){
-	 	
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("latest_id", String.valueOf(latest_id));
-		params.put("oldest_id", String.valueOf(oldest_id));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					HandleRequest.build_link(HandleRequest.GET_NOTIFICATIONS, params), params, 
-					new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_get_notifications",response.toString());
-						try {
-							JSONArray data_aray = response.getJSONArray("data");
-							for (int i = 0; i < data_aray.length(); i++) {
-								Notification notification = new Notification((JSONObject) data_aray.get(i));
-								Store.NotificationsList.add(notification);
-							}					
-						} catch (JSONException e) {
-
-							e.printStackTrace();
-						}	
-						//code here
-					}
-					}, 
-					new Response.ErrorListener() {
-						@Override
-						public void onErrorResponse(VolleyError error) {
-						}
-					});
-			requestQueue.add(jsObjRequest);
-	}
-
-	public void api_read_notifications(){
-	 	
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
-					HandleRequest.READ_NOTIFICATIONS, params, 
-					new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_read_notifications",response.toString());
-						// code here
-					}
-					}, 
-					new Response.ErrorListener() {
-						@Override
-						public void onErrorResponse(VolleyError error) {
-						}
-					});
-			requestQueue.add(jsObjRequest);
-	}
-	
-	public void api_send_request_join_shop_to_friend(int shop_id, int temp_id){
-	 	
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("shop_id", String.valueOf(shop_id));
-		params.put("temp_id", String.valueOf(temp_id));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
-					HandleRequest.SEND_REQUEST_JOIN_SHOP_TO_FRIEND, params, 
-					new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_send_request_join_shop_to_friend",response.toString());
-						// code here
-					}
-					}, 
-					new Response.ErrorListener() {
-						@Override
-						public void onErrorResponse(VolleyError error) {
-						}
-					});
-			requestQueue.add(jsObjRequest);
-	}
-	
-	public void api_remove_friend_from_circle(int shop_id, int friend_id){
-	 	
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("shop_id", String.valueOf(shop_id));
-		params.put("friend_id", String.valueOf(friend_id));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
-					HandleRequest.REMOVE_FRIEND_FROM_CIRCLE, params, 
-					new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_remove_friend_from_circle",response.toString());
-						// code here
-					}
-					}, 
-					new Response.ErrorListener() {
-						@Override
-						public void onErrorResponse(VolleyError error) {
-						}
-					});
-			requestQueue.add(jsObjRequest);
-	}
-
-	//accept_type:  accept, deny, deny_forever	
-	public void api_response_join_shop(int request_id, String accept_type){
-	 	
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("request_id", String.valueOf(request_id));
-		params.put("accept_type", accept_type);
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
-					HandleRequest.RESPONSE_REQUEST__JOIN_SHOP, params, 
-					new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_response_join_shop",response.toString());
-						// code here
-					}
-					}, 
-					new Response.ErrorListener() {
-						@Override
-						public void onErrorResponse(VolleyError error) {
-						}
-					});
-			requestQueue.add(jsObjRequest);
-	}
-	
-	public void api_join_shop(int shop_id){
-	 	
-    	Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("shop_id", String.valueOf(shop_id));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
-					HandleRequest.JOIN_SHOP, params, 
-					new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_join_shop",response.toString());
-						// code here
-					}
-					}, 
-					new Response.ErrorListener() {
-						@Override
-						public void onErrorResponse(VolleyError error) {
-						}
-					});
-			requestQueue.add(jsObjRequest);
-	}
-	
-	public void api_leave_shop(int shop_id){
-	 	
-    	Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("shop_id", String.valueOf(shop_id));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
-					HandleRequest.LEAVE_SHOP, params, 
-					new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_leave_shop",response.toString());
-						// code here
-					}
-					}, 
-					new Response.ErrorListener() {
-						@Override
-						public void onErrorResponse(VolleyError error) {
-						}
-					});
-			requestQueue.add(jsObjRequest);
-	}
-	
-	public void get_added_point_in_shop(int shop_id){
-	 	
-    	Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("shop_id", String.valueOf(shop_id));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
-					HandleRequest.GET_ADDED_POINT_IN_SHOP, params, 
-					new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("get_added_point_in_shop",response.toString());
-						// code here
-					}
-					}, 
-					new Response.ErrorListener() {
-						@Override
-						public void onErrorResponse(VolleyError error) {
-						}
-					});
-			requestQueue.add(jsObjRequest);
-	}
-	
-	public void get_added_point_history(int shop_id){
- 	
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("shop_id", String.valueOf(shop_id));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					HandleRequest.build_link(HandleRequest.GET_ADDED_POINT_HISTORY, params), params, 
-					new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("get_added_point_history",response.toString());
-						// code here
-					}
-					}, 
-					new Response.ErrorListener() {
-						@Override
-						public void onErrorResponse(VolleyError error) {
-						}
-					});
-			requestQueue.add(jsObjRequest);
-	}
-	
 	
 	public static final long serialVersionUID = 6036846677812555352L;
 	

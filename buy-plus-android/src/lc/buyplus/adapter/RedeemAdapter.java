@@ -35,7 +35,7 @@ public class RedeemAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return 1;
+		return giftItems.size();
 	}
 
 	@Override

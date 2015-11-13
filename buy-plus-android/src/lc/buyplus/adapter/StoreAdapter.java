@@ -37,7 +37,10 @@ public class StoreAdapter extends BaseAdapter{
 	public Object getItem(int position) {
 		return storeList.get(position);
 	}
-
+	
+	public int getItem_id(int position){
+		return storeList.get(position).getId();
+	}
 	@Override
 	public long getItemId(int position) {
 		return position;

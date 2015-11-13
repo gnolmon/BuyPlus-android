@@ -108,8 +108,9 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 				return ShopInfoFragment.getInstance(mActivity);
 			case 2:
 				return ShopImageFragment.getInstance(mActivity);
-			/*
-			 * case 3: return LoyaltyCardFragment.getInstance(mActivity); case
+			case 3: 
+				return LoyaltyCardFragment.getInstance(mActivity); 
+			 /*case
 			 * 4: return NotificationsFragment.getInstance(mActivity); case 5:
 			 * return SettingFragment.getInstance(mActivity);
 			 */
