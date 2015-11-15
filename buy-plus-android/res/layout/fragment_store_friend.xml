@@ -13,9 +13,15 @@
         <RelativeLayout
             android:id="@+id/rladdFriend"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="40dp"
             android:layout_alignParentBottom="true"
             android:background="@color/white" >
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
+                android:background="@color/title" />
 
             <TextView
                 android:id="@+id/tvAddFriend"
@@ -28,11 +34,11 @@
 
             <ImageView
                 android:id="@+id/imAdd"
-                android:layout_width="@dimen/icon"
-                android:layout_height="@dimen/icon"
+                android:layout_width="@dimen/icon_normal"
+                android:layout_height="@dimen/icon_normal"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/add_green"
+                android:src="@drawable/add_gray"
                 android:layout_marginRight="@dimen/feed_item_profile_info_padd" />
         </RelativeLayout>
 

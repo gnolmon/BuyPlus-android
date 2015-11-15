@@ -71,54 +71,6 @@
             android:background="@color/white"
             android:scaleType="fitXY"
             android:visibility="visible" />
-
-        <!--
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/feed_item_padding_left_right"
-            android:paddingRight="@dimen/feed_item_padding_left_right" >
-
-            Like
-
-            <Button
-                android:id="@+id/imLike"
-                android:layout_marginTop="15dp"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:background="@drawable/unlike" />
-
-            <TextView
-                android:id="@+id/storeLike"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="5dp"
-                android:text="Like"
-                android:textColor="#000000"
-                android:textSize="15dp" />
-            Comment
-
-            <ImageView
-                android:id="@+id/imComment"
-                android:layout_marginTop="15dp"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="30dp"
-                android:background="@drawable/comment" />
-
-            <TextView
-                android:id="@+id/storeComment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="5dp"
-                android:text="Comment"
-                android:textColor="#000000"
-                android:textSize="15dp" />
-        </LinearLayout>
-        -->
     </LinearLayout>
 
 </LinearLayout>
