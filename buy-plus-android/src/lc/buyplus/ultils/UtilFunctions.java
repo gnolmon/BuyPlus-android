@@ -5,7 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
+import android.content.Context;
+import android.graphics.Point;
+import android.view.Display;
+import android.view.WindowManager;
+
 public class UtilFunctions {
+	private Context _context;
 	public static boolean dateValidate(String d) {
 		String dateArray[] = d.split("-");
 		int day = Integer.parseInt(dateArray[0]);
@@ -90,4 +96,22 @@ public class UtilFunctions {
 		Date date = new Date();
 		return dateFormat.format(date);
 	}
+	
+	public int getScreenWidth() {
+        int columnWidth;
+        WindowManager wm = (WindowManager) _context
+                .getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+ 
+        final Point point = new Point();
+        try {
+            display.getSize(point);
+        } catch (java.lang.NoSuchMethodError ignore) {
+            // Older device
+            point.x = display.getWidth();
+            point.y = display.getHeight();
+        }
+        columnWidth = point.x;
+        return columnWidth;
+    }
 }
