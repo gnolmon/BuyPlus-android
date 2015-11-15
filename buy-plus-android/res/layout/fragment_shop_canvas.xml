@@ -64,50 +64,128 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/hometab_height"
         android:layout_centerInParent="true"
-        android:paddingLeft="@dimen/feed_item_padding_left_right"
-        android:paddingRight="@dimen/feed_item_padding_left_right"
         android:background="@color/white"
         android:orientation="horizontal" >
 
-        <TextView
+        <View
+            android:id="@+id/separator"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0.1dp"
+            android:layout_alignParentBottom="true"
             android:layout_centerVertical="true"
-            android:text="Bài viết"
-            android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:background="@color/title" />
+
+        <View
+            android:id="@+id/idcenter"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="@dimen/margin_divide"
+            android:layout_marginTop="@dimen/margin_divide"
+            android:background="@color/title" />
 
         <RelativeLayout
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true" >
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/idcenter"
+            android:orientation="horizontal" >
 
-            <TextView
-                android:layout_width="wrap_content"
+            <View
+                android:id="@+id/center1"
+                android:layout_width="1dp"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="@dimen/margin_divide"
+                android:layout_marginTop="@dimen/margin_divide"
+                android:background="@color/title" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
-                android:text="Thông tin"
-                android:textColor="@color/black"
-                android:textSize="15dp" />
+                android:layout_toLeftOf="@id/center1"
+                android:gravity="center"
+                android:orientation="horizontal" >
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Bài viết"
+                    android:textColor="@color/title"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:text="Hình ảnh"
-                android:textColor="@color/black"
-                android:textSize="15dp" />
+                android:layout_toRightOf="@id/center1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Thông tin"
+                    android:textColor="@color/title"
+                    android:textSize="15dp" />
+            </LinearLayout>
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tvPoint"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:text="Tích điểm"
-            android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:layout_toEndOf="@id/idcenter"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <View
+                android:id="@+id/center2"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/margin_divide"
+                android:layout_marginBottom="@dimen/margin_divide"
+                android:background="@color/title" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_toStartOf="@id/center2"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="Hình ảnh"
+                    android:textColor="@color/title"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/center2"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/tvPoint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tích điểm"
+                    android:textColor="@color/title"
+                    android:textSize="15dp" />
+            </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 
     <android.support.v4.view.ViewPager
@@ -117,11 +195,6 @@
         android:layout_weight="1"
         android:background="@color/white" >
     </android.support.v4.view.ViewPager>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/actionbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
