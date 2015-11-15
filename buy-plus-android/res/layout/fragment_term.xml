@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/feed_bg"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -49,35 +49,6 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/lnButton"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_above="@id/tab"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/padding_standard" >
-
-        <Button
-            android:id="@+id/btnAgreeTerm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/maincolor"
-            android:text="Đồng ý"
-            android:textColor="@color/white" >
-        </Button>
-
-        <Button
-            android:id="@+id/btnIgnore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/padding_standard"
-            android:background="@color/maincolor"
-            android:text="Từ chối"
-            android:textColor="@color/white" >
-        </Button>
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/tab"
@@ -186,22 +157,64 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/term"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@id/lnButton"
+        android:layout_above="@id/tab"
+        android:layout_below="@id/tabtop"
+        android:background="@color/feed_bg"
         android:gravity="center_vertical"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:padding="@dimen/padding_standard" >
+        <LinearLayout
+            android:id="@+id/lnButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:padding="@dimen/padding_standard"
+            android:background="@color/feed_bg"
+            android:orientation="horizontal" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/feed_item_margin"
-            android:scrollbars="vertical"
-            android:text="Điều khoản sử dụng"
-            android:textColor="@color/black"
-            android:textSize="15dp" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/btnAgreeTerm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@color/maincolor"
+                android:text="Đồng ý"
+                android:textColor="@color/white" >
+            </Button>
+
+            <Button
+                android:id="@+id/btnIgnore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/padding_standard"
+                android:layout_toRightOf="@id/btnAgreeTerm"
+                android:background="@color/maincolor"
+                android:text="Từ chối"
+                android:textColor="@color/white" >
+            </Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/lnButton"
+            android:background="@drawable/bg_parent_rounded_corner"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/feed_item_margin"
+                android:scrollbars="vertical"
+                android:text="Điều khoản sử dụng"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
