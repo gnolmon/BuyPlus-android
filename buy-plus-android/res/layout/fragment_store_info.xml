@@ -8,7 +8,7 @@
         android:id="@+id/rlbanner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background_gray"
+        android:background="@color/white"
         android:orientation="vertical" >
 
         <com.android.volley.toolbox.NetworkImageView
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/imbannerStore"
             android:text="Cửa hàng"
-            android:textColor="@color/white"
+            android:textColor="@color/title"
             android:layout_centerHorizontal="true"
             android:textSize="20dp" />
     </RelativeLayout>
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_below="@id/rlbanner"
-        android:background="@color/background_gray" >
+        android:background="@color/white" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,7 +45,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/background_gray"
+                android:background="@color/white"
                 android:orientation="vertical" >
 
                 <ImageView
@@ -68,7 +68,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/background_gray"
+                android:background="@color/white"
                 android:orientation="vertical" >
 
                 <ImageView
@@ -91,7 +91,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/background_gray"
+                android:background="@color/white"
                 android:orientation="vertical" >
 
                 <ImageView
@@ -114,7 +114,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/background_gray"
+                android:background="@color/white"
                 android:orientation="vertical" >
 
                 <ImageView
@@ -137,7 +137,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/background_gray"
+                android:background="@color/white"
                 android:orientation="vertical" >
 
                 <ImageView
