@@ -2,13 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/feed_bg"
     android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical">
+        android:layout_marginLeft="@dimen/feed_item_margin"
+        android:layout_marginRight="@dimen/feed_item_margin"
+        android:layout_marginTop="@dimen/feed_item_margin"
+        android:background="@drawable/bg_parent_rounded_corner"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/feed_item_padding_top_bottom"
+        android:paddingTop="@dimen/feed_item_padding_top_bottom" >
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -35,17 +41,17 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
-                    android:textSize="@dimen/feed_item_profile_name"
-                    android:textColor="@color/actionbar"
                     android:text="JackLand"
+                    android:textColor="@color/actionbar"
+                    android:textSize="@dimen/feed_item_profile_name"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvTimestamp"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/timestamp"
                     android:text="10:00"
+                    android:textColor="@color/timestamp"
                     android:textSize="@dimen/feed_item_timestamp" />
             </LinearLayout>
         </LinearLayout>
@@ -54,12 +60,11 @@
             android:id="@+id/tvStatus"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/timestamp"
             android:paddingBottom="5dp"
             android:paddingLeft="@dimen/feed_item_status_pad_left_right"
             android:paddingRight="@dimen/feed_item_status_pad_left_right"
-            android:paddingTop="@dimen/feed_item_status_pad_top" />
-
+            android:paddingTop="@dimen/feed_item_status_pad_top"
+            android:textColor="@color/timestamp" />
 
         <lc.buyplus.cores.FeedImageView
             android:id="@+id/imFeed"
@@ -69,7 +74,8 @@
             android:scaleType="fitXY"
             android:visibility="visible" />
 
-        <!-- <LinearLayout
+        <!--
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -113,7 +119,8 @@
                 android:text="Comment"
                 android:textColor="#000000"
                 android:textSize="15dp" />
-        </LinearLayout> -->
+        </LinearLayout>
+        -->
     </LinearLayout>
 
 </LinearLayout>
