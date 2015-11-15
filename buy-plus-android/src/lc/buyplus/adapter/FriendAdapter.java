@@ -60,8 +60,8 @@ public class FriendAdapter extends BaseAdapter {
 		nameFriend.setText(item.getName());
 
 		
-		TextView tvID = (TextView) convertView.findViewById(R.id.tvFriendId);
-		tvID.setText("ID:" +item.getId());
+		//TextView tvID = (TextView) convertView.findViewById(R.id.tvFriendId);
+		//tvID.setText("ID:" +item.getId());
 
 
 		NetworkImageView imNoti = (NetworkImageView) convertView.findViewById(R.id.imFriend);

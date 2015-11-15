@@ -1,8 +1,11 @@
 package lc.buyplus.fragments;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.android.volley.RequestQueue;
@@ -24,21 +27,30 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.adapter.AddFriendAdapter;
 import lc.buyplus.adapter.FriendAdapter;
+import lc.buyplus.adapter.ShopFriendAdapter;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.models.Friend;
 import lc.buyplus.models.Store;
+import lc.buyplus.models.UserAccount;
 
 public class AddFriendFragment extends CoreFragment {
 	Display display;
-	private ImageView imFb;
+	private ImageView imFb, imSearchFriend;
 	private ListView listFriendFb;
 	private LayoutInflater inflaterActivity;
+	private FriendAdapter friendAdapter;
+	private AddFriendAdapter addFriendAdapter;
+	private EditText txtFind;
+	private String search_params;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,14 +75,27 @@ public class AddFriendFragment extends CoreFragment {
 	protected void initViews(View v) {
 		listFriendFb = (ListView) v.findViewById(R.id.listAddFriend);
 		imFb = (ImageView) v.findViewById(R.id.imFb);
+		txtFind = (EditText) v.findViewById(R.id.search_params);
 		imFb.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				api_send_request_join_shop_to_friend(1,1);
-				
+				friendAdapter = new FriendAdapter(Store.FacebookFriendsList, inflaterActivity);
+				listFriendFb.setAdapter(friendAdapter);
+				friendAdapter.notifyDataSetChanged();	
 			}
 		});
+		
+		imSearchFriend = (ImageView) v.findViewById(R.id.imSearchFriend);
+		imSearchFriend.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				search_params = String.valueOf(txtFind.getText());
+				api_search_friends_for_shop(search_params);
+			}
+		});
+		
 	}
 
 	@Override
@@ -107,7 +132,7 @@ public class AddFriendFragment extends CoreFragment {
 	public void api_send_request_join_shop_to_friend(int shop_id, int temp_id){
 	 	
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		params.put("access_token", Store.user.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
 		params.put("temp_id", String.valueOf(temp_id));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
@@ -127,5 +152,43 @@ public class AddFriendFragment extends CoreFragment {
 					});
 			requestQueue.add(jsObjRequest);
 	}
+	
+public void api_search_friends_for_shop(String search){
+	 	
+    	Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", Store.user.getAccessToken());
+		params.put("search", String.valueOf(search));
+		Log.d("search", String.valueOf(search));
+			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
+					HandleRequest.build_link(HandleRequest.SEARCH_FRIENDS_FOR_SHOP, params), params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						try {
+							Log.d("api_search_friends_for_shop", response.toString());
+							ArrayList<Friend> FriendsList = new ArrayList<Friend>();
+							JSONArray data_aray = response.getJSONArray("data");
+							for (int i = 0; i < data_aray.length(); i++) {
+								Friend friend = new Friend((JSONObject) data_aray.get(i));
+								FriendsList.add(friend);
+								
+	                        }
+							addFriendAdapter = new AddFriendAdapter(FriendsList, inflaterActivity);
+							listFriendFb.setAdapter(addFriendAdapter);
+							addFriendAdapter.notifyDataSetChanged();	
+						} catch (JSONException e) {
+
+							e.printStackTrace();
+						}	
+					}
+				}, 
+				new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+					}
+				});
+			requestQueue.add(jsObjRequest);
+	}	
 	
 }

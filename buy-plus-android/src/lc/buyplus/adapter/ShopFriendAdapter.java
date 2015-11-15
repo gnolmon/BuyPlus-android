@@ -1,17 +1,33 @@
 package lc.buyplus.adapter;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.json.JSONObject;
+
+import com.android.volley.Request.Method;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.application.MonApplication;
+import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.fragments.CanvasFragment;
+import lc.buyplus.fragments.ShopDetailCanvasFragment;
 import lc.buyplus.models.Friend;
 
 public class ShopFriendAdapter extends BaseAdapter {
@@ -43,6 +59,11 @@ public class ShopFriendAdapter extends BaseAdapter {
 		// TODO Auto-generated method stub
 		return position;
 	}
+	
+	public long getFriendId(int position) {
+		// TODO Auto-generated method stub
+		return friendList.get(position).getId();
+	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -53,15 +74,24 @@ public class ShopFriendAdapter extends BaseAdapter {
 
 		if (imageLoader == null)
 			imageLoader = MonApplication.getInstance().getImageLoader();
-		Friend item = friendList.get(position);
-
+		final Friend item = friendList.get(position);
+		final int pos = position;
 		TextView nameFriend = (TextView) convertView.findViewById(R.id.tvFriendName);
 		nameFriend.setText(item.getName());
 
 		
 		TextView tvID = (TextView) convertView.findViewById(R.id.tvFriendId);
 		tvID.setText("ID:" +item.getId());
-
+		
+		Button delBtn = (Button) convertView.findViewById(R.id.btnDelFriend);
+		delBtn.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				
+				api_remove_friend_from_shop(ShopInfoActivity.current_shop_id,item.getId());
+				friendList.remove(pos);
+			}
+		});
 
 		NetworkImageView imNoti = (NetworkImageView) convertView.findViewById(R.id.imFriend);
 
@@ -71,6 +101,30 @@ public class ShopFriendAdapter extends BaseAdapter {
 		imNoti.setImageUrl(item.getImage(), imageLoader);
 
 		return convertView;
+	}
+	
+	public void api_remove_friend_from_shop(int shop_id,int friend_id){
+	 	
+    	Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		params.put("shop_id", String.valueOf(shop_id));
+		params.put("friend_id", String.valueOf(friend_id));
+			RequestQueue requestQueue = Volley.newRequestQueue(CanvasFragment.mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
+					HandleRequest.REMOVE_FRIEND_FROM_CIRCLE, params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("get_added_point_in_shop",response.toString());
+						// code here
+					}
+					}, 
+					new Response.ErrorListener() {
+						@Override
+						public void onErrorResponse(VolleyError error) {
+						}
+					});
+			requestQueue.add(jsObjRequest);
 	}
 
 }

@@ -44,7 +44,7 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 		initListener();
 		initAnimations();
 
-		mActivity.showToastLong(mUser.toString());
+		//mActivity.showToastLong(mUser.toString());
 
 		return view;
 	}

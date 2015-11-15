@@ -250,8 +250,8 @@ public class LoginFragment extends CoreFragment {
 							editor.putString("login_name", editName.getText().toString());
 							editor.putString("password", editPass.getText().toString());
 							editor.commit();
-							UserAccount user = new UserAccount(accessToken,id,phone,email,login_name,imageUrl,imageThumbnail,username,active);;
-							mFragmentManager.beginTransaction().replace(R.id.canvas, CanvasFragment.getInstance(mActivity, user)).commit();
+							Store.user = new UserAccount(accessToken,id,phone,email,login_name,imageUrl,imageThumbnail,username,active);;
+							mFragmentManager.beginTransaction().replace(R.id.canvas, CanvasFragment.getInstance(mActivity, Store.user)).commit();
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -294,8 +294,8 @@ public class LoginFragment extends CoreFragment {
 							int active = Integer.parseInt(data.getString("active"));
 							
 							
-							UserAccount user = new UserAccount(accessToken,id,phone,email,login_name,imageUrl,imageThumbnail,username,active);
-							mFragmentManager.beginTransaction().replace(R.id.canvas, CanvasFragment.getInstance(mActivity, user)).commit();
+							Store.user = new UserAccount(accessToken,id,phone,email,login_name,imageUrl,imageThumbnail,username,active);
+							mFragmentManager.beginTransaction().replace(R.id.canvas, CanvasFragment.getInstance(mActivity, Store.user)).commit();
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

@@ -9,4 +9,5 @@ public class Store {
 	public static ArrayList<Notification> NotificationsList = new ArrayList<Notification>();
 	public static ArrayList<Shop> MyShopsList = new ArrayList<Shop>();
 	public static ArrayList<FacebookFriend> FacebookFriendsList = new ArrayList<FacebookFriend>();
+	public static UserAccount user;
 }

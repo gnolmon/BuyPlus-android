@@ -136,11 +136,11 @@
                 android:textSize="15dp" />
 
             <EditText
+                android:id="@+id/search_params"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/tvTimban"
-                android:text="Nhập email, ID hoặc tên bạn bè"
                 android:textColor="@color/title"
                 android:textSize="10dp" />
         </RelativeLayout>
