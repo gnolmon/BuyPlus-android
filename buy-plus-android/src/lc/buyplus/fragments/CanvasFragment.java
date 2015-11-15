@@ -150,7 +150,7 @@ public class CanvasFragment extends CoreFragment {
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			mTitle.setText(getResources().getString(R.string.canvas_title_home));
 		} else {
-			mHomeTab.setBackgroundColor(getResources().getColor(R.color.white));
+			mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
 			rHomeTab.setVisibility(View.GONE);
 		}
 		if (homenews) {
@@ -158,32 +158,32 @@ public class CanvasFragment extends CoreFragment {
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			mTitle.setText(getResources().getString(R.string.canvas_title_home));
 		} else {
-			mHomeTab.setBackgroundColor(getResources().getColor(R.color.white));
+			mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
 			rHomeTab.setVisibility(View.GONE);
 		}
 		if (personal) {
 			mPersonalTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			mTitle.setText(getResources().getString(R.string.canvas_title_personal));
 		} else {
-			mPersonalTab.setBackgroundColor(getResources().getColor(R.color.white));
+			mPersonalTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
 		}
 		if (loyaltycard) {
 			mLoyaltyCardTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			mTitle.setText(getResources().getString(R.string.canvas_title_loyaltycard));
 		} else {
-			mLoyaltyCardTab.setBackgroundColor(getResources().getColor(R.color.white));
+			mLoyaltyCardTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
 		}
 		if (noti) {
 			mNotiTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			mTitle.setText(getResources().getString(R.string.canvas_title_notifications));
 		} else {
-			mNotiTab.setBackgroundColor(getResources().getColor(R.color.white));
+			mNotiTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
 		}
 		if (setting) {
 			mSettingTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			mTitle.setText(getResources().getString(R.string.canvas_title_setting));
 		} else {
-			mSettingTab.setBackgroundColor(getResources().getColor(R.color.white));
+			mSettingTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
 		}
 	}
 
