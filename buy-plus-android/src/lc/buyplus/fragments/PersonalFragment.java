@@ -3,10 +3,8 @@ package lc.buyplus.fragments;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 
-import lc.buyplus.R;
-import lc.buyplus.cores.CoreActivity;
-import lc.buyplus.cores.CoreFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -14,15 +12,20 @@ import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import lc.buyplus.R;
+import lc.buyplus.activities.UserActivity;
+import lc.buyplus.cores.CoreActivity;
+import lc.buyplus.cores.CoreFragment;
 
 public class PersonalFragment extends CoreFragment {
 	Display display;
+
+	private ImageView imEdit;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,6 +49,18 @@ public class PersonalFragment extends CoreFragment {
 	protected void initViews(View v) {
 		WindowManager manager = (WindowManager) mActivity.getSystemService(Context.WINDOW_SERVICE);
 		display = manager.getDefaultDisplay();
+
+		imEdit = (ImageView) v.findViewById(R.id.imEdit);
+		imEdit.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent userActivity = new Intent(mActivity, UserActivity.class);
+
+				startActivity(userActivity);
+
+			}
+		});
 
 		TextView user_id_txt = (TextView) v.findViewById(R.id.user_id);
 		user_id_txt.setText("123213");

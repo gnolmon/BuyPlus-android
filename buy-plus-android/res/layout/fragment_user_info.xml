@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/canvas"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerInParent="true"
+        android:background="@color/white"
+        android:padding="@dimen/padding_standard" >
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/imFriend"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginRight="8dp" />
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/imFriend"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/edUser"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Thanh Mai"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+            <View
+                android:id="@+id/diverName"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/edUser"
+                android:background="@color/white" />
+
+            <CheckBox
+                android:id="@+id/cbMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/diverName"
+                android:text="Nam"
+                android:textColor="@color/title" />
+
+            <CheckBox
+                android:id="@+id/cbFemale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/diverName"
+                android:layout_marginLeft="20dp"
+                android:layout_toEndOf="@id/cbMale"
+                android:text="Nữ"
+                android:textColor="@color/title" />
+
+            <View
+                android:id="@+id/devideSex"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/cbMale"
+                android:background="@color/title" />
+
+            <EditText
+                android:id="@+id/edBirthday"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/devideSex"
+                android:inputType="date"
+                android:text="07/01/1994"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+            <View
+                android:id="@+id/devideBirthday"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/edBirthday"
+                android:background="@color/white" />
+
+            <EditText
+                android:id="@+id/edAddress"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/devideBirthday"
+                android:text="Hà Nội"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+        </RelativeLayout>
+        <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:padding="@dimen/padding_standard"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/btnAgreeTerm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/maincolor"
+            android:text="Đồng ý"
+            android:textColor="@color/white" >
+        </Button>
+
+        <Button
+            android:id="@+id/btnIgnore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/padding_standard"
+            android:layout_toRightOf="@id/btnAgreeTerm"
+            android:background="@color/maincolor"
+            android:text="Từ chối"
+            android:textColor="@color/white" >
+        </Button>
+    </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
