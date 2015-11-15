@@ -54,6 +54,7 @@
     <dimen name="feed_item_corner_radius">3dp</dimen>
     <dimen name="feed_item_border_width">1dp</dimen>
     <dimen name="title">17dp</dimen>
+    <dimen name="title_pass">15dp</dimen>
     <dimen name="caption">10dip</dimen>
     
     

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/canvas"
+    android:background="@color/white"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -23,16 +23,16 @@
                 android:layout_centerVertical="true"
                 android:text="Mật khẩu hiện tại"
                 android:textColor="@color/black"
-                android:textSize="10dp" />
+                android:textSize="@dimen/title_pass" />
 
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="120dp"
                 android:inputType="textPassword"
                 android:textColor="@color/title"
-                android:textSize="10dp" />
+                android:textSize="@dimen/title_pass" />
         </RelativeLayout>
 
         <View
@@ -55,16 +55,16 @@
                 android:text="Mật khẩu mới"
                 
                 android:textColor="@color/black"
-                android:textSize="10dp" />
+                android:textSize="@dimen/title_pass" />
 
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="120dp"
                 android:inputType="textPassword"
                 android:textColor="@color/title"
-                android:textSize="10dp" />
+                android:textSize="@dimen/title_pass" />
         </RelativeLayout>
 
         <View
@@ -86,16 +86,16 @@
                 android:layout_centerVertical="true"
                 android:text="Mật khẩu mới"
                 android:textColor="@color/black"
-                android:textSize="10dp" />
+                android:textSize="@dimen/title_pass" />
 
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="120dp"
                 android:inputType="textPassword"
                 android:textColor="@color/title"
-                android:textSize="10dp" />
+                android:textSize="@dimen/title_pass" />
         </RelativeLayout>
     </LinearLayout>
 

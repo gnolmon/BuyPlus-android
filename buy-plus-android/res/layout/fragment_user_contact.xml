@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/canvas"
+    android:background="@color/white"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -23,7 +23,7 @@
                 android:layout_centerVertical="true"
                 android:text="Email"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="@dimen/title_pass" />
 
             <EditText
                 android:layout_width="fill_parent"
@@ -32,7 +32,7 @@
                 android:layout_marginLeft="100dp"
                 android:text="thanh123@gmail.com"
                 android:textColor="@color/title"
-                android:textSize="20dp" />
+                android:textSize="@dimen/title_pass" />
         </RelativeLayout>
 
         <View
@@ -54,7 +54,7 @@
                 android:layout_centerVertical="true"
                 android:text="Phone"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="@dimen/title_pass" />
 
             <EditText
                 android:layout_width="fill_parent"
@@ -63,7 +63,7 @@
                 android:layout_marginLeft="100dp"
                 android:text="0987654321"
                 android:textColor="@color/title"
-                android:textSize="20dp" />
+                android:textSize="@dimen/title_pass" />
         </RelativeLayout>
 
         <View
@@ -85,7 +85,7 @@
                 android:layout_centerVertical="true"
                 android:text="Facebook"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="@dimen/title_pass" />
 
             <EditText
                 android:layout_width="fill_parent"
@@ -94,7 +94,7 @@
                 android:layout_marginLeft="100dp"
                 android:text="Thanh Mai"
                 android:textColor="@color/title"
-                android:textSize="20dp" />
+                android:textSize="@dimen/title_pass" />
         </RelativeLayout>
     </LinearLayout>
 
