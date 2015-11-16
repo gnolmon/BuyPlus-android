@@ -11,7 +11,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 
 import android.util.Log;
@@ -26,8 +25,8 @@ import lc.buyplus.R;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.customizes.RoundedImageView;
 import lc.buyplus.fragments.CanvasFragment;
-import lc.buyplus.fragments.ShopDetailCanvasFragment;
 import lc.buyplus.models.Friend;
 
 public class ShopFriendAdapter extends BaseAdapter {
@@ -93,7 +92,7 @@ public class ShopFriendAdapter extends BaseAdapter {
 			}
 		});
 
-		NetworkImageView imNoti = (NetworkImageView) convertView.findViewById(R.id.imFriend);
+		RoundedImageView imNoti = (RoundedImageView) convertView.findViewById(R.id.imFriend);
 
 		// name.setText(item.getName());
 

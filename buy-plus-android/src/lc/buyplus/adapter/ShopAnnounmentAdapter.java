@@ -3,7 +3,6 @@ package lc.buyplus.adapter;
 import java.util.ArrayList;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.FeedImageView;
+import lc.buyplus.customizes.RoundedImageView;
 import lc.buyplus.models.Announcement;
 
 public class ShopAnnounmentAdapter extends BaseAdapter {
@@ -59,7 +59,7 @@ public class ShopAnnounmentAdapter extends BaseAdapter {
 		TextView timestamp = (TextView) convertView.findViewById(R.id.tvTimestamp);
 
 		TextView tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
-		NetworkImageView avaStore = (NetworkImageView) convertView.findViewById(R.id.avaStore);
+		RoundedImageView avaStore = (RoundedImageView) convertView.findViewById(R.id.avaStore);
 		FeedImageView feedImageView = (FeedImageView) convertView.findViewById(R.id.imFeed);
 
 		Announcement item = announcementList.get(position);

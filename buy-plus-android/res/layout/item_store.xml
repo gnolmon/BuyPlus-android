@@ -15,12 +15,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
-            <com.android.volley.toolbox.NetworkImageView
+            <lc.buyplus.customizes.RoundedImageView
                 android:id="@+id/profilePic"
                 android:layout_width="@dimen/avatar_height"
                 android:layout_height="@dimen/avatar_width"
                 android:scaleType="fitCenter" >
-            </com.android.volley.toolbox.NetworkImageView>
+            </lc.buyplus.customizes.RoundedImageView>
 
             <LinearLayout
                 android:layout_width="fill_parent"

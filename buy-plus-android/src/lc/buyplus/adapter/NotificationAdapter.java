@@ -3,7 +3,6 @@ package lc.buyplus.adapter;
 import java.util.List;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.application.MonApplication;
+import lc.buyplus.customizes.RoundedImageView;
 import lc.buyplus.models.Notification;
 
 public class NotificationAdapter extends BaseAdapter {
@@ -63,7 +63,7 @@ public class NotificationAdapter extends BaseAdapter {
 
 		TextView name = (TextView) convertView.findViewById(R.id.tvTitleNoti);
 
-		NetworkImageView imNoti = (NetworkImageView) convertView.findViewById(R.id.imNoti);
+		RoundedImageView imNoti = (RoundedImageView) convertView.findViewById(R.id.imNoti);
 
 		// name.setText(item.getName());
 
