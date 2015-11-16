@@ -108,12 +108,6 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 				return ShopInfoFragment.getInstance(mActivity);
 			case 2:
 				return ShopImageFragment.getInstance(mActivity);
-			case 3: 
-				return LoyaltyCardFragment.getInstance(mActivity); 
-			 /*case
-			 * 4: return NotificationsFragment.getInstance(mActivity); case 5:
-			 * return SettingFragment.getInstance(mActivity);
-			 */
 			default:
 				break;
 			}
@@ -146,10 +140,12 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 			rHomeTab.setVisibility(View.GONE);
 		}
 		if (personal) {
-			mPersonalTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			mTitle.setText(getResources().getString(R.string.canvas_title_personal));
+			rHomeTab.setVisibility(View.VISIBLE);
+			mHomeTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			mTitle.setText(getResources().getString(R.string.canvas_title_home));
 		} else {
-			mPersonalTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
+			mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
+			rHomeTab.setVisibility(View.GONE);
 		}
 		if (loyaltycard) {
 			mLoyaltyCardTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
@@ -181,13 +177,13 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 			public void onPageSelected(int arg0) {
 				switch (mPager.getCurrentItem()) {
 				case 0:
-					changeTabState(true, true, false, false, false, false);
+					changeTabState(true, true, true, false, false, false);
 					break;
 				case 1:
-					changeTabState(true, true, false, false, false, false);
+					changeTabState(true, true, true, false, false, false);
 					break;
 				case 2:
-					changeTabState(false, false, true, false, false, false);
+					changeTabState(true, true, true, false, false, false);
 					break;
 				case 3:
 					changeTabState(false, false, false, true, false, false);

@@ -106,9 +106,9 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 		public CoreFragment getItem(int position) {
 			switch (position) {
 			case 0:
-				return ShopFriendFragment.getInstance(mActivity);
-			case 1:
 				return ShopGiftFragment.getInstance(mActivity);
+			case 1:
+				return ShopFriendFragment.getInstance(mActivity);
 			/*
 			 * case 3: return LoyaltyCardFragment.getInstance(mActivity); case
 			 * 4: return NotificationsFragment.getInstance(mActivity); case 5:
