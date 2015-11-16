@@ -13,7 +13,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 
 import android.content.Intent;
@@ -31,9 +30,8 @@ import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.FeedImageView;
 import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.customizes.RoundedImageView;
 import lc.buyplus.fragments.CanvasFragment;
-import lc.buyplus.fragments.HomeAnnounmentFragment;
-import lc.buyplus.fragments.ShopDetailCanvasFragment;
 import lc.buyplus.models.Announcement;
 
 public class AnnounmentAdapter extends BaseAdapter {
@@ -86,7 +84,7 @@ public class AnnounmentAdapter extends BaseAdapter {
 		TextView timestamp = (TextView) convertView.findViewById(R.id.tvTimestamp);
 
 		TextView tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
-		NetworkImageView avaStore = (NetworkImageView) convertView.findViewById(R.id.avaStore);
+		RoundedImageView avaStore = (RoundedImageView) convertView.findViewById(R.id.avaStore);
 		FeedImageView feedImageView = (FeedImageView) convertView.findViewById(R.id.imFeed);
 
 		Announcement item = announcementList.get(position);
