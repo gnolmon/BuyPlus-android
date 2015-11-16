@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="180dp"
         android:background="@color/white"
         android:orientation="vertical" >
 
@@ -63,8 +63,8 @@
 
         <ImageView
             android:id="@+id/imEdit"
-            android:layout_width="@dimen/icon_normal"
-            android:layout_height="@dimen/icon_normal"
+            android:layout_width="@dimen/icon"
+            android:layout_height="@dimen/icon"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/feed_item_profile_info_padd"
             android:src="@drawable/edit_profile" />

@@ -14,6 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.application.MonApplication;
+import lc.buyplus.customizes.RoundedImageView;
 import lc.buyplus.models.Shop;
 
 public class StoreAdapter extends BaseAdapter{
@@ -68,7 +69,7 @@ public class StoreAdapter extends BaseAdapter{
 		
 		TextView tvAddressStore = (TextView) convertView.findViewById(R.id.tvAddressStore);
 		
-		NetworkImageView avaStore = (NetworkImageView) convertView
+		RoundedImageView avaStore = (RoundedImageView) convertView
 				.findViewById(R.id.avaStore);
 
 		Shop item = storeList.get(position);
@@ -76,7 +77,10 @@ public class StoreAdapter extends BaseAdapter{
 		tvNameStore.setText(item.getName());
 		tvAddressStore.setText(item.getAddress());
 		
-		avaStore.setImageUrl(item.getImage(), imageLoader);
+		if (item.getImage() != null || item.getImage() != ""){
+			avaStore.setImageUrl(item.getImage(), imageLoader);
+		}
+		
 		
 		return convertView;
 	}
