@@ -45,18 +45,11 @@
                     android:textSize="@dimen/canvas_title_text_size" />
             </LinearLayout>
         </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/fragment_canvas_sort"
-            android:layout_width="@dimen/actionbar_height"
-            android:layout_height="match_parent"
-            android:gravity="center" >
-
-            <ImageView
+		
+        <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/sort" />
-        </LinearLayout>
     </LinearLayout>
 
     <RelativeLayout
@@ -101,6 +94,7 @@
                 android:background="@color/title" />
 
             <LinearLayout
+                android:id="@+id/rHome_baiviet"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
@@ -118,6 +112,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/rHome_thongtin"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
@@ -153,6 +148,7 @@
                 android:background="@color/title" />
 
             <LinearLayout
+                android:id="@+id/rHome_hinhanh"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
@@ -170,6 +166,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/rHome_tichdiem"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
@@ -256,48 +253,6 @@
                 android:layout_width="@dimen/icon_tab"
                 android:layout_height="@dimen/icon_tab"
                 android:src="@drawable/card_white" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_divide"
-            android:layout_marginTop="@dimen/margin_divide"
-            android:background="@color/white" />
-
-        <LinearLayout
-            android:id="@+id/fragment_canvas_notifications_tab"
-            android:layout_width="@dimen/zero"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:layout_width="@dimen/icon_tab"
-                android:layout_height="@dimen/icon_tab"
-                android:src="@drawable/bell_white" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_divide"
-            android:layout_marginTop="@dimen/margin_divide"
-            android:background="@color/white" />
-
-        <LinearLayout
-            android:id="@+id/fragment_canvas_setting_tab"
-            android:layout_width="@dimen/zero"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:layout_width="@dimen/icon_tab"
-                android:layout_height="@dimen/icon_tab"
-                android:src="@drawable/setting_white" />
         </LinearLayout>
     </LinearLayout>
 

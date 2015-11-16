@@ -1,6 +1,7 @@
 package lc.buyplus.fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.activities.AddFriendActivity;
 import lc.buyplus.activities.ShopInfoActivity;
@@ -21,19 +23,20 @@ import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.customizes.MyAnimations;
 import lc.buyplus.customizes.MyEditText;
 import lc.buyplus.customizes.MyTextView;
+import lc.buyplus.models.Store;
 import lc.buyplus.models.UserAccount;
 
 public class ShopFriendRedeemFragment extends CoreFragment {
 
 	private static final long serialVersionUID = 1L;
-	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab;
+	private LinearLayout mHomeTab, mPersonalTab;
 	private RelativeLayout rHomeTab;
 	private LinearLayout mBack, mSortTab;
 	private LinearLayout mSearchBlock, mTitleBlock;
 	private LinearLayout mSearchBlockCancel;
 	private MyEditText mSearchEdittext;
 	private ImageView imAdd;
-
+	private TextView rHgiftlist, rHfriendlist;
 	private MyTextView mTitle;
 
 	@Override
@@ -77,16 +80,13 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 			mPager.setCurrentItem(0);
 			break;
 		case R.id.fragment_canvas_personal_tab:
-			mPager.setCurrentItem(2);
+			mPager.setCurrentItem(1);
 			break;
-		case R.id.fragment_canvas_loyaltycard_tab:
-			mPager.setCurrentItem(3);
+		case R.id.idgiftlist:
+			mPager.setCurrentItem(0);
 			break;
-		case R.id.fragment_canvas_notifications_tab:
-			mPager.setCurrentItem(4);
-			break;
-		case R.id.fragment_canvas_setting_tab:
-			mPager.setCurrentItem(5);
+		case R.id.idfriendlist:
+			mPager.setCurrentItem(1);
 			break;
 		default:
 			break;
@@ -109,11 +109,6 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 				return ShopGiftFragment.getInstance(mActivity);
 			case 1:
 				return ShopFriendFragment.getInstance(mActivity);
-			/*
-			 * case 3: return LoyaltyCardFragment.getInstance(mActivity); case
-			 * 4: return NotificationsFragment.getInstance(mActivity); case 5:
-			 * return SettingFragment.getInstance(mActivity);
-			 */
 			default:
 				break;
 			}
@@ -126,48 +121,20 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 		}
 	}
 
-	public void changeTabState(boolean home, boolean homenews, boolean personal, boolean loyaltycard, boolean noti,
-			boolean setting) {
-		mTitle.startAnimation(MyAnimations.fadeId(1000));
+	public void changeTabState(boolean home, boolean personal) {
 		if (home) {
-			rHomeTab.setVisibility(View.VISIBLE);
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			mTitle.setText(getResources().getString(R.string.canvas_title_home));
+			rHgiftlist.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 		} else {
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
-			rHomeTab.setVisibility(View.GONE);
-		}
-		if (homenews) {
-			rHomeTab.setVisibility(View.VISIBLE);
-			mHomeTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			mTitle.setText(getResources().getString(R.string.canvas_title_home));
-		} else {
-			mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
-			rHomeTab.setVisibility(View.GONE);
+			rHgiftlist.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		}
 		if (personal) {
 			mPersonalTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			mTitle.setText(getResources().getString(R.string.canvas_title_personal));
+			rHfriendlist.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 		} else {
 			mPersonalTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
-		}
-		if (loyaltycard) {
-			mLoyaltyCardTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			mTitle.setText(getResources().getString(R.string.canvas_title_loyaltycard));
-		} else {
-			mLoyaltyCardTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
-		}
-		if (noti) {
-			mNotiTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			mTitle.setText(getResources().getString(R.string.canvas_title_notifications));
-		} else {
-			mNotiTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
-		}
-		if (setting) {
-			mSettingTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			mTitle.setText(getResources().getString(R.string.canvas_title_setting));
-		} else {
-			mSettingTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
+			rHfriendlist.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		}
 	}
 
@@ -181,22 +148,10 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 			public void onPageSelected(int arg0) {
 				switch (mPager.getCurrentItem()) {
 				case 0:
-					changeTabState(true, true, false, false, false, false);
+					changeTabState(true, false);
 					break;
 				case 1:
-					changeTabState(true, true, false, false, false, false);
-					break;
-				case 2:
-					changeTabState(false, false, true, false, false, false);
-					break;
-				case 3:
-					changeTabState(false, false, false, true, false, false);
-					break;
-				case 4:
-					changeTabState(false, false, false, false, true, false);
-					break;
-				case 5:
-					changeTabState(false, false, false, false, false, true);
+					changeTabState(false, true);
 					break;
 				default:
 					break;
@@ -213,7 +168,7 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 		});
 
 		mPager.setCurrentItem(firstTab);
-		changeTabState(true, true, false, false, false, false);
+		changeTabState(true, false);
 
 	}
 
@@ -222,13 +177,14 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 		mPager = (ViewPager) v.findViewById(R.id.viewpager);
 		mHomeTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_home_tab);
 		mPersonalTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_personal_tab);
-		mLoyaltyCardTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_loyaltycard_tab);
-		mNotiTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_notifications_tab);
-		mSettingTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_setting_tab);
 		mTitle = (MyTextView) v.findViewById(R.id.fragment_canvas_title);
 		mBack = (LinearLayout) v.findViewById(R.id.fragment_canvas_back);
-		
+		mTitle.setText(Store.ShopsList.get(ShopInfoActivity.current_shop_id).getName());
 		rHomeTab = (RelativeLayout) v.findViewById(R.id.rhomeTab);
+		rHomeTab.setVisibility(View.VISIBLE);
+		rHgiftlist = (TextView) v.findViewById(R.id.idgiftlist);
+		rHgiftlist.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+		rHfriendlist = (TextView) v.findViewById(R.id.idfriendlist);
 		mTitleBlock = (LinearLayout) v.findViewById(R.id.fragment_canvas_title_block);
 	}
 
@@ -236,11 +192,9 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 	protected void initListener() {
 		mHomeTab.setOnClickListener(this);
 		mPersonalTab.setOnClickListener(this);
-		mLoyaltyCardTab.setOnClickListener(this);
-		mNotiTab.setOnClickListener(this);
-		mSettingTab.setOnClickListener(this);
 		mBack.setOnClickListener(this);
-
+		rHgiftlist.setOnClickListener(this);
+		rHfriendlist.setOnClickListener(this);
 	}
 
 	@Override

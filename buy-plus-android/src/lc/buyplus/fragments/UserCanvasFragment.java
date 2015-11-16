@@ -1,6 +1,7 @@
 package lc.buyplus.fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
@@ -26,7 +27,7 @@ import lc.buyplus.models.UserAccount;
 public class UserCanvasFragment extends CoreFragment {
 
 	private static final long serialVersionUID = 1L;
-	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab;
+	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab,rHomeidInfo,rHomeidContact,rHomeidSecure;
 	private RelativeLayout rHomeTab;
 	private LinearLayout mBack, mSortTab;
 	private LinearLayout mSearchBlock, mTitleBlock;
@@ -75,17 +76,20 @@ public class UserCanvasFragment extends CoreFragment {
 			mPager.setCurrentItem(0);
 			break;
 		case R.id.fragment_canvas_personal_tab:
-			mPager.setCurrentItem(2);
+			mPager.setCurrentItem(1);
 			break;
 		case R.id.fragment_canvas_loyaltycard_tab:
-			mPager.setCurrentItem(3);
+			mPager.setCurrentItem(2);
 			break;
-		case R.id.fragment_canvas_notifications_tab:
-			mPager.setCurrentItem(4);
+		case R.id.idInfo:
+			mPager.setCurrentItem(0);
 			break;
-		case R.id.fragment_canvas_setting_tab:
-			mPager.setCurrentItem(5);
+		case R.id.idContact:
+			mPager.setCurrentItem(1);
 			break;
+		case R.id.idSecure:
+			mPager.setCurrentItem(2);
+			break;	
 		default:
 			break;
 		}
@@ -121,48 +125,28 @@ public class UserCanvasFragment extends CoreFragment {
 		}
 	}
 
-	public void changeTabState(boolean home, boolean homenews, boolean personal, boolean loyaltycard, boolean noti,
-			boolean setting) {
-		mTitle.startAnimation(MyAnimations.fadeId(1000));
+	public void changeTabState(boolean home, boolean personal, boolean loyaltycard) {
 		if (home) {
-			rHomeTab.setVisibility(View.VISIBLE);
+			rHomeidInfo.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			mTitle.setText(getResources().getString(R.string.canvas_title_home));
 		} else {
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
-			rHomeTab.setVisibility(View.GONE);
-		}
-		if (homenews) {
-			rHomeTab.setVisibility(View.VISIBLE);
-			mHomeTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			mTitle.setText(getResources().getString(R.string.canvas_title_home));
-		} else {
-			mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
-			rHomeTab.setVisibility(View.GONE);
+			rHomeidInfo.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		}
 		if (personal) {
 			mPersonalTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			mTitle.setText(getResources().getString(R.string.canvas_title_personal));
+			rHomeidContact.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 		} else {
 			mPersonalTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
+			rHomeidContact.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		}
 		if (loyaltycard) {
 			mLoyaltyCardTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			mTitle.setText(getResources().getString(R.string.canvas_title_loyaltycard));
+			rHomeidSecure.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			
 		} else {
 			mLoyaltyCardTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
-		}
-		if (noti) {
-			mNotiTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			mTitle.setText(getResources().getString(R.string.canvas_title_notifications));
-		} else {
-			mNotiTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
-		}
-		if (setting) {
-			mSettingTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			mTitle.setText(getResources().getString(R.string.canvas_title_setting));
-		} else {
-			mSettingTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
+			rHomeidSecure.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		}
 	}
 
@@ -176,22 +160,13 @@ public class UserCanvasFragment extends CoreFragment {
 			public void onPageSelected(int arg0) {
 				switch (mPager.getCurrentItem()) {
 				case 0:
-					changeTabState(true, true, false, false, false, false);
+					changeTabState(true, false, false);
 					break;
 				case 1:
-					changeTabState(true, true, false, false, false, false);
+					changeTabState(false, true, false);
 					break;
 				case 2:
-					changeTabState(false, false, true, false, false, false);
-					break;
-				case 3:
-					changeTabState(false, false, false, true, false, false);
-					break;
-				case 4:
-					changeTabState(false, false, false, false, true, false);
-					break;
-				case 5:
-					changeTabState(false, false, false, false, false, true);
+					changeTabState(false, false, true);
 					break;
 				default:
 					break;
@@ -208,7 +183,7 @@ public class UserCanvasFragment extends CoreFragment {
 		});
 
 		mPager.setCurrentItem(firstTab);
-		changeTabState(true, true, false, false, false, false);
+		changeTabState(true, false, false);
 
 	}
 
@@ -218,14 +193,17 @@ public class UserCanvasFragment extends CoreFragment {
 		mHomeTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_home_tab);
 		mPersonalTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_personal_tab);
 		mLoyaltyCardTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_loyaltycard_tab);
-		mNotiTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_notifications_tab);
-		mSettingTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_setting_tab);
 		mTitle = (MyTextView) v.findViewById(R.id.fragment_canvas_title);
+		mTitle.setText("User information");
 		mBack = (LinearLayout) v.findViewById(R.id.fragment_canvas_back);
 
 		rHomeTab = (RelativeLayout) v.findViewById(R.id.rhomeTab);
+		rHomeidInfo = (LinearLayout) v.findViewById(R.id.idInfo);
+		rHomeidInfo.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+		rHomeidContact = (LinearLayout) v.findViewById(R.id.idContact);
+		rHomeidSecure = (LinearLayout) v.findViewById(R.id.idSecure);
 		mTitleBlock = (LinearLayout) v.findViewById(R.id.fragment_canvas_title_block);
-
+		rHomeTab.setVisibility(View.VISIBLE);
 	}
 
 	@Override
@@ -233,9 +211,10 @@ public class UserCanvasFragment extends CoreFragment {
 		mHomeTab.setOnClickListener(this);
 		mPersonalTab.setOnClickListener(this);
 		mLoyaltyCardTab.setOnClickListener(this);
-		mNotiTab.setOnClickListener(this);
-		mSettingTab.setOnClickListener(this);
 		mBack.setOnClickListener(this);
+		rHomeidInfo.setOnClickListener(this);
+		rHomeidContact.setOnClickListener(this);
+		rHomeidSecure.setOnClickListener(this);
 	}
 
 	@Override

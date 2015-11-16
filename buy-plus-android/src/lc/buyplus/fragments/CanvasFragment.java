@@ -11,6 +11,7 @@ import lc.buyplus.models.UserAccount;
 import com.facebook.CallbackManager;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
@@ -30,7 +31,7 @@ import android.widget.RelativeLayout;
 public class CanvasFragment extends CoreFragment {
 
 	private static final long serialVersionUID = 1L;
-	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab;
+	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab,rHidAnnouce,rHidNews,rHidSort;
 	private RelativeLayout rHomeTab;
 	private LinearLayout mSearchTab, mSortTab;
 	private LinearLayout mSearchBlock, mTitleBlock;
@@ -100,6 +101,12 @@ public class CanvasFragment extends CoreFragment {
 		case R.id.fragment_canvas_setting_tab:
 			mPager.setCurrentItem(5);
 			break;
+		case R.id.idAnnouce:
+			mPager.setCurrentItem(0);
+			break;
+		case R.id.idNews:
+			mPager.setCurrentItem(1);
+			break;	
 		default:
 			break;
 		}
@@ -144,22 +151,22 @@ public class CanvasFragment extends CoreFragment {
 	public void changeTabState(boolean home, boolean homenews, boolean personal, boolean loyaltycard, boolean noti,
 			boolean setting) {
 		hideSearchBlock();
-		mTitle.startAnimation(MyAnimations.fadeId(1000));
 		if (home) {
 			rHomeTab.setVisibility(View.VISIBLE);
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			mTitle.setText(getResources().getString(R.string.canvas_title_home));
-		} else {
-			mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
-			rHomeTab.setVisibility(View.GONE);
-		}
-		if (homenews) {
+			rHidAnnouce.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			rHidNews.setBackgroundColor(Color.parseColor("#FFFFFF"));
+		} else if (homenews) {
+			rHidAnnouce.setBackgroundColor(Color.parseColor("#FFFFFF"));
 			rHomeTab.setVisibility(View.VISIBLE);
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			mTitle.setText(getResources().getString(R.string.canvas_title_home));
+			rHidNews.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 		} else {
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
 			rHomeTab.setVisibility(View.GONE);
+			rHidNews.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		}
 		if (personal) {
 			mPersonalTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
@@ -196,10 +203,10 @@ public class CanvasFragment extends CoreFragment {
 			public void onPageSelected(int arg0) {
 				switch (mPager.getCurrentItem()) {
 				case 0:
-					changeTabState(true, true, false, false, false, false);
+					changeTabState(true, false, false, false, false, false);
 					break;
 				case 1:
-					changeTabState(true, true, false, false, false, false);
+					changeTabState(false, true, false, false, false, false);
 					break;
 				case 2:
 					changeTabState(false, false, true, false, false, false);
@@ -228,7 +235,7 @@ public class CanvasFragment extends CoreFragment {
 		});
 
 		mPager.setCurrentItem(firstTab);
-		changeTabState(true, true, false, false, false, false);
+		changeTabState(true, false, false, false, false, false);
 
 		mSearchEdittext.setHintTextColor(getResources().getColor(R.color.white));
 	}
@@ -250,6 +257,10 @@ public class CanvasFragment extends CoreFragment {
 		mSearchBlockCancel = (LinearLayout) v.findViewById(R.id.fragnemt_canvas_search_cancel);
 		mSearchEdittext = (MyEditText) v.findViewById(R.id.fragment_canvas_search_edittext);
 		rHomeTab = (RelativeLayout) v.findViewById(R.id.rhomeTab);
+		rHomeTab.setVisibility(View.VISIBLE);
+		rHidAnnouce = (LinearLayout) v.findViewById(R.id.idAnnouce);
+		rHidAnnouce.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+		rHidNews = (LinearLayout) v.findViewById(R.id.idNews);
 	}
 
 	@Override
@@ -262,6 +273,8 @@ public class CanvasFragment extends CoreFragment {
 		mSearchTab.setOnClickListener(this);
 		mSortTab.setOnClickListener(this);
 		mSearchBlockCancel.setOnClickListener(this);
+		rHidAnnouce.setOnClickListener(this);
+		rHidNews.setOnClickListener(this);
 	}
 
 	@Override
