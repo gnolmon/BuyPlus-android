@@ -31,12 +31,12 @@
     <dimen name="person_ava_width">120dp</dimen>
     <dimen name="person_ava_height">120dp</dimen>
     <dimen name="term_size">220dp</dimen>
-    <dimen name="QR_size">220dp</dimen>
+    <dimen name="QR_size">200dp</dimen>
     <dimen name="icon">50dp</dimen>
     <dimen name="icon_small">20dp</dimen>
     <dimen name="icon_normal">30dp</dimen>
     <dimen name="icon_title">18dp</dimen>
-    <dimen name="icon_tab">20dp</dimen>
+    <dimen name="icon_tab">25dp</dimen>
     <dimen name="margin_divide">4dp</dimen>
     <dimen name="margin_title">10dp</dimen>
     <dimen name="padding_standard">10dp</dimen>

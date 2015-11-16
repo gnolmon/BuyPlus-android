@@ -3,7 +3,6 @@ package lc.buyplus.adapter;
 import java.util.List;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.application.MonApplication;
+import lc.buyplus.customizes.RoundedImageView;
 import lc.buyplus.models.Gift;
 
 public class ShopGiftAdapter extends BaseAdapter {
@@ -65,7 +65,7 @@ public class ShopGiftAdapter extends BaseAdapter {
 		TextView tvPoint = (TextView) convertView.findViewById(R.id.tvPoint);
 		tvPoint.setText("Diem: " + item.getPoint());
 
-		NetworkImageView imRedeem = (NetworkImageView) convertView.findViewById(R.id.imRedeem);
+		RoundedImageView imRedeem = (RoundedImageView) convertView.findViewById(R.id.imRedeem);
 
 		// name.setText(item.getName());
 

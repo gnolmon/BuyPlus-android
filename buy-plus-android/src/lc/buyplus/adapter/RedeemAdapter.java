@@ -4,21 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.application.MonApplication;
-import lc.buyplus.cores.FeedImageView;
-import lc.buyplus.models.Announcement;
-import lc.buyplus.models.Gift;
+import lc.buyplus.customizes.RoundedImageView;
 import lc.buyplus.models.Shop;
 
 public class RedeemAdapter extends BaseAdapter {
@@ -60,7 +55,7 @@ public class RedeemAdapter extends BaseAdapter {
 
 		TextView name = (TextView) convertView.findViewById(R.id.tvTitleShop);
 
-		NetworkImageView imShop = (NetworkImageView) convertView.findViewById(R.id.imShop);
+		RoundedImageView imShop = (RoundedImageView) convertView.findViewById(R.id.imShop);
 
 		Shop item = giftItems.get(position);
 
@@ -73,7 +68,7 @@ public class RedeemAdapter extends BaseAdapter {
 		}
 
 		name.setText(item.getName());
-		imShop.setImageUrl(item.getImage(), imageLoader);
+		imShop.setImageUrl(item.getImage_thumbnail(), imageLoader);
 
 		return convertView;
 

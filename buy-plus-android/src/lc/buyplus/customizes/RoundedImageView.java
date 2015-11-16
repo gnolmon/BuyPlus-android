@@ -34,7 +34,7 @@ public class RoundedImageView extends NetworkImageView {
 	@Override
 	protected void onDraw(Canvas canvas) {
 
-		Drawable drawable = getDrawable();
+		Bitmap drawable = drawableToBitmap(getDrawable());
 
 		if (drawable == null) {
 			return;
@@ -43,7 +43,7 @@ public class RoundedImageView extends NetworkImageView {
 		if (getWidth() == 0 || getHeight() == 0) {
 			return;
 		}
-		Bitmap b = ((BitmapDrawable) drawable).getBitmap();
+		Bitmap b = drawable;
 		Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
 
 		int w = getWidth(), h = getHeight();
@@ -77,5 +77,19 @@ public class RoundedImageView extends NetworkImageView {
 
 		return output;
 	}
+	public Bitmap drawableToBitmap(Drawable drawable) {
+	    if (drawable == null) {
+	        return null;
+	    } else if (drawable instanceof BitmapDrawable) {
+	        return ((BitmapDrawable) drawable).getBitmap();
+	    }
 
+	    Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+	            drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+	    Canvas canvas = new Canvas(bitmap);
+	    drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+	    drawable.draw(canvas);
+
+	    return bitmap;
+	}
 }

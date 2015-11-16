@@ -48,7 +48,7 @@ public class Shop {
 			if (data.optString ("name") != "") {
 				name = data.getString("name");
 			}
-			if (data.optString ("email") != "") {
+			if (data.optString ("address") != "") {
 				address = data.getString("address");
 			}
 			if (data.optString ("description") != "") {

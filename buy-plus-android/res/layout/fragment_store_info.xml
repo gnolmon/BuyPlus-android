@@ -11,21 +11,32 @@
         android:background="@color/white"
         android:orientation="vertical" >
 
-        <com.android.volley.toolbox.NetworkImageView
+        <lc.buyplus.customizes.RoundedImageView
             android:id="@+id/imbannerStore"
             android:layout_width="@dimen/person_ava_width"
             android:layout_height="@dimen/person_ava_width"
             android:layout_centerInParent="true"
             android:scaleType="fitXY" />
 
+        <Button
+            android:layout_margin="@dimen/padding_standard"
+            android:id="@+id/btnAgreeTerm"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_toRightOf="@id/imbannerStore"
+            android:background="@color/maincolor"
+            android:text="Tham gia"
+            android:textColor="@color/white" >
+        </Button>
+
         <TextView
             android:id="@+id/storeName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/imbannerStore"
+            android:layout_centerHorizontal="true"
             android:text="Cửa hàng"
             android:textColor="@color/title"
-            android:layout_centerHorizontal="true"
             android:textSize="20dp" />
     </RelativeLayout>
 
@@ -63,6 +74,14 @@
                     android:hint="91 Chùa Láng, Đống Đa, Hà Nội "
                     android:textColor="@color/white"
                     android:textSize="15dp" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="60dp"
+                    android:background="@color/title" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -86,6 +105,14 @@
                     android:hint="thời trang nam"
                     android:textColor="@color/white"
                     android:textSize="15dp" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="60dp"
+                    android:background="@color/title" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -109,6 +136,14 @@
                     android:hint="0906 8888 8888"
                     android:textColor="@color/white"
                     android:textSize="15dp" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="60dp"
+                    android:background="@color/title" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -132,6 +167,14 @@
                     android:hint="www.jacklane.com.vn"
                     android:textColor="@color/white"
                     android:textSize="15dp" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="60dp"
+                    android:background="@color/title" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -155,6 +198,14 @@
                     android:hint="fb.com/jacklane"
                     android:textColor="@color/white"
                     android:textSize="15dp" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="60dp"
+                    android:background="@color/title" />
             </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>

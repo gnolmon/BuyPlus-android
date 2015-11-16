@@ -1,5 +1,6 @@
 package lc.buyplus.fragments;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 
@@ -19,14 +20,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.activities.UserActivity;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
+import lc.buyplus.customizes.RoundedImageView;
 
 public class PersonalFragment extends CoreFragment {
 	Display display;
 
 	private ImageView imEdit;
-
+	private RoundedImageView imAvaUser;
+	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_personal, container, false);
@@ -61,9 +65,12 @@ public class PersonalFragment extends CoreFragment {
 
 			}
 		});
+		
+		imAvaUser = (RoundedImageView) v.findViewById(R.id.imAvaUser);
+		imAvaUser.setImageUrl(CanvasFragment.mUser.getImageUrl(), imageLoader);
 
 		TextView user_id_txt = (TextView) v.findViewById(R.id.user_id);
-		user_id_txt.setText("123213");
+		user_id_txt.setText("Mã số cá nhân: " + CanvasFragment.mUser.getId());
 		String qrInputText = user_id_txt.toString();
 		// Find screen size
 

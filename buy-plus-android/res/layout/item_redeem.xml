@@ -10,7 +10,7 @@
         android:padding="@dimen/padding_standard"
         android:orientation="horizontal" >
 
-        <com.android.volley.toolbox.NetworkImageView
+        <lc.buyplus.customizes.RoundedImageView
             android:id="@+id/imShop"
             android:layout_width="120dp"
             android:layout_height="80dp" />

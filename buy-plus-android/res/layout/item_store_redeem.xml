@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_standard" >
 
-        <com.android.volley.toolbox.NetworkImageView
+        <lc.buyplus.customizes.RoundedImageView
             android:id="@+id/imRedeem"
             android:layout_width="120dp"
             android:layout_height="80dp" />
