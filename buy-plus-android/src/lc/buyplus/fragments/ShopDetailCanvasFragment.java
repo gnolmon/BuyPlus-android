@@ -90,7 +90,7 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 		}
 	}
 
-	public static final int NUM_PAGES = 2;
+	public static final int NUM_PAGES = 3;
 	public static ViewPager mPager;
 	public PagerAdapter mPagerAdapter;
 

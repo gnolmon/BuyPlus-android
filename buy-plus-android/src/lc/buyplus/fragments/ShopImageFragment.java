@@ -14,13 +14,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
 
+import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.GridView;
 import android.widget.ListView;
 import lc.buyplus.R;
@@ -36,6 +40,7 @@ import lc.buyplus.models.Announcement;
 import lc.buyplus.models.Friend;
 import lc.buyplus.models.Gift;
 import lc.buyplus.models.Notification;
+import lc.buyplus.models.Photo;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
 import lc.buyplus.ultils.UtilFunctions;
@@ -54,9 +59,10 @@ public class ShopImageFragment extends CoreFragment {
 		initViews(view);
 		initModels();
 		initAnimations();
-		listView = (ListView) view.findViewById(R.id.grid_view);
 		inflaterActivity = inflater;
-
+		gridView = (GridView) view.findViewById(R.id.grid_view);
+		api_get_shop_announcement_images(1,0,0);
+	
 		return view;
 	}
 
@@ -102,6 +108,11 @@ public class ShopImageFragment extends CoreFragment {
 								Photo photo = new Photo((JSONObject) data_aray.get(i));
 								PhotosList.add(photo);
 	                        }
+					        InitilizeGridLayout();
+					        
+					        photoAdapter = new ShopPhotoAdapter(inflaterActivity, PhotosList, columnWidth);
+					        gridView.setAdapter(photoAdapter);
+					        
 						} catch (JSONException e) {
 
 							e.printStackTrace();
@@ -151,8 +162,10 @@ public class ShopImageFragment extends CoreFragment {
 		float padding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, AppConfigs.GRID_PADDING,
 				r.getDisplayMetrics());
 
+		
+		
 		// Column width
-		columnWidth = (int) ((utils.getScreenWidth() - ((5) * padding)) / 4);
+		columnWidth = (int) ((this.getScreenWidth(mContext) - ((5) * padding)) / 4);
 
 		// Setting number of grid columns
 		gridView.setNumColumns(4);
@@ -164,5 +177,20 @@ public class ShopImageFragment extends CoreFragment {
 		gridView.setHorizontalSpacing((int) padding);
 		gridView.setVerticalSpacing((int) padding);
 	}
-
+	public int getScreenWidth(Context context) {
+        int columnWidth;
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+ 
+        final Point point = new Point();
+        try {
+            display.getSize(point);
+        } catch (java.lang.NoSuchMethodError ignore) {
+            // Older device
+            point.x = display.getWidth();
+            point.y = display.getHeight();
+        }
+        columnWidth = point.x;
+        return columnWidth;
+    }
 }
