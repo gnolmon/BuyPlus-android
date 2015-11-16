@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="Thông báo"
-                    android:textColor="@color/black"
+                    android:textColor="@color/title"
                     android:textSize="15dp" />
             </RelativeLayout>
 
@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="Ngôn ngữ"
-                    android:textColor="@color/black"
+                    android:textColor="@color/title"
                     android:textSize="15dp" />
             </RelativeLayout>
 
@@ -80,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="Thông tin về Buy Plus"
-                    android:textColor="@color/black"
+                    android:textColor="@color/title"
                     android:textSize="15dp" />
             </RelativeLayout>
 
@@ -98,12 +98,34 @@
                     android:src="@drawable/person_gray" />
 
                 <TextView
-                    android:id="@+id/tvWeb"
+                    android:id="@+id/tvManagerUser"
                     android:layout_width="210dp"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="Quản lý tài khoản"
-                    android:textColor="@color/black"
+                    android:textColor="@color/title"
+                    android:textSize="15dp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/logout" />
+
+                <TextView
+                    android:id="@+id/tvLogout"
+                    android:layout_width="210dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Đăng xuất"
+                    android:textColor="@color/title"
                     android:textSize="15dp" />
             </RelativeLayout>
         </LinearLayout>

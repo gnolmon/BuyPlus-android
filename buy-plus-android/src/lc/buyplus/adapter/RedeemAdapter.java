@@ -68,7 +68,7 @@ public class RedeemAdapter extends BaseAdapter {
 		}
 
 		name.setText(item.getName());
-		imShop.setImageUrl(item.getImage(), imageLoader);
+		imShop.setImageUrl(item.getImage_thumbnail(), imageLoader);
 
 		return convertView;
 
