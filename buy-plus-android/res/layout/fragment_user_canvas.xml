@@ -254,7 +254,47 @@
                 android:layout_height="@dimen/icon_tab"
                 android:src="@drawable/card_white" />
         </LinearLayout>
-     
+     	<View
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_divide"
+            android:layout_marginTop="@dimen/margin_divide"
+            android:background="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/fragment_canvas_notifications_tab"
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="@dimen/icon_tab"
+                android:layout_height="@dimen/icon_tab"
+                android:src="@drawable/bell_white" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_divide"
+            android:layout_marginTop="@dimen/margin_divide"
+            android:background="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/fragment_canvas_setting_tab"
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="@dimen/icon_tab"
+                android:layout_height="@dimen/icon_tab"
+                android:src="@drawable/setting_white" />
+        </LinearLayout>
     </LinearLayout>
 
     <android.support.v4.view.ViewPager

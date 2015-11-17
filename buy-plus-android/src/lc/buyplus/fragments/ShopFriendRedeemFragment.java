@@ -29,7 +29,7 @@ import lc.buyplus.models.UserAccount;
 public class ShopFriendRedeemFragment extends CoreFragment {
 
 	private static final long serialVersionUID = 1L;
-	private LinearLayout mHomeTab, mPersonalTab;
+	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab;
 	private RelativeLayout rHomeTab;
 	private LinearLayout mBack, mSortTab;
 	private LinearLayout mSearchBlock, mTitleBlock;
@@ -66,6 +66,7 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 
 	@Override
 	public void onClick(View view) {
+		Intent returnIntent;
 		switch (view.getId()) {
 		case R.id.fragment_canvas_back:
 			mActivity.finish();
@@ -77,10 +78,34 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 
 			break;
 		case R.id.fragment_canvas_home_tab:
-			mPager.setCurrentItem(0);
+			CanvasFragment.mPager.setCurrentItem(0);
+			returnIntent = new Intent();
+			mActivity.setResult(2, returnIntent);
+			mActivity.finish();
 			break;
 		case R.id.fragment_canvas_personal_tab:
-			mPager.setCurrentItem(1);
+			CanvasFragment.mPager.setCurrentItem(2);
+			returnIntent = new Intent();
+			mActivity.setResult(2, returnIntent);
+			mActivity.finish();
+			break;
+		case R.id.fragment_canvas_loyaltycard_tab:
+			CanvasFragment.mPager.setCurrentItem(3);
+			returnIntent = new Intent();
+			mActivity.setResult(2, returnIntent);
+			mActivity.finish();
+			break;
+		case R.id.fragment_canvas_notifications_tab:
+			CanvasFragment.mPager.setCurrentItem(4);
+			returnIntent = new Intent();
+			mActivity.setResult(2, returnIntent);
+			mActivity.finish();
+			break;
+		case R.id.fragment_canvas_setting_tab:
+			CanvasFragment.mPager.setCurrentItem(5);
+			returnIntent = new Intent();
+			mActivity.setResult(2, returnIntent);
+			mActivity.finish();
 			break;
 		case R.id.idgiftlist:
 			mPager.setCurrentItem(0);
@@ -123,17 +148,17 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 
 	public void changeTabState(boolean home, boolean personal) {
 		if (home) {
-			mHomeTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			//mHomeTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			rHgiftlist.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 		} else {
-			mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
+			//mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
 			rHgiftlist.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		}
 		if (personal) {
-			mPersonalTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			//mPersonalTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			rHfriendlist.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 		} else {
-			mPersonalTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
+			//mPersonalTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
 			rHfriendlist.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		}
 	}
@@ -177,6 +202,9 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 		mPager = (ViewPager) v.findViewById(R.id.viewpager);
 		mHomeTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_home_tab);
 		mPersonalTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_personal_tab);
+		mLoyaltyCardTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_loyaltycard_tab);
+		mNotiTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_notifications_tab);
+		mSettingTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_setting_tab);
 		mTitle = (MyTextView) v.findViewById(R.id.fragment_canvas_title);
 		mBack = (LinearLayout) v.findViewById(R.id.fragment_canvas_back);
 		mTitle.setText(Store.ShopsList.get(ShopInfoActivity.current_shop_id).getName());
@@ -192,6 +220,9 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 	protected void initListener() {
 		mHomeTab.setOnClickListener(this);
 		mPersonalTab.setOnClickListener(this);
+		mLoyaltyCardTab.setOnClickListener(this);
+		mNotiTab.setOnClickListener(this);
+		mSettingTab.setOnClickListener(this);
 		mBack.setOnClickListener(this);
 		rHgiftlist.setOnClickListener(this);
 		rHfriendlist.setOnClickListener(this);
