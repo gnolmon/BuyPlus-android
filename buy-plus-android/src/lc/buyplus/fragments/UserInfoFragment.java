@@ -21,6 +21,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import lc.buyplus.R;
@@ -31,13 +33,17 @@ import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.models.Friend;
+import lc.buyplus.models.Store;
 
 public class UserInfoFragment extends CoreFragment {
 	private ListView listView;
 	private ShopFriendAdapter friendAdapter;
 	private LayoutInflater inflaterActivity;
 	private ImageView imAdd;
-
+	private EditText username;
+	private Button accept, reject;
+	String tmp_name;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_user_info, container, false);
@@ -51,8 +57,15 @@ public class UserInfoFragment extends CoreFragment {
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
-
+		case R.id.btnAgreeTerm:
+			api_update_user_information(username.getText().toString());
+			Store.user.setUsername(username.getText().toString());
+		break;	
+		case R.id.btnIgnore:
+			username.setText(Store.user.getUsername());
+		break;	
 		}
+		
 	}
 
 	protected void initModels() {
@@ -61,6 +74,12 @@ public class UserInfoFragment extends CoreFragment {
 
 	@Override
 	protected void initViews(View v) {
+		username = (EditText) v.findViewById(R.id.edUser);
+		accept = (Button) v.findViewById(R.id.btnAgreeTerm);
+		reject = (Button) v.findViewById(R.id.btnIgnore);
+		accept.setOnClickListener(this);
+		reject.setOnClickListener(this);
+		username.setText(Store.user.getUsername());
 	}
 
 	@Override
@@ -68,40 +87,27 @@ public class UserInfoFragment extends CoreFragment {
 
 	}
 
-	public void api_get_shop_friends(int shop_id) {
-
-		Map<String, String> params = new HashMap<String, String>();
+public void api_update_user_information(String name){
+	 	
+    	Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("shop_id", String.valueOf(shop_id));
-		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-				HandleRequest.build_link(HandleRequest.GET_SHOP_FRIENDS, params), params,
-				new Response.Listener<JSONObject>() {
+		params.put("name", String.valueOf(name));
+			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
+					HandleRequest.UPDATE_USER_INFORMATION, params, 
+					new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
-						Log.d("api_get_shop_gifts", response.toString());
-						try {
-							ArrayList<Friend> FriendsList = new ArrayList<Friend>();
-							JSONArray data_aray = response.getJSONArray("data");
-							for (int i = 0; i < data_aray.length(); i++) {
-								Friend friend = new Friend((JSONObject) data_aray.get(i));
-								FriendsList.add(friend);
-							}
-							friendAdapter = new ShopFriendAdapter(FriendsList, inflaterActivity);
-							listView.setAdapter(friendAdapter);
-							friendAdapter.notifyDataSetChanged();
-						} catch (JSONException e) {
-
-							e.printStackTrace();
-						}
+						Log.d("api_join_shop",response.toString());
 						// code here
 					}
-				}, new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-					}
-				});
-		requestQueue.add(jsObjRequest);
+					}, 
+					new Response.ErrorListener() {
+						@Override
+						public void onErrorResponse(VolleyError error) {
+						}
+					});
+			requestQueue.add(jsObjRequest);
 	}
 
 	public static final long serialVersionUID = 6036846677812555352L;

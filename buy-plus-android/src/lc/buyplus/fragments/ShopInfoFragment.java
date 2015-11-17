@@ -94,6 +94,11 @@ public class ShopInfoFragment   extends CoreFragment {
 		join_leave.setOnClickListener(this);	
 		imbannerStore = (RoundedImageView) v.findViewById(R.id.imbannerStore);
 		rlbanner = (RelativeLayout) v.findViewById(R.id.rlbanner);
+		tvName = (TextView) v.findViewById(R.id.tvName);
+		tvField = (TextView) v.findViewById(R.id.tvField);
+		tvPhone = (TextView) v.findViewById(R.id.tvPhone);
+		tvWeb = (TextView) v.findViewById(R.id.tvWeb);
+		tvFb = (TextView) v.findViewById(R.id.tvFb);
 	}
 
 	@Override
@@ -125,7 +130,18 @@ public class ShopInfoFragment   extends CoreFragment {
 								join_leave.setText("Roi di");
 								isJoin = true;
 							}
-
+							
+							tvName.setHint(shop.getAddress()); 
+							tvField.setHint(shop.getName()); 
+							tvPhone.setHint(shop.getPhone()); 
+							tvWeb.setHint(shop.getWebsite()); 
+							tvFb.setHint(String.valueOf(shop.getFacebook_id()));
+							
+							Log.d("sadsd", shop.getAddress());
+							Log.d("sadsd", shop.getName());
+							Log.d("sadsd", shop.getPhone());
+							Log.d("sadsd", shop.getWebsite());
+							Log.d("sadsd", String.valueOf(shop.getFacebook_id()));
 							imbannerStore.setImageUrl(shop.getImage(), imageLoader);
 							
 							if (imbannerStore.getWidth() > 0) {
