@@ -85,7 +85,7 @@ public class PersonalFragment extends CoreFragment {
 		        @Override
 		        public void onGlobalLayout() {	
 		            Bitmap image = BlurBuilder.blur(imAvaUser);
-		            rlBackground.setBackgroundDrawable(new BitmapDrawable(getResources(), image));
+		            rlBackground.setBackground(new BitmapDrawable(getResources(), image));
 		        }
 		    });
 		}

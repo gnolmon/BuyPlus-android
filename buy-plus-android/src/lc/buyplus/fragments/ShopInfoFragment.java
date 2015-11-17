@@ -12,22 +12,30 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.ShopAnnounmentAdapter;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.customizes.BlurBuilder;
+import lc.buyplus.customizes.RoundedImageView;
 import lc.buyplus.models.Announcement;
 import lc.buyplus.models.Friend;
 import lc.buyplus.models.Gift;
@@ -43,6 +51,10 @@ public class ShopInfoFragment   extends CoreFragment {
 	private Button join_leave;
 	private boolean isJoin;
 	Shop shop;
+	private RelativeLayout rlbanner;
+	private RoundedImageView imbannerStore;
+	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_store_info, container, false);
@@ -77,8 +89,11 @@ public class ShopInfoFragment   extends CoreFragment {
 
 	@Override
 	protected void initViews(View v) {
+
 		join_leave= (Button) v.findViewById(R.id.btnAgreeTerm);
-		join_leave.setOnClickListener(this);
+		join_leave.setOnClickListener(this);	
+		imbannerStore = (RoundedImageView) v.findViewById(R.id.imbannerStore);
+		rlbanner = (RelativeLayout) v.findViewById(R.id.rlbanner);
 	}
 
 	@Override
@@ -99,6 +114,7 @@ public class ShopInfoFragment   extends CoreFragment {
 					public void onResponse(JSONObject response) {
 						Log.d("api_get_shop_info", response.toString());
 						try {
+
 							shop = new Shop(response.getJSONObject("data"));
 							
 							if ((shop.current_customer_shop_id==null) || (shop.current_customer_shop_id=="")){
@@ -109,7 +125,21 @@ public class ShopInfoFragment   extends CoreFragment {
 								join_leave.setText("Roi di");
 								isJoin = true;
 							}
+
+							imbannerStore.setImageUrl(shop.getImage(), imageLoader);
 							
+							if (imbannerStore.getWidth() > 0) {
+								Bitmap image = BlurBuilder.blur(imbannerStore);
+								rlbanner.setBackground(new BitmapDrawable(getResources(), image));
+							} else {
+								imbannerStore.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+							        @Override
+							        public void onGlobalLayout() {	
+							            Bitmap image = BlurBuilder.blur(imbannerStore);
+							            rlbanner.setBackground(new BitmapDrawable(getResources(), image));
+							        }
+							    });
+							}
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}

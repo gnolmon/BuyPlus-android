@@ -51,7 +51,7 @@ public class HomeFragment extends CoreFragment {
 		initAnimations();
 		listView = (ListView) view.findViewById(R.id.listStore);
 		inflaterActivity = inflater;
-		api_get_all_shop(1,0,0);
+		api_get_all_shop(0,0,0);
 		api_search_friends_for_shop(1,"");
 		return view;
 	}

@@ -46,10 +46,17 @@
             </LinearLayout>
         </RelativeLayout>
 		
-        <ImageView
+        <LinearLayout
+            android:id="@+id/fragment_canvas_sort"
+            android:layout_width="@dimen/actionbar_height"
+            android:layout_height="match_parent"
+            android:gravity="center" >
+
+            <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/sort" />
+        </LinearLayout>
     </LinearLayout>
 
     <RelativeLayout
