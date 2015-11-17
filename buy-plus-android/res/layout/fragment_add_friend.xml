@@ -72,7 +72,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/search" />
+                        android:src="@drawable/back_white" />
                 </LinearLayout>
 
                 <lc.buyplus.customizes.MyTextView
@@ -118,31 +118,28 @@
             android:paddingLeft="@dimen/feed_item_padding_left_right"
             android:paddingRight="@dimen/feed_item_padding_left_right" >
 
-            <View
-                android:id="@+id/separator"
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:layout_alignParentBottom="true"
-                android:background="@color/title" />
-
-            <TextView
-                android:id="@+id/tvTimban"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/imTimban"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_alignParentLeft="true"
+                android:layout_marginRight="@dimen/padding_standard"
                 android:layout_centerVertical="true"
-                android:text="Tìm bạn"
-                android:textColor="@color/title"
-                android:textSize="15dp" />
+                android:src="@drawable/search_gray" />
 
-            <EditText
+            <lc.buyplus.customizes.MyEditText
                 android:id="@+id/search_params"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@id/tvTimban"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@id/imTimban"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:hint="Nhập email, ID hoặc tên bạn bè"
+                android:lines="1"
+                android:paddingRight="5dp"
                 android:textColor="@color/title"
-                android:textSize="10dp" />
+                android:textSize="15dp" />
         </RelativeLayout>
 
         <LinearLayout
@@ -273,7 +270,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="Tìm kiếm bạn bè "
+                android:text="Hoặc tìm bạn bè qua "
                 android:textColor="@color/title"
                 android:textSize="15dp" />
 
@@ -290,8 +287,8 @@
                 android:layout_width="@dimen/icon_normal"
                 android:layout_height="@dimen/icon_normal"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/imSearchFriend"
                 android:layout_marginRight="@dimen/padding_standard"
+                android:layout_toLeftOf="@id/imSearchFriend"
                 android:src="@drawable/facebook" />
         </RelativeLayout>
 
