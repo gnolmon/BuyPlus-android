@@ -38,6 +38,7 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 	private TextView tvPoint;
 	private LinearLayout rHomeBaiviet, rHomeThongtin, rHomeHinhanh;
 	private MyTextView mTitle;
+	private TextView tvPost, tvShopInfo, tvShopPhoto;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -143,24 +144,30 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 	public void changeTabState(boolean announcements, boolean info, boolean images) {
 		if (announcements) {
 			//mShopAnnouncements.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			rHomeBaiviet.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			//rHomeBaiviet.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			tvPost.setTextColor(getResources().getColor(R.color.tab_selected));
 		} else {
 			//mShopAnnouncements.setBackgroundColor(getResources().getColor(R.color.maincolor));
-			rHomeBaiviet.setBackgroundColor(Color.parseColor("#FFFFFF"));
+			//rHomeBaiviet.setBackgroundColor(Color.parseColor("#FFFFFF"));
+			tvPost.setTextColor(getResources().getColor(R.color.title));
 		}
 		if (info) {
 			//mShopInfo.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			rHomeThongtin.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			//rHomeThongtin.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			tvShopInfo.setTextColor(getResources().getColor(R.color.tab_selected));
 		} else {
 			//mShopInfo.setBackgroundColor(getResources().getColor(R.color.maincolor));
-			rHomeThongtin.setBackgroundColor(Color.parseColor("#FFFFFF"));
+			//rHomeThongtin.setBackgroundColor(Color.parseColor("#FFFFFF"));
+			tvShopInfo.setTextColor(getResources().getColor(R.color.title));
 		}
 		if (images) {
 			//mShopImages.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			rHomeHinhanh.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			//rHomeHinhanh.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			tvShopPhoto.setTextColor(getResources().getColor(R.color.tab_selected));
 		} else {
 			//mShopImages.setBackgroundColor(getResources().getColor(R.color.maincolor));
-			rHomeHinhanh.setBackgroundColor(Color.parseColor("#FFFFFF"));
+			//rHomeHinhanh.setBackgroundColor(Color.parseColor("#FFFFFF"));
+			tvShopPhoto.setTextColor(getResources().getColor(R.color.title));
 		}
 	}
 
@@ -219,7 +226,7 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 		rHomeBaiviet = (LinearLayout) v.findViewById(R.id.rHome_baiviet);
 		rHomeThongtin = (LinearLayout) v.findViewById(R.id.rHome_thongtin);
 		rHomeHinhanh = (LinearLayout) v.findViewById(R.id.rHome_hinhanh);
-		rHomeBaiviet.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+		
 		tvPoint = (TextView) v.findViewById(R.id.tvPoint);
 		tvPoint.setOnClickListener(new OnClickListener() {
 
@@ -229,6 +236,10 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 				startActivityForResult(shopFriendActivity,2);
 			}
 		});
+		
+		tvPost = (TextView) v.findViewById(R.id.tvPost);
+		tvShopInfo = (TextView) v.findViewById(R.id.tvShopInfo);
+		tvShopPhoto = (TextView) v.findViewById(R.id.tvShopPhoto);
 	}
 	
 	 public void onActivityResult(int requestCode, int resultCode, Intent data) {

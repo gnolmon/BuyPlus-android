@@ -12,21 +12,29 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.ShopAnnounmentAdapter;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.customizes.BlurBuilder;
+import lc.buyplus.customizes.RoundedImageView;
 import lc.buyplus.models.Announcement;
 import lc.buyplus.models.Friend;
 import lc.buyplus.models.Gift;
@@ -39,6 +47,9 @@ public class ShopInfoFragment   extends CoreFragment {
 	private ShopAnnounmentAdapter newsAdapter;
 	private LayoutInflater inflaterActivity;
 	private TextView tvName, tvField, tvPhone, tvWeb, tvFb;
+	private RelativeLayout rlbanner;
+	private RoundedImageView imbannerStore;
+	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,7 +74,11 @@ public class ShopInfoFragment   extends CoreFragment {
 
 	@Override
 	protected void initViews(View v) {
-
+		
+		imbannerStore = (RoundedImageView) v.findViewById(R.id.imbannerStore);
+		
+		rlbanner = (RelativeLayout) v.findViewById(R.id.rlbanner);
+		
 	}
 
 	@Override
@@ -85,9 +100,21 @@ public class ShopInfoFragment   extends CoreFragment {
 						Log.d("api_get_shop_info", response.toString());
 						try {
 							Shop shop = new Shop(response.getJSONObject("data"));
-							///////////////////////////
-							// code here
-							//////////////////////////
+							
+							imbannerStore.setImageUrl(shop.getImage(), imageLoader);
+							
+							if (imbannerStore.getWidth() > 0) {
+								Bitmap image = BlurBuilder.blur(imbannerStore);
+								rlbanner.setBackground(new BitmapDrawable(getResources(), image));
+							} else {
+								imbannerStore.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+							        @Override
+							        public void onGlobalLayout() {	
+							            Bitmap image = BlurBuilder.blur(imbannerStore);
+							            rlbanner.setBackground(new BitmapDrawable(getResources(), image));
+							        }
+							    });
+							}
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}

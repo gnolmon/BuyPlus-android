@@ -1,13 +1,5 @@
 package lc.buyplus.fragments;
 
-import lc.buyplus.R;
-import lc.buyplus.cores.CoreActivity;
-import lc.buyplus.cores.CoreFragment;
-import lc.buyplus.customizes.MyAnimations;
-import lc.buyplus.customizes.MyEditText;
-import lc.buyplus.customizes.MyTextView;
-import lc.buyplus.models.UserAccount;
-
 import com.facebook.CallbackManager;
 
 import android.content.Intent;
@@ -20,24 +12,31 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import lc.buyplus.R;
+import lc.buyplus.cores.CoreActivity;
+import lc.buyplus.cores.CoreFragment;
+import lc.buyplus.customizes.MyAnimations;
+import lc.buyplus.customizes.MyEditText;
+import lc.buyplus.customizes.MyTextView;
+import lc.buyplus.models.UserAccount;
 
 public class CanvasFragment extends CoreFragment {
 
 	private static final long serialVersionUID = 1L;
-	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab,rHidAnnouce,rHidNews,rHidSort;
+	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab, rHidAnnouce, rHidNews,
+			rHidSort;
 	private RelativeLayout rHomeTab;
 	private LinearLayout mSearchTab, mSortTab;
 	private LinearLayout mSearchBlock, mTitleBlock;
 	private LinearLayout mSearchBlockCancel;
 	private MyEditText mSearchEdittext;
 	private CallbackManager callbackManager;
+	private TextView tvStore, tvNews;
+	private ImageView imStore, imNews;
 
 	private MyTextView mTitle;
 
@@ -45,9 +44,9 @@ public class CanvasFragment extends CoreFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		callbackManager = CallbackManager.Factory.create();
 		View view = inflater.inflate(R.layout.fragment_canvas, container, false);
-		
+
 		initViews(view);
-		
+
 		initModels();
 		initListener();
 		initAnimations();
@@ -57,7 +56,7 @@ public class CanvasFragment extends CoreFragment {
 	}
 
 	public void hideSearchBlock() {
-		mTitleBlock.setVisibility(View.VISIBLE);	
+		mTitleBlock.setVisibility(View.VISIBLE);
 		mSearchBlock.setVisibility(View.GONE);
 		mSearchBlock.clearAnimation();
 	}
@@ -67,12 +66,11 @@ public class CanvasFragment extends CoreFragment {
 		mSearchBlock.setVisibility(View.VISIBLE);
 		mSearchBlock.startAnimation(MyAnimations.fromLeft(800, 200));
 	}
-	
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    callbackManager.onActivityResult(requestCode, resultCode, data);
+		callbackManager.onActivityResult(requestCode, resultCode, data);
 	}
-	
 
 	@Override
 	public void onClick(View view) {
@@ -106,7 +104,7 @@ public class CanvasFragment extends CoreFragment {
 			break;
 		case R.id.idNews:
 			mPager.setCurrentItem(1);
-			break;	
+			break;
 		default:
 			break;
 		}
@@ -155,18 +153,28 @@ public class CanvasFragment extends CoreFragment {
 			rHomeTab.setVisibility(View.VISIBLE);
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			mTitle.setText(getResources().getString(R.string.canvas_title_home));
-			rHidAnnouce.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			rHidNews.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
+			tvStore.setTextColor(getResources().getColor(R.color.tab_selected));
+			imStore.setImageResource(R.drawable.store_green);
+
+			tvNews.setTextColor(getResources().getColor(R.color.title));
+			imNews.setImageResource(R.drawable.news);
+			;
 		} else if (homenews) {
-			rHidAnnouce.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
 			rHomeTab.setVisibility(View.VISIBLE);
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			mTitle.setText(getResources().getString(R.string.canvas_title_home));
-			rHidNews.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+
+			tvNews.setTextColor(getResources().getColor(R.color.tab_selected));
+			imNews.setImageResource(R.drawable.news_green);
+
+			tvStore.setTextColor(getResources().getColor(R.color.title));
+			imStore.setImageResource(R.drawable.store);
 		} else {
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
 			rHomeTab.setVisibility(View.GONE);
-			rHidNews.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
 		}
 		if (personal) {
 			mPersonalTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
@@ -259,8 +267,15 @@ public class CanvasFragment extends CoreFragment {
 		rHomeTab = (RelativeLayout) v.findViewById(R.id.rhomeTab);
 		rHomeTab.setVisibility(View.VISIBLE);
 		rHidAnnouce = (LinearLayout) v.findViewById(R.id.idAnnouce);
-		rHidAnnouce.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+
 		rHidNews = (LinearLayout) v.findViewById(R.id.idNews);
+
+		// TextView, ImageView
+		tvNews = (TextView) v.findViewById(R.id.tvNews);
+		tvStore = (TextView) v.findViewById(R.id.tvStore);
+
+		imNews = (ImageView) v.findViewById(R.id.imNews);
+		imStore = (ImageView) v.findViewById(R.id.imStore);
 	}
 
 	@Override
@@ -299,7 +314,7 @@ public class CanvasFragment extends CoreFragment {
 	public static CanvasFragment getInstance() {
 		if (mInstance == null) {
 			mInstance = new CanvasFragment();
-		} 
+		}
 		return mInstance;
 	}
 }

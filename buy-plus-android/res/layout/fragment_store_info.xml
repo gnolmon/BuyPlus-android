@@ -7,7 +7,7 @@
     <RelativeLayout
         android:id="@+id/rlbanner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="220dp"
         android:background="@color/white"
         android:orientation="vertical" >
 
@@ -15,16 +15,17 @@
             android:id="@+id/imbannerStore"
             android:layout_width="@dimen/person_ava_width"
             android:layout_height="@dimen/person_ava_width"
-            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/padding_standard"
+            android:layout_centerHorizontal="true"
             android:scaleType="fitXY" />
 
         <Button
-            android:layout_margin="@dimen/padding_standard"
             android:id="@+id/btnAgreeTerm"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_toRightOf="@id/imbannerStore"
-            android:background="@color/maincolor"
+            android:layout_margin="@dimen/padding_standard"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/round_button_green"
             android:text="Tham gia"
             android:textColor="@color/white" >
         </Button>
@@ -35,15 +36,25 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/imbannerStore"
             android:layout_centerHorizontal="true"
+            android:padding="@dimen/padding_standard"
             android:text="Cửa hàng"
-            android:textColor="@color/title"
+            android:textColor="@color/white"
             android:textSize="20dp" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerVertical="true"
+            android:background="@color/title" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_below="@id/rlbanner"
+        android:layout_marginBottom="@dimen/padding_standard"
         android:background="@color/white" >
 
         <LinearLayout
