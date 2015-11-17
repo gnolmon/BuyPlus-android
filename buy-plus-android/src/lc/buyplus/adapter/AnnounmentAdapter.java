@@ -1,8 +1,12 @@
 package lc.buyplus.adapter;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -99,7 +103,12 @@ public class AnnounmentAdapter extends BaseAdapter {
 			}
 		});
 		
-		timestamp.setText(item.getStart_time());
+		long unixSeconds = item.getStart_time();
+		Date date = new Date(unixSeconds*1000L);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT-7"));
+		String formattedDate = sdf.format(date);
+		timestamp.setText(formattedDate);
 		tvStatus.setText(item.getContent());
 
 		avaStore.setImageUrl(item.getShop().getImage_thumbnail(), imageLoader);

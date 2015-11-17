@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import lc.buyplus.R;
@@ -39,7 +40,9 @@ public class ShopInfoFragment   extends CoreFragment {
 	private ShopAnnounmentAdapter newsAdapter;
 	private LayoutInflater inflaterActivity;
 	private TextView tvName, tvField, tvPhone, tvWeb, tvFb;
-
+	private Button join_leave;
+	private boolean isJoin;
+	Shop shop;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_store_info, container, false);
@@ -53,7 +56,18 @@ public class ShopInfoFragment   extends CoreFragment {
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
-
+		case R.id.btnAgreeTerm:
+			if (isJoin){
+				api_leave_shop(ShopInfoActivity.current_shop_id);
+				join_leave.setText("Tham gia");
+				isJoin = false;
+			}
+			else{
+				api_join_shop(ShopInfoActivity.current_shop_id);
+				join_leave.setText("Roi di");
+				isJoin = true;
+			}
+		break;
 		}
 	}
 
@@ -63,7 +77,8 @@ public class ShopInfoFragment   extends CoreFragment {
 
 	@Override
 	protected void initViews(View v) {
-
+		join_leave= (Button) v.findViewById(R.id.btnAgreeTerm);
+		join_leave.setOnClickListener(this);
 	}
 
 	@Override
@@ -84,10 +99,17 @@ public class ShopInfoFragment   extends CoreFragment {
 					public void onResponse(JSONObject response) {
 						Log.d("api_get_shop_info", response.toString());
 						try {
-							Shop shop = new Shop(response.getJSONObject("data"));
-							///////////////////////////
-							// code here
-							//////////////////////////
+							shop = new Shop(response.getJSONObject("data"));
+							
+							if ((shop.current_customer_shop_id==null) || (shop.current_customer_shop_id=="")){
+								join_leave.setText("Tham gia");
+								isJoin = false;
+							}
+							else{
+								join_leave.setText("Roi di");
+								isJoin = true;
+							}
+							
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
@@ -125,5 +147,52 @@ public class ShopInfoFragment   extends CoreFragment {
 		// TODO Auto-generated method stub
 
 	}
+	
+public void api_join_shop(int shop_id){
+	 	
+    	Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		params.put("shop_id", String.valueOf(shop_id));
+			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
+					HandleRequest.JOIN_SHOP, params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("api_join_shop",response.toString());
+						// code here
+					}
+					}, 
+					new Response.ErrorListener() {
+						@Override
+						public void onErrorResponse(VolleyError error) {
+						}
+					});
+			requestQueue.add(jsObjRequest);
+	}
+	
+	public void api_leave_shop(int shop_id){
+	 	
+    	Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		params.put("shop_id", String.valueOf(shop_id));
+			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
+					HandleRequest.LEAVE_SHOP, params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("api_leave_shop",response.toString());
+						// code here
+					}
+					}, 
+					new Response.ErrorListener() {
+						@Override
+						public void onErrorResponse(VolleyError error) {
+						}
+					});
+			requestQueue.add(jsObjRequest);
+	}
+	
 }
 

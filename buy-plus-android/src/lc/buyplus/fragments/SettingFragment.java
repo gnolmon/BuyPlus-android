@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class SettingFragment extends CoreFragment {
+	TextView logout;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_setting, container, false);
@@ -19,8 +22,10 @@ public class SettingFragment extends CoreFragment {
 	}
 	@Override
 	public void onClick(View view) {
-		switch(view.getId()) {
-
+		switch(view.getId()){ 
+		case R.id.tvLogout:
+			mFragmentManager.beginTransaction().replace(R.id.canvas, LoginFragment.getInstance(mActivity)).commit();
+		break;
 		}
 	}
 	
@@ -30,8 +35,9 @@ public class SettingFragment extends CoreFragment {
 
 	@Override
 	protected void initViews(View v) {
-
-	}
+		logout = (TextView) v.findViewById(R.id.tvLogout);
+		logout.setOnClickListener(this);
+	}	
 
 	@Override
 	protected void initAnimations() {

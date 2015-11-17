@@ -1,6 +1,9 @@
 package lc.buyplus.adapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.TimeZone;
 
 import com.android.volley.toolbox.ImageLoader;
 
@@ -65,7 +68,12 @@ public class ShopAnnounmentAdapter extends BaseAdapter {
 		Announcement item = announcementList.get(position);
 
 		name.setText(item.getShop().getName());
-		timestamp.setText(item.getStart_time());
+		long unixSeconds = item.getStart_time();
+		Date date = new Date(unixSeconds*1000L);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT-7"));
+		String formattedDate = sdf.format(date);
+		timestamp.setText(formattedDate);
 		tvStatus.setText(item.getContent());
 
 		avaStore.setImageUrl(item.getShop().getImage_thumbnail(), imageLoader);

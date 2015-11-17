@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import android.util.Log;
 
 public class FacebookFriend {
-	String id;
+	int id;
 	String name;
 	String picture;
 	
@@ -17,7 +17,7 @@ public class FacebookFriend {
 	public FacebookFriend(JSONObject data) {
 		try {
 			if (data.optString ("id") != "") {
-				id =data.getString("id");
+				id = Integer.parseInt(data.getString("id"));
 	        }
 			if (data.optString ("name") != "") {
 				name = data.getString("name");
@@ -35,11 +35,11 @@ public class FacebookFriend {
 		}
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

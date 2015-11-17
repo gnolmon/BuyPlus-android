@@ -17,7 +17,7 @@ public class Announcement {
 
 	public ArrayList<Photo> photos = new ArrayList<Photo>();
 	public Shop shop;
-	public String start_time;
+	public Long start_time = (long) 0;
 	public String end_time;
 
 	public Announcement() {
@@ -26,7 +26,7 @@ public class Announcement {
 	}
 
 	public Announcement(int id, int shop_id, String content, int type, String created_time, String updated_time,
-			int active, ArrayList<Photo> photos, Shop shop, String start_time, String end_time) {
+			int active, ArrayList<Photo> photos, Shop shop, Long start_time, String end_time) {
 		super();
 		this.id = id;
 		this.shop_id = shop_id;
@@ -83,9 +83,15 @@ public class Announcement {
 			}
 
 			// code here
-
-			start_time = data.getString("start_time");
-			end_time = data.getString("end_time");
+			
+			if (data.optString("start_time") != "") {
+				start_time = data.getLong("start_time");
+			}
+			if (data.optString("end_time") != "") {
+				end_time = data.getString("end_time");
+			}
+			
+			
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {
@@ -165,11 +171,11 @@ public class Announcement {
 		this.shop = shop;
 	}
 
-	public String getStart_time() {
+	public Long getStart_time() {
 		return start_time;
 	}
 
-	public void setStart_time(String start_time) {
+	public void setStart_time(Long start_time) {
 		this.start_time = start_time;
 	}
 
