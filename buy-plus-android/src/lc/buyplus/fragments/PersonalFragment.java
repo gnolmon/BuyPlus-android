@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -15,22 +16,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.activities.UserActivity;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
+import lc.buyplus.customizes.BlurBuilder;
 import lc.buyplus.customizes.RoundedImageView;
 
 public class PersonalFragment extends CoreFragment {
 	Display display;
 
+	private RelativeLayout rlBackground;
 	private ImageView imEdit;
 	private RoundedImageView imAvaUser;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_personal, container, false);
@@ -65,10 +71,25 @@ public class PersonalFragment extends CoreFragment {
 
 			}
 		});
-		
+
 		imAvaUser = (RoundedImageView) v.findViewById(R.id.imAvaUser);
 		imAvaUser.setImageUrl(CanvasFragment.mUser.getImageUrl(), imageLoader);
+		
 
+		rlBackground = (RelativeLayout) v.findViewById(R.id.rlBackground);
+		if (imAvaUser.getWidth() > 0) {
+			Bitmap image = BlurBuilder.blur(imAvaUser);
+			rlBackground.setBackground(new BitmapDrawable(getResources(), image));
+		} else {
+			imAvaUser.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+		        @Override
+		        public void onGlobalLayout() {	
+		            Bitmap image = BlurBuilder.blur(imAvaUser);
+		            rlBackground.setBackgroundDrawable(new BitmapDrawable(getResources(), image));
+		        }
+		    });
+		}
+		
 		TextView user_id_txt = (TextView) v.findViewById(R.id.user_id);
 		user_id_txt.setText("Mã số cá nhân: " + CanvasFragment.mUser.getId());
 		String qrInputText = user_id_txt.toString();
