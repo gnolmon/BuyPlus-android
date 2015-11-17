@@ -29,6 +29,7 @@
     <dimen name="image_normal">80dp</dimen>
     <dimen name="setting_size">20dp</dimen>
     <dimen name="person_ava_width">120dp</dimen>
+    <dimen name="logo">90dp</dimen>
     <dimen name="person_ava_height">120dp</dimen>
     <dimen name="term_size">220dp</dimen>
     <dimen name="QR_size">200dp</dimen>

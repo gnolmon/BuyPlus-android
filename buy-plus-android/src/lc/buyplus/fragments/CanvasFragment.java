@@ -25,8 +25,10 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class CanvasFragment extends CoreFragment {
 
@@ -38,6 +40,8 @@ public class CanvasFragment extends CoreFragment {
 	private LinearLayout mSearchBlockCancel;
 	private MyEditText mSearchEdittext;
 	private CallbackManager callbackManager;
+	private TextView tvStore, tvNews;
+	private ImageView imStore, imNews;
 
 	private MyTextView mTitle;
 
@@ -155,18 +159,17 @@ public class CanvasFragment extends CoreFragment {
 			rHomeTab.setVisibility(View.VISIBLE);
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			mTitle.setText(getResources().getString(R.string.canvas_title_home));
-			rHidAnnouce.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			rHidNews.setBackgroundColor(Color.parseColor("#FFFFFF"));
+			tvStore.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			imStore.setBackground(getResources().getDrawable(R.drawable.store_green));
 		} else if (homenews) {
 			rHidAnnouce.setBackgroundColor(Color.parseColor("#FFFFFF"));
 			rHomeTab.setVisibility(View.VISIBLE);
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			mTitle.setText(getResources().getString(R.string.canvas_title_home));
-			rHidNews.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			tvNews.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 		} else {
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
 			rHomeTab.setVisibility(View.GONE);
-			rHidNews.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		}
 		if (personal) {
 			mPersonalTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
@@ -261,6 +264,13 @@ public class CanvasFragment extends CoreFragment {
 		rHidAnnouce = (LinearLayout) v.findViewById(R.id.idAnnouce);
 		rHidAnnouce.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 		rHidNews = (LinearLayout) v.findViewById(R.id.idNews);
+		
+		//TextView, ImageView
+		tvNews = (TextView) v.findViewById(R.id.tvNews);
+		tvStore = (TextView) v.findViewById(R.id.tvStore);
+		
+		imNews = (ImageView) v.findViewById(R.id.imNews);
+		imStore = (ImageView) v.findViewById(R.id.imStore);
 	}
 
 	@Override

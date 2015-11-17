@@ -37,6 +37,7 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 	private TextView tvPoint;
 	private LinearLayout rHomeBaiviet, rHomeThongtin, rHomeHinhanh;
 	private MyTextView mTitle;
+	private TextView tvPost, tvShopInfo, tvShopPhoto;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -90,7 +91,7 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 			break;
 		case R.id.rHome_hinhanh:
 			mPager.setCurrentItem(2);
-			break;	
+			break;
 		default:
 			break;
 		}
@@ -129,24 +130,22 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 	public void changeTabState(boolean announcements, boolean info, boolean images) {
 		if (announcements) {
 			mShopAnnouncements.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			rHomeBaiviet.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			tvPost.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 		} else {
 			mShopAnnouncements.setBackgroundColor(getResources().getColor(R.color.maincolor));
-			rHomeBaiviet.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		}
 		if (info) {
 			mShopInfo.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			rHomeThongtin.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			tvShopInfo.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 		} else {
 			mShopInfo.setBackgroundColor(getResources().getColor(R.color.maincolor));
-			rHomeThongtin.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		}
 		if (images) {
 			mShopImages.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			rHomeHinhanh.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			tvShopPhoto.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 		} else {
 			mShopImages.setBackgroundColor(getResources().getColor(R.color.maincolor));
-			rHomeHinhanh.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
 		}
 	}
 
@@ -213,6 +212,11 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 				startActivity(shopFriendActivity);
 			}
 		});
+
+		tvPost = (TextView) v.findViewById(R.id.tvPost);
+		tvShopInfo = (TextView) v.findViewById(R.id.tvShopInfo);
+		tvShopPhoto = (TextView) v.findViewById(R.id.tvShopPhoto);
+
 	}
 
 	@Override

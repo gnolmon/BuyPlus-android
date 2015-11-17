@@ -27,4 +27,6 @@
     <string name="pull_to_refresh_from_bottom_refreshing_label">@string/pull_to_refresh_refreshing_label</string>
     
     <string name="facebook_app_id">474226309417351</string>
+    
+    <string name="guide">Tính năng &amp; Hướng dẫn</string>
 </resources>
