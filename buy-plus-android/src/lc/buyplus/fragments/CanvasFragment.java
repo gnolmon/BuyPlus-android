@@ -159,14 +159,23 @@ public class CanvasFragment extends CoreFragment {
 			rHomeTab.setVisibility(View.VISIBLE);
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			mTitle.setText(getResources().getString(R.string.canvas_title_home));
-			tvStore.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			imStore.setBackground(getResources().getDrawable(R.drawable.store_green));
+			
+			tvStore.setTextColor(getResources().getColor(R.color.tab_selected));
+			imStore.setBackgroundResource(R.drawable.store_green);
+			
+			tvNews.setTextColor(getResources().getColor(R.color.title));
+			imNews.setBackgroundResource(R.drawable.news);;
 		} else if (homenews) {
-			rHidAnnouce.setBackgroundColor(Color.parseColor("#FFFFFF"));
+			
 			rHomeTab.setVisibility(View.VISIBLE);
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			mTitle.setText(getResources().getString(R.string.canvas_title_home));
-			tvNews.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			
+			tvNews.setTextColor(getResources().getColor(R.color.tab_selected));
+			imNews.setBackgroundResource(R.drawable.news_green);
+			
+			tvStore.setTextColor(getResources().getColor(R.color.title));
+			imStore.setBackgroundResource(R.drawable.store);
 		} else {
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
 			rHomeTab.setVisibility(View.GONE);
@@ -262,7 +271,6 @@ public class CanvasFragment extends CoreFragment {
 		rHomeTab = (RelativeLayout) v.findViewById(R.id.rhomeTab);
 		rHomeTab.setVisibility(View.VISIBLE);
 		rHidAnnouce = (LinearLayout) v.findViewById(R.id.idAnnouce);
-		rHidAnnouce.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 		rHidNews = (LinearLayout) v.findViewById(R.id.idNews);
 		
 		//TextView, ImageView
