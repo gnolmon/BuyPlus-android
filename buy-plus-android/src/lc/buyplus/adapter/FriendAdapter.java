@@ -1,18 +1,35 @@
 package lc.buyplus.adapter;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.json.JSONObject;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.Request.Method;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.Volley;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.application.MonApplication;
+import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.RoundedImageView;
+import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.models.FacebookFriend;
+import lc.buyplus.models.Friend;
+import lc.buyplus.models.Store;
 
 public class FriendAdapter extends BaseAdapter {
 
@@ -53,8 +70,8 @@ public class FriendAdapter extends BaseAdapter {
 
 		if (imageLoader == null)
 			imageLoader = MonApplication.getInstance().getImageLoader();
-		FacebookFriend item = friendList.get(position);
-
+		final FacebookFriend item = friendList.get(position);
+		final int pos = position;
 		TextView nameFriend = (TextView) convertView.findViewById(R.id.tvFriendName);
 		nameFriend.setText(item.getName());
 
@@ -62,7 +79,19 @@ public class FriendAdapter extends BaseAdapter {
 		//TextView tvID = (TextView) convertView.findViewById(R.id.tvFriendId);
 		//tvID.setText("ID:" +item.getId());
 
-
+		TextView tvID = (TextView) convertView.findViewById(R.id.tvFriendId);
+		tvID.setText("ID:" +String.valueOf(item.getId()));
+		final Button addFriend = (Button) convertView.findViewById(R.id.btnAddFriend);
+		addFriend.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				
+				api_send_request_join_shop_to_friend(ShopInfoActivity.current_shop_id,item.getId());
+				addFriend.setText("Dang cho");
+				addFriend.setEnabled(false);
+				friendList.remove(pos);
+			}
+		});
 		RoundedImageView imNoti = (RoundedImageView) convertView.findViewById(R.id.imFriend);
 
 		// name.setText(item.getName());
@@ -71,6 +100,30 @@ public class FriendAdapter extends BaseAdapter {
 		imNoti.setImageUrl(item.getPicture(), imageLoader);
 
 		return convertView;
+	}
+	
+	public void api_send_request_join_shop_to_friend(int shop_id, int temp_id){
+	 	
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", Store.user.getAccessToken());
+		params.put("shop_id", String.valueOf(shop_id));
+		params.put("temp_id", String.valueOf(temp_id));
+			RequestQueue requestQueue = Volley.newRequestQueue(CanvasFragment.mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
+					HandleRequest.SEND_REQUEST_JOIN_SHOP_TO_FRIEND, params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("api_send_request_join_shop_to_friend",response.toString());
+						// code here
+					}
+					}, 
+					new Response.ErrorListener() {
+						@Override
+						public void onErrorResponse(VolleyError error) {
+						}
+					});
+			requestQueue.add(jsObjRequest);
 	}
 
 }

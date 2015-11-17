@@ -82,12 +82,14 @@ public class ShopFriendAdapter extends BaseAdapter {
 		TextView tvID = (TextView) convertView.findViewById(R.id.tvFriendId);
 		tvID.setText("ID:" +item.getId());
 		
-		Button delBtn = (Button) convertView.findViewById(R.id.btnDelFriend);
+		final Button delBtn = (Button) convertView.findViewById(R.id.btnDelFriend);
 		delBtn.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
 				
 				api_remove_friend_from_shop(ShopInfoActivity.current_shop_id,item.getId());
+				delBtn.setText("Dang cho");
+				delBtn.setEnabled(false);
 				friendList.remove(pos);
 			}
 		});
@@ -108,13 +110,14 @@ public class ShopFriendAdapter extends BaseAdapter {
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
 		params.put("friend_id", String.valueOf(friend_id));
+		Log.d("sadd",params.toString());
 			RequestQueue requestQueue = Volley.newRequestQueue(CanvasFragment.mActivity);
 			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.REMOVE_FRIEND_FROM_CIRCLE, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
-						Log.d("get_added_point_in_shop",response.toString());
+						Log.d("api_remove_friend_from_shop",response.toString());
 						// code here
 					}
 					}, 

@@ -46,7 +46,7 @@
                 android:orientation="vertical" >
 
                 <Button
-                    android:id="@+id/btnDelFriend"
+                    android:id="@+id/btnAddFriend"
                     android:layout_width="100dp"
                     android:layout_height="25dp"
                     android:layout_alignParentRight="true"
