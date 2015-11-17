@@ -56,48 +56,37 @@
                     android:text="1 ngày trước"
                     android:textColor="@color/timestamp"
                     android:textSize="@dimen/timestamp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:orientation="horizontal" >
-
-                    <Button
-                        android:id="@+id/btnAgreeTerm"
-                        android:layout_width="80dp"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="@dimen/padding_standard"
-                        android:layout_marginRight="@dimen/padding_standard"
-                        android:background="@drawable/round_button_green"
-                        android:text="Đồng ý"
-                        android:textColor="@color/white"
-                        android:textSize="15dp" />
-
-                    <Button
-                        android:id="@+id/btnIgnore"
-                        android:layout_width="80dp"
-                        android:layout_height="20dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginLeft="@dimen/padding_standard"
-                        android:layout_marginRight="@dimen/padding_standard"
-                        android:background="@drawable/rounded_button_red"
-                        android:text="Hủy"
-                        android:textColor="@color/white"
-                        android:textSize="15dp" />
-                </LinearLayout>
             </LinearLayout>
 
-            <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:orientation="vertical"
-            android:padding="@dimen/padding_standard" >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="horizontal" >
 
-            
-        </RelativeLayout>
+                <Button
+                    android:id="@+id/btnAgreeTerm"
+                    android:layout_width="80dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="@dimen/padding_standard"
+                    android:layout_marginRight="@dimen/padding_standard"
+                    android:background="@drawable/round_button_green"
+                    android:text="Đồng ý"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+
+                <Button
+                    android:id="@+id/btnIgnore"
+                    android:layout_width="80dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="@dimen/padding_standard"
+                    android:layout_marginRight="@dimen/padding_standard"
+                    android:background="@drawable/rounded_button_red"
+                    android:text="Hủy"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

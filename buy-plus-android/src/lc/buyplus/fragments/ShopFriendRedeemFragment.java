@@ -149,17 +149,17 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 	public void changeTabState(boolean home, boolean personal) {
 		if (home) {
 			//mHomeTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			rHgiftlist.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			rHgiftlist.setTextColor(getResources().getColor(R.color.tab_selected));
 		} else {
 			//mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
-			rHgiftlist.setBackgroundColor(Color.parseColor("#FFFFFF"));
+			rHgiftlist.setTextColor(getResources().getColor(R.color.title));
 		}
 		if (personal) {
 			//mPersonalTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			rHfriendlist.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			rHfriendlist.setTextColor(getResources().getColor(R.color.tab_selected));
 		} else {
 			//mPersonalTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
-			rHfriendlist.setBackgroundColor(Color.parseColor("#FFFFFF"));
+			rHfriendlist.setTextColor(getResources().getColor(R.color.title));
 		}
 	}
 
@@ -211,7 +211,7 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 		rHomeTab = (RelativeLayout) v.findViewById(R.id.rhomeTab);
 		rHomeTab.setVisibility(View.VISIBLE);
 		rHgiftlist = (TextView) v.findViewById(R.id.idgiftlist);
-		rHgiftlist.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+		rHgiftlist.setTextColor(getResources().getColor(R.color.tab_selected));
 		rHfriendlist = (TextView) v.findViewById(R.id.idfriendlist);
 		mTitleBlock = (LinearLayout) v.findViewById(R.id.fragment_canvas_title_block);
 	}
