@@ -27,7 +27,7 @@ import lc.buyplus.models.UserAccount;
 public class UserCanvasFragment extends CoreFragment {
 
 	private static final long serialVersionUID = 1L;
-	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab,rHomeidInfo,rHomeidContact,rHomeidSecure;
+	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab,rHomeidInfo,rHomeidContact,rHomeidSecure, mNotiTab, mSettingTab;
 	private RelativeLayout rHomeTab;
 	private LinearLayout mBack, mSortTab;
 	private LinearLayout mSearchBlock, mTitleBlock;
@@ -73,13 +73,24 @@ public class UserCanvasFragment extends CoreFragment {
 
 			break;
 		case R.id.fragment_canvas_home_tab:
-			mPager.setCurrentItem(0);
+			CanvasFragment.mPager.setCurrentItem(0);
+			mActivity.finish();
 			break;
 		case R.id.fragment_canvas_personal_tab:
-			mPager.setCurrentItem(1);
+			CanvasFragment.mPager.setCurrentItem(2);
+			mActivity.finish();
 			break;
 		case R.id.fragment_canvas_loyaltycard_tab:
-			mPager.setCurrentItem(2);
+			CanvasFragment.mPager.setCurrentItem(3);
+			mActivity.finish();
+			break;
+		case R.id.fragment_canvas_notifications_tab:
+			CanvasFragment.mPager.setCurrentItem(4);
+			mActivity.finish();
+			break;
+		case R.id.fragment_canvas_setting_tab:
+			CanvasFragment.mPager.setCurrentItem(5);
+			mActivity.finish();
 			break;
 		case R.id.idInfo:
 			mPager.setCurrentItem(0);
@@ -127,25 +138,25 @@ public class UserCanvasFragment extends CoreFragment {
 
 	public void changeTabState(boolean home, boolean personal, boolean loyaltycard) {
 		if (home) {
-			rHomeidInfo.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			//rHomeidInfo.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 		} else {
-			mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
+			//mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
 			rHomeidInfo.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		}
 		if (personal) {
-			mPersonalTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			//mPersonalTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			rHomeidContact.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 		} else {
-			mPersonalTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
+			//mPersonalTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
 			rHomeidContact.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		}
 		if (loyaltycard) {
-			mLoyaltyCardTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			//mLoyaltyCardTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			rHomeidSecure.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 			
 		} else {
-			mLoyaltyCardTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
+			//mLoyaltyCardTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
 			rHomeidSecure.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		}
 	}
@@ -193,6 +204,8 @@ public class UserCanvasFragment extends CoreFragment {
 		mHomeTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_home_tab);
 		mPersonalTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_personal_tab);
 		mLoyaltyCardTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_loyaltycard_tab);
+		mNotiTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_notifications_tab);
+		mSettingTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_setting_tab);
 		mTitle = (MyTextView) v.findViewById(R.id.fragment_canvas_title);
 		mTitle.setText("User information");
 		mBack = (LinearLayout) v.findViewById(R.id.fragment_canvas_back);
@@ -211,6 +224,8 @@ public class UserCanvasFragment extends CoreFragment {
 		mHomeTab.setOnClickListener(this);
 		mPersonalTab.setOnClickListener(this);
 		mLoyaltyCardTab.setOnClickListener(this);
+		mNotiTab.setOnClickListener(this);
+		mSettingTab.setOnClickListener(this);
 		mBack.setOnClickListener(this);
 		rHomeidInfo.setOnClickListener(this);
 		rHomeidContact.setOnClickListener(this);

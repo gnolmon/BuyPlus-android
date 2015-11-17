@@ -3,6 +3,7 @@ package lc.buyplus.fragments;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -28,7 +29,7 @@ import lc.buyplus.models.UserAccount;
 public class ShopDetailCanvasFragment extends CoreFragment {
 
 	private static final long serialVersionUID = 1L;
-	private LinearLayout mShopAnnouncements, mShopInfo, mShopImages;
+	private LinearLayout mShopAnnouncements, mShopInfo, mShopImages, mShopNoti, mShopSetting;
 	private RelativeLayout rHomeTab;
 	private LinearLayout mBack, mSortTab;
 	private LinearLayout mSearchBlock, mTitleBlock;
@@ -37,7 +38,6 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 	private TextView tvPoint;
 	private LinearLayout rHomeBaiviet, rHomeThongtin, rHomeHinhanh;
 	private MyTextView mTitle;
-	private TextView tvPost, tvShopInfo, tvShopPhoto;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,13 +75,24 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 
 			break;
 		case R.id.fragment_canvas_home_tab:
-			mPager.setCurrentItem(0);
+			CanvasFragment.mPager.setCurrentItem(0);
+			mActivity.finish();
 			break;
 		case R.id.fragment_canvas_personal_tab:
-			mPager.setCurrentItem(1);
+			CanvasFragment.mPager.setCurrentItem(2);
+			mActivity.finish();
 			break;
 		case R.id.fragment_canvas_loyaltycard_tab:
-			mPager.setCurrentItem(2);
+			CanvasFragment.mPager.setCurrentItem(3);
+			mActivity.finish();
+			break;
+		case R.id.fragment_canvas_notifications_tab:
+			CanvasFragment.mPager.setCurrentItem(4);
+			mActivity.finish();
+			break;
+		case R.id.fragment_canvas_setting_tab:
+			CanvasFragment.mPager.setCurrentItem(5);
+			mActivity.finish();
 			break;
 		case R.id.rHome_baiviet:
 			mPager.setCurrentItem(0);
@@ -91,17 +102,19 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 			break;
 		case R.id.rHome_hinhanh:
 			mPager.setCurrentItem(2);
-			break;
+			break;	
 		default:
 			break;
 		}
 	}
+	
 
+	
 	public static final int NUM_PAGES = 3;
 	public static ViewPager mPager;
 	public PagerAdapter mPagerAdapter;
 
-	public class ShopSlidePagerAdapter extends FragmentStatePagerAdapter {
+	public class ShopSlidePagerAdapter extends FragmentPagerAdapter  {
 		public ShopSlidePagerAdapter(android.support.v4.app.FragmentManager fm) {
 			super(fm);
 		}
@@ -129,23 +142,25 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 
 	public void changeTabState(boolean announcements, boolean info, boolean images) {
 		if (announcements) {
-			mShopAnnouncements.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			tvPost.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			//mShopAnnouncements.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			rHomeBaiviet.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 		} else {
-			mShopAnnouncements.setBackgroundColor(getResources().getColor(R.color.maincolor));
+			//mShopAnnouncements.setBackgroundColor(getResources().getColor(R.color.maincolor));
+			rHomeBaiviet.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		}
 		if (info) {
-			mShopInfo.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			tvShopInfo.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			//mShopInfo.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			rHomeThongtin.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 		} else {
-			mShopInfo.setBackgroundColor(getResources().getColor(R.color.maincolor));
+			//mShopInfo.setBackgroundColor(getResources().getColor(R.color.maincolor));
+			rHomeThongtin.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		}
 		if (images) {
-			mShopImages.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			tvShopPhoto.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			//mShopImages.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			rHomeHinhanh.setBackgroundColor(getResources().getColor(R.color.tab_selected));
 		} else {
-			mShopImages.setBackgroundColor(getResources().getColor(R.color.maincolor));
-
+			//mShopImages.setBackgroundColor(getResources().getColor(R.color.maincolor));
+			rHomeHinhanh.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		}
 	}
 
@@ -192,6 +207,8 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 		mShopAnnouncements = (LinearLayout) v.findViewById(R.id.fragment_canvas_home_tab);
 		mShopInfo = (LinearLayout) v.findViewById(R.id.fragment_canvas_personal_tab);
 		mShopImages = (LinearLayout) v.findViewById(R.id.fragment_canvas_loyaltycard_tab);
+		mShopNoti = (LinearLayout) v.findViewById(R.id.fragment_canvas_notifications_tab);
+		mShopSetting = (LinearLayout) v.findViewById(R.id.fragment_canvas_setting_tab);
 		mTitle = (MyTextView) v.findViewById(R.id.fragment_canvas_title);
 		mTitle.setText(Store.ShopsList.get(ShopInfoActivity.current_shop_id).getName());
 		mBack = (LinearLayout) v.findViewById(R.id.fragment_canvas_back);
@@ -209,21 +226,24 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 			@Override
 			public void onClick(View v) {
 				Intent shopFriendActivity = new Intent(mActivity, ShopFriendActivity.class);
-				startActivity(shopFriendActivity);
+				startActivityForResult(shopFriendActivity,2);
 			}
 		});
-
-		tvPost = (TextView) v.findViewById(R.id.tvPost);
-		tvShopInfo = (TextView) v.findViewById(R.id.tvShopInfo);
-		tvShopPhoto = (TextView) v.findViewById(R.id.tvShopPhoto);
-
 	}
-
+	
+	 public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		    if (resultCode == 2) {
+		    	mActivity.finish();
+		    }
+		}
+	 
 	@Override
 	protected void initListener() {
 		mShopAnnouncements.setOnClickListener(this);
 		mShopInfo.setOnClickListener(this);
 		mShopImages.setOnClickListener(this);
+		mShopNoti.setOnClickListener(this);
+		mShopSetting.setOnClickListener(this);
 		mBack.setOnClickListener(this);
 		rHomeBaiviet.setOnClickListener(this);
 		rHomeThongtin.setOnClickListener(this);
