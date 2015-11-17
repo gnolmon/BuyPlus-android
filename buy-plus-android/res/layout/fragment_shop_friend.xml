@@ -90,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:paddingLeft="@dimen/feed_item_padding_left_right"
-            android:text="Danh sach qua tang"
+            android:text="Danh sách quà tặng"
             android:textColor="@color/title"
             android:textSize="15dp" />
 
@@ -101,7 +101,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:paddingRight="@dimen/feed_item_padding_left_right"
-            android:text="Dach sach ban be"
+            android:text="Danh sách bạn bè"
             android:textColor="@color/title"
             android:textSize="15dp" />
     </RelativeLayout>

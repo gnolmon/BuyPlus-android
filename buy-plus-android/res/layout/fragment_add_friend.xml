@@ -280,7 +280,7 @@
                 android:layout_height="@dimen/icon_normal"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/searchfriend" />
+                android:src="@drawable/addfriend" />
 
             <ImageView
                 android:id="@+id/imFb"
@@ -289,7 +289,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/padding_standard"
                 android:layout_toLeftOf="@id/imSearchFriend"
-                android:src="@drawable/facebook" />
+                android:src="@drawable/fb_blue" />
         </RelativeLayout>
 
         <ListView
