@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import lc.buyplus.R;
@@ -30,12 +31,14 @@ import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.models.Friend;
+import lc.buyplus.models.Store;
 
 public class UserContactFragment extends CoreFragment {
 	private ListView listView;
 	private ShopFriendAdapter friendAdapter;
 	private LayoutInflater inflaterActivity;
 	private ImageView imAdd;
+	private EditText userFacebook, userEmail, userPhone;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,47 +63,17 @@ public class UserContactFragment extends CoreFragment {
 
 	@Override
 	protected void initViews(View v) {
+		userEmail = (EditText) v.findViewById(R.id.edUserEmail);
+		userFacebook = (EditText) v.findViewById(R.id.edUserFacebook);
+		userPhone = (EditText) v.findViewById(R.id.edUserPhone);
+		userEmail.setText(Store.user.getEmail());
+		userFacebook.setText(Store.user.getUsername());
+		userPhone.setText(Store.user.getPhonenumbers());
 	}
 
 	@Override
 	protected void initAnimations() {
 
-	}
-
-	public void api_get_shop_friends(int shop_id) {
-
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("shop_id", String.valueOf(shop_id));
-		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-				HandleRequest.build_link(HandleRequest.GET_SHOP_FRIENDS, params), params,
-				new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_get_shop_gifts", response.toString());
-						try {
-							ArrayList<Friend> FriendsList = new ArrayList<Friend>();
-							JSONArray data_aray = response.getJSONArray("data");
-							for (int i = 0; i < data_aray.length(); i++) {
-								Friend friend = new Friend((JSONObject) data_aray.get(i));
-								FriendsList.add(friend);
-							}
-							friendAdapter = new ShopFriendAdapter(FriendsList, inflaterActivity);
-							listView.setAdapter(friendAdapter);
-							friendAdapter.notifyDataSetChanged();
-						} catch (JSONException e) {
-
-							e.printStackTrace();
-						}
-						// code here
-					}
-				}, new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-					}
-				});
-		requestQueue.add(jsObjRequest);
 	}
 
 	public static final long serialVersionUID = 6036846677812555352L;

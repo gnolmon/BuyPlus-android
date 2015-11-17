@@ -26,6 +26,7 @@
                 android:textSize="@dimen/title_pass" />
 
             <EditText
+                android:id="@+id/edUserEmail"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -57,6 +58,7 @@
                 android:textSize="@dimen/title_pass" />
 
             <EditText
+                android:id="@+id/edUserPhone"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -88,6 +90,7 @@
                 android:textSize="@dimen/title_pass" />
 
             <EditText
+                android:id="@+id/edUserFacebook"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
