@@ -1,18 +1,34 @@
 package lc.buyplus.adapter;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.json.JSONObject;
+
+import com.android.volley.Request.Method;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.Volley;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.application.MonApplication;
+import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.RoundedImageView;
+import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.models.Notification;
+import lc.buyplus.models.Store;
 
 public class NotificationAdapter extends BaseAdapter {
 
@@ -65,12 +81,70 @@ public class NotificationAdapter extends BaseAdapter {
 
 		RoundedImageView imNoti = (RoundedImageView) convertView.findViewById(R.id.imNoti);
 
+	
 		// name.setText(item.getName());
 
 		// user profile pic
+		
+		
+		
+		final Button accept= (Button) convertView.findViewById(R.id.btnAgreeTerm);
+		final Button reject= (Button) convertView.findViewById(R.id.btnIgnore);
+		
+		String string = notiList.get(position).getParams();
+		final String[] parts = string.split(":");
+		Log.d("sad",parts[1]);
+		if (notiList.get(position).getType()!=4){
+			accept.setVisibility(View.GONE);
+			reject.setVisibility(View.GONE);
+		}
+		else{
+			accept.setVisibility(0);
+			reject.setVisibility(0);
+		} 
+		accept.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				api_response_join_shop(Integer.valueOf(parts[1]),"accept");
+				accept.setVisibility(View.GONE);
+				reject.setVisibility(View.GONE);
+			}
+		});
+		reject.setOnClickListener(new OnClickListener() {
+	
+			public void onClick(View v) {
+				api_response_join_shop(Integer.valueOf(parts[1]),"deny");
+				accept.setVisibility(View.GONE);
+				reject.setVisibility(View.GONE);
+			}
+		});
 		imNoti.setImageUrl(item.getImage(), imageLoader);
 
 		return convertView;
 	}
-
+	
+	//accept_type:  accept, deny, deny_forever	
+		public void api_response_join_shop(int request_id, String accept_type){
+		 	
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("access_token", Store.user.getAccessToken());
+			params.put("request_id", String.valueOf(request_id));
+			params.put("accept_type", accept_type);
+				RequestQueue requestQueue = Volley.newRequestQueue(CanvasFragment.mActivity);
+				HandleRequest jsObjRequest = new HandleRequest(Method.POST,
+						HandleRequest.RESPONSE_REQUEST__JOIN_SHOP, params, 
+						new Response.Listener<JSONObject>() {
+						@Override
+						public void onResponse(JSONObject response) {
+							Log.d("api_response_join_shop",response.toString());
+							// code here
+						}
+						}, 
+						new Response.ErrorListener() {
+							@Override
+							public void onErrorResponse(VolleyError error) {
+							}
+						});
+				requestQueue.add(jsObjRequest);
+		}
 }
