@@ -4,6 +4,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Notification {
+	
+	private int TYPE_FRIEND_ACCEPTED_MY_REQUEST_TO_SHOP = 1; // friend_id:shop_id:request_id:friend_name:shop_name
+	private int TYPE_FRIEND_SEND_ME_REQUEST_TO_SHOP = 2; // friend_id:shop_id:request_id:friend_name:shop_name
+	private int TYPE_FRIEND_ADD_POINT_FOR_ME = 3; // friend_id:shop_id:transaction_id:num_point:friend_name:shop_name
+	private int TYPE_SHOP_SEND_ME_REQUEST_TO_SHOP = 4; // shop_id:request_id:shop_name
+	private int TYPE_SHOP_SEND_ME_ANNOUNCEMENT = 5; // shop_id:announcement_id:shop_name:announcement_content
+	private int TYPE_SHOP_ADD_POINT_FOR_ME = 6; // shop_id:transaction_id:num_point:money:shop_name
+	private int TYPE_BUYPLUS_SEND_ME_ANNOUNCEMENT = 7; // announcement_content
 	private int id;
 	private int active;
 	private String created_time;
@@ -14,7 +22,16 @@ public class Notification {
 	private String is_read;
 	private String message;
 	private String image;
+	private boolean isRep;
 	
+	public boolean isRep() {
+		return isRep;
+	}
+
+	public void setRep(boolean isRep) {
+		this.isRep = isRep;
+	}
+
 	public Notification() {
 		super();
 	}
