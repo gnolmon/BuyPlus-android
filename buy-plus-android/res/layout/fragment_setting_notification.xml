@@ -1,12 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/canvas"
     android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/rlTitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        android:background="@color/actionbar"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <LinearLayout
+                android:id="@+id/fragment_canvas_title_block"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:id="@+id/fragment_canvas_back"
+                    android:layout_width="@dimen/actionbar_height"
+                    android:layout_height="match_parent"
+                    android:gravity="center" >
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/back_white" />
+                </LinearLayout>
+
+                <lc.buyplus.customizes.MyTextView
+                    android:id="@+id/fragment_canvas_title"
+                    android:layout_width="@dimen/zero"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:text="Cài đặt"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/canvas_title_text_size" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/fragment_canvas_sort"
+            android:layout_width="@dimen/actionbar_height"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="invisible" >
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/sort" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnTab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tabbar_height"
+        android:layout_alignParentBottom="true"
+        android:background="@color/maincolor_light"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/fragment_canvas_home_tab"
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="@dimen/icon_tab"
+                android:layout_height="@dimen/icon_tab"
+                android:src="@drawable/home_white" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_divide"
+            android:layout_marginTop="@dimen/margin_divide"
+            android:background="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/fragment_canvas_personal_tab"
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="@dimen/icon_tab"
+                android:layout_height="@dimen/icon_tab"
+                android:src="@drawable/personal_white" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_divide"
+            android:layout_marginTop="@dimen/margin_divide"
+            android:background="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/fragment_canvas_loyaltycard_tab"
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="@dimen/icon_tab"
+                android:layout_height="@dimen/icon_tab"
+                android:src="@drawable/card_white" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_divide"
+            android:layout_marginTop="@dimen/margin_divide"
+            android:background="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/fragment_canvas_notifications_tab"
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="@dimen/icon_tab"
+                android:layout_height="@dimen/icon_tab"
+                android:src="@drawable/bell_white" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_divide"
+            android:layout_marginTop="@dimen/margin_divide"
+            android:background="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/fragment_canvas_setting_tab"
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="@dimen/icon_tab"
+                android:layout_height="@dimen/icon_tab"
+                android:src="@drawable/setting_white" />
+        </LinearLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
+        android:layout_above="@id/lnTab"
+        android:layout_below="@id/rlTitle"
         android:background="@color/white" >
 
         <LinearLayout
@@ -72,6 +239,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerVertical="true"
                     android:background="@color/title" />
+
                 <lc.buyplus.customizes.Switch
                     android:id="@+id/btnAllowSound"
                     android:layout_width="wrap_content"
@@ -104,6 +272,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerVertical="true"
                     android:background="@color/title" />
+
                 <lc.buyplus.customizes.Switch
                     android:id="@+id/btnAllowVirbate"
                     android:layout_width="wrap_content"
@@ -115,4 +284,4 @@
         </LinearLayout>
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

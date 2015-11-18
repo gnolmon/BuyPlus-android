@@ -50,6 +50,18 @@
             android:name="lc.buyplus.activities.UserActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="lc.buyplus.activities.BuyPlusInfoActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="lc.buyplus.activities.TermActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="lc.buyplus.activities.SettingNotificationActivity"
+            android:label="@string/app_name" >
+        </activity>
         <activity android:name="com.facebook.FacebookActivity"
         android:configChanges=
             "keyboard|keyboardHidden|screenLayout|screenSize|orientation"

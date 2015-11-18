@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import lc.buyplus.R;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.fragments.CanvasFragment;
-import lc.buyplus.fragments.ShopDetailCanvasFragment;
 import lc.buyplus.fragments.ShopFriendRedeemFragment;
 
 public class ShopFriendActivity extends CoreActivity {

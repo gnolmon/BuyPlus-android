@@ -38,7 +38,7 @@
                 android:layout_height="@dimen/icon_normal"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/add_gray"
+                android:src="@drawable/add_green"
                 android:layout_marginRight="@dimen/feed_item_profile_info_padd" />
         </RelativeLayout>
 
