@@ -4,16 +4,17 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 import lc.buyplus.R;
 
-public class CustomDialogClass extends android.app.Dialog implements android.view.View.OnClickListener {
+public class LanguageDialog extends android.app.Dialog implements android.view.View.OnClickListener {
 
 	public Activity c;
 	public Dialog d;
-	public Button yes, no;
+	public TextView tvVN, tvEng;
 	public int flag;
 
-	public CustomDialogClass(Activity a, String msg) {
+	public LanguageDialog(Activity a) {
 		super(a);
 		// TODO Auto-generated constructor stub
 		this.c = a;
@@ -24,21 +25,21 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.custom_dialog);
-		yes = (Button) findViewById(R.id.btnYes);
-		no = (Button) findViewById(R.id.btnNo);
-		yes.setOnClickListener(this);
-		no.setOnClickListener(this);
+		setContentView(R.layout.dialog_language);
+		tvVN = (TextView) findViewById(R.id.tvVN);
+		tvEng = (TextView) findViewById(R.id.tvEng);
+		tvVN.setOnClickListener(this);
+		tvEng.setOnClickListener(this);
 
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.btnYes:
+		case R.id.tvVN:
 			flag = 1;
 			break;
-		case R.id.btnNo:
+		case R.id.tvEng:
 			dismiss();
 			break;
 		default:

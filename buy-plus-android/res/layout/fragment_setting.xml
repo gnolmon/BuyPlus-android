@@ -16,6 +16,7 @@
             android:orientation="vertical" >
 
             <RelativeLayout
+                android:id="@+id/rlSettingNoti"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
@@ -47,6 +48,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rlLanguage"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
@@ -78,6 +80,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rlBuyplusInfo"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
@@ -109,6 +112,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rlSettingUser"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
@@ -140,6 +144,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rlLogout"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"

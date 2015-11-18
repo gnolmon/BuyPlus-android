@@ -6,13 +6,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import lc.buyplus.R;
 import lc.buyplus.cores.CoreActivity;
-import lc.buyplus.fragments.AddFriendFragment;
+import lc.buyplus.fragments.SettingNotificationFragment;
 
-public class AddFriendActivity extends CoreActivity {
-	
+public class SettingNotificationActivity extends CoreActivity {
+
 	private static final long serialVersionUID = 250212518535755420L;
-//	private ImageView image;
-	
+	// private ImageView image;
+
+	public static int current_shop_id;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,12 +24,14 @@ public class AddFriendActivity extends CoreActivity {
 		initListeners();
 		initAnimations();
 		FragmentManager mFragmentManager = getSupportFragmentManager();
-		mFragmentManager.beginTransaction().add(R.id.canvas, AddFriendFragment.getInstance(AddFriendActivity.this)).commit();
+		mFragmentManager.beginTransaction()
+				.add(R.id.canvas, SettingNotificationFragment.getInstance(SettingNotificationActivity.this))
+				.commit();
 	}
-	
+
 	@Override
 	public void initViews() {
-//		image = (ImageView) findViewById(R.id.image);
+		// image = (ImageView) findViewById(R.id.image);
 	}
 
 	@Override
@@ -38,19 +42,19 @@ public class AddFriendActivity extends CoreActivity {
 	@Override
 	public void initListeners() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void initAnimations() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.canvas);
-	    fragment.onActivityResult(requestCode, resultCode, data);
+		Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.canvas);
+		fragment.onActivityResult(requestCode, resultCode, data);
 	}
 
 }

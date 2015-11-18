@@ -49,7 +49,6 @@
         </RelativeLayout>
     </LinearLayout>
 
-
     <LinearLayout
         android:id="@+id/tab"
         android:layout_width="match_parent"
@@ -167,37 +166,45 @@
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:padding="@dimen/padding_standard" >
-        <LinearLayout
+
+        <RelativeLayout
             android:id="@+id/lnButton"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
             android:layout_alignParentBottom="true"
-            android:padding="@dimen/padding_standard"
-            android:background="@color/feed_bg"
-            android:orientation="horizontal" >
+            android:orientation="vertical"
+            android:padding="5dp" >
 
-            <Button
-                android:id="@+id/btnAgreeTerm"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="@color/maincolor"
-                android:text="Đồng ý"
-                android:textColor="@color/white" >
-            </Button>
+                android:layout_height="@dimen/actionbar_height"
+                android:layout_centerInParent="true"
+                android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/btnIgnore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="@dimen/padding_standard"
-                android:layout_toRightOf="@id/btnAgreeTerm"
-                android:background="@color/maincolor"
-                android:text="Từ chối"
-                android:textColor="@color/white" >
-            </Button>
-        </LinearLayout>
+                <Button
+                    android:id="@+id/btnAgreeTerm"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_standard"
+                    android:layout_marginRight="@dimen/padding_standard"
+                    android:background="@drawable/round_button_green"
+                    android:textSize="15dp"
+                    android:text="Lưu"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/btnIgnore"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="@dimen/padding_standard"
+                    android:layout_marginRight="@dimen/padding_standard"
+                    android:background="@drawable/rounded_button_red"
+                    android:text="Hủy"
+                    android:textSize="15dp"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
