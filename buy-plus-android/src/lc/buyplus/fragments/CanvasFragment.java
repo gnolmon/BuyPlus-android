@@ -4,6 +4,7 @@ import com.facebook.CallbackManager;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
@@ -19,6 +20,9 @@ import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
+import lc.buyplus.customizes.DialogNews;
+import lc.buyplus.customizes.DialogSort;
+import lc.buyplus.customizes.LanguageDialog;
 import lc.buyplus.customizes.MyAnimations;
 import lc.buyplus.customizes.MyEditText;
 import lc.buyplus.customizes.MyTextView;
@@ -31,12 +35,12 @@ public class CanvasFragment extends CoreFragment {
 			rHidSort;
 	private RelativeLayout rHomeTab;
 	private LinearLayout mSearchTab, mSortTab;
-	private LinearLayout mSearchBlock, mTitleBlock;
+	private LinearLayout mSearchBlock, mTitleBlock, idSort;
 	private LinearLayout mSearchBlockCancel;
 	private MyEditText mSearchEdittext;
 	private CallbackManager callbackManager;
 	private TextView tvStore, tvNews;
-	private ImageView imStore, imNews;
+	private ImageView imStore, imNews, imNewsDialog;
 
 	private MyTextView mTitle;
 
@@ -105,6 +109,16 @@ public class CanvasFragment extends CoreFragment {
 		case R.id.idNews:
 			mPager.setCurrentItem(1);
 			break;
+		case R.id.idSort:
+			DialogSort sortDialog = new DialogSort(mActivity);
+			sortDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+			sortDialog.show();
+			break;
+		case R.id.imNewsDialog:
+			DialogNews newsDialog = new DialogNews(mActivity);
+			newsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+			newsDialog.show();
+			break;
 		default:
 			break;
 		}
@@ -159,6 +173,7 @@ public class CanvasFragment extends CoreFragment {
 
 			tvNews.setTextColor(getResources().getColor(R.color.title));
 			imNews.setImageResource(R.drawable.news);
+			imNewsDialog.setImageResource(R.drawable.down_gray);
 			;
 		} else if (homenews) {
 
@@ -171,6 +186,7 @@ public class CanvasFragment extends CoreFragment {
 
 			tvStore.setTextColor(getResources().getColor(R.color.title));
 			imStore.setImageResource(R.drawable.store);
+			imNewsDialog.setImageResource(R.drawable.down_green);
 		} else {
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
 			rHomeTab.setVisibility(View.GONE);
@@ -267,6 +283,8 @@ public class CanvasFragment extends CoreFragment {
 		rHomeTab = (RelativeLayout) v.findViewById(R.id.rhomeTab);
 		rHomeTab.setVisibility(View.VISIBLE);
 		rHidAnnouce = (LinearLayout) v.findViewById(R.id.idAnnouce);
+		
+		idSort = (LinearLayout) v.findViewById(R.id.idSort);
 
 		rHidNews = (LinearLayout) v.findViewById(R.id.idNews);
 
@@ -275,6 +293,7 @@ public class CanvasFragment extends CoreFragment {
 		tvStore = (TextView) v.findViewById(R.id.tvStore);
 
 		imNews = (ImageView) v.findViewById(R.id.imNews);
+		imNewsDialog = (ImageView) v.findViewById(R.id.imNewsDialog);
 		imStore = (ImageView) v.findViewById(R.id.imStore);
 	}
 
@@ -290,6 +309,8 @@ public class CanvasFragment extends CoreFragment {
 		mSearchBlockCancel.setOnClickListener(this);
 		rHidAnnouce.setOnClickListener(this);
 		rHidNews.setOnClickListener(this);
+		imNewsDialog.setOnClickListener(this);
+		idSort.setOnClickListener(this);
 	}
 
 	@Override
