@@ -166,6 +166,12 @@
                 android:text="Tin tức"
                 android:textColor="@color/title"
                 android:textSize="15dp" />
+            <ImageView
+                android:id="@+id/imNewsDialog"
+                android:layout_width="@dimen/icon_title"
+                android:layout_height="@dimen/icon_title"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/down_gray" />
         </LinearLayout>
 
         <LinearLayout

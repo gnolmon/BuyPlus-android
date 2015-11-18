@@ -1,11 +1,8 @@
 package lc.buyplus.fragments;
 
-import lc.buyplus.R;
-import lc.buyplus.activities.LoginActivity;
-import lc.buyplus.activities.MainActivity;
-import lc.buyplus.cores.CoreActivity;
-import lc.buyplus.cores.CoreFragment;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +10,13 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.R;
 import lc.buyplus.activities.BuyPlusInfoActivity;
+import lc.buyplus.activities.LoginActivity;
 import lc.buyplus.activities.SettingNotificationActivity;
 import lc.buyplus.cores.CoreActivity;
+import lc.buyplus.cores.CoreActivity;
+import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.customizes.LanguageDialog;
 
@@ -50,6 +51,7 @@ public class SettingFragment extends CoreFragment {
 			break;
 		case R.id.rlLanguage:
 			LanguageDialog lanDialog = new LanguageDialog(mActivity);
+			lanDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 			lanDialog.show();
 			break;
 		}

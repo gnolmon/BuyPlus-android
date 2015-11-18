@@ -21,7 +21,7 @@
             android:layout_marginRight="@dimen/padding_standard"
             android:text="Lựa chọn ngôn ngữ"
             android:textColor="@color/title"
-            android:textSize="20dp" />
+            android:textSize="15dp" />
     </RelativeLayout>
 
     <LinearLayout
@@ -39,7 +39,7 @@
             android:layout_marginRight="@dimen/padding_standard"
             android:text="Tiếng Việt"
             android:textColor="@color/title"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -57,7 +57,7 @@
             android:layout_marginRight="@dimen/padding_standard"
             android:text="Tiếng Anh"
             android:textColor="@color/title"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
     </LinearLayout>
 
 </LinearLayout>
