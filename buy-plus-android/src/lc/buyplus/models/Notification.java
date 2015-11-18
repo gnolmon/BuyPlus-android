@@ -5,13 +5,6 @@ import org.json.JSONObject;
 
 public class Notification {
 	
-	private int TYPE_FRIEND_ACCEPTED_MY_REQUEST_TO_SHOP = 1; // friend_id:shop_id:request_id:friend_name:shop_name
-	private int TYPE_FRIEND_SEND_ME_REQUEST_TO_SHOP = 2; // friend_id:shop_id:request_id:friend_name:shop_name
-	private int TYPE_FRIEND_ADD_POINT_FOR_ME = 3; // friend_id:shop_id:transaction_id:num_point:friend_name:shop_name
-	private int TYPE_SHOP_SEND_ME_REQUEST_TO_SHOP = 4; // shop_id:request_id:shop_name
-	private int TYPE_SHOP_SEND_ME_ANNOUNCEMENT = 5; // shop_id:announcement_id:shop_name:announcement_content
-	private int TYPE_SHOP_ADD_POINT_FOR_ME = 6; // shop_id:transaction_id:num_point:money:shop_name
-	private int TYPE_BUYPLUS_SEND_ME_ANNOUNCEMENT = 7; // announcement_content
 	private int id;
 	private int active;
 	private String created_time;
@@ -22,14 +15,15 @@ public class Notification {
 	private String is_read;
 	private String message;
 	private String image;
-	private boolean isRep;
-	
-	public boolean isRep() {
-		return isRep;
+	private int response_result;
+
+
+	public int getResponse_result() {
+		return response_result;
 	}
 
-	public void setRep(boolean isRep) {
-		this.isRep = isRep;
+	public void setResponse_result(int response_result) {
+		this.response_result = response_result;
 	}
 
 	public Notification() {
@@ -37,7 +31,11 @@ public class Notification {
 	}
 	
 	public Notification(JSONObject data) {
-		try {          
+		try {
+			response_result = 0;
+			if (data.optString ("response_result") != "" && data.optString ("response_result") != "null") {
+				response_result = Integer.parseInt(data.getString("response_result"));
+	        }
 			if (data.optString ("id") != "") {
 				id = Integer.parseInt(data.getString("id"));
 	        }
@@ -47,6 +45,9 @@ public class Notification {
 			if (data.optString ("params") != "") {
 				params = data.getString("params");
 	        }
+			else {
+				params = "1:1";
+			}
 			if (data.optString ("active") != "") {
 				active = Integer.parseInt(data.getString("active"));
 	        }
@@ -68,6 +69,7 @@ public class Notification {
 			if (data.optString ("image") != "") {
 				image = data.getString("image");
 	        }
+			
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {

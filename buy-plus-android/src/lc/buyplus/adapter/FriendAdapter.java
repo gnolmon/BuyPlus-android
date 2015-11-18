@@ -89,7 +89,6 @@ public class FriendAdapter extends BaseAdapter {
 				api_send_request_join_shop_to_friend(ShopInfoActivity.current_shop_id,item.getId());
 				addFriend.setText("Dang cho");
 				addFriend.setEnabled(false);
-				friendList.remove(pos);
 			}
 		});
 		RoundedImageView imNoti = (RoundedImageView) convertView.findViewById(R.id.imFriend);

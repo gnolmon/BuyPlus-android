@@ -146,13 +146,29 @@ public class ShopInfoFragment   extends CoreFragment {
 							
 							if (imbannerStore.getWidth() > 0) {
 								Bitmap image = BlurBuilder.blur(imbannerStore);
-								rlbanner.setBackground(new BitmapDrawable(getResources(), image));
+								int sdk = android.os.Build.VERSION.SDK_INT;
+								if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+								    //if you want take image from resources - getResources().getDrawable(your_id)
+									rlbanner.setBackgroundDrawable(new BitmapDrawable(getResources(), image));
+
+								} else {
+									rlbanner.setBackground(new BitmapDrawable(getResources(), image));
+								}
+								
 							} else {
 								imbannerStore.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 							        @Override
 							        public void onGlobalLayout() {	
 							            Bitmap image = BlurBuilder.blur(imbannerStore);
-							            rlbanner.setBackground(new BitmapDrawable(getResources(), image));
+							            
+							            int sdk = android.os.Build.VERSION.SDK_INT;
+										if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+										    //if you want take image from resources - getResources().getDrawable(your_id)
+											rlbanner.setBackgroundDrawable(new BitmapDrawable(getResources(), image));
+
+										} else {
+											rlbanner.setBackground(new BitmapDrawable(getResources(), image));
+										}
 							        }
 							    });
 							}

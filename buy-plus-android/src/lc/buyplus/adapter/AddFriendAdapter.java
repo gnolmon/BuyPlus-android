@@ -78,14 +78,24 @@ public class AddFriendAdapter extends BaseAdapter {
 		TextView tvID = (TextView) convertView.findViewById(R.id.tvFriendId);
 		tvID.setText("ID:" +item.getId());
 		final Button addFriend = (Button) convertView.findViewById(R.id.btnAddFriend);
+		addFriend.setText("Thêm Bạn");
+		if (friendList.get(position).getHas_joined()==1){
+			addFriend.setText("Đã vào");
+			addFriend.setEnabled(false);
+		}else{
+			if (friendList.get(position).getHas_requested()==1){
+				addFriend.setText("Đang chờ");
+				addFriend.setEnabled(false);
+			}
+		}
 		addFriend.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
 				
 				api_send_request_join_shop_to_friend(ShopInfoActivity.current_shop_id,item.getId());
-				addFriend.setText("Ä�ang chá»�");
+				addFriend.setText("Đang chờ");
 				addFriend.setEnabled(false);
-				friendList.remove(pos);
+				friendList.get(pos).setHas_requested(1);
 			}
 		});
 

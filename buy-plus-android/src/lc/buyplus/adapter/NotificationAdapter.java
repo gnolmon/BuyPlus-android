@@ -93,19 +93,20 @@ public class NotificationAdapter extends BaseAdapter {
 		
 		String string = notiList.get(position).getParams();
 		final String[] parts = string.split(":");
-		Log.d("sad",parts[1]);
-		if (notiList.get(position).getType()!=4){
-			accept.setVisibility(View.GONE);
-			reject.setVisibility(View.GONE);
-		}
-		else{
+		if (notiList.get(position).getResponse_result()==0 && (notiList.get(position).getType()==4 || notiList.get(position).getType()==2)){
 			accept.setVisibility(0);
 			reject.setVisibility(0);
+		}
+		else{
+			accept.setVisibility(View.GONE);
+			reject.setVisibility(View.GONE);
 		} 
+		final int pos = position;
 		accept.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
 				api_response_join_shop(Integer.valueOf(parts[1]),"accept");
+				notiList.get(pos).setResponse_result(1);
 				accept.setVisibility(View.GONE);
 				reject.setVisibility(View.GONE);
 			}
@@ -114,6 +115,7 @@ public class NotificationAdapter extends BaseAdapter {
 	
 			public void onClick(View v) {
 				api_response_join_shop(Integer.valueOf(parts[1]),"deny");
+				notiList.get(pos).setResponse_result(2);
 				accept.setVisibility(View.GONE);
 				reject.setVisibility(View.GONE);
 			}

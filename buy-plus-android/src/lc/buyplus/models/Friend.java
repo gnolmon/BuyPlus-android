@@ -9,10 +9,13 @@ public class Friend {
 		String name;
 		String image;
 		String image_thumbnail;
+		int has_requested;
+		int has_joined;
 		public Friend() {
 			super();
 		}
 		
+
 		public Friend(JSONObject data) {
 			try {
 				if (data.optString ("id") != "") {
@@ -30,6 +33,12 @@ public class Friend {
 				if (data.optString ("active") != "") {
 					active = Integer.parseInt(data.getString("active"));
 		        }
+				if (data.optString ("has_requested") != "") {
+					has_requested = Integer.parseInt(data.getString("has_requested"));
+		        }
+				if (data.optString ("has_joined") != "") {
+					has_joined = Integer.parseInt(data.getString("has_joined"));
+		        }
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			} catch (JSONException e) {
@@ -45,6 +54,23 @@ public class Friend {
 			this.name = name;
 			this.image = image;
 			this.image_thumbnail = image_thumbnail;
+		}
+		
+
+		public int getHas_requested() {
+			return has_requested;
+		}
+
+		public void setHas_requested(int has_requested) {
+			this.has_requested = has_requested;
+		}
+
+		public int getHas_joined() {
+			return has_joined;
+		}
+
+		public void setHas_joined(int has_joined) {
+			this.has_joined = has_joined;
 		}
 		
 		public int getId() {

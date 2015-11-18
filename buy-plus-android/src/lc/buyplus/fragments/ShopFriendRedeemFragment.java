@@ -3,6 +3,7 @@ package lc.buyplus.fragments;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -131,7 +132,7 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 	public static ViewPager mPager;
 	public PagerAdapter mPagerAdapter;
 
-	public class ShopFriendSlidePagerAdapter extends FragmentStatePagerAdapter {
+	public class ShopFriendSlidePagerAdapter extends FragmentPagerAdapter {
 		public ShopFriendSlidePagerAdapter(android.support.v4.app.FragmentManager fm) {
 			super(fm);
 		}
