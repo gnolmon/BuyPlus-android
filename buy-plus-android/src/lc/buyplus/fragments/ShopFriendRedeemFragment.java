@@ -117,7 +117,16 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 			break;
 		}
 	}
-
+	
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Intent returnIntent;
+		if (resultCode == 2) {
+			returnIntent = new Intent();
+			mActivity.setResult(2, returnIntent);
+			mActivity.finish();
+	    }
+	}
+	
 	public static final int NUM_PAGES = 2;
 	public static ViewPager mPager;
 	public PagerAdapter mPagerAdapter;

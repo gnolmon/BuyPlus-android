@@ -88,9 +88,8 @@ public class ShopFriendAdapter extends BaseAdapter {
 			public void onClick(View v) {
 				
 				api_remove_friend_from_shop(ShopInfoActivity.current_shop_id,item.getId());
-				delBtn.setText("Dang cho");
-				delBtn.setEnabled(false);
 				friendList.remove(pos);
+				notifyDataSetChanged();
 			}
 		});
 

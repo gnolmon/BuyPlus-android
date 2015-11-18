@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import lc.buyplus.R;
+import lc.buyplus.activities.MainActivity;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.StoreAdapter;
 import lc.buyplus.cores.CoreActivity;
@@ -251,7 +252,9 @@ public class LoginFragment extends CoreFragment {
 							editor.putString("password", editPass.getText().toString());
 							editor.commit();
 							Store.user = new UserAccount(accessToken,id,phone,email,login_name,imageUrl,imageThumbnail,username,active);;
-							mFragmentManager.beginTransaction().replace(R.id.canvas, CanvasFragment.getInstance(mActivity, Store.user)).commit();
+							Intent mainActivity = new Intent(mActivity,MainActivity.class);
+				            startActivity(mainActivity);
+				            mActivity.finish();
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -295,7 +298,9 @@ public class LoginFragment extends CoreFragment {
 							
 							
 							Store.user = new UserAccount(accessToken,id,phone,email,login_name,imageUrl,imageThumbnail,username,active);
-							mFragmentManager.beginTransaction().replace(R.id.canvas, CanvasFragment.getInstance(mActivity, Store.user)).commit();
+							Intent mainActivity = new Intent(mActivity,MainActivity.class);
+				            startActivity(mainActivity);
+				            mActivity.finish();
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

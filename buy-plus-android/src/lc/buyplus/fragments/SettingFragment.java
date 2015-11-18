@@ -1,8 +1,11 @@
 package lc.buyplus.fragments;
 
 import lc.buyplus.R;
+import lc.buyplus.activities.LoginActivity;
+import lc.buyplus.activities.MainActivity;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +27,9 @@ public class SettingFragment extends CoreFragment {
 	public void onClick(View view) {
 		switch(view.getId()){ 
 		case R.id.tvLogout:
-			mFragmentManager.beginTransaction().replace(R.id.canvas, LoginFragment.getInstance(mActivity)).commit();
+			Intent loginActivity = new Intent(mActivity,LoginActivity.class);
+            startActivity(loginActivity);
+            mActivity.finish();
 		break;
 		}
 	}

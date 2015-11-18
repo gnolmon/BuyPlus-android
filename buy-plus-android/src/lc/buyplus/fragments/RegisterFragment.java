@@ -26,6 +26,7 @@ import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.MyEditText;
+import lc.buyplus.customizes.MyTextView;
 import lc.buyplus.models.UserAccount;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,7 +43,7 @@ public class RegisterFragment extends CoreFragment implements OnClickListener {
 
 	private Button btnRegister;
 	private MyEditText edName, edPass, edCfPass, edEmail;
-
+	private MyTextView backBtn;
 	private CallbackManager callbackManager;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,14 +53,15 @@ public class RegisterFragment extends CoreFragment implements OnClickListener {
 		initModels();
 		initAnimations();
 		btnRegister = (Button) view.findViewById(R.id.btnConfirm);
-
+		
 		edName = (MyEditText) view.findViewById(R.id.edNameRegister);
 		edPass = (MyEditText) view.findViewById(R.id.edPassRegister);
 		edCfPass = (MyEditText) view.findViewById(R.id.edcfPass);
 		edEmail = (MyEditText) view.findViewById(R.id.edEmail);
+		backBtn = (MyTextView) view.findViewById(R.id.btbBack);
 
 		btnRegister.setOnClickListener(this);
-
+		backBtn.setOnClickListener(this);;
 		return view;
 	}
 
@@ -101,6 +103,9 @@ public class RegisterFragment extends CoreFragment implements OnClickListener {
 				api_user_register(email, cpassword);
 				Toast.makeText(this.getActivity(), "Please check email to conplete your registation", 1000).show();
 			}
+			break;
+		case R.id.btbBack:
+			mFragmentManager.beginTransaction().replace(R.id.canvas, LoginFragment.getInstance(mActivity)).commit();
 			break;
 		default:
 			break;

@@ -17,6 +17,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import lc.buyplus.R;
@@ -43,8 +45,9 @@ import lc.buyplus.models.Store;
 import lc.buyplus.models.UserAccount;
 
 public class AddFriendFragment extends CoreFragment {
+	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab;
 	Display display;
-	private ImageView imFb, imSearchFriend;
+	private ImageView imFb, imSearchFriend,mBack;
 	private ListView listFriendFb;
 	private LayoutInflater inflaterActivity;
 	private FriendAdapter friendAdapter;
@@ -63,8 +66,45 @@ public class AddFriendFragment extends CoreFragment {
 	}
 
 	@Override
-	public void onClick(View v) {
-
+	public void onClick(View view) {
+		Intent returnIntent;
+		switch (view.getId()) {
+		case R.id.fragment_canvas_back:
+			mActivity.finish();
+			break;
+		case R.id.fragment_canvas_home_tab:
+			CanvasFragment.mPager.setCurrentItem(0);
+			returnIntent = new Intent();
+			mActivity.setResult(2, returnIntent);
+			mActivity.finish();
+			break;
+		case R.id.fragment_canvas_personal_tab:
+			CanvasFragment.mPager.setCurrentItem(2);
+			returnIntent = new Intent();
+			mActivity.setResult(2, returnIntent);
+			mActivity.finish();
+			break;
+		case R.id.fragment_canvas_loyaltycard_tab:
+			CanvasFragment.mPager.setCurrentItem(3);
+			returnIntent = new Intent();
+			mActivity.setResult(2, returnIntent);
+			mActivity.finish();
+			break;
+		case R.id.fragment_canvas_notifications_tab:
+			CanvasFragment.mPager.setCurrentItem(4);
+			returnIntent = new Intent();
+			mActivity.setResult(2, returnIntent);
+			mActivity.finish();
+			break;
+		case R.id.fragment_canvas_setting_tab:
+			CanvasFragment.mPager.setCurrentItem(5);
+			returnIntent = new Intent();
+			mActivity.setResult(2, returnIntent);
+			mActivity.finish();
+			break;
+		default:
+			break;
+		}
 	}
 
 	protected void initModels() {
@@ -73,7 +113,15 @@ public class AddFriendFragment extends CoreFragment {
 
 	@Override
 	protected void initViews(View v) {
+		mHomeTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_home_tab);
+		mPersonalTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_personal_tab);
+		mLoyaltyCardTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_loyaltycard_tab);
+		mNotiTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_notifications_tab);
+		mSettingTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_setting_tab);
 		listFriendFb = (ListView) v.findViewById(R.id.listAddFriend);
+		mBack = (ImageView) v.findViewById(R.id.fragment_canvas_back);
+		
+		
 		imFb = (ImageView) v.findViewById(R.id.imFb);
 		txtFind = (EditText) v.findViewById(R.id.search_params);
 		imFb.setOnClickListener(new OnClickListener() {
@@ -96,6 +144,12 @@ public class AddFriendFragment extends CoreFragment {
 			}
 		});
 		
+		mHomeTab.setOnClickListener(this);
+		mPersonalTab.setOnClickListener(this);
+		mLoyaltyCardTab.setOnClickListener(this);
+		mNotiTab.setOnClickListener(this);
+		mSettingTab.setOnClickListener(this);
+		mBack.setOnClickListener(this);
 	}
 
 	@Override

@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import lc.buyplus.R;
 import lc.buyplus.activities.AddFriendActivity;
+import lc.buyplus.activities.ShopFriendActivity;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.ShopFriendAdapter;
 import lc.buyplus.cores.CoreActivity;
@@ -74,7 +75,7 @@ public class ShopFriendFragment  extends CoreFragment {
 			@Override
 			public void onClick(View v) {
 				Intent addFriendActivity = new Intent(mActivity, AddFriendActivity.class);
-				startActivity(addFriendActivity);
+				startActivityForResult(addFriendActivity,2);
 			}
 		});
 	}

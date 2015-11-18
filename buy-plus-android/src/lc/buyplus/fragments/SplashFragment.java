@@ -3,6 +3,7 @@ package lc.buyplus.fragments;
 import lc.buyplus.R;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
+import lc.buyplus.models.Store;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,9 +22,9 @@ public class SplashFragment extends CoreFragment {
 			@Override
 			public void run() {
 				try {
-					Thread.sleep(3000);
+					Thread.sleep(1500);
 //					switchFragmentWithAnimation(CanvasFragment.getInstance(mActivity), 100, 200);
-					mFragmentManager.beginTransaction().replace(R.id.canvas, LoginFragment.getInstance(mActivity)).commit();
+					mFragmentManager.beginTransaction().replace(R.id.canvas, CanvasFragment.getInstance(mActivity, Store.user)).commit();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
