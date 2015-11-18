@@ -1,43 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="260dp"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@drawable/background_dialog"
     android:orientation="vertical" >
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="horizontal"
-        android:padding="@dimen/padding_standard" >
-
-        <TextView
-            android:layout_centerHorizontal="true"
-            android:id="@+id/tvChoice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/padding_standard"
-            android:layout_marginRight="@dimen/padding_standard"
-            android:text="Lựa chọn ngôn ngữ"
-            android:textColor="@color/title"
-            android:textSize="20dp" />
-    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:orientation="horizontal"
         android:padding="@dimen/padding_standard" >
 
+        <ImageView
+            android:id="@+id/imShop"
+            android:layout_width="@dimen/icon_small"
+            android:layout_height="@dimen/icon_small"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/feed_item_profile_info_padd"
+            android:src="@drawable/tick" />
+
         <TextView
-            android:id="@+id/tvVN"
+            android:id="@+id/tvShop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/padding_standard"
             android:layout_marginRight="@dimen/padding_standard"
-            android:text="Tiếng Việt"
+            android:text="Tin cửa hàng"
             android:textColor="@color/title"
             android:textSize="20dp" />
     </LinearLayout>
@@ -45,12 +33,46 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:orientation="horizontal"
         android:padding="@dimen/padding_standard" >
 
+        <ImageView
+            android:id="@+id/imPromo"
+            android:layout_width="@dimen/icon_small"
+            android:layout_height="@dimen/icon_small"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/feed_item_profile_info_padd"
+            android:visibility="invisible"
+            android:src="@drawable/tick" />
+
         <TextView
-            android:id="@+id/tvEng"
+            android:id="@+id/tvPromo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_standard"
+            android:layout_marginRight="@dimen/padding_standard"
+            android:text="Tin khuyến mãi"
+            android:textColor="@color/title"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_standard" >
+
+        <ImageView
+            android:id="@+id/imAll"
+            android:layout_width="@dimen/icon_small"
+            android:layout_height="@dimen/icon_small"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/feed_item_profile_info_padd"
+            android:visibility="invisible"
+            android:src="@drawable/tick" />
+
+        <TextView
+            android:id="@+id/tvAll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/padding_standard"
