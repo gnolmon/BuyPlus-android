@@ -64,7 +64,7 @@ public class RedeemAdapter extends BaseAdapter {
 		if (item.getCurrent_customer_shop_point() != null) {
 			scoreTotal.setText("Số điểm tích: " + item.getCurrent_customer_shop_point());
 		} else {
-			scoreTotal.setText("Số điểm tích: 0");
+			scoreTotal.setText("Sá»‘ Ä‘iá»ƒm tÃ­ch: 0");
 		}
 
 		name.setText(item.getName());
