@@ -25,7 +25,8 @@
                 android:id="@+id/avaStore"
                 android:layout_width="@dimen/feed_item_profile_pic"
                 android:layout_height="@dimen/feed_item_profile_pic"
-                android:scaleType="fitCenter" >
+                android:scaleType="fitCenter"
+                android:src="@drawable/loading_icon" >
             </lc.buyplus.customizes.RoundedImageView>
 
             <LinearLayout
@@ -62,7 +63,7 @@
             android:paddingLeft="@dimen/padding_standard"
             android:paddingRight="@dimen/padding_standard"
             android:paddingTop="@dimen/feed_item_status_pad_top"
-            android:textColor="@color/timestamp" />
+            android:textColor="@color/title" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -76,6 +77,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:scaleType="fitXY"
+                android:src="@drawable/loading_icon"
                 android:visibility="visible" />
         </LinearLayout>
     </LinearLayout>

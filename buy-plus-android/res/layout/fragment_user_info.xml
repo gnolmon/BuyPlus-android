@@ -16,7 +16,8 @@
             android:id="@+id/imFriend"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginRight="8dp" />
+            android:layout_marginRight="8dp" 
+            android:src="@drawable/loading_icon"/>
 
         <RelativeLayout
             android:id="@+id/relativeLayout1"
