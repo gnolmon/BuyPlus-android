@@ -12,6 +12,7 @@ import lc.buyplus.models.Gift;
 import lc.buyplus.models.Notification;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
+import android.support.v4.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,28 +35,48 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-public class NotificationsFragment extends CoreFragment {
+public class NotificationsFragment extends CoreFragment implements SwipeRefreshLayout.OnRefreshListener {
 	private ListView listView;
 	private NotificationAdapter notiAdapter;
 	private LayoutInflater inflaterActivity;
+	private SwipeRefreshLayout swipeRefreshLayout;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_notifications, container, false);
 		initViews(view);
 		initModels();
 		initAnimations();
-		listView = (ListView) view.findViewById(R.id.listNoti);
 		inflaterActivity = inflater;
-		api_get_notifications(0, 0);
+		listView = (ListView) view.findViewById(R.id.listNoti);
+
+		swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+
+		swipeRefreshLayout.setOnRefreshListener(this);
+
+		/**
+		 * Showing Swipe Refresh animation on activity create As animation won't
+		 * start on onCreate, post runnable is used
+		 */
+		swipeRefreshLayout.post(new Runnable() {
+			@Override
+			public void run() {
+				swipeRefreshLayout.setRefreshing(true);
+				Log.d("xxxxx", "xxxx");
+				api_get_notifications(0, 0);
+			}
+		});
+
 		return view;
 	}
+
 	@Override
 	public void onClick(View view) {
-		switch(view.getId()) {
+		switch (view.getId()) {
 
 		}
 	}
-	
+
 	protected void initModels() {
 
 	}
@@ -67,22 +88,22 @@ public class NotificationsFragment extends CoreFragment {
 
 	@Override
 	protected void initAnimations() {
-		
+
 	}
 
-	public void api_get_notifications(int latest_id, int oldest_id){
-	 	
+	public void api_get_notifications(int latest_id, int oldest_id) {
+		swipeRefreshLayout.setRefreshing(true);
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("latest_id", String.valueOf(latest_id));
 		params.put("oldest_id", String.valueOf(oldest_id));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					HandleRequest.build_link(HandleRequest.GET_NOTIFICATIONS, params), params, 
-					new Response.Listener<JSONObject>() {
+		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
+				HandleRequest.build_link(HandleRequest.GET_NOTIFICATIONS, params), params,
+				new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
-						Log.d("api_get_notifications",response.toString());
+						Log.d("api_get_notifications", response.toString());
 						try {
 							JSONArray data_aray = response.getJSONArray("data");
 							for (int i = 0; i < data_aray.length(); i++) {
@@ -90,28 +111,31 @@ public class NotificationsFragment extends CoreFragment {
 								Store.NotificationsList.add(notification);
 							}
 							notiAdapter = new NotificationAdapter(Store.NotificationsList, inflaterActivity);
-							
+
 							listView.setAdapter(notiAdapter);
 							notiAdapter.notifyDataSetChanged();
 						} catch (JSONException e) {
 
 							e.printStackTrace();
-						}	
-						//code here
-					}
-					}, 
-					new Response.ErrorListener() {
-						@Override
-						public void onErrorResponse(VolleyError error) {
 						}
-					});
-			requestQueue.add(jsObjRequest);
+						// stopping swipe refresh
+						swipeRefreshLayout.setRefreshing(false);
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						// stopping swipe refresh
+						swipeRefreshLayout.setRefreshing(false);
+					}
+				});
+		requestQueue.add(jsObjRequest);
 	}
 
 	public static final long serialVersionUID = 6036846677812555352L;
-	
+
 	public static CoreActivity mActivity;
 	public static NotificationsFragment mInstance;
+
 	public static NotificationsFragment getInstance(CoreActivity activity) {
 		if (mInstance == null) {
 			mInstance = new NotificationsFragment();
@@ -119,15 +143,23 @@ public class NotificationsFragment extends CoreFragment {
 		mActivity = activity;
 		return mInstance;
 	}
+
 	public static NotificationsFragment getInstance() {
 		if (mInstance == null) {
 			mInstance = new NotificationsFragment();
 		}
 		return mInstance;
 	}
+
 	@Override
 	protected void initListener() {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public void onRefresh() {
+		// TODO Auto-generated method stub
+		api_get_notifications(0, 0);
 	}
 }
