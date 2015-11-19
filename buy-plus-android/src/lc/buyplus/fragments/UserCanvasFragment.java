@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,7 +34,8 @@ public class UserCanvasFragment extends CoreFragment {
 	private LinearLayout mSearchBlock, mTitleBlock;
 	private LinearLayout mSearchBlockCancel;
 	private MyEditText mSearchEdittext;
-	private TextView tvPoint;
+	private TextView tvPoint,tvUserInfo, tvUserContact, tvUserSecure;
+	private ImageView imUserInfo, imUserContact, imUserSecure;
 
 	private MyTextView mTitle;
 
@@ -138,26 +140,33 @@ public class UserCanvasFragment extends CoreFragment {
 
 	public void changeTabState(boolean home, boolean personal, boolean loyaltycard) {
 		if (home) {
-			//rHomeidInfo.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			mHomeTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-		} else {
-			//mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
-			rHomeidInfo.setBackgroundColor(Color.parseColor("#FFFFFF"));
-		}
-		if (personal) {
-			//mPersonalTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			rHomeidContact.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-		} else {
-			//mPersonalTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
-			rHomeidContact.setBackgroundColor(Color.parseColor("#FFFFFF"));
-		}
-		if (loyaltycard) {
-			//mLoyaltyCardTab.setBackgroundColor(getResources().getColor(R.color.tab_selected));
-			rHomeidSecure.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+			tvUserInfo.setTextColor(getResources().getColor(R.color.tab_selected));
+			imUserInfo.setImageResource(R.drawable.userinfo_green);
+			
+			tvUserContact.setTextColor(getResources().getColor(R.color.title));
+			imUserContact.setImageResource(R.drawable.usercontact);
 			
 		} else {
-			//mLoyaltyCardTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
-			rHomeidSecure.setBackgroundColor(Color.parseColor("#FFFFFF"));
+			tvUserInfo.setTextColor(getResources().getColor(R.color.title));
+			imUserInfo.setImageResource(R.drawable.userinfo);
+			
+			tvUserContact.setTextColor(getResources().getColor(R.color.tab_selected));
+			imUserContact.setImageResource(R.drawable.usercontact_green);
+		}
+		if (personal) {
+			tvUserContact.setTextColor(getResources().getColor(R.color.tab_selected));
+			imUserContact.setImageResource(R.drawable.usercontact_green);
+			
+			tvUserSecure.setTextColor(getResources().getColor(R.color.title));
+			imUserSecure.setImageResource(R.drawable.usersecure);
+		}
+		if (loyaltycard) {
+			tvUserContact.setTextColor(getResources().getColor(R.color.title));
+			imUserContact.setImageResource(R.drawable.usercontact);
+			
+			tvUserSecure.setTextColor(getResources().getColor(R.color.tab_selected));
+			imUserSecure.setImageResource(R.drawable.usersecure_green);
+			
 		}
 	}
 
@@ -212,11 +221,21 @@ public class UserCanvasFragment extends CoreFragment {
 
 		rHomeTab = (RelativeLayout) v.findViewById(R.id.rhomeTab);
 		rHomeidInfo = (LinearLayout) v.findViewById(R.id.idInfo);
-		rHomeidInfo.setBackgroundColor(getResources().getColor(R.color.tab_selected));
+
 		rHomeidContact = (LinearLayout) v.findViewById(R.id.idContact);
 		rHomeidSecure = (LinearLayout) v.findViewById(R.id.idSecure);
 		mTitleBlock = (LinearLayout) v.findViewById(R.id.fragment_canvas_title_block);
 		rHomeTab.setVisibility(View.VISIBLE);
+		
+		tvUserInfo = (TextView) v.findViewById(R.id.tvUserInfo);
+		tvUserContact = (TextView) v.findViewById(R.id.tvUserContact);
+		tvUserSecure = (TextView) v.findViewById(R.id.tvUserSecure);
+		
+		imUserInfo = (ImageView) v.findViewById(R.id.imUserInfo);
+		imUserContact = (ImageView) v.findViewById(R.id.imUserContact);
+		imUserSecure = (ImageView) v.findViewById(R.id.imUserSecure);
+		
+		
 	}
 
 	@Override

@@ -77,7 +77,6 @@ public class NotificationAdapter extends BaseAdapter {
 		TextView timeStamp = (TextView) convertView.findViewById(R.id.tvTimeStamp);
 		timeStamp.setText(item.getCreated_time());
 
-		TextView name = (TextView) convertView.findViewById(R.id.tvTitleNoti);
 
 		RoundedImageView imNoti = (RoundedImageView) convertView.findViewById(R.id.imNoti);
 

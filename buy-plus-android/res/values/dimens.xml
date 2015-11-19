@@ -25,7 +25,7 @@
      <dimen name="width_row">100dp</dimen>
     <dimen name="avatar_height">150dp</dimen>
     <dimen name="title_name">20dp</dimen>
-    <dimen name="timestamp">14dp</dimen>
+    <dimen name="timestamp">10dp</dimen>
     <dimen name="image_normal">80dp</dimen>
     <dimen name="setting_size">20dp</dimen>
     <dimen name="person_ava_width">120dp</dimen>
