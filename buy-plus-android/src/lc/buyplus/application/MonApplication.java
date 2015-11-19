@@ -14,7 +14,7 @@ public class MonApplication extends MultiDexApplication  {
 	
 	private RequestQueue mRequestQueue;
 	private ImageLoader mImageLoader;
-	
+	LruBitmapCache mLruBitmapCache;
 	private static MonApplication mInstance;
 	
 //	@Override 
@@ -43,9 +43,16 @@ public class MonApplication extends MultiDexApplication  {
 	public ImageLoader getImageLoader(){
 		getRequestQueue();
 		if (mImageLoader == null) {
-			mImageLoader = new ImageLoader(this.mRequestQueue, new LruBitmapCache());
+			getLruBitmapCache();
+			mImageLoader = new ImageLoader(this.mRequestQueue, mLruBitmapCache);
 		}
 		return this.mImageLoader;
+	}
+	
+	public LruBitmapCache getLruBitmapCache() {
+		if (mLruBitmapCache == null)
+			mLruBitmapCache = new LruBitmapCache();
+		return this.mLruBitmapCache;
 	}
 	
 	public <T> void addToRequestQueue(Request<T> request, String tag){

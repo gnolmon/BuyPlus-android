@@ -92,4 +92,6 @@ public class RoundedImageView extends NetworkImageView {
 
 	    return bitmap;
 	}
+	
+	
 }

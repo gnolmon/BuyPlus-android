@@ -18,6 +18,7 @@ import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.CoreFragment;
+import lc.buyplus.customizes.CustomDialogClass;
 import lc.buyplus.customizes.LanguageDialog;
 
 public class SettingFragment extends CoreFragment {
@@ -37,9 +38,9 @@ public class SettingFragment extends CoreFragment {
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.tvLogout:
-			Intent loginActivity = new Intent(mActivity,LoginActivity.class);
-            startActivity(loginActivity);
-            mActivity.finish();
+			CustomDialogClass dialog = new CustomDialogClass(mActivity,"Bạn có thực sự muốn đăng xuất?", 1);
+			dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+			dialog.show();
 			break;
 		case R.id.rlSettingNoti:
 			Intent settingNotiActivity = new Intent(mActivity, SettingNotificationActivity.class);
