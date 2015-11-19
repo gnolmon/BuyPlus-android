@@ -20,10 +20,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import lc.buyplus.R;
 import lc.buyplus.activities.ShopInfoActivity;
+import lc.buyplus.adapter.OnLoadMoreListener;
 import lc.buyplus.adapter.StoreAdapter;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
@@ -43,16 +46,17 @@ public class HomeFragment extends CoreFragment {
 	private ListView listView;
 	private StoreAdapter storeAdapter;
 	private LayoutInflater inflaterActivity;
+	private boolean isLoad,isLoading;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
+		listView = (ListView) view.findViewById(R.id.listStore);
+		inflaterActivity = inflater;
 		initViews(view);
 		initModels();
 		initAnimations();
-		listView = (ListView) view.findViewById(R.id.listStore);
-		inflaterActivity = inflater;
+		
 		api_get_all_shop(0,0,0);
-		api_search_friends_for_shop(1,"");
 		return view;
 	}
 	@Override
@@ -68,7 +72,48 @@ public class HomeFragment extends CoreFragment {
 
 	@Override
 	protected void initViews(View v) {
-
+		isLoad = false;
+		isLoading = false;
+		storeAdapter = new StoreAdapter(Store.ShopsList, inflaterActivity);
+		Log.d("count",String.valueOf(listView));
+		listView.setAdapter(storeAdapter);
+		
+		listView.setOnItemClickListener(new OnItemClickListener() {
+		      public void onItemClick(AdapterView<?> parent, View view,
+		          int position, long id) {
+		             Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);
+		             Bundle b = new Bundle();
+		             b.putInt("shop_id", storeAdapter.getItem_id(position)); //Your id
+		             shopInfoActivity.putExtras(b); //Put your id to your next Intent
+		             startActivity(shopInfoActivity);
+		      }
+		    });
+		
+		storeAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+            	//api_get_all_shop(0,0,0);
+            }
+        });
+		
+		listView.setOnScrollListener(new OnScrollListener(){
+		    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+		    	
+		    	if (!isLoading && firstVisibleItem + visibleItemCount == totalItemCount){
+		    		isLoad = true;
+		    	}
+		    	 
+		    }
+		    public void onScrollStateChanged(AbsListView view, int scrollState) {
+		      // TODO Auto-generated method stub
+		      if(scrollState == 0) {
+		    	  if (isLoad){
+				    	storeAdapter.getOnLoadMoreListener().onLoadMore();
+				    	isLoad = false;
+		    	  }
+		      }
+		    }
+	  });
 	}
 
 	@Override
@@ -98,75 +143,13 @@ public class HomeFragment extends CoreFragment {
 	                            		Store.ShopsList.add(shop);
 	                            	}
 	                        }
-							storeAdapter = new StoreAdapter(Store.ShopsList, inflaterActivity);
-							
-							listView.setAdapter(storeAdapter);
-							listView.setOnItemClickListener(new OnItemClickListener() {
-							      public void onItemClick(AdapterView<?> parent, View view,
-							          int position, long id) {
-							             Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);
-							             Bundle b = new Bundle();
-							             b.putInt("shop_id", storeAdapter.getItem_id(position)); //Your id
-							             shopInfoActivity.putExtras(b); //Put your id to your next Intent
-							             startActivity(shopInfoActivity);
-							      }
-							    });
 							storeAdapter.notifyDataSetChanged();
-							
+							isLoading = true;
 						} catch (JSONException e) {
 							e.printStackTrace();
-						}	
-					}
-				}, 
-				new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-						Log.d("api_get_all_shop",error.toString());
-					}
-				});
-			requestQueue.add(jsObjRequest);
-	}
-	
-public void api_search_friends_for_shop(int shop_id, String search){
-	 	
-    	Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("shop_id", String.valueOf(shop_id));
-		params.put("search", String.valueOf(search));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					HandleRequest.build_link(HandleRequest.SEARCH_FRIENDS_FOR_SHOP, params), params, 
-					new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						try {
-							Log.d("api_search_friends_for_shop",response.toString());
-							JSONArray data_aray = response.getJSONArray("data");
-							ArrayList<Friend> FriendsList = new ArrayList<Friend>();
-							for (int i = 0; i < data_aray.length(); i++) {								 
-	                            Friend friend = new Friend((JSONObject) data_aray.get(i));
-	                            	if (friend != null){
-	                            		FriendsList.add(friend);
-	                            	}
-	                        }
-							storeAdapter = new StoreAdapter(Store.ShopsList, inflaterActivity);
-							
-							listView.setAdapter(storeAdapter);
-							listView.setOnItemClickListener(new OnItemClickListener() {
-							      public void onItemClick(AdapterView<?> parent, View view,
-							          int position, long id) {
-							             Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);
-							             Bundle b = new Bundle();
-							             b.putInt("shop_id", storeAdapter.getItem_id(position)); //Your id
-							             shopInfoActivity.putExtras(b); //Put your id to your next Intent
-							             startActivity(shopInfoActivity);
-							      }
-							    });
-							storeAdapter.notifyDataSetChanged();
-							
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}	
+						}
+												
+						
 					}
 				}, 
 				new Response.ErrorListener() {
