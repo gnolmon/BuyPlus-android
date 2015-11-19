@@ -24,7 +24,7 @@ public class StoreAdapter extends BaseAdapter{
 	ArrayList<Shop> storeList;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
 	private OnLoadMoreListener onLoadMoreListener;
-	private int latest, oldest;
+
 	public StoreAdapter(ArrayList<Shop> shopsList, LayoutInflater inflaterActivity) {
 		this.inflaterActivity = inflaterActivity;
 		this.storeList = shopsList;
@@ -35,31 +35,9 @@ public class StoreAdapter extends BaseAdapter{
 		return onLoadMoreListener;
 	}
 
-
 	public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
 		this.onLoadMoreListener = onLoadMoreListener;
 	}
-
-
-	public int getLatest() {
-		return latest;
-	}
-
-
-	public void setLatest(int latest) {
-		this.latest = latest;
-	}
-
-
-	public int getOldest() {
-		return oldest;
-	}
-
-
-	public void setOldest(int oldest) {
-		this.oldest = oldest;
-	}
-
 
 	@Override
 	public int getCount() {

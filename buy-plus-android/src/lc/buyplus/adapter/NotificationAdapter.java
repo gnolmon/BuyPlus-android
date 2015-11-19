@@ -22,7 +22,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import lc.buyplus.R;
-import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.RoundedImageView;
@@ -36,12 +35,21 @@ public class NotificationAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	List<Notification> notiList;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
-
+	private OnLoadMoreListener onLoadMoreListener;
+	
 	public NotificationAdapter( List<Notification> notiList,LayoutInflater inflaterActivity) {
 		this.inflaterActivity = inflaterActivity;
 		this.notiList = notiList;
 	}
+	
+	public OnLoadMoreListener getOnLoadMoreListener() {
+		return onLoadMoreListener;
+	}
 
+	public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+		this.onLoadMoreListener = onLoadMoreListener;
+	}
+	
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub

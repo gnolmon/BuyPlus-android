@@ -75,7 +75,6 @@ public class HomeFragment extends CoreFragment {
 		isLoad = false;
 		isLoading = false;
 		storeAdapter = new StoreAdapter(Store.ShopsList, inflaterActivity);
-		Log.d("count",String.valueOf(listView));
 		listView.setAdapter(storeAdapter);
 		
 		listView.setOnItemClickListener(new OnItemClickListener() {

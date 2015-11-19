@@ -2,19 +2,17 @@ package lc.buyplus.fragments;
 
 import lc.buyplus.R;
 import lc.buyplus.adapter.NotificationAdapter;
-import lc.buyplus.adapter.StoreAdapter;
+import lc.buyplus.adapter.OnLoadMoreListener;
+
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
-import lc.buyplus.models.Announcement;
-import lc.buyplus.models.Friend;
-import lc.buyplus.models.Gift;
 import lc.buyplus.models.Notification;
-import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
+import lc.buyplus.pulltorefresh.PullToRefreshListView;
+import lc.buyplus.pulltorefresh.PullToRefreshListView.OnRefreshListener;
 import android.support.v4.widget.SwipeRefreshLayout;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,43 +31,72 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 
-public class NotificationsFragment extends CoreFragment implements SwipeRefreshLayout.OnRefreshListener {
-	private ListView listView;
+public class NotificationsFragment extends CoreFragment{
+	private PullToRefreshListView listView;
 	private NotificationAdapter notiAdapter;
 	private LayoutInflater inflaterActivity;
-	private SwipeRefreshLayout swipeRefreshLayout;
-
+	
+	private int limit = 6;
+	private int current_last_id = 0;
+	private boolean isLoadMore,isLoading,reload;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_notifications, container, false);
 		initViews(view);
 		initModels();
 		initAnimations();
+		
 		inflaterActivity = inflater;
-		listView = (ListView) view.findViewById(R.id.listNoti);
+		isLoadMore = false;
+		isLoading = false;
+		listView = (PullToRefreshListView ) view.findViewById(R.id.listNoti);
+		notiAdapter = new NotificationAdapter(Store.NotificationsList, inflaterActivity);
+		listView.setAdapter(notiAdapter);
+		api_get_notifications(0, limit);
+		notiAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+            	api_get_notifications(current_last_id, limit);
+            }
+        });
+		listView.setOnScrollListener(new OnScrollListener(){
+		    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+		    	
+		    	if (!isLoading && firstVisibleItem + visibleItemCount == totalItemCount){
+		    		isLoadMore = true;
+		    	}
+		    	 
+		    }
+		    public void onScrollStateChanged(AbsListView view, int scrollState) {
+		      // TODO Auto-generated method stub
+		      if(scrollState == 0) {
+		    	  if (isLoadMore){
+		    		  isLoading = true;
+		    		  notiAdapter.getOnLoadMoreListener().onLoadMore();
+		    		  Log.d("isLoad",String.valueOf(Store.NotificationsList.size()));  	
+		    	  }
+		      }
+		    }
+		 });
+		
+		listView.setOnRefreshListener(new OnRefreshListener() {
 
-		swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
-
-		swipeRefreshLayout.setOnRefreshListener(this);
-
-		/**
-		 * Showing Swipe Refresh animation on activity create As animation won't
-		 * start on onCreate, post runnable is used
-		 */
-		swipeRefreshLayout.post(new Runnable() {
-			@Override
-			public void run() {
-				swipeRefreshLayout.setRefreshing(true);
-				Log.d("xxxxx", "xxxx");
-				api_get_notifications(0, 0);
+			public void onRefresh() {
+				reload = true;
+				Log.d("sixxxxxze",String.valueOf(Store.NotificationsList.size()));
+				api_get_notifications(0, limit);
+				
 			}
 		});
 
 		return view;
 	}
-
+		
+	
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
@@ -91,41 +118,45 @@ public class NotificationsFragment extends CoreFragment implements SwipeRefreshL
 
 	}
 
-	public void api_get_notifications(int latest_id, int oldest_id) {
-		swipeRefreshLayout.setRefreshing(true);
+	public void api_get_notifications(int last_id, int limit) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("latest_id", String.valueOf(latest_id));
-		params.put("oldest_id", String.valueOf(oldest_id));
+		params.put("last_id", String.valueOf(last_id));
+		params.put("limit", String.valueOf(limit));
 		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
 		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 				HandleRequest.build_link(HandleRequest.GET_NOTIFICATIONS, params), params,
 				new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
+						if (reload){
+							Store.NotificationsList.removeAll(Store.NotificationsList);
+							Log.d("size",String.valueOf(Store.NotificationsList.size()));
+							reload = false;
+						}
 						Log.d("api_get_notifications", response.toString());
 						try {
 							JSONArray data_aray = response.getJSONArray("data");
 							for (int i = 0; i < data_aray.length(); i++) {
 								Notification notification = new Notification((JSONObject) data_aray.get(i));
+								current_last_id = notification.getId();
 								Store.NotificationsList.add(notification);
 							}
-							notiAdapter = new NotificationAdapter(Store.NotificationsList, inflaterActivity);
-
-							listView.setAdapter(notiAdapter);
+							isLoading = false;
 							notiAdapter.notifyDataSetChanged();
 						} catch (JSONException e) {
 
 							e.printStackTrace();
 						}
 						// stopping swipe refresh
-						swipeRefreshLayout.setRefreshing(false);
+						
+						listView.onRefreshComplete();
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						// stopping swipe refresh
-						swipeRefreshLayout.setRefreshing(false);
+						listView.onRefreshComplete();
 					}
 				});
 		requestQueue.add(jsObjRequest);
@@ -155,11 +186,5 @@ public class NotificationsFragment extends CoreFragment implements SwipeRefreshL
 	protected void initListener() {
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public void onRefresh() {
-		// TODO Auto-generated method stub
-		api_get_notifications(0, 0);
 	}
 }

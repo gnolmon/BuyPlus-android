@@ -3,6 +3,8 @@ package lc.buyplus.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public class Friend {
 		int id;
 		int active;
@@ -17,6 +19,7 @@ public class Friend {
 		
 
 		public Friend(JSONObject data) {
+			has_requested = -1;
 			try {
 				if (data.optString ("id") != "") {
 					id = Integer.parseInt(data.getString("id"));
@@ -35,6 +38,8 @@ public class Friend {
 		        }
 				if (data.optString ("has_requested") != "") {
 					has_requested = Integer.parseInt(data.getString("has_requested"));
+					Log.d("id",String.valueOf(id));
+					Log.d("has_requested",String.valueOf(has_requested));
 		        }
 				if (data.optString ("has_joined") != "") {
 					has_joined = Integer.parseInt(data.getString("has_joined"));

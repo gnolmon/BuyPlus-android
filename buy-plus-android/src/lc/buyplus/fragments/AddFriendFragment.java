@@ -34,6 +34,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.AddFriendAdapter;
 import lc.buyplus.adapter.FriendAdapter;
 import lc.buyplus.adapter.ShopFriendAdapter;
@@ -140,7 +141,7 @@ public class AddFriendFragment extends CoreFragment {
 			@Override
 			public void onClick(View v) {
 				search_params = String.valueOf(txtFind.getText());
-				api_search_friends_for_shop(search_params);
+				api_search_friends_for_shop(ShopInfoActivity.current_shop_id, search_params);
 			}
 		});
 		
@@ -207,11 +208,12 @@ public class AddFriendFragment extends CoreFragment {
 			requestQueue.add(jsObjRequest);
 	}
 	
-public void api_search_friends_for_shop(String search){
+public void api_search_friends_for_shop(int shop_id, String search){
 	 	
     	Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", Store.user.getAccessToken());
 		params.put("search", String.valueOf(search));
+		params.put("shop_id", String.valueOf(shop_id));
 		Log.d("search", String.valueOf(search));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
 			HandleRequest jsObjRequest = new HandleRequest(Method.GET,

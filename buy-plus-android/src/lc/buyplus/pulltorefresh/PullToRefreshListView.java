@@ -1,335 +1,531 @@
-/*******************************************************************************
- * Copyright 2011, 2012 Chris Banes.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *******************************************************************************/
 package lc.buyplus.pulltorefresh;
 
-import lc.buyplus.R;
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
-import android.view.Gravity;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+import android.util.Log;
+import android.view.*;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.animation.*;
+import android.view.animation.Animation.AnimationListener;
+import android.widget.*;
 
-public class PullToRefreshListView extends PullToRefreshAdapterViewBase<ListView> {
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-	private LoadingLayout mHeaderLoadingView;
-	private LoadingLayout mFooterLoadingView;
+import lc.buyplus.R;
 
-	private FrameLayout mLvFooterLoadingFrame;
+/**
+ * A generic, customizable Android ListView implementation that has 'Pull to Refresh' functionality.
+ * <p/>
+ * This ListView can be used in place of the normal Android android.widget.ListView class.
+ * <p/>
+ * Users of this class should implement OnRefreshListener and call setOnRefreshListener(..)
+ * to get notified on refresh events. The using class should call onRefreshComplete() when
+ * refreshing is finished.
+ * <p/>
+ * The using class can call setRefreshing() to set the state explicitly to refreshing. This
+ * is useful when you want to show the spinner and 'Refreshing' text when the
+ * refresh was not triggered by 'Pull to Refresh', for example on start.
+ * <p/>
+ * For more information, visit the project page:
+ * https://github.com/erikwt/PullToRefresh-ListView
+ *
+ * @author Erik Wallentinsen <dev+ptr@erikw.eu>
+ * @version 1.3.0
+ */
+public class PullToRefreshListView extends ListView{
 
-	private boolean mListViewExtrasEnabled;
+    private static final float PULL_RESISTANCE                 = 1.7f;
+    private static final int   BOUNCE_ANIMATION_DURATION       = 700;
+    private static final int   BOUNCE_ANIMATION_DELAY          = 100;
+    private static final float BOUNCE_OVERSHOOT_TENSION        = 1.4f;
+    private static final int   ROTATE_ARROW_ANIMATION_DURATION = 250;
 
-	public PullToRefreshListView(Context context) {
-		super(context);
-	}
+    private static enum State{
+        PULL_TO_REFRESH,
+        RELEASE_TO_REFRESH,
+        REFRESHING
+    }
 
-	public PullToRefreshListView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-	}
+    /**
+     * Interface to implement when you want to get notified of 'pull to refresh'
+     * events.
+     * Call setOnRefreshListener(..) to activate an OnRefreshListener.
+     */
+    public interface OnRefreshListener{
 
-	public PullToRefreshListView(Context context, Mode mode) {
-		super(context, mode);
-	}
+        /**
+         * Method to be called when a refresh is requested
+         */
+        public void onRefresh();
+    }
 
-	public PullToRefreshListView(Context context, Mode mode, AnimationStyle style) {
-		super(context, mode, style);
-	}
+    private static int measuredHeaderHeight;
 
-	@Override
-	public final Orientation getPullToRefreshScrollDirection() {
-		return Orientation.VERTICAL;
-	}
+    private boolean scrollbarEnabled;
+    private boolean bounceBackHeader;
+    private boolean lockScrollWhileRefreshing;
+    private boolean showLastUpdatedText;
+    private String  pullToRefreshText;
+    private String  releaseToRefreshText;
+    private String  refreshingText;
+    private String  lastUpdatedText;
+    private SimpleDateFormat lastUpdatedDateFormat = new SimpleDateFormat("dd/MM HH:mm");
 
-	@Override
-	protected void onRefreshing(final boolean doScroll) {
-		/**
-		 * If we're not showing the Refreshing view, or the list is empty, the
-		 * the header/footer views won't show so we use the normal method.
-		 */
-		ListAdapter adapter = mRefreshableView.getAdapter();
-		if (!mListViewExtrasEnabled || !getShowViewWhileRefreshing() || null == adapter || adapter.isEmpty()) {
-			super.onRefreshing(doScroll);
-			return;
-		}
+    private float                   previousY;
+    private int                     headerPadding;
+    private boolean                 hasResetHeader;
+    private long                    lastUpdated = -1;
+    private State                   state;
+    private LinearLayout            headerContainer;
+    private RelativeLayout          header;
+    private RotateAnimation         flipAnimation;
+    private RotateAnimation         reverseFlipAnimation;
+    private ImageView               image;
+    private ProgressBar             spinner;
+    private TextView                text;
+    private TextView                lastUpdatedTextView;
+    private OnItemClickListener     onItemClickListener;
+    private OnItemLongClickListener onItemLongClickListener;
+    private OnRefreshListener       onRefreshListener;
 
-		super.onRefreshing(false);
+    private float mScrollStartY;
+    private final int IDLE_DISTANCE = 5;
 
-		final LoadingLayout origLoadingView, listViewLoadingView, oppositeListViewLoadingView;
-		final int selection, scrollToY;
+    public PullToRefreshListView(Context context){
+        super(context);
+        init();
+    }
 
-		switch (getCurrentMode()) {
-			case MANUAL_REFRESH_ONLY:
-			case PULL_FROM_END:
-				origLoadingView = getFooterLayout();
-				listViewLoadingView = mFooterLoadingView;
-				oppositeListViewLoadingView = mHeaderLoadingView;
-				selection = mRefreshableView.getCount() - 1;
-				scrollToY = getScrollY() - getFooterSize();
-				break;
-			case PULL_FROM_START:
-			default:
-				origLoadingView = getHeaderLayout();
-				listViewLoadingView = mHeaderLoadingView;
-				oppositeListViewLoadingView = mFooterLoadingView;
-				selection = 0;
-				scrollToY = getScrollY() + getHeaderSize();
-				break;
-		}
+    public PullToRefreshListView(Context context, AttributeSet attrs){
+        super(context, attrs);
+        init();
+    }
 
-		// Hide our original Loading View
-		origLoadingView.reset();
-		origLoadingView.hideAllViews();
+    public PullToRefreshListView(Context context, AttributeSet attrs, int defStyle){
+        super(context, attrs, defStyle);
+        init();
+    }
 
-		// Make sure the opposite end is hidden too
-		oppositeListViewLoadingView.setVisibility(View.GONE);
+    @Override
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.onItemClickListener = onItemClickListener;
+    }
 
-		// Show the ListView Loading View and set it to refresh.
-		listViewLoadingView.setVisibility(View.VISIBLE);
-		listViewLoadingView.refreshing();
+    @Override
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener){
+        this.onItemLongClickListener = onItemLongClickListener;
+    }
 
-		if (doScroll) {
-			// We need to disable the automatic visibility changes for now
-			disableLoadingLayoutVisibilityChanges();
+    /**
+     * Activate an OnRefreshListener to get notified on 'pull to refresh'
+     * events.
+     *
+     * @param onRefreshListener The OnRefreshListener to get notified
+     */
+    public void setOnRefreshListener(OnRefreshListener onRefreshListener){
+        this.onRefreshListener = onRefreshListener;
+    }
 
-			// We scroll slightly so that the ListView's header/footer is at the
-			// same Y position as our normal header/footer
-			setHeaderScroll(scrollToY);
+    /**
+     * @return If the list is in 'Refreshing' state
+     */
+    public boolean isRefreshing(){
+        return state == State.REFRESHING;
+    }
 
-			// Make sure the ListView is scrolled to show the loading
-			// header/footer
-			mRefreshableView.setSelection(selection);
+    /**
+     * Default is false. When lockScrollWhileRefreshing is set to true, the list
+     * cannot scroll when in 'refreshing' mode. It's 'locked' on refreshing.
+     *
+     * @param lockScrollWhileRefreshing
+     */
+    public void setLockScrollWhileRefreshing(boolean lockScrollWhileRefreshing){
+        this.lockScrollWhileRefreshing = lockScrollWhileRefreshing;
+    }
 
-			// Smooth scroll as normal
-			smoothScrollTo(0);
-		}
-	}
+    /**
+     * Default is false. Show the last-updated date/time in the 'Pull ro Refresh'
+     * header. See 'setLastUpdatedDateFormat' to set the date/time formatting.
+     *
+     * @param showLastUpdatedText
+     */
+    public void setShowLastUpdatedText(boolean showLastUpdatedText){
+        this.showLastUpdatedText = showLastUpdatedText;
+        if(!showLastUpdatedText) lastUpdatedTextView.setVisibility(View.GONE);
+    }
 
-	@Override
-	protected void onReset() {
-		/**
-		 * If the extras are not enabled, just call up to super and return.
-		 */
-		if (!mListViewExtrasEnabled) {
-			super.onReset();
-			return;
-		}
+    /**
+     * Default: "dd/MM HH:mm". Set the format in which the last-updated
+     * date/time is shown. Meaningless if 'showLastUpdatedText == false (default)'.
+     * See 'setShowLastUpdatedText'.
+     *
+     * @param lastUpdatedDateFormat
+     */
+    public void setLastUpdatedDateFormat(SimpleDateFormat lastUpdatedDateFormat){
+        this.lastUpdatedDateFormat = lastUpdatedDateFormat;
+    }
 
-		final LoadingLayout originalLoadingLayout, listViewLoadingLayout;
-		final int scrollToHeight, selection;
-		final boolean scrollLvToEdge;
+    /**
+     * Explicitly set the state to refreshing. This
+     * is useful when you want to show the spinner and 'Refreshing' text when
+     * the refresh was not triggered by 'pull to refresh', for example on start.
+     */
+    public void setRefreshing(){
+        state = State.REFRESHING;
+        scrollTo(0, 0);
+        setUiRefreshing();
+        setHeaderPadding(0);
+    }
 
-		switch (getCurrentMode()) {
-			case MANUAL_REFRESH_ONLY:
-			case PULL_FROM_END:
-				originalLoadingLayout = getFooterLayout();
-				listViewLoadingLayout = mFooterLoadingView;
-				selection = mRefreshableView.getCount() - 1;
-				scrollToHeight = getFooterSize();
-				scrollLvToEdge = Math.abs(mRefreshableView.getLastVisiblePosition() - selection) <= 1;
-				break;
-			case PULL_FROM_START:
-			default:
-				originalLoadingLayout = getHeaderLayout();
-				listViewLoadingLayout = mHeaderLoadingView;
-				scrollToHeight = -getHeaderSize();
-				selection = 0;
-				scrollLvToEdge = Math.abs(mRefreshableView.getFirstVisiblePosition() - selection) <= 1;
-				break;
-		}
+    /**
+     * Set the state back to 'pull to refresh'. Call this method when refreshing
+     * the data is finished.
+     */
+    public void onRefreshComplete(){
+        state = State.PULL_TO_REFRESH;
+        resetHeader();
+        lastUpdated = System.currentTimeMillis();
+    }
 
-		// If the ListView header loading layout is showing, then we need to
-		// flip so that the original one is showing instead
-		if (listViewLoadingLayout.getVisibility() == View.VISIBLE) {
+    /**
+     * Change the label text on state 'Pull to Refresh'
+     *
+     * @param pullToRefreshText Text
+     */
+    public void setTextPullToRefresh(String pullToRefreshText){
+        this.pullToRefreshText = pullToRefreshText;
+        if(state == State.PULL_TO_REFRESH){
+            text.setText(pullToRefreshText);
+        }
+    }
 
-			// Set our Original View to Visible
-			originalLoadingLayout.showInvisibleViews();
+    /**
+     * Change the label text on state 'Release to Refresh'
+     *
+     * @param releaseToRefreshText Text
+     */
+    public void setTextReleaseToRefresh(String releaseToRefreshText){
+        this.releaseToRefreshText = releaseToRefreshText;
+        if(state == State.RELEASE_TO_REFRESH){
+            text.setText(releaseToRefreshText);
+        }
+    }
 
-			// Hide the ListView Header/Footer
-			listViewLoadingLayout.setVisibility(View.GONE);
+    /**
+     * Change the label text on state 'Refreshing'
+     *
+     * @param refreshingText Text
+     */
+    public void setTextRefreshing(String refreshingText){
+        this.refreshingText = refreshingText;
+        if(state == State.REFRESHING){
+            text.setText(refreshingText);
+        }
+    }
 
-			/**
-			 * Scroll so the View is at the same Y as the ListView
-			 * header/footer, but only scroll if: we've pulled to refresh, it's
-			 * positioned correctly
-			 */
-			if (scrollLvToEdge && getState() != State.MANUAL_REFRESHING) {
-				mRefreshableView.setSelection(selection);
-				setHeaderScroll(scrollToHeight);
-			}
-		}
+    private void init(){
+        setVerticalFadingEdgeEnabled(false);
 
-		// Finally, call up to super
-		super.onReset();
-	}
+        headerContainer = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.ptr_header, null);
+        header = (RelativeLayout) headerContainer.findViewById(R.id.ptr_id_header);
+        text = (TextView) header.findViewById(R.id.ptr_id_text);
+        lastUpdatedTextView = (TextView) header.findViewById(R.id.ptr_id_last_updated);
+        image = (ImageView) header.findViewById(R.id.ptr_id_image);
+        spinner = (ProgressBar) header.findViewById(R.id.ptr_id_spinner);
 
-	@Override
-	protected LoadingLayoutProxy createLoadingLayoutProxy(final boolean includeStart, final boolean includeEnd) {
-		LoadingLayoutProxy proxy = super.createLoadingLayoutProxy(includeStart, includeEnd);
+        pullToRefreshText = getContext().getString(R.string.ptr_pull_to_refresh);
+        releaseToRefreshText = getContext().getString(R.string.ptr_release_to_refresh);
+        refreshingText = getContext().getString(R.string.ptr_refreshing);
+        lastUpdatedText = getContext().getString(R.string.ptr_last_updated);
 
-		if (mListViewExtrasEnabled) {
-			final Mode mode = getMode();
+        flipAnimation = new RotateAnimation(0, -180, RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+        flipAnimation.setInterpolator(new LinearInterpolator());
+        flipAnimation.setDuration(ROTATE_ARROW_ANIMATION_DURATION);
+        flipAnimation.setFillAfter(true);
 
-			if (includeStart && mode.showHeaderLoadingLayout()) {
-				proxy.addLayout(mHeaderLoadingView);
-			}
-			if (includeEnd && mode.showFooterLoadingLayout()) {
-				proxy.addLayout(mFooterLoadingView);
-			}
-		}
+        reverseFlipAnimation = new RotateAnimation(-180, 0, RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+        reverseFlipAnimation.setInterpolator(new LinearInterpolator());
+        reverseFlipAnimation.setDuration(ROTATE_ARROW_ANIMATION_DURATION);
+        reverseFlipAnimation.setFillAfter(true);
 
-		return proxy;
-	}
+        addHeaderView(headerContainer);
+        setState(State.PULL_TO_REFRESH);
+        scrollbarEnabled = isVerticalScrollBarEnabled();
 
-	protected ListView createListView(Context context, AttributeSet attrs) {
-		final ListView lv;
-		if (VERSION.SDK_INT >= VERSION_CODES.GINGERBREAD) {
-			lv = new InternalListViewSDK9(context, attrs);
-		} else {
-			lv = new InternalListView(context, attrs);
-		}
-		return lv;
-	}
+        ViewTreeObserver vto = header.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new PTROnGlobalLayoutListener());
 
-	@Override
-	protected ListView createRefreshableView(Context context, AttributeSet attrs) {
-		ListView lv = createListView(context, attrs);
+        super.setOnItemClickListener(new PTROnItemClickListener());
+        super.setOnItemLongClickListener(new PTROnItemLongClickListener());
+    }
 
-		// Set it to this so it can be used in ListActivity/ListFragment
-		lv.setId(android.R.id.list);
-		return lv;
-	}
+    private void setHeaderPadding(int padding){
+        headerPadding = padding;
 
-	@Override
-	protected void handleStyledAttributes(TypedArray a) {
-		super.handleStyledAttributes(a);
+        MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) header.getLayoutParams();
+        mlp.setMargins(0, Math.round(padding), 0, 0);
+        header.setLayoutParams(mlp);
+    }
 
-		mListViewExtrasEnabled = a.getBoolean(R.styleable.PullToRefresh_ptrListViewExtrasEnabled, true);
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        if(lockScrollWhileRefreshing
+                && (state == State.REFRESHING || getAnimation() != null && !getAnimation().hasEnded())){
+            return true;
+        }
 
-		if (mListViewExtrasEnabled) {
-			final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-					FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
+        switch(event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                if(getFirstVisiblePosition() == 0){
+                	previousY = event.getY();
+                }
+                else {
+                	previousY = -1;
+                }
+                
+                // Remember where have we started
+                mScrollStartY = event.getY();
+                
+                break;
 
-			// Create Loading Views ready for use later
-			FrameLayout frame = new FrameLayout(getContext());
-			mHeaderLoadingView = createLoadingLayout(getContext(), Mode.PULL_FROM_START, a);
-			mHeaderLoadingView.setVisibility(View.GONE);
-			frame.addView(mHeaderLoadingView, lp);
-			mRefreshableView.addHeaderView(frame, null, false);
+            case MotionEvent.ACTION_UP:
+                if(previousY != -1 && (state == State.RELEASE_TO_REFRESH || getFirstVisiblePosition() == 0)){
+                    switch(state){
+                        case RELEASE_TO_REFRESH:
+                            setState(State.REFRESHING);
+                            bounceBackHeader();
 
-			mLvFooterLoadingFrame = new FrameLayout(getContext());
-			mFooterLoadingView = createLoadingLayout(getContext(), Mode.PULL_FROM_END, a);
-			mFooterLoadingView.setVisibility(View.GONE);
-			mLvFooterLoadingFrame.addView(mFooterLoadingView, lp);
+                            break;
 
-			/**
-			 * If the value for Scrolling While Refreshing hasn't been
-			 * explicitly set via XML, enable Scrolling While Refreshing.
-			 */
-			if (!a.hasValue(R.styleable.PullToRefresh_ptrScrollingWhileRefreshingEnabled)) {
-				setScrollingWhileRefreshingEnabled(true);
-			}
-		}
-	}
+                        case PULL_TO_REFRESH:
+                            resetHeader();
+                            break;
+                    }
+                }
+                break;
 
-	@TargetApi(9)
-	final class InternalListViewSDK9 extends InternalListView {
+            case MotionEvent.ACTION_MOVE:
+                if(previousY != -1 && getFirstVisiblePosition() == 0 && Math.abs(mScrollStartY-event.getY()) > IDLE_DISTANCE){
+                    float y = event.getY();
+                    float diff = y - previousY;
+                    if(diff > 0) diff /= PULL_RESISTANCE;
+                    previousY = y;
 
-		public InternalListViewSDK9(Context context, AttributeSet attrs) {
-			super(context, attrs);
-		}
+                    int newHeaderPadding = Math.max(Math.round(headerPadding + diff), -header.getHeight());
 
-		@Override
-		protected boolean overScrollBy(int deltaX, int deltaY, int scrollX, int scrollY, int scrollRangeX,
-				int scrollRangeY, int maxOverScrollX, int maxOverScrollY, boolean isTouchEvent) {
+                    if(newHeaderPadding != headerPadding && state != State.REFRESHING){
+                        setHeaderPadding(newHeaderPadding);
 
-			final boolean returnValue = super.overScrollBy(deltaX, deltaY, scrollX, scrollY, scrollRangeX,
-					scrollRangeY, maxOverScrollX, maxOverScrollY, isTouchEvent);
+                        if(state == State.PULL_TO_REFRESH && headerPadding > 0){
+                            setState(State.RELEASE_TO_REFRESH);
 
-			// Does all of the hard work...
-			OverscrollHelper.overScrollBy(PullToRefreshListView.this, deltaX, scrollX, deltaY, scrollY, isTouchEvent);
+                            image.clearAnimation();
+                            image.startAnimation(flipAnimation);
+                        }else if(state == State.RELEASE_TO_REFRESH && headerPadding < 0){
+                            setState(State.PULL_TO_REFRESH);
 
-			return returnValue;
-		}
-	}
+                            image.clearAnimation();
+                            image.startAnimation(reverseFlipAnimation);
+                        }
+                    }
+                }
 
-	protected class InternalListView extends ListView implements EmptyViewMethodAccessor {
+                break;
+        }
 
-		private boolean mAddedLvFooter = false;
+        return super.onTouchEvent(event);
+    }
 
-		public InternalListView(Context context, AttributeSet attrs) {
-			super(context, attrs);
-		}
+    private void bounceBackHeader(){
+        int yTranslate = state == State.REFRESHING ?
+                header.getHeight() - headerContainer.getHeight() :
+                -headerContainer.getHeight() - headerContainer.getTop() + getPaddingTop();;
 
-		@Override
-		protected void dispatchDraw(Canvas canvas) {
-			/**
-			 * This is a bit hacky, but Samsung's ListView has got a bug in it
-			 * when using Header/Footer Views and the list is empty. This masks
-			 * the issue so that it doesn't cause an FC. See Issue #66.
-			 */
-			try {
-				super.dispatchDraw(canvas);
-			} catch (IndexOutOfBoundsException e) {
-				e.printStackTrace();
-			}
-		}
+        TranslateAnimation bounceAnimation = new TranslateAnimation(
+                TranslateAnimation.ABSOLUTE, 0,
+                TranslateAnimation.ABSOLUTE, 0,
+                TranslateAnimation.ABSOLUTE, 0,
+                TranslateAnimation.ABSOLUTE, yTranslate);
 
-		@Override
-		public boolean dispatchTouchEvent(MotionEvent ev) {
-			/**
-			 * This is a bit hacky, but Samsung's ListView has got a bug in it
-			 * when using Header/Footer Views and the list is empty. This masks
-			 * the issue so that it doesn't cause an FC. See Issue #66.
-			 */
-			try {
-				return super.dispatchTouchEvent(ev);
-			} catch (IndexOutOfBoundsException e) {
-				e.printStackTrace();
-				return false;
-			}
-		}
+        bounceAnimation.setDuration(BOUNCE_ANIMATION_DURATION);
+        bounceAnimation.setFillEnabled(true);
+        bounceAnimation.setFillAfter(false);
+        bounceAnimation.setFillBefore(true);
+        bounceAnimation.setInterpolator(new OvershootInterpolator(BOUNCE_OVERSHOOT_TENSION));
+        bounceAnimation.setAnimationListener(new HeaderAnimationListener(yTranslate));
 
-		@Override
-		public void setAdapter(ListAdapter adapter) {
-			// Add the Footer View at the last possible moment
-			if (null != mLvFooterLoadingFrame && !mAddedLvFooter) {
-				addFooterView(mLvFooterLoadingFrame, null, false);
-				mAddedLvFooter = true;
-			}
+        startAnimation(bounceAnimation);
+    }
 
-			super.setAdapter(adapter);
-		}
+    private void resetHeader(){
+        if(getFirstVisiblePosition() > 0){
+            setHeaderPadding(-header.getHeight());
+            setState(State.PULL_TO_REFRESH);
+            return;
+        }
 
-		@Override
-		public void setEmptyView(View emptyView) {
-			PullToRefreshListView.this.setEmptyView(emptyView);
-		}
+        if(getAnimation() != null && !getAnimation().hasEnded()){
+            bounceBackHeader = true;
+        }else{
+            bounceBackHeader();
+        }
+    }
 
-		@Override
-		public void setEmptyViewInternal(View emptyView) {
-			super.setEmptyView(emptyView);
-		}
+    private void setUiRefreshing(){
+        spinner.setVisibility(View.VISIBLE);
+        image.clearAnimation();
+        image.setVisibility(View.INVISIBLE);
+        text.setText(refreshingText);
+    }
 
-	}
+    private void setState(State state){
+        this.state = state;
+        switch(state){
+            case PULL_TO_REFRESH:
+                spinner.setVisibility(View.INVISIBLE);
+                image.setVisibility(View.VISIBLE);
+                text.setText(pullToRefreshText);
 
+                if(showLastUpdatedText && lastUpdated != -1){
+                    lastUpdatedTextView.setVisibility(View.VISIBLE);
+                    lastUpdatedTextView.setText(String.format(lastUpdatedText, lastUpdatedDateFormat.format(new Date(lastUpdated))));
+                }
+
+                break;
+
+            case RELEASE_TO_REFRESH:
+                spinner.setVisibility(View.INVISIBLE);
+                image.setVisibility(View.VISIBLE);
+                text.setText(releaseToRefreshText);
+                break;
+
+            case REFRESHING:
+                setUiRefreshing();
+
+                lastUpdated = System.currentTimeMillis();
+                if(onRefreshListener == null){
+                    setState(State.PULL_TO_REFRESH);
+                }else{
+                    onRefreshListener.onRefresh();
+                }
+
+                break;
+        }
+    }
+
+    @Override
+    protected void onScrollChanged(int l, int t, int oldl, int oldt){
+        super.onScrollChanged(l, t, oldl, oldt);
+
+        if(!hasResetHeader){
+            if(measuredHeaderHeight > 0 && state != State.REFRESHING){
+                setHeaderPadding(-measuredHeaderHeight);
+            }
+
+            hasResetHeader = true;
+        }
+    }
+
+    private class HeaderAnimationListener implements AnimationListener{
+
+        private int height, translation;
+        private State stateAtAnimationStart;
+
+        public HeaderAnimationListener(int translation){
+            this.translation = translation;
+        }
+
+        @Override
+        public void onAnimationStart(Animation animation){
+            stateAtAnimationStart = state;
+
+            android.view.ViewGroup.LayoutParams lp = getLayoutParams();
+            height = lp.height;
+            lp.height = getHeight() - translation;
+            setLayoutParams(lp);
+
+            if(scrollbarEnabled){
+                setVerticalScrollBarEnabled(false);
+            }
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation){
+            setHeaderPadding(stateAtAnimationStart == State.REFRESHING ? 0 : -measuredHeaderHeight - headerContainer.getTop());
+            setSelection(0);
+
+            android.view.ViewGroup.LayoutParams lp = getLayoutParams();
+            lp.height = height;
+            setLayoutParams(lp);
+
+            if(scrollbarEnabled){
+                setVerticalScrollBarEnabled(true);
+            }
+
+            if(bounceBackHeader){
+                bounceBackHeader = false;
+
+                postDelayed(new Runnable(){
+
+                    @Override
+                    public void run(){
+                        resetHeader();
+                    }
+                }, BOUNCE_ANIMATION_DELAY);
+            }else if(stateAtAnimationStart != State.REFRESHING){
+                setState(State.PULL_TO_REFRESH);
+            }
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation){}
+    }
+
+    private class PTROnGlobalLayoutListener implements OnGlobalLayoutListener{
+
+        @Override
+        public void onGlobalLayout(){
+            int initialHeaderHeight = header.getHeight();
+
+            if(initialHeaderHeight > 0){
+                measuredHeaderHeight = initialHeaderHeight;
+
+                if(measuredHeaderHeight > 0 && state != State.REFRESHING){
+                    setHeaderPadding(-measuredHeaderHeight);
+                    requestLayout();
+                }
+            }
+
+            getViewTreeObserver().removeGlobalOnLayoutListener(this);
+        }
+    }
+
+    private class PTROnItemClickListener implements OnItemClickListener{
+
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
+            hasResetHeader = false;
+
+            if(onItemClickListener != null && state == State.PULL_TO_REFRESH){
+                // Passing up onItemClick. Correct position with the number of header views
+                onItemClickListener.onItemClick(adapterView, view, position - getHeaderViewsCount(), id);
+            }
+        }
+    }
+
+    private class PTROnItemLongClickListener implements OnItemLongClickListener{
+
+        @Override
+        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id){
+            hasResetHeader = false;
+
+            if(onItemLongClickListener != null && state == State.PULL_TO_REFRESH){
+                // Passing up onItemLongClick. Correct position with the number of header views
+                return onItemLongClickListener.onItemLongClick(adapterView, view, position - getHeaderViewsCount(), id);
+            }
+
+            return false;
+        }
+    }
 }

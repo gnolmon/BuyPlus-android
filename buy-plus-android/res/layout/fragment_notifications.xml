@@ -1,4 +1,5 @@
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/swipe_refresh_layout"
@@ -6,11 +7,11 @@
     tools:context="com.lc.buyplus.tab.HomeActivity" >
 
 
-        <ListView
+        <lc.buyplus.pulltorefresh.PullToRefreshListView
             android:id="@+id/listNoti"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:divider="@color/list_divider"
             android:dividerHeight="1dp"/>
 
-</android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>

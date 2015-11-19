@@ -33,10 +33,8 @@ import android.view.LayoutInflater;
  * @author Chris Banes
  * 
  */
-public class PullToRefreshListFragment extends PullToRefreshBaseListFragment<PullToRefreshListView> {
+public class PullToRefreshListFragment  {
 
-	protected PullToRefreshListView onCreatePullToRefreshListView(LayoutInflater inflater, Bundle savedInstanceState) {
-		return new PullToRefreshListView(getActivity());
-	}
+
 
 }
