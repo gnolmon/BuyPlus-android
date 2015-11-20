@@ -42,7 +42,11 @@ public class RedeemAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		return position;
 	}
-
+	
+	public int getItem_id(int position){
+		return giftItems.get(position).getId();
+	}
+	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (inflater == null)

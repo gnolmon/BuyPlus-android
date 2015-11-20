@@ -28,6 +28,7 @@ import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.RoundedImageView;
 import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.models.Friend;
+import lc.buyplus.models.Store;
 
 public class ShopFriendAdapter extends BaseAdapter {
 
@@ -87,7 +88,7 @@ public class ShopFriendAdapter extends BaseAdapter {
 			
 			public void onClick(View v) {
 				
-				api_remove_friend_from_shop(ShopInfoActivity.current_shop_id,item.getId());
+				api_remove_friend_from_shop(Store.current_shop_id,item.getId());
 				friendList.remove(pos);
 				notifyDataSetChanged();
 			}

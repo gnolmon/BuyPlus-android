@@ -19,12 +19,12 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 	public String msg;
 	private TextView tvMsg;
 
-	public CustomDialogClass(Activity a,String msg,int flag) {
-		super(a);
+	public CustomDialogClass(Activity pa,String pmsg,int pflag) {
+		super(pa);
 		// TODO Auto-generated constructor stub
-		this.c = a;
-		flag = flag;
-		this.msg = msg;
+		this.c = pa;
+		this.flag = pflag;
+		this.msg = pmsg;
 	}
 
 	@Override

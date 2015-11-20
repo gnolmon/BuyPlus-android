@@ -46,12 +46,21 @@ public class AnnounmentAdapter extends BaseAdapter {
 	ArrayList<Announcement> announcementList;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
 	FragmentManager mFragmentManager;
-
+	private OnLoadMoreListener onLoadMoreListener;
+	
 	public AnnounmentAdapter(ArrayList<Announcement> announcementList, LayoutInflater inflaterActivity, CoreActivity activity, FragmentManager mFragmentManager) {
 		this.inflaterActivity = inflaterActivity;
 		this.announcementList = announcementList;
 		this.activity = activity;
 		this.mFragmentManager = mFragmentManager;
+	}
+	
+	public OnLoadMoreListener getOnLoadMoreListener() {
+		return onLoadMoreListener;
+	}
+
+	public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+		this.onLoadMoreListener = onLoadMoreListener;
 	}
 
 	@Override

@@ -61,7 +61,7 @@ public class ShopInfoFragment   extends CoreFragment {
 		initViews(view);
 		initModels();
 		initAnimations();
-		api_get_shop_info(ShopInfoActivity.current_shop_id);
+		api_get_shop_info(Store.current_shop_id);
 		return view;
 	}
 
@@ -70,12 +70,12 @@ public class ShopInfoFragment   extends CoreFragment {
 		switch (view.getId()) {
 		case R.id.btnAgreeTerm:
 			if (isJoin){
-				api_leave_shop(ShopInfoActivity.current_shop_id);
+				api_leave_shop(Store.current_shop_id);
 				join_leave.setText("Tham gia");
 				isJoin = false;
 			}
 			else{
-				api_join_shop(ShopInfoActivity.current_shop_id);
+				api_join_shop(Store.current_shop_id);
 				join_leave.setText("Roi di");
 				isJoin = true;
 			}
@@ -121,7 +121,6 @@ public class ShopInfoFragment   extends CoreFragment {
 						try {
 
 							shop = new Shop(response.getJSONObject("data"));
-							
 							if ((shop.current_customer_shop_id==null) || (shop.current_customer_shop_id=="")){
 								join_leave.setText("Tham gia");
 								isJoin = false;

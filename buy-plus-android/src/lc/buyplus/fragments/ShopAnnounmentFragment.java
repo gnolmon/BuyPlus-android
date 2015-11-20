@@ -47,7 +47,7 @@ public class ShopAnnounmentFragment extends CoreFragment {
 		initAnimations();
 		listView = (ListView) view.findViewById(R.id.listShopAnnounment);
 		inflaterActivity = inflater;
-		api_get_shop_announcements(ShopInfoActivity.current_shop_id, 0, 0, 0);
+		api_get_shop_announcements(Store.current_shop_id, 0, 0, 0);
 		return view;
 	}
 
