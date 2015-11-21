@@ -55,7 +55,8 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/sort" />
+                android:src="@drawable/sort"
+                android:visibility="invisible" />
         </LinearLayout>
     </LinearLayout>
 
@@ -143,7 +144,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:layout_toEndOf="@id/idcenter"
+            android:layout_toRightOf="@id/idcenter"
             android:gravity="center"
             android:orientation="horizontal" >
 
@@ -161,7 +162,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
-                android:layout_toStartOf="@id/center2"
+                android:layout_toLeftOf="@id/center2"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
