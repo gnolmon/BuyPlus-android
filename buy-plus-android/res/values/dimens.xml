@@ -41,6 +41,7 @@
     <dimen name="margin_divide">4dp</dimen>
     <dimen name="margin_title">10dp</dimen>
     <dimen name="padding_standard">10dp</dimen>
+    <dimen name="padding_login">50dp</dimen>
     <dimen name="rounded">5dp</dimen>
 
     <!-- Older dimens -->
@@ -58,6 +59,7 @@
     <dimen name="title">17dp</dimen>
     <dimen name="title_pass">15dp</dimen>
     <dimen name="caption">10dip</dimen>
+    <dimen name="edit_padding">10dip</dimen>
     
     
     

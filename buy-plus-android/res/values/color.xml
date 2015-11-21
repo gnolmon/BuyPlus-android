@@ -22,7 +22,8 @@
     <color name="link">#0a80d1</color>
     <color name="timestamp">#a0a3a7</color>
     <color name="press_button">#1E9B67</color>
-    <color name="normal_button">#51CE9A</color>
+    <color name="normal_button">#7dba9b</color>
+    <color name="normal_edittext">#459e74</color>
     <color name="floating_button">#ed7d31</color>
     <color name="green">#00FF00</color>
     <color name="tab_selected">#22aa72</color>
