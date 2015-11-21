@@ -40,23 +40,28 @@ import lc.buyplus.models.Photo;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
 import lc.buyplus.models.UserAccount;
+import lc.buyplus.pulltorefresh.PullToRefreshListView;
+import lc.buyplus.pulltorefresh.PullToRefreshListView.OnRefreshListener;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class HomeFragment extends CoreFragment {
-	private ListView listView;
+	private PullToRefreshListView listView;
 	private StoreAdapter storeAdapter;
 	private LayoutInflater inflaterActivity;
-	private boolean isLoad,isLoading;
+	
+	private int current_last_id = 0;
+	private boolean isLoadMore,isLoading,reload;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
-		listView = (ListView) view.findViewById(R.id.listStore);
+		listView = (PullToRefreshListView) view.findViewById(R.id.listStore);
 		inflaterActivity = inflater;
 		initViews(view);
 		initModels();
 		initAnimations();
 		
-		api_get_all_shop(0,0,0);
+		
 		return view;
 	}
 	@Override
@@ -72,18 +77,17 @@ public class HomeFragment extends CoreFragment {
 
 	@Override
 	protected void initViews(View v) {
-		isLoad = false;
+		isLoadMore = false;
 		isLoading = false;
+		api_get_all_shop(0,Store.limit,"");
 		storeAdapter = new StoreAdapter(Store.ShopsList, inflaterActivity);
 		listView.setAdapter(storeAdapter);
 		
 		listView.setOnItemClickListener(new OnItemClickListener() {
 		      public void onItemClick(AdapterView<?> parent, View view,
 		          int position, long id) {
-		             Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);
-		             Bundle b = new Bundle();
-		             b.putInt("shop_id", storeAdapter.getItem_id(position)); //Your id
-		             shopInfoActivity.putExtras(b); //Put your id to your next Intent
+		    	  	 Store.current_shop_id = storeAdapter.getItem_id(position);
+		             Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);		             
 		             startActivity(shopInfoActivity);
 		      }
 		    });
@@ -91,7 +95,7 @@ public class HomeFragment extends CoreFragment {
 		storeAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-            	//api_get_all_shop(0,0,0);
+            	api_get_all_shop(current_last_id, Store.limit, "");
             }
         });
 		
@@ -99,20 +103,29 @@ public class HomeFragment extends CoreFragment {
 		    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 		    	
 		    	if (!isLoading && firstVisibleItem + visibleItemCount == totalItemCount){
-		    		isLoad = true;
+		    		isLoadMore = true;
 		    	}
 		    	 
 		    }
 		    public void onScrollStateChanged(AbsListView view, int scrollState) {
 		      // TODO Auto-generated method stub
 		      if(scrollState == 0) {
-		    	  if (isLoad){
-				    	storeAdapter.getOnLoadMoreListener().onLoadMore();
-				    	isLoad = false;
+		    	  if (isLoadMore){
+		    		  isLoading = true;
+		    		  storeAdapter.getOnLoadMoreListener().onLoadMore();	
 		    	  }
 		      }
 		    }
-	  });
+		 });
+		
+		listView.setOnRefreshListener(new OnRefreshListener() {
+
+			public void onRefresh() {
+				reload = true;
+				api_get_all_shop(0,Store.limit,"");
+				
+			}
+		});
 	}
 
 	@Override
@@ -120,12 +133,12 @@ public class HomeFragment extends CoreFragment {
 		
 	}
 
-	public void api_get_all_shop(int latest_id, int oldest_id, int search){
+	public void api_get_all_shop(int last_id, int limit, String search){
 	 	
     	Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("latest_id", String.valueOf(latest_id));
-		params.put("oldest_id", String.valueOf(oldest_id));
+		params.put("last_id", String.valueOf(last_id));
+		params.put("limit", String.valueOf(limit));
 		params.put("search", String.valueOf(search));
 			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
 			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
@@ -133,6 +146,10 @@ public class HomeFragment extends CoreFragment {
 					new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
+						if (reload){
+							Store.ShopsList.removeAll(Store.ShopsList);
+							reload = false;
+						}
 						try {
 							Log.d("api_get_all_shop",response.toString());
 							JSONArray data_aray = response.getJSONArray("data");
@@ -143,18 +160,19 @@ public class HomeFragment extends CoreFragment {
 	                            	}
 	                        }
 							storeAdapter.notifyDataSetChanged();
-							isLoading = true;
+							isLoading = false;
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
 												
-						
+						listView.onRefreshComplete();
 					}
 				}, 
 				new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						Log.d("api_get_all_shop",error.toString());
+						listView.onRefreshComplete();
 					}
 				});
 			requestQueue.add(jsObjRequest);

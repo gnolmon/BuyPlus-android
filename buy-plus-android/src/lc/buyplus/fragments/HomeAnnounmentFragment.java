@@ -22,12 +22,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import lc.buyplus.R;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.AnnounmentAdapter;
+import lc.buyplus.adapter.OnLoadMoreListener;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
@@ -37,24 +40,30 @@ import lc.buyplus.models.Gift;
 import lc.buyplus.models.Notification;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
+import lc.buyplus.pulltorefresh.PullToRefreshListView;
+import lc.buyplus.pulltorefresh.PullToRefreshListView.OnRefreshListener;
 
 public class HomeAnnounmentFragment extends CoreFragment {
-	private ListView listView;
+	private PullToRefreshListView listView;
 	private AnnounmentAdapter newsAdapter;
 	private LayoutInflater inflaterActivity;
 	FragmentManager mFragmentManager;
 	public static Fragment homeFrg;
 
+	private int current_last_id = 0;
+	private boolean isLoadMore,isLoading,reload;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_announment, container, false);
+		listView = (PullToRefreshListView) view.findViewById(R.id.listAnnounment);
+		inflaterActivity = inflater;
 		initViews(view);
 		initModels();
 		initAnimations();
 		mFragmentManager = getFragmentManager();
-		listView = (ListView) view.findViewById(R.id.listAnnounment);
-		inflaterActivity = inflater;
-		api_get_all_announcements(2, 0, 0, 0, 0);
+		
+		
 		return view;
 	}
 
@@ -72,7 +81,54 @@ public class HomeAnnounmentFragment extends CoreFragment {
 	@Override
 	protected void initViews(View v) {
 		homeFrg = this.getTargetFragment();
+		newsAdapter = new AnnounmentAdapter(Store.AnnouncementsList, inflaterActivity, mActivity, mFragmentManager);
+		listView.setAdapter(newsAdapter);
+		api_get_all_announcements(0, Store.limit, 0, 0, 0);
+		
+		listView.setOnItemClickListener(new OnItemClickListener() {
+		      public void onItemClick(AdapterView<?> parent, View view,
+		          int position, long id) {
+		    	  Store.current_shop_id = newsAdapter.getItem_id(position);
+		    	  Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);
+	              startActivity(shopInfoActivity);
+		      }
+	    });
+		
+		newsAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+            	api_get_all_announcements(current_last_id, Store.limit, 0, 0, 0);
+            }
+        });
+		
+		listView.setOnScrollListener(new OnScrollListener(){
+		    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+		    	
+		    	if (!isLoading && firstVisibleItem + visibleItemCount == totalItemCount){
+		    		isLoadMore = true;
+		    	}
+		    	 
+		    }
+		    public void onScrollStateChanged(AbsListView view, int scrollState) {
+		      // TODO Auto-generated method stub
+		      if(scrollState == 0) {
+		    	  if (isLoadMore){
+		    		  isLoading = true;
+		    		  newsAdapter.getOnLoadMoreListener().onLoadMore();	
+		    	  }
+		      }
+		    }
+		 });
+		
+		listView.setOnRefreshListener(new OnRefreshListener() {
 
+			public void onRefresh() {
+				reload = true;
+				api_get_all_announcements(0, Store.limit, 0, 0, 0);
+				
+			}
+		});
+		
 	}
 
 	@Override
@@ -101,29 +157,18 @@ public class HomeAnnounmentFragment extends CoreFragment {
 							for (int i = 0; i < data_aray.length(); i++) {
 								Announcement announcement = new Announcement((JSONObject) data_aray.get(i));
 								Store.AnnouncementsList.add(announcement);
-
 							}
-							newsAdapter = new AnnounmentAdapter(Store.AnnouncementsList, inflaterActivity, mActivity, mFragmentManager);
-							listView.setAdapter(newsAdapter);
-							listView.setOnItemClickListener(new OnItemClickListener() {
-							      public void onItemClick(AdapterView<?> parent, View view,
-							          int position, long id) {
-							    	  Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);
-						              Bundle b = new Bundle();
-						              b.putInt("shop_id", newsAdapter.getItem_id(position)); //Your id
-						              shopInfoActivity.putExtras(b); //Put your id to your next Intent
-						              startActivity(shopInfoActivity);
-							      }
-							    });
 							newsAdapter.notifyDataSetChanged();
 						} catch (JSONException e) {
 
 							e.printStackTrace();
 						}
+						listView.onRefreshComplete();
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
+						listView.onRefreshComplete();
 					}
 				});
 		requestQueue.add(jsObjRequest);

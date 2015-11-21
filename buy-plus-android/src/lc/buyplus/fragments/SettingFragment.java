@@ -15,6 +15,7 @@ import lc.buyplus.R;
 import lc.buyplus.activities.BuyPlusInfoActivity;
 import lc.buyplus.activities.LoginActivity;
 import lc.buyplus.activities.SettingNotificationActivity;
+import lc.buyplus.activities.UserActivity;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
@@ -55,6 +56,10 @@ public class SettingFragment extends CoreFragment {
 			LanguageDialog lanDialog = new LanguageDialog(mActivity);
 			lanDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 			lanDialog.show();
+			break;
+		case R.id.rlSettingUser:
+			Intent userActivity = new Intent(mActivity, UserActivity.class);
+			startActivity(userActivity);
 			break;
 		}
 	}

@@ -141,7 +141,7 @@ public class AddFriendFragment extends CoreFragment {
 			@Override
 			public void onClick(View v) {
 				search_params = String.valueOf(txtFind.getText());
-				api_search_friends_for_shop(ShopInfoActivity.current_shop_id, search_params);
+				api_search_friends_for_shop(Store.current_shop_id, search_params);
 			}
 		});
 		

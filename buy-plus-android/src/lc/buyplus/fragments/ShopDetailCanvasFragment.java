@@ -217,7 +217,7 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 		mShopNoti = (LinearLayout) v.findViewById(R.id.fragment_canvas_notifications_tab);
 		mShopSetting = (LinearLayout) v.findViewById(R.id.fragment_canvas_setting_tab);
 		mTitle = (MyTextView) v.findViewById(R.id.fragment_canvas_title);
-		mTitle.setText(Store.ShopsList.get(ShopInfoActivity.current_shop_id).getName());
+		mTitle.setText(Store.get_current_shop().getName());
 		mBack = (LinearLayout) v.findViewById(R.id.fragment_canvas_back);
 
 		rHomeTab = (RelativeLayout) v.findViewById(R.id.rhomeTab);

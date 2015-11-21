@@ -86,7 +86,7 @@ public class FriendAdapter extends BaseAdapter {
 			
 			public void onClick(View v) {
 				
-				api_send_request_join_shop_to_friend(ShopInfoActivity.current_shop_id,item.getId());
+				api_send_request_join_shop_to_friend(Store.current_shop_id,item.getId());
 				addFriend.setText("Dang cho");
 				addFriend.setEnabled(false);
 			}

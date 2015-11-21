@@ -52,7 +52,7 @@ public class ShopFriendFragment  extends CoreFragment {
 		initAnimations();
 		listView = (ListView) view.findViewById(R.id.listFriend);
 		inflaterActivity = inflater;
-		api_get_shop_friends(ShopInfoActivity.current_shop_id);
+		api_get_shop_friends(Store.current_shop_id);
 		return view;
 	}
 

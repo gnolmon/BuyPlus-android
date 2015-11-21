@@ -47,7 +47,7 @@ public class ShopGiftFragment extends CoreFragment {
 		initAnimations();
 		listView = (ListView) view.findViewById(R.id.listShopRedeem);
 		inflaterActivity = inflater;
-		api_get_shop_gifts(ShopInfoActivity.current_shop_id);
+		api_get_shop_gifts(Store.current_shop_id);
 		return view;
 	}
 

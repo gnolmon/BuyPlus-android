@@ -30,7 +30,6 @@ public class StoreAdapter extends BaseAdapter{
 		this.storeList = shopsList;
 	}
 	
-	
 	public OnLoadMoreListener getOnLoadMoreListener() {
 		return onLoadMoreListener;
 	}
@@ -52,6 +51,7 @@ public class StoreAdapter extends BaseAdapter{
 	public int getItem_id(int position){
 		return storeList.get(position).getId();
 	}
+	
 	@Override
 	public long getItemId(int position) {
 		return position;
@@ -68,14 +68,6 @@ public class StoreAdapter extends BaseAdapter{
 			imageLoader = MonApplication.getInstance().getImageLoader();
 
 		TextView tvNameStore = (TextView) convertView.findViewById(R.id.tvNameStore);
-		tvNameStore.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		
 		TextView tvAddressStore = (TextView) convertView.findViewById(R.id.tvAddressStore);
 		

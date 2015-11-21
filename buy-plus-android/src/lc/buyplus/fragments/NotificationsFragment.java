@@ -39,7 +39,6 @@ public class NotificationsFragment extends CoreFragment{
 	private NotificationAdapter notiAdapter;
 	private LayoutInflater inflaterActivity;
 	
-	private int limit = 6;
 	private int current_last_id = 0;
 	private boolean isLoadMore,isLoading,reload;
 	
@@ -56,11 +55,12 @@ public class NotificationsFragment extends CoreFragment{
 		listView = (PullToRefreshListView ) view.findViewById(R.id.listNoti);
 		notiAdapter = new NotificationAdapter(Store.NotificationsList, inflaterActivity);
 		listView.setAdapter(notiAdapter);
-		api_get_notifications(0, limit);
+		api_get_notifications(0, Store.limit);
+		
 		notiAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-            	api_get_notifications(current_last_id, limit);
+            	api_get_notifications(current_last_id, Store.limit);
             }
         });
 		listView.setOnScrollListener(new OnScrollListener(){
@@ -88,7 +88,7 @@ public class NotificationsFragment extends CoreFragment{
 			public void onRefresh() {
 				reload = true;
 				Log.d("sixxxxxze",String.valueOf(Store.NotificationsList.size()));
-				api_get_notifications(0, limit);
+				api_get_notifications(0, Store.limit);
 				
 			}
 		});
@@ -134,7 +134,6 @@ public class NotificationsFragment extends CoreFragment{
 							Log.d("size",String.valueOf(Store.NotificationsList.size()));
 							reload = false;
 						}
-						Log.d("api_get_notifications", response.toString());
 						try {
 							JSONArray data_aray = response.getJSONArray("data");
 							for (int i = 0; i < data_aray.length(); i++) {

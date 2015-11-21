@@ -13,8 +13,6 @@ public class ShopInfoActivity extends CoreActivity {
 	
 	private static final long serialVersionUID = 250212518535755420L;
 //	private ImageView image;
-	
-	public static int current_shop_id; 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -24,7 +22,6 @@ public class ShopInfoActivity extends CoreActivity {
 		initListeners();
 		initAnimations();
 		Bundle b = getIntent().getExtras();
-		current_shop_id = b.getInt("shop_id");
 		FragmentManager mFragmentManager = getSupportFragmentManager();
 		mFragmentManager.beginTransaction().add(R.id.canvas, ShopDetailCanvasFragment.getInstance(ShopInfoActivity.this,CanvasFragment.mUser)).commit();
 	}

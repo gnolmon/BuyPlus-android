@@ -14,13 +14,18 @@ import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 import lc.buyplus.R;
+import lc.buyplus.activities.ShopFriendActivity;
+import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.AnnounmentAdapter;
 import lc.buyplus.adapter.RedeemAdapter;
 import lc.buyplus.cores.CoreActivity;
@@ -40,11 +45,12 @@ public class LoyaltyCardFragment extends CoreFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_redeem, container, false);
+		listView = (ListView) view.findViewById(R.id.listRedeem);
+		inflaterActivity = inflater;
 		initViews(view);
 		initModels();
 		initAnimations();
-		listView = (ListView) view.findViewById(R.id.listRedeem);
-		inflaterActivity = inflater;
+		
 		api_get_my_shop(1);
 		return view;
 	}
@@ -61,7 +67,16 @@ public class LoyaltyCardFragment extends CoreFragment {
 
 	@Override
 	protected void initViews(View v) {
-
+		redeemAdapter = new RedeemAdapter(Store.MyShopsList, inflaterActivity);
+		listView.setAdapter(redeemAdapter);
+		listView.setOnItemClickListener(new OnItemClickListener() {
+		      public void onItemClick(AdapterView<?> parent, View view,
+		          int position, long id) {
+		             Store.current_shop_id = redeemAdapter.getItem_id(position);
+		             Intent shopFriendActivity = new Intent(mActivity,ShopFriendActivity.class);
+		             startActivity(shopFriendActivity);
+		      }
+		    });
 	}
 
 	@Override
@@ -89,9 +104,6 @@ public class LoyaltyCardFragment extends CoreFragment {
 									Store.MyShopsList.add(shop);
 								}
 							}
-							
-							redeemAdapter = new RedeemAdapter(Store.MyShopsList, inflaterActivity);
-							listView.setAdapter(redeemAdapter);
 							redeemAdapter.notifyDataSetChanged();
 						} catch (JSONException e) {
 							e.printStackTrace();

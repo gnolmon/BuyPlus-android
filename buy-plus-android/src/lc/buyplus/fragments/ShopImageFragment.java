@@ -61,7 +61,7 @@ public class ShopImageFragment extends CoreFragment {
 		initAnimations();
 		inflaterActivity = inflater;
 		gridView = (GridView) view.findViewById(R.id.grid_view);
-		api_get_shop_announcement_images(ShopInfoActivity.current_shop_id,0,0);
+		api_get_shop_announcement_images(Store.current_shop_id,0,0);
 	
 		return view;
 	}

@@ -10,4 +10,15 @@ public class Store {
 	public static ArrayList<Shop> MyShopsList = new ArrayList<Shop>();
 	public static ArrayList<FacebookFriend> FacebookFriendsList = new ArrayList<FacebookFriend>();
 	public static UserAccount user;
+	
+	public static int limit = 6;
+
+	public static int current_shop_id; 
+	public static Shop get_current_shop(){
+		for (int i=0;i<ShopsList.size();i++){
+			if (ShopsList.get(i).getId() == current_shop_id) return ShopsList.get(i);
+		}
+		return null;
+	}
+	
 }
