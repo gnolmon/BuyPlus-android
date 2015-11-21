@@ -14,7 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -65,18 +65,21 @@ public class ShopInfoFragment   extends CoreFragment {
 		return view;
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.btnAgreeTerm:
 			if (isJoin){
 				api_leave_shop(Store.current_shop_id);
-				join_leave.setText("Tham gia");
+				join_leave.setText("Đã tham gia");
+				join_leave.setBackground(getResources().getDrawable(R.drawable.round_button_green));
 				isJoin = false;
 			}
 			else{
 				api_join_shop(Store.current_shop_id);
-				join_leave.setText("Roi di");
+				join_leave.setText("Tham gia");
+				join_leave.setBackground(getResources().getDrawable(R.drawable.round_button_gray));
 				isJoin = true;
 			}
 		break;
@@ -106,6 +109,7 @@ public class ShopInfoFragment   extends CoreFragment {
 
 	}
 
+	@SuppressLint("NewApi")
 	public void api_get_shop_info(int shop_id) {
 
 		Map<String, String> params = new HashMap<String, String>();
@@ -122,11 +126,13 @@ public class ShopInfoFragment   extends CoreFragment {
 
 							shop = new Shop(response.getJSONObject("data"));
 							if ((shop.current_customer_shop_id==null) || (shop.current_customer_shop_id=="")){
-								join_leave.setText("Tham gia");
+								join_leave.setText("Đã tham gia");
+								join_leave.setBackground(getResources().getDrawable(R.drawable.round_button_green));
 								isJoin = false;
 							}
 							else{
-								join_leave.setText("Roi di");
+								join_leave.setText("Tham gia");
+								join_leave.setBackground(getResources().getDrawable(R.drawable.round_button_gray));
 								isJoin = true;
 							}
 							
@@ -143,12 +149,15 @@ public class ShopInfoFragment   extends CoreFragment {
 							Log.d("sadsd", String.valueOf(shop.getFacebook_id()));
 							imbannerStore.setImageUrl(shop.getImage(), imageLoader);
 							
-							if (imbannerStore.getWidth() > 0) {
+							Bitmap image = BlurBuilder.blur(imbannerStore);
+							rlbanner.setBackground(new BitmapDrawable(getResources(), image));
+							
+							/*if (imbannerStore.getWidth() > 0) {
 								Bitmap image = BlurBuilder.blur(imbannerStore);
 								int sdk = android.os.Build.VERSION.SDK_INT;
 								if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
 								    //if you want take image from resources - getResources().getDrawable(your_id)
-									rlbanner.setBackgroundDrawable(new BitmapDrawable(getResources(), image));
+									rlbanner.setBackground(new BitmapDrawable(getResources(), image));
 
 								} else {
 									rlbanner.setBackground(new BitmapDrawable(getResources(), image));
@@ -163,14 +172,14 @@ public class ShopInfoFragment   extends CoreFragment {
 							            int sdk = android.os.Build.VERSION.SDK_INT;
 										if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
 										    //if you want take image from resources - getResources().getDrawable(your_id)
-											rlbanner.setBackgroundDrawable(new BitmapDrawable(getResources(), image));
+											rlbanner.setBackground(new BitmapDrawable(getResources(), image));
 
 										} else {
 											rlbanner.setBackground(new BitmapDrawable(getResources(), image));
 										}
 							        }
 							    });
-							}
+							}*/
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
