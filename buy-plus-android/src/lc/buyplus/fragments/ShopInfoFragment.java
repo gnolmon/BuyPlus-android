@@ -149,8 +149,9 @@ public class ShopInfoFragment   extends CoreFragment {
 							Log.d("sadsd", String.valueOf(shop.getFacebook_id()));
 							imbannerStore.setImageUrl(shop.getImage(), imageLoader);
 							
-							Bitmap image = BlurBuilder.blur(imbannerStore);
-							rlbanner.setBackground(new BitmapDrawable(getResources(), image));
+							BitmapDrawable drawable = (BitmapDrawable) imbannerStore.getDrawable();
+							Bitmap bmap = drawable.getBitmap();
+							rlbanner.setBackground(new BitmapDrawable(getResources(), bmap));
 							
 							/*if (imbannerStore.getWidth() > 0) {
 								Bitmap image = BlurBuilder.blur(imbannerStore);

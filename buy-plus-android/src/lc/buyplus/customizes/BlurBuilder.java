@@ -1,5 +1,6 @@
 package lc.buyplus.customizes;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -7,8 +8,6 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
-import android.view.View;
-import android.widget.LinearLayout;
 
 public class BlurBuilder {
 	private static final float BITMAP_SCALE = 0.4f;
@@ -18,6 +17,7 @@ public class BlurBuilder {
 		return blur(v.getContext(), getScreenshot(v));
 	}
 
+	@SuppressLint("NewApi")
 	public static Bitmap blur(Context ctx, Bitmap image) {
 		int width = Math.round(image.getWidth() * BITMAP_SCALE);
 		int height = Math.round(image.getHeight() * BITMAP_SCALE);

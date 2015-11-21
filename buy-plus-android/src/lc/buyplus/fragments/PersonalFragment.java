@@ -3,7 +3,7 @@ package lc.buyplus.fragments;
 import com.android.volley.toolbox.ImageLoader;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -55,6 +55,7 @@ public class PersonalFragment extends CoreFragment {
 
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void initViews(View v) {
 		WindowManager manager = (WindowManager) mActivity.getSystemService(Context.WINDOW_SERVICE);
@@ -74,18 +75,20 @@ public class PersonalFragment extends CoreFragment {
 
 		imAvaUser = (RoundedImageView) v.findViewById(R.id.imAvaUser);
 		imAvaUser.setImageUrl(CanvasFragment.mUser.getImageUrl(), imageLoader);
-		
+		imAvaUser.buildDrawingCache();
+		BitmapDrawable drawable = (BitmapDrawable) imAvaUser.getDrawable();
+		final Bitmap bmap = drawable.getBitmap();
 
 		rlBackground = (RelativeLayout) v.findViewById(R.id.rlBackground);
 		if (imAvaUser.getWidth() > 0) {
-			Bitmap image = BlurBuilder.blur(imAvaUser);
-			rlBackground.setBackground(new BitmapDrawable(getResources(), image));
+			Bitmap image = Bitmap.createScaledBitmap(bmap,150, 150, true);
+			rlBackground.setBackgroundDrawable(new BitmapDrawable(getResources(), image));
 		} else {
 			imAvaUser.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 		        @Override
 		        public void onGlobalLayout() {	
-		            Bitmap image = BlurBuilder.blur(imAvaUser);
-		            rlBackground.setBackground(new BitmapDrawable(getResources(), image));
+		        	Bitmap image = Bitmap.createScaledBitmap(bmap,150, 150, true);
+		            rlBackground.setBackgroundDrawable(new BitmapDrawable(getResources(), image));
 		        }
 		    });
 		}
