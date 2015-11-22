@@ -3,32 +3,15 @@ package lc.buyplus.fragments;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 
-import lc.buyplus.R;
-import lc.buyplus.cores.CoreActivity;
-import lc.buyplus.cores.CoreFragment;
-import lc.buyplus.cores.HandleRequest;
-import lc.buyplus.customizes.MyEditText;
-import lc.buyplus.customizes.MyTextView;
-import lc.buyplus.models.UserAccount;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,8 +19,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
+import lc.buyplus.R;
+import lc.buyplus.cores.CoreActivity;
+import lc.buyplus.cores.CoreFragment;
+import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.customizes.MyEditText;
+import lc.buyplus.customizes.MyTextView;
 
 public class RegisterFragment extends CoreFragment implements OnClickListener {
 
