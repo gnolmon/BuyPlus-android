@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import lc.buyplus.R;
@@ -34,7 +35,7 @@ import lc.buyplus.customizes.RoundedImageView;
 public class PersonalFragment extends CoreFragment {
 	Display display;
 
-	private RelativeLayout rlBackground;
+	private LinearLayout rlBackground;
 	private ImageView imEdit;
 	private RoundedImageView imAvaUser;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
@@ -78,10 +79,8 @@ public class PersonalFragment extends CoreFragment {
 		imAvaUser = (RoundedImageView) v.findViewById(R.id.imAvaUser);
 		imAvaUser.setImageUrl(CanvasFragment.mUser.getImageUrl(), imageLoader);
 		imAvaUser.buildDrawingCache();
-		rlBackground = (RelativeLayout) v.findViewById(R.id.rlBackground);
-		
+		rlBackground = (LinearLayout) v.findViewById(R.id.rlBackground);
 
-		
 		if (imAvaUser.getWidth() > 0) {
 			BitmapDrawable drawable = (BitmapDrawable) imAvaUser.getDrawable();
 			Bitmap bmap = drawable.getBitmap();
@@ -153,17 +152,18 @@ public class PersonalFragment extends CoreFragment {
 		// TODO Auto-generated method stub
 
 	}
+
 	@SuppressLint("NewApi")
 	private void blur(Bitmap bkg, View view) {
-	    long startMs = System.currentTimeMillis();
-	    float radius = 20;
+		long startMs = System.currentTimeMillis();
+		float radius = 20;
 
-	    Bitmap overlay = Bitmap.createBitmap((int) (view.getMeasuredWidth()),
-	            (int) (view.getMeasuredHeight()), Bitmap.Config.ARGB_8888);
-	    Canvas canvas = new Canvas(overlay);
-	    canvas.translate(-view.getLeft(), -view.getTop());
-	    canvas.drawBitmap(bkg, 0, 0, null);
-	    overlay = FastBlur.doBlur(overlay, (int)radius, true);
-	    view.setBackground(new BitmapDrawable(getResources(), overlay));
+		Bitmap overlay = Bitmap.createBitmap((int) (view.getMeasuredWidth()), (int) (view.getMeasuredHeight()),
+				Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(overlay);
+		canvas.translate(-view.getLeft(), -view.getTop());
+		canvas.drawBitmap(bkg, 0, 0, null);
+		overlay = FastBlur.doBlur(overlay, (int) radius, true);
+		view.setBackground(new BitmapDrawable(getResources(), overlay));
 	}
 }
