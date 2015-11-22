@@ -4,7 +4,7 @@
     <!-- BASE COLOR -->
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
-    <color name="title">#404040</color>
+    <color name="title">#474747</color>
     <color name="red">#FF0000</color>
     <color name="gray_dark">#808080</color>
     <color name="gray_light">#C0C0C0</color>
@@ -37,7 +37,7 @@
     <color name="maincolor_shadow">#00b169</color>
     <color name="like_comment">#B2B2B2</color>
     <color name="background_gray">#999999</color>
-    <color name="list_divider">#999999</color>
+    <color name="list_divider">#b5b5b5</color>
     <color name="divider_tab_bottom">#93e1c0</color>
     <color name="divider_top">#b5b5b5</color>
 

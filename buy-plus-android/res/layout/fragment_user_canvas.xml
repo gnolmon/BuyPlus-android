@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/canvas"
@@ -62,7 +62,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rhomeTab"
         android:layout_width="match_parent"
         android:layout_height="@dimen/hometab_height"
@@ -71,29 +71,13 @@
         android:background="@color/white"
         android:orientation="horizontal" >
 
-        <View
-            android:id="@+id/separator"
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerVertical="true"
-            android:background="@color/title" />
-
         <LinearLayout
             android:id="@+id/idInfo"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/zero"
             android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_title" >
-
-            <ImageView
-                android:id="@+id/imUserInfo"
-                android:layout_width="@dimen/icon_title"
-                android:layout_height="@dimen/icon_title"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/userinfo" />
+            android:orientation="horizontal" >
 
             <TextView
                 android:id="@+id/tvUserInfo"
@@ -105,20 +89,20 @@
                 android:textSize="15dp" />
         </LinearLayout>
 
+        <View
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_divide"
+            android:layout_marginTop="@dimen/margin_divide"
+            android:background="@color/divider_top" />
+
         <LinearLayout
             android:id="@+id/idContact"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/zero"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal" >
-
-            <ImageView
-                android:id="@+id/imUserContact"
-                android:layout_width="@dimen/icon_title"
-                android:layout_height="@dimen/icon_title"
-                android:layout_margin="5dp"
-                android:src="@drawable/usercontact" />
 
             <TextView
                 android:id="@+id/tvUserContact"
@@ -130,37 +114,20 @@
                 android:textSize="15dp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@id/idInfo"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_title" >
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_divide"
-                android:layout_marginTop="@dimen/margin_divide"
-                android:background="@color/title" />
-        </LinearLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_divide"
+            android:layout_marginTop="@dimen/margin_divide"
+            android:background="@color/divider_top" />
 
         <LinearLayout
             android:id="@+id/idSecure"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/zero"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
+            android:layout_weight="1"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingRight="@dimen/feed_item_padding_left_right" >
-
-            <ImageView
-                android:id="@+id/imUserSecure"
-                android:layout_width="@dimen/icon_title"
-                android:layout_height="@dimen/icon_title"
-                android:layout_margin="5dp"
-                android:src="@drawable/usersecure" />
+            android:orientation="horizontal" >
 
             <TextView
                 android:id="@+id/tvUserSecure"
@@ -171,30 +138,29 @@
                 android:textColor="@color/title"
                 android:textSize="15dp" />
         </LinearLayout>
+    </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@id/idContact"
-            android:layout_toLeftOf="@id/idSecure"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_title" >
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/viewpager"
+        android:layout_below="@id/rhomeTab"
+        android:background="@color/divider_top" />
 
-            <View
-                android:layout_width="1dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_divide"
-                android:layout_marginTop="@dimen/margin_divide"
-                android:background="@color/title" />
-        </LinearLayout>
-    </RelativeLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/lnTab"
+        android:layout_below="@id/rhomeTab"
+        android:layout_weight="1"
+        android:background="@color/white" >
+    </android.support.v4.view.ViewPager>
 
     <LinearLayout
-        android:id="@+id/lnTab"
         android:layout_width="match_parent"
         android:layout_height="@dimen/tabbar_height"
-        android:layout_alignParentBottom="true"
         android:background="@color/maincolor_light"
         android:orientation="horizontal" >
 
@@ -217,7 +183,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_divide"
             android:layout_marginTop="@dimen/margin_divide"
-            android:background="@color/white" />
+            android:background="@color/divider_tab_bottom" />
 
         <LinearLayout
             android:id="@+id/fragment_canvas_personal_tab"
@@ -238,7 +204,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_divide"
             android:layout_marginTop="@dimen/margin_divide"
-            android:background="@color/white" />
+            android:background="@color/divider_tab_bottom" />
 
         <LinearLayout
             android:id="@+id/fragment_canvas_loyaltycard_tab"
@@ -251,14 +217,15 @@
             <ImageView
                 android:layout_width="@dimen/icon_tab"
                 android:layout_height="@dimen/icon_tab"
-                android:src="@drawable/card_white" />
+                android:src="@drawable/ticket" />
         </LinearLayout>
-     	<View
+
+        <View
             android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_divide"
             android:layout_marginTop="@dimen/margin_divide"
-            android:background="@color/white" />
+            android:background="@color/divider_tab_bottom" />
 
         <LinearLayout
             android:id="@+id/fragment_canvas_notifications_tab"
@@ -279,7 +246,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_divide"
             android:layout_marginTop="@dimen/margin_divide"
-            android:background="@color/white" />
+            android:background="@color/divider_tab_bottom" />
 
         <LinearLayout
             android:id="@+id/fragment_canvas_setting_tab"
@@ -296,14 +263,4 @@
         </LinearLayout>
     </LinearLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/lnTab"
-        android:layout_below="@id/rhomeTab"
-        android:layout_weight="1"
-        android:background="@color/white" >
-    </android.support.v4.view.ViewPager>
-
-</RelativeLayout>
+</LinearLayout>

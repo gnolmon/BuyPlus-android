@@ -28,14 +28,14 @@ import lc.buyplus.models.UserAccount;
 public class UserCanvasFragment extends CoreFragment {
 
 	private static final long serialVersionUID = 1L;
-	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab,rHomeidInfo,rHomeidContact,rHomeidSecure, mNotiTab, mSettingTab;
-	private RelativeLayout rHomeTab;
+	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, rHomeidInfo, rHomeidContact, rHomeidSecure, mNotiTab,
+			mSettingTab;
+	private LinearLayout rHomeTab;
 	private LinearLayout mBack, mSortTab;
 	private LinearLayout mSearchBlock, mTitleBlock;
 	private LinearLayout mSearchBlockCancel;
 	private MyEditText mSearchEdittext;
-	private TextView tvPoint,tvUserInfo, tvUserContact, tvUserSecure;
-	private ImageView imUserInfo, imUserContact, imUserSecure;
+	private TextView tvPoint, tvUserInfo, tvUserContact, tvUserSecure;
 
 	private MyTextView mTitle;
 
@@ -102,7 +102,7 @@ public class UserCanvasFragment extends CoreFragment {
 			break;
 		case R.id.idSecure:
 			mPager.setCurrentItem(2);
-			break;	
+			break;
 		default:
 			break;
 		}
@@ -141,32 +141,24 @@ public class UserCanvasFragment extends CoreFragment {
 	public void changeTabState(boolean home, boolean personal, boolean loyaltycard) {
 		if (home) {
 			tvUserInfo.setTextColor(getResources().getColor(R.color.tab_selected));
-			imUserInfo.setImageResource(R.drawable.userinfo_green);
-			
+
 			tvUserContact.setTextColor(getResources().getColor(R.color.title));
-			imUserContact.setImageResource(R.drawable.usercontact);
-			
+
 		} else {
 			tvUserInfo.setTextColor(getResources().getColor(R.color.title));
-			imUserInfo.setImageResource(R.drawable.userinfo);
-			
+
 			tvUserContact.setTextColor(getResources().getColor(R.color.tab_selected));
-			imUserContact.setImageResource(R.drawable.usercontact_green);
 		}
 		if (personal) {
 			tvUserContact.setTextColor(getResources().getColor(R.color.tab_selected));
-			imUserContact.setImageResource(R.drawable.usercontact_green);
-			
+
 			tvUserSecure.setTextColor(getResources().getColor(R.color.title));
-			imUserSecure.setImageResource(R.drawable.usersecure);
 		}
 		if (loyaltycard) {
 			tvUserContact.setTextColor(getResources().getColor(R.color.title));
-			imUserContact.setImageResource(R.drawable.usercontact);
-			
+
 			tvUserSecure.setTextColor(getResources().getColor(R.color.tab_selected));
-			imUserSecure.setImageResource(R.drawable.usersecure_green);
-			
+
 		}
 	}
 
@@ -219,23 +211,18 @@ public class UserCanvasFragment extends CoreFragment {
 		mTitle.setText("User information");
 		mBack = (LinearLayout) v.findViewById(R.id.fragment_canvas_back);
 
-		rHomeTab = (RelativeLayout) v.findViewById(R.id.rhomeTab);
+		rHomeTab = (LinearLayout) v.findViewById(R.id.rhomeTab);
 		rHomeidInfo = (LinearLayout) v.findViewById(R.id.idInfo);
 
 		rHomeidContact = (LinearLayout) v.findViewById(R.id.idContact);
 		rHomeidSecure = (LinearLayout) v.findViewById(R.id.idSecure);
 		mTitleBlock = (LinearLayout) v.findViewById(R.id.fragment_canvas_title_block);
 		rHomeTab.setVisibility(View.VISIBLE);
-		
+
 		tvUserInfo = (TextView) v.findViewById(R.id.tvUserInfo);
 		tvUserContact = (TextView) v.findViewById(R.id.tvUserContact);
 		tvUserSecure = (TextView) v.findViewById(R.id.tvUserSecure);
-		
-		imUserInfo = (ImageView) v.findViewById(R.id.imUserInfo);
-		imUserContact = (ImageView) v.findViewById(R.id.imUserContact);
-		imUserSecure = (ImageView) v.findViewById(R.id.imUserSecure);
-		
-		
+
 	}
 
 	@Override

@@ -64,9 +64,9 @@
 
     <LinearLayout
         android:id="@+id/lnTab"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="@dimen/tabbar_height"
-        android:layout_alignParentBottom="true"
         android:background="@color/maincolor_light"
         android:orientation="horizontal" >
 
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_divide"
             android:layout_marginTop="@dimen/margin_divide"
-            android:background="@color/white" />
+            android:background="@color/divider_tab_bottom" />
 
         <LinearLayout
             android:id="@+id/fragment_canvas_personal_tab"
@@ -110,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_divide"
             android:layout_marginTop="@dimen/margin_divide"
-            android:background="@color/white" />
+            android:background="@color/divider_tab_bottom" />
 
         <LinearLayout
             android:id="@+id/fragment_canvas_loyaltycard_tab"
@@ -123,7 +123,7 @@
             <ImageView
                 android:layout_width="@dimen/icon_tab"
                 android:layout_height="@dimen/icon_tab"
-                android:src="@drawable/card_white" />
+                android:src="@drawable/ticket" />
         </LinearLayout>
 
         <View
@@ -131,7 +131,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_divide"
             android:layout_marginTop="@dimen/margin_divide"
-            android:background="@color/white" />
+            android:background="@color/divider_tab_bottom" />
 
         <LinearLayout
             android:id="@+id/fragment_canvas_notifications_tab"
@@ -152,7 +152,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_divide"
             android:layout_marginTop="@dimen/margin_divide"
-            android:background="@color/white" />
+            android:background="@color/divider_tab_bottom" />
 
         <LinearLayout
             android:id="@+id/fragment_canvas_setting_tab"

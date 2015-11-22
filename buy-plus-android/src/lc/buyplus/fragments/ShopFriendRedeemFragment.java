@@ -31,7 +31,7 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 
 	private static final long serialVersionUID = 1L;
 	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab;
-	private RelativeLayout rHomeTab;
+	private LinearLayout rHomeTab;
 	private LinearLayout mBack, mSortTab;
 	private LinearLayout mSearchBlock, mTitleBlock;
 	private LinearLayout mSearchBlockCancel;
@@ -218,7 +218,7 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 		mTitle = (MyTextView) v.findViewById(R.id.fragment_canvas_title);
 		mBack = (LinearLayout) v.findViewById(R.id.fragment_canvas_back);
 		mTitle.setText(Store.get_current_shop().getName());
-		rHomeTab = (RelativeLayout) v.findViewById(R.id.rhomeTab);
+		rHomeTab = (LinearLayout) v.findViewById(R.id.rhomeTab);
 		rHomeTab.setVisibility(View.VISIBLE);
 		rHgiftlist = (TextView) v.findViewById(R.id.idgiftlist);
 		rHgiftlist.setTextColor(getResources().getColor(R.color.tab_selected));
