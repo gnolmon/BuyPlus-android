@@ -73,7 +73,7 @@ public abstract class CoreActivity extends FragmentActivity implements Serializa
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 //        setStatusBarColor(findViewById(R.id.statusBarBackground),getResources().getColor(R.color.actionbar));
 	}
 	public int getActionBarHeight() {
