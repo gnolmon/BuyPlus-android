@@ -178,7 +178,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_divide"
                 android:layout_marginTop="@dimen/margin_divide"
-                android:background="@color/white" />
+                android:background="@color/divider_tab_bottom" />
 
             <LinearLayout
                 android:id="@+id/fragment_canvas_personal_tab"
@@ -199,7 +199,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_divide"
                 android:layout_marginTop="@dimen/margin_divide"
-                android:background="@color/white" />
+                android:background="@color/divider_tab_bottom" />
 
             <LinearLayout
                 android:id="@+id/fragment_canvas_loyaltycard_tab"
@@ -220,7 +220,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_divide"
                 android:layout_marginTop="@dimen/margin_divide"
-                android:background="@color/white" />
+                android:background="@color/divider_tab_bottom" />
 
             <LinearLayout
                 android:id="@+id/fragment_canvas_notifications_tab"
@@ -241,7 +241,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_divide"
                 android:layout_marginTop="@dimen/margin_divide"
-                android:background="@color/white" />
+                android:background="@color/divider_tab_bottom" />
 
             <LinearLayout
                 android:id="@+id/fragment_canvas_setting_tab"
