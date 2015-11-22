@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -51,7 +52,7 @@ public class ShopInfoFragment   extends CoreFragment {
 	private Button join_leave;
 	private boolean isJoin;
 	Shop shop;
-	private RelativeLayout rlbanner;
+	private LinearLayout rlbanner;
 	private RoundedImageView imbannerStore;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
 
@@ -96,7 +97,7 @@ public class ShopInfoFragment   extends CoreFragment {
 		join_leave= (Button) v.findViewById(R.id.btnAgreeTerm);
 		join_leave.setOnClickListener(this);	
 		imbannerStore = (RoundedImageView) v.findViewById(R.id.imbannerStore);
-		rlbanner = (RelativeLayout) v.findViewById(R.id.rlbanner);
+		rlbanner = (LinearLayout) v.findViewById(R.id.rlbanner);
 		tvName = (TextView) v.findViewById(R.id.tvName);
 		tvField = (TextView) v.findViewById(R.id.tvField);
 		tvPhone = (TextView) v.findViewById(R.id.tvPhone);

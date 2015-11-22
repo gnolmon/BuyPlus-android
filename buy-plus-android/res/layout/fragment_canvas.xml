@@ -181,22 +181,12 @@
                 android:text="Sắp xếp"
                 android:textColor="@color/title"
                 android:textSize="15dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toLeftOf="@id/idSort"
-            android:layout_toRightOf="@id/idNews"
-            android:gravity="center"
-            android:orientation="horizontal" >
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_divide"
-                android:layout_marginTop="@dimen/margin_divide"
-                android:background="@color/title" />
+            <ImageView
+                android:id="@+id/imSortDialog"
+                android:layout_width="@dimen/icon_title"
+                android:layout_height="@dimen/icon_title"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/down_gray" />
         </LinearLayout>
     </LinearLayout>
 
