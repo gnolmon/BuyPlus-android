@@ -22,7 +22,6 @@ import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.customizes.DialogNews;
 import lc.buyplus.customizes.DialogSort;
-import lc.buyplus.customizes.LanguageDialog;
 import lc.buyplus.customizes.MyAnimations;
 import lc.buyplus.customizes.MyEditText;
 import lc.buyplus.customizes.MyTextView;
