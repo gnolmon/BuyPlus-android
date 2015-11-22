@@ -30,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="120dp"
+                android:background="#00000000"
                 android:inputType="textPassword"
                 android:textColor="@color/title"
                 android:textSize="@dimen/title_pass" />
@@ -39,40 +40,8 @@
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="@dimen/margin_divide"
-            android:layout_marginTop="@dimen/margin_divide"
-            android:background="@color/white" />
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="Mật khẩu mới"
-                
-                android:textColor="@color/black"
-                android:textSize="@dimen/title_pass" />
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="120dp"
-                android:inputType="textPassword"
-                android:textColor="@color/title"
-                android:textSize="@dimen/title_pass" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/margin_divide"
-            android:layout_marginTop="@dimen/margin_divide"
-            android:background="@color/white" />
+            android:layout_marginLeft="120dp"
+            android:background="@color/divider_top" />
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -93,13 +62,51 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="120dp"
+                android:background="#00000000"
                 android:inputType="textPassword"
                 android:textColor="@color/title"
                 android:textSize="@dimen/title_pass" />
         </RelativeLayout>
-    </LinearLayout>
 
-    <RelativeLayout
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="@dimen/margin_divide"
+            android:layout_marginLeft="120dp"
+            android:background="@color/divider_top" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Mật khẩu mới"
+                android:textColor="@color/black"
+                android:textSize="@dimen/title_pass" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="120dp"
+                android:background="#00000000"
+                android:inputType="textPassword"
+                android:textColor="@color/title"
+                android:textSize="@dimen/title_pass" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="120dp"
+            android:background="@color/divider_top" />
+
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_alignParentRight="true"
@@ -117,10 +124,10 @@
                     android:id="@+id/btnAgreeTerm"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/round_button_green"
-                    android:text="Lưu"
                     android:layout_marginLeft="@dimen/padding_standard"
                     android:layout_marginRight="@dimen/padding_standard"
+                    android:background="@drawable/round_button_green"
+                    android:text="Lưu"
                     android:textColor="@color/white" />
 
                 <Button
@@ -128,12 +135,13 @@
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:background="@drawable/rounded_button_red"
                     android:layout_marginLeft="@dimen/padding_standard"
                     android:layout_marginRight="@dimen/padding_standard"
+                    android:background="@drawable/rounded_button_red"
                     android:text="Hủy"
                     android:textColor="@color/white" />
             </LinearLayout>
         </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>

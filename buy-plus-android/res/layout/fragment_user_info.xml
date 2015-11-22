@@ -16,20 +16,22 @@
             android:id="@+id/imFriend"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginRight="8dp" 
-            android:src="@drawable/loading_icon"/>
+            android:layout_marginRight="8dp"
+            android:src="@drawable/loading_icon" />
 
         <RelativeLayout
             android:id="@+id/relativeLayout1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/imFriend"
+            android:layout_toRightOf="@id/imFriend"
             android:orientation="vertical" >
 
             <EditText
                 android:id="@+id/edUser"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:background="#00000000"
+                android:singleLine="true"
                 android:text="Thanh Mai"
                 android:textColor="@color/black"
                 android:textSize="15dp" />
@@ -39,12 +41,12 @@
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
                 android:layout_below="@id/edUser"
-                android:background="@color/white" />
+                android:background="@color/divider_top" />
 
             <CheckBox
                 android:id="@+id/cbMale"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_below="@+id/diverName"
                 android:text="Nam"
                 android:textColor="@color/title" />
@@ -52,10 +54,10 @@
             <CheckBox
                 android:id="@+id/cbFemale"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_below="@+id/diverName"
                 android:layout_marginLeft="20dp"
-                android:layout_toEndOf="@id/cbMale"
+                android:layout_toRightOf="@id/cbMale"
                 android:text="Nữ"
                 android:textColor="@color/title" />
 
@@ -64,14 +66,16 @@
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
                 android:layout_below="@id/cbMale"
-                android:background="@color/title" />
+                android:background="@color/divider_top" />
 
             <EditText
                 android:id="@+id/edBirthday"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_below="@id/devideSex"
+                android:background="#00000000"
                 android:inputType="date"
+                android:singleLine="true"
                 android:text="07/01/1994"
                 android:textColor="@color/black"
                 android:textSize="15dp" />
@@ -81,23 +85,30 @@
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
                 android:layout_below="@id/edBirthday"
-                android:background="@color/white" />
+                android:background="@color/divider_top" />
 
             <EditText
                 android:id="@+id/edAddress"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_below="@id/devideBirthday"
+                android:background="#00000000"
+                android:singleLine="true"
                 android:text="Hà Nội"
                 android:textColor="@color/black"
                 android:textSize="15dp" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/edBirthday"
+                android:background="@color/divider_top" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_below="@id/relativeLayout1"
             android:orientation="vertical"
             android:padding="@dimen/padding_standard" >
 
@@ -111,10 +122,10 @@
                     android:id="@+id/btnAgreeTerm"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/round_button_green"
-                    android:text="Lưu"
                     android:layout_marginLeft="@dimen/padding_standard"
                     android:layout_marginRight="@dimen/padding_standard"
+                    android:background="@drawable/round_button_green"
+                    android:text="Lưu"
                     android:textColor="@color/white" />
 
                 <Button
@@ -122,9 +133,9 @@
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:background="@drawable/rounded_button_red"
                     android:layout_marginLeft="@dimen/padding_standard"
                     android:layout_marginRight="@dimen/padding_standard"
+                    android:background="@drawable/rounded_button_red"
                     android:text="Hủy"
                     android:textColor="@color/white" />
             </LinearLayout>

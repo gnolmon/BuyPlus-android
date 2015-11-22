@@ -1,224 +1,238 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.lc.buyplus.tab.HomeActivity" >
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rlbanner"
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:background="@color/white"
         android:orientation="vertical" >
 
-        <lc.buyplus.customizes.RoundedImageView
-            android:id="@+id/imbannerStore"
-            android:layout_width="@dimen/person_ava_width"
-            android:layout_height="@dimen/person_ava_width"
-            android:layout_margin="@dimen/padding_standard"
-            android:layout_centerHorizontal="true"
-            android:scaleType="fitXY" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+            <Button
+                android:id="@+id/btnAgreeTerm"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_margin="@dimen/padding_standard"
+                android:background="@drawable/round_button_green"
+                android:text="Đã tham gia"
+                android:textSize="20dp"
+                android:textColor="@color/white" >
+            </Button>
 
-        <Button
-            android:id="@+id/btnAgreeTerm"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_margin="@dimen/padding_standard"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/round_button_green"
-            android:text="Đã tham gia"
-            android:textColor="@color/white" >
-        </Button>
+            <lc.buyplus.customizes.RoundedImageView
+                android:id="@+id/imbannerStore"
+                android:layout_below="@id/btnAgreeTerm"
+                android:layout_width="@dimen/person_ava_width"
+                android:layout_height="@dimen/person_ava_width"
+                android:layout_centerHorizontal="true"
+                android:scaleType="fitXY" />
 
-        <TextView
-            android:id="@+id/storeName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/imbannerStore"
-            android:layout_centerHorizontal="true"
-            android:padding="@dimen/padding_standard"
-            android:text="Cửa hàng"
-            android:textColor="@color/white"
-            android:textSize="20dp" />
+            <TextView
+                android:id="@+id/storeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imbannerStore"
+                android:layout_centerHorizontal="true"
+                android:padding="@dimen/padding_standard"
+                android:text="Cửa hàng"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:background="@color/divider_top" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/zero"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/location_black" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/padding_shopinfo"
+                android:hint="91 Chùa Láng, Đống Đa, Hà Nội "
+                android:textColor="@color/white"
+                android:textSize="15dp" />
+        </LinearLayout>
 
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:layout_alignParentBottom="true"
             android:layout_centerVertical="true"
-            android:background="@color/title" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@id/rlbanner"
-        android:layout_marginBottom="@dimen/padding_standard"
-        android:background="@color/white" >
+            android:layout_marginLeft="60dp"
+            android:background="@color/divider_top" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="#ecebeb"
-            android:orientation="vertical" >
+            android:layout_height="@dimen/zero"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/white"
-                android:orientation="vertical" >
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/fashion" />
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:src="@drawable/location_black" />
-
-                <TextView
-                    android:id="@+id/tvName"
-                    android:layout_width="210dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:hint="91 Chùa Láng, Đống Đa, Hà Nội "
-                    android:textColor="@color/white"
-                    android:textSize="15dp" />
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="60dp"
-                    android:background="@color/title" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/white"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:src="@drawable/fashion" />
-
-                <TextView
-                    android:id="@+id/tvField"
-                    android:layout_width="210dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:hint="thời trang nam"
-                    android:textColor="@color/white"
-                    android:textSize="15dp" />
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="60dp"
-                    android:background="@color/title" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/white"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:src="@drawable/phonestore" />
-
-                <TextView
-                    android:id="@+id/tvPhone"
-                    android:layout_width="210dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:hint="0906 8888 8888"
-                    android:textColor="@color/white"
-                    android:textSize="15dp" />
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="60dp"
-                    android:background="@color/title" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/white"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:src="@drawable/website" />
-
-                <TextView
-                    android:id="@+id/tvWeb"
-                    android:layout_width="210dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:hint="www.jacklane.com.vn"
-                    android:textColor="@color/white"
-                    android:textSize="15dp" />
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="60dp"
-                    android:background="@color/title" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/white"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:src="@drawable/facebook" />
-
-                <TextView
-                    android:id="@+id/tvFb"
-                    android:layout_width="210dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:hint="fb.com/jacklane"
-                    android:textColor="@color/white"
-                    android:textSize="15dp" />
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="60dp"
-                    android:background="@color/title" />
-            </RelativeLayout>
+            <TextView
+                android:id="@+id/tvField"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/padding_shopinfo"
+                android:hint="thời trang nam"
+                android:textColor="@color/white"
+                android:textSize="15dp" />
         </LinearLayout>
-    </RelativeLayout>
 
-</RelativeLayout>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="60dp"
+            android:background="@color/divider_top" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/phonestore" />
+
+            <TextView
+                android:id="@+id/tvPhone"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/padding_shopinfo"
+                android:hint="0906 8888 8888"
+                android:textColor="@color/white"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="60dp"
+            android:background="@color/divider_top" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/website" />
+
+            <TextView
+                android:id="@+id/tvWeb"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/padding_shopinfo"
+                android:hint="www.jacklane.com.vn"
+                android:textColor="@color/white"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="60dp"
+            android:background="@color/divider_top" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/facebook" />
+
+            <TextView
+                android:id="@+id/tvFb"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/padding_shopinfo"
+                android:hint="fb.com/jacklane"
+                android:textColor="@color/white"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="60dp"
+            android:background="@color/divider_top" />
+    </LinearLayout>
+
+</LinearLayout>

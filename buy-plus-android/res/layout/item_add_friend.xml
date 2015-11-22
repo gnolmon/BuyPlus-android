@@ -19,7 +19,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/imFriend"
+            android:layout_toRightOf="@id/imFriend"
             android:orientation="vertical" >
 
             <TextView
@@ -29,14 +29,13 @@
                 android:layout_centerVertical="true"
                 android:text="Thanh Mai"
                 android:textColor="@color/black"
-                android:textSize="30px" />
+                android:textSize="20px" />
 
             <TextView
                 android:id="@+id/tvFriendId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvFriendName"
-                android:layout_toEndOf="@id/imFriend"
                 android:text="ID : 12345"
                 android:textColor="@color/timestamp"
                 android:textSize="@dimen/timestamp" />

@@ -3,7 +3,7 @@
     <dimen name="canvas_title_text_size">18dp</dimen>
     <dimen name="actionbar_height">50dp</dimen>
     <dimen name="hometab_height">30dp</dimen>
-    <dimen name="tabbar_height">40dp</dimen>
+    <dimen name="tabbar_height">50dp</dimen>
     <dimen name="zero">0dp</dimen>
     <dimen name="tab_item_width">50dp</dimen>
     <dimen name="action_bar_icon_width">28dp</dimen>
@@ -41,6 +41,7 @@
     <dimen name="margin_divide">4dp</dimen>
     <dimen name="margin_title">10dp</dimen>
     <dimen name="padding_standard">10dp</dimen>
+    <dimen name="padding_shopinfo">20dp</dimen>
     <dimen name="padding_login">50dp</dimen>
     <dimen name="rounded">5dp</dimen>
     <dimen name="size_edit">15dp</dimen>
