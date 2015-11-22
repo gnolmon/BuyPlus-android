@@ -150,17 +150,16 @@ public class ShopInfoFragment   extends CoreFragment {
 							imbannerStore.setImageUrl(shop.getImage(), imageLoader);
 							
 							BitmapDrawable drawable = (BitmapDrawable) imbannerStore.getDrawable();
-							Bitmap bmap = drawable.getBitmap();
-							rlbanner.setBackground(new BitmapDrawable(getResources(), bmap));
+							final Bitmap bmap = drawable.getBitmap();
 							
-							/*if (imbannerStore.getWidth() > 0) {
-								Bitmap image = BlurBuilder.blur(imbannerStore);
+							/*if (imbannerStore.getWidth() > 0) {	
 								int sdk = android.os.Build.VERSION.SDK_INT;
 								if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
 								    //if you want take image from resources - getResources().getDrawable(your_id)
+									Bitmap image = Bitmap.createScaledBitmap(bmap,150, 150, true);
 									rlbanner.setBackground(new BitmapDrawable(getResources(), image));
-
 								} else {
+									Bitmap image = BlurBuilder.blur(imbannerStore);
 									rlbanner.setBackground(new BitmapDrawable(getResources(), image));
 								}
 								
@@ -168,14 +167,13 @@ public class ShopInfoFragment   extends CoreFragment {
 								imbannerStore.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 							        @Override
 							        public void onGlobalLayout() {	
-							            Bitmap image = BlurBuilder.blur(imbannerStore);
-							            
 							            int sdk = android.os.Build.VERSION.SDK_INT;
 										if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
 										    //if you want take image from resources - getResources().getDrawable(your_id)
+											Bitmap image = Bitmap.createScaledBitmap(bmap,150, 150, true);
 											rlbanner.setBackground(new BitmapDrawable(getResources(), image));
-
 										} else {
+											Bitmap image = BlurBuilder.blur(imbannerStore);
 											rlbanner.setBackground(new BitmapDrawable(getResources(), image));
 										}
 							        }

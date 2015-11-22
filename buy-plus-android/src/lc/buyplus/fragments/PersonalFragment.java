@@ -3,10 +3,12 @@ package lc.buyplus.fragments;
 import com.android.volley.toolbox.ImageLoader;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -26,7 +28,7 @@ import lc.buyplus.activities.UserActivity;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
-import lc.buyplus.customizes.BlurBuilder;
+import lc.buyplus.customizes.FastBlur;
 import lc.buyplus.customizes.RoundedImageView;
 
 public class PersonalFragment extends CoreFragment {
@@ -76,23 +78,25 @@ public class PersonalFragment extends CoreFragment {
 		imAvaUser = (RoundedImageView) v.findViewById(R.id.imAvaUser);
 		imAvaUser.setImageUrl(CanvasFragment.mUser.getImageUrl(), imageLoader);
 		imAvaUser.buildDrawingCache();
-		BitmapDrawable drawable = (BitmapDrawable) imAvaUser.getDrawable();
-		final Bitmap bmap = drawable.getBitmap();
-
 		rlBackground = (RelativeLayout) v.findViewById(R.id.rlBackground);
+		
+
+		
 		if (imAvaUser.getWidth() > 0) {
-			Bitmap image = Bitmap.createScaledBitmap(bmap,150, 150, true);
-			rlBackground.setBackgroundDrawable(new BitmapDrawable(getResources(), image));
+			BitmapDrawable drawable = (BitmapDrawable) imAvaUser.getDrawable();
+			Bitmap bmap = drawable.getBitmap();
+			blur(bmap, rlBackground);
 		} else {
 			imAvaUser.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-		        @Override
-		        public void onGlobalLayout() {	
-		        	Bitmap image = Bitmap.createScaledBitmap(bmap,150, 150, true);
-		            rlBackground.setBackgroundDrawable(new BitmapDrawable(getResources(), image));
-		        }
-		    });
+				@Override
+				public void onGlobalLayout() {
+					BitmapDrawable drawable = (BitmapDrawable) imAvaUser.getDrawable();
+					Bitmap bmap = drawable.getBitmap();
+					blur(bmap, rlBackground);
+				}
+			});
 		}
-		
+
 		TextView user_id_txt = (TextView) v.findViewById(R.id.user_id);
 		user_id_txt.setText("Mã số cá nhân: " + CanvasFragment.mUser.getId());
 		String qrInputText = user_id_txt.toString();
@@ -148,5 +152,18 @@ public class PersonalFragment extends CoreFragment {
 	protected void initListener() {
 		// TODO Auto-generated method stub
 
+	}
+	@SuppressLint("NewApi")
+	private void blur(Bitmap bkg, View view) {
+	    long startMs = System.currentTimeMillis();
+	    float radius = 20;
+
+	    Bitmap overlay = Bitmap.createBitmap((int) (view.getMeasuredWidth()),
+	            (int) (view.getMeasuredHeight()), Bitmap.Config.ARGB_8888);
+	    Canvas canvas = new Canvas(overlay);
+	    canvas.translate(-view.getLeft(), -view.getTop());
+	    canvas.drawBitmap(bkg, 0, 0, null);
+	    overlay = FastBlur.doBlur(overlay, (int)radius, true);
+	    view.setBackground(new BitmapDrawable(getResources(), overlay));
 	}
 }
