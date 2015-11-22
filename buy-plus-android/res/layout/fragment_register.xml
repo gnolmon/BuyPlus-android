@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/rlPassRegister"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/edit_height"
         android:layout_centerInParent="true"
         android:layout_marginLeft="@dimen/padding_login"
         android:layout_marginRight="@dimen/padding_login"
@@ -21,16 +21,17 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/edit_padding"
             android:background="#00000000"
             android:hint="Nhập mật khẩu"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="20dp" />
+            android:textSize="@dimen/size_edit" />
 
         <ImageView
             android:id="@+id/imPassRegister"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/icon_small"
+            android:layout_height="@dimen/icon_small"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/pass_white" />
@@ -38,7 +39,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/edit_height"
         android:layout_above="@id/rlPassRegister"
         android:layout_marginLeft="@dimen/padding_login"
         android:layout_marginRight="@dimen/padding_login"
@@ -47,8 +48,8 @@
 
         <ImageView
             android:id="@+id/imNameRegister"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/icon_small"
+            android:layout_height="@dimen/icon_small"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/personal_white" />
@@ -60,16 +61,17 @@
             android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/edit_padding"
             android:background="#00000000"
+            android:singleLine="true"
             android:hint="Tên đăng nhập"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="20dp" />
+            android:textSize="@dimen/size_edit" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rlcfPass"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/edit_height"
         android:layout_below="@id/rlPassRegister"
         android:layout_marginLeft="@dimen/padding_login"
         android:layout_marginRight="@dimen/padding_login"
@@ -79,8 +81,8 @@
 
         <ImageView
             android:id="@+id/imcfPass"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/icon_small"
+            android:layout_height="@dimen/icon_small"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/pass_white" />
@@ -93,15 +95,16 @@
             android:layout_marginLeft="@dimen/edit_padding"
             android:background="#00000000"
             android:hint="Nhập lại mật khẩu"
+            android:singleLine="true"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="20dp" />
+            android:textSize="@dimen/size_edit" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rlEmail"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/edit_height"
         android:layout_below="@id/rlcfPass"
         android:layout_marginLeft="@dimen/padding_login"
         android:layout_marginRight="@dimen/padding_login"
@@ -111,8 +114,8 @@
 
         <ImageView
             android:id="@+id/imEmail"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/icon_small"
+            android:layout_height="@dimen/icon_small"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/email" />
@@ -126,8 +129,9 @@
             android:background="#00000000"
             android:hint="Nhập địa chỉ mail"
             android:textColor="@color/white"
+            android:singleLine="true"
             android:textColorHint="@color/white"
-            android:textSize="20dp" />
+            android:textSize="@dimen/size_edit" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -146,7 +150,7 @@
             android:layout_height="40dp"
             android:layout_centerInParent="true"
             android:background="@drawable/button_background"
-            android:text="Đăng ký"
+            android:text="ĐĂNG KÝ"
             android:textColor="@color/white"
             android:textSize="20dp" />
     </RelativeLayout>

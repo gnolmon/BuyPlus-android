@@ -25,9 +25,10 @@
             android:background="#00000000"
             android:hint="Nhập mật khẩu"
             android:password="true"
+            android:singleLine="true"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="20dp" />
+            android:textSize="@dimen/size_edit" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -48,9 +49,10 @@
             android:layout_marginLeft="@dimen/edit_padding"
             android:background="#00000000"
             android:hint="Nhập tên đăng nhập"
+            android:singleLine="true"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="20dp" />
+            android:textSize="@dimen/size_edit" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -68,9 +70,9 @@
             android:layout_height="35dp"
             android:layout_centerInParent="true"
             android:background="@drawable/button_background"
-            android:text="Đăng nhập"
+            android:text="ĐĂNG NHẬP"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="@dimen/size_edit" />
     </RelativeLayout>
 
     <RelativeLayout

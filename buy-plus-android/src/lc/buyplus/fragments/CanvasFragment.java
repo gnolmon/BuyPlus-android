@@ -32,14 +32,14 @@ public class CanvasFragment extends CoreFragment {
 	private static final long serialVersionUID = 1L;
 	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab, rHidAnnouce, rHidNews,
 			rHidSort;
-	private RelativeLayout rHomeTab;
+	private LinearLayout rHomeTab;
 	private LinearLayout mSearchTab, mSortTab;
 	private LinearLayout mSearchBlock, mTitleBlock, idSort;
 	private LinearLayout mSearchBlockCancel;
 	private MyEditText mSearchEdittext;
 	private CallbackManager callbackManager;
 	private TextView tvStore, tvNews;
-	private ImageView imStore, imNews, imNewsDialog;
+	private ImageView imNewsDialog;
 
 	private MyTextView mTitle;
 
@@ -168,10 +168,8 @@ public class CanvasFragment extends CoreFragment {
 			mTitle.setText(getResources().getString(R.string.canvas_title_home));
 
 			tvStore.setTextColor(getResources().getColor(R.color.tab_selected));
-			imStore.setImageResource(R.drawable.store_green);
 
 			tvNews.setTextColor(getResources().getColor(R.color.title));
-			imNews.setImageResource(R.drawable.news);
 			imNewsDialog.setImageResource(R.drawable.down_gray);
 			;
 		} else if (homenews) {
@@ -181,10 +179,8 @@ public class CanvasFragment extends CoreFragment {
 			mTitle.setText(getResources().getString(R.string.canvas_title_home));
 
 			tvNews.setTextColor(getResources().getColor(R.color.tab_selected));
-			imNews.setImageResource(R.drawable.news_green);
 
 			tvStore.setTextColor(getResources().getColor(R.color.title));
-			imStore.setImageResource(R.drawable.store);
 			imNewsDialog.setImageResource(R.drawable.down_green);
 		} else {
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
@@ -279,7 +275,7 @@ public class CanvasFragment extends CoreFragment {
 		mTitleBlock = (LinearLayout) v.findViewById(R.id.fragment_canvas_title_block);
 		mSearchBlockCancel = (LinearLayout) v.findViewById(R.id.fragnemt_canvas_search_cancel);
 		mSearchEdittext = (MyEditText) v.findViewById(R.id.fragment_canvas_search_edittext);
-		rHomeTab = (RelativeLayout) v.findViewById(R.id.rhomeTab);
+		rHomeTab = (LinearLayout) v.findViewById(R.id.rhomeTab);
 		rHomeTab.setVisibility(View.VISIBLE);
 		rHidAnnouce = (LinearLayout) v.findViewById(R.id.idAnnouce);
 		
@@ -291,9 +287,7 @@ public class CanvasFragment extends CoreFragment {
 		tvNews = (TextView) v.findViewById(R.id.tvNews);
 		tvStore = (TextView) v.findViewById(R.id.tvStore);
 
-		imNews = (ImageView) v.findViewById(R.id.imNews);
 		imNewsDialog = (ImageView) v.findViewById(R.id.imNewsDialog);
-		imStore = (ImageView) v.findViewById(R.id.imStore);
 	}
 
 	@Override
