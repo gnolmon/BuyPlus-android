@@ -22,7 +22,7 @@ public class RedeemAdapter extends BaseAdapter {
 	private LayoutInflater inflaterActivity;
 	List<Shop> giftItems;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
-
+	private OnLoadMoreListener onLoadMoreListener;
 	public RedeemAdapter(ArrayList<Shop> giftItems, LayoutInflater inflaterActivity) {
 		this.inflaterActivity = inflaterActivity;
 		this.giftItems = giftItems;
@@ -32,7 +32,14 @@ public class RedeemAdapter extends BaseAdapter {
 	public int getCount() {
 		return giftItems.size();
 	}
+	
+	public OnLoadMoreListener getOnLoadMoreListener() {
+		return onLoadMoreListener;
+	}
 
+	public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+		this.onLoadMoreListener = onLoadMoreListener;
+	}
 	@Override
 	public Object getItem(int position) {
 		return giftItems.get(position);

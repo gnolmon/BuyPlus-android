@@ -23,7 +23,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import lc.buyplus.R;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.OnLoadMoreListener;
@@ -31,15 +30,8 @@ import lc.buyplus.adapter.StoreAdapter;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
-import lc.buyplus.models.Announcement;
-import lc.buyplus.models.FacebookFriend;
-import lc.buyplus.models.Friend;
-import lc.buyplus.models.Gift;
-import lc.buyplus.models.Notification;
-import lc.buyplus.models.Photo;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
-import lc.buyplus.models.UserAccount;
 import lc.buyplus.pulltorefresh.PullToRefreshListView;
 import lc.buyplus.pulltorefresh.PullToRefreshListView.OnRefreshListener;
 import android.widget.AdapterView.OnItemClickListener;
@@ -79,10 +71,9 @@ public class HomeFragment extends CoreFragment {
 	protected void initViews(View v) {
 		isLoadMore = false;
 		isLoading = false;
-		api_get_all_shop(0,Store.limit,"");
 		storeAdapter = new StoreAdapter(Store.ShopsList, inflaterActivity);
 		listView.setAdapter(storeAdapter);
-		
+		api_get_all_shop(0,Store.limit,"");
 		listView.setOnItemClickListener(new OnItemClickListener() {
 		      public void onItemClick(AdapterView<?> parent, View view,
 		          int position, long id) {

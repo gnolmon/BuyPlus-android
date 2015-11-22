@@ -20,7 +20,8 @@ public class ShopGiftAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	List<Gift> giftList;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
-
+	private OnLoadMoreListener onLoadMoreListener;
+	
 	public ShopGiftAdapter( List<Gift> giftList,LayoutInflater inflaterActivity) {
 		this.inflaterActivity = inflaterActivity;
 		this.giftList = giftList;
@@ -30,6 +31,14 @@ public class ShopGiftAdapter extends BaseAdapter {
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return giftList.size();
+	}
+	
+	public OnLoadMoreListener getOnLoadMoreListener() {
+		return onLoadMoreListener;
+	}
+
+	public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+		this.onLoadMoreListener = onLoadMoreListener;
 	}
 
 	@Override

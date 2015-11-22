@@ -36,7 +36,8 @@ public class ShopFriendAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	List<Friend> friendList;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
-
+	private OnLoadMoreListener onLoadMoreListener;
+	
 	public ShopFriendAdapter( List<Friend> friendList,LayoutInflater inflaterActivity) {
 		this.inflaterActivity = inflaterActivity;
 		this.friendList = friendList;
@@ -47,7 +48,15 @@ public class ShopFriendAdapter extends BaseAdapter {
 		// TODO Auto-generated method stub
 		return friendList.size();
 	}
+	
+	public OnLoadMoreListener getOnLoadMoreListener() {
+		return onLoadMoreListener;
+	}
 
+	public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+		this.onLoadMoreListener = onLoadMoreListener;
+	}
+	
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub

@@ -10,7 +10,7 @@
         android:layout_height="fill_parent"
         android:background="#ecebeb" >
 
-        <ListView
+        <lc.buyplus.pulltorefresh.PullToRefreshListView
             android:id="@+id/listShopRedeem"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

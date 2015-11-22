@@ -161,6 +161,7 @@ public class HomeAnnounmentFragment extends CoreFragment {
 								Store.AnnouncementsList.add(announcement);
 							}
 							newsAdapter.notifyDataSetChanged();
+							isLoading = false;
 						} catch (JSONException e) {
 
 							e.printStackTrace();

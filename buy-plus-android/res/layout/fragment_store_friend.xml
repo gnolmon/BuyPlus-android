@@ -42,7 +42,7 @@
                 android:layout_marginRight="@dimen/feed_item_profile_info_padd" />
         </RelativeLayout>
 
-        <ListView
+        <lc.buyplus.pulltorefresh.PullToRefreshListView
             android:id="@+id/listFriend"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

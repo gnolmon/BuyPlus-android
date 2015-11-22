@@ -26,12 +26,21 @@ public class ShopAnnounmentAdapter extends BaseAdapter {
 	private LayoutInflater inflaterActivity;
 	ArrayList<Announcement> announcementList;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
-
+	private OnLoadMoreListener onLoadMoreListener;
+	
 	public ShopAnnounmentAdapter(ArrayList<Announcement> announcementList, LayoutInflater inflaterActivity) {
 		this.inflaterActivity = inflaterActivity;
 		this.announcementList = announcementList;
 	}
+	
+	public OnLoadMoreListener getOnLoadMoreListener() {
+		return onLoadMoreListener;
+	}
 
+	public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+		this.onLoadMoreListener = onLoadMoreListener;
+	}
+	
 	@Override
 	public int getCount() {
 		return announcementList.size();
