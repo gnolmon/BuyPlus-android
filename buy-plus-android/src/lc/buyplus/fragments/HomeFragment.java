@@ -156,6 +156,7 @@ public class HomeFragment extends CoreFragment {
 							for (int i = 0; i < data_aray.length(); i++) {								 
 	                            Shop shop = new Shop((JSONObject) data_aray.get(i));
 	                            	if (shop != null){
+	                            		current_last_id = shop.getId();
 	                            		Store.ShopsList.add(shop);
 	                            	}
 	                        }

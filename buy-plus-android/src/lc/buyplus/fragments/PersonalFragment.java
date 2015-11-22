@@ -163,7 +163,7 @@ public class PersonalFragment extends CoreFragment {
 	    Canvas canvas = new Canvas(overlay);
 	    canvas.translate(-view.getLeft(), -view.getTop());
 	    canvas.drawBitmap(bkg, 0, 0, null);
-	    overlay = FastBlur.doBlur(overlay, (int)radius, true);
+	    //overlay = FastBlur.doBlur(overlay, (int)radius, true);
 	    view.setBackground(new BitmapDrawable(getResources(), overlay));
 	}
 }

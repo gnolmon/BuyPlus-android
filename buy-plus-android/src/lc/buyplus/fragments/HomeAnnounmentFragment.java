@@ -88,7 +88,8 @@ public class HomeAnnounmentFragment extends CoreFragment {
 		listView.setOnItemClickListener(new OnItemClickListener() {
 		      public void onItemClick(AdapterView<?> parent, View view,
 		          int position, long id) {
-		    	  Store.current_shop_id = newsAdapter.getItem_id(position);
+		    	  Store.current_shop_id = ((Announcement)newsAdapter.getItem(position)).getShop_id();
+		    	  Log.d("ads",String.valueOf(Store.current_shop_id));
 		    	  Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);
 	              startActivity(shopInfoActivity);
 		      }
@@ -156,6 +157,7 @@ public class HomeAnnounmentFragment extends CoreFragment {
 							JSONArray data_aray = response.getJSONArray("data");
 							for (int i = 0; i < data_aray.length(); i++) {
 								Announcement announcement = new Announcement((JSONObject) data_aray.get(i));
+								current_last_id = announcement.getId();
 								Store.AnnouncementsList.add(announcement);
 							}
 							newsAdapter.notifyDataSetChanged();
