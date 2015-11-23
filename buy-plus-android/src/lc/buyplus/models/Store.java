@@ -12,7 +12,7 @@ public class Store {
 	public static UserAccount user;
 	
 	public static int limit = 6;
-
+	public static String current_shop_name;
 	public static int current_shop_id; 
 	public static Shop get_current_shop(){
 		for (int i=0;i<ShopsList.size();i++){
@@ -20,5 +20,4 @@ public class Store {
 		}
 		return null;
 	}
-	
 }

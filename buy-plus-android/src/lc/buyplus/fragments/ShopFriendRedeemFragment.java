@@ -217,7 +217,7 @@ public class ShopFriendRedeemFragment extends CoreFragment {
 		mSettingTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_setting_tab);
 		mTitle = (MyTextView) v.findViewById(R.id.fragment_canvas_title);
 		mBack = (LinearLayout) v.findViewById(R.id.fragment_canvas_back);
-		mTitle.setText(Store.get_current_shop().getName());
+		mTitle.setText(Store.current_shop_name);
 		rHomeTab = (LinearLayout) v.findViewById(R.id.rhomeTab);
 		rHomeTab.setVisibility(View.VISIBLE);
 		rHgiftlist = (TextView) v.findViewById(R.id.idgiftlist);

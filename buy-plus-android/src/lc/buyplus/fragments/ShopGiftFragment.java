@@ -75,6 +75,7 @@ public class ShopGiftFragment extends CoreFragment {
 	protected void initViews(View v) {
 		isLoadMore = false;
 		isLoading = false;
+		GiftsList.removeAll(GiftsList);
 		giftAdapter = new ShopGiftAdapter(GiftsList, inflaterActivity);
 		listView.setAdapter(giftAdapter);
 		api_get_shop_gifts(Store.current_shop_id,0,Store.limit);

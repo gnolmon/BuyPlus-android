@@ -89,7 +89,7 @@ public class HomeAnnounmentFragment extends CoreFragment {
 		      public void onItemClick(AdapterView<?> parent, View view,
 		          int position, long id) {
 		    	  Store.current_shop_id = ((Announcement)newsAdapter.getItem(position)).getShop_id();
-		    	  Log.d("ads",String.valueOf(Store.current_shop_id));
+		    	  Store.current_shop_name =  ((Announcement)newsAdapter.getItem(position)).getShop().getName();
 		    	  Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);
 	              startActivity(shopInfoActivity);
 		      }

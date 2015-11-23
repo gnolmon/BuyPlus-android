@@ -56,5 +56,8 @@ public class SettingNotificationActivity extends CoreActivity {
 		Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.canvas);
 		fragment.onActivityResult(requestCode, resultCode, data);
 	}
-
+	@Override
+	public void onBackPressed() {
+		moveTaskToBack(true);
+	}
 }

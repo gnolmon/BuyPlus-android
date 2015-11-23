@@ -178,6 +178,7 @@ public class LoginFragment extends CoreFragment {
 		loginbtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				loginbtn.setEnabled(false);
 				String name = editName.getText().toString();
 				String password = editPass.getText().toString();
 				api_user_login( name,md5(password));
@@ -264,6 +265,7 @@ public class LoginFragment extends CoreFragment {
 				new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
+						loginbtn.setEnabled(true);
 					}
 				});
 			requestQueue.add(jsObjRequest);

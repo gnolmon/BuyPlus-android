@@ -80,6 +80,7 @@ public class ShopFriendFragment  extends CoreFragment {
 	protected void initViews(View v) {
 		isLoadMore = false;
 		isLoading = false;
+		FriendsList.removeAll(FriendsList);
 		friendAdapter = new ShopFriendAdapter(FriendsList, inflaterActivity);
 		listView.setAdapter(friendAdapter);
 		api_get_shop_friends(Store.current_shop_id,0,Store.limit);
@@ -147,7 +148,7 @@ public class ShopFriendFragment  extends CoreFragment {
 				new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
-						Log.d("api_get_shop_gifts", response.toString());
+						Log.d("api_get_shop_friends", response.toString());
 						try {
 							if (reload){
 								FriendsList.removeAll(FriendsList);

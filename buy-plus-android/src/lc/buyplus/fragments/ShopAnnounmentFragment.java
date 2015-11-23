@@ -118,14 +118,14 @@ public class ShopAnnounmentFragment extends CoreFragment {
 
 	}
 
-	public void api_get_shop_announcements(int shop_id, int type, int latest_id, int oldest_id) {
+	public void api_get_shop_announcements(int shop_id, int last_id, int limit, int type) {
 
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
 		params.put("type", String.valueOf(type));
-		params.put("latest_id", String.valueOf(latest_id));
-		params.put("oldest_id", String.valueOf(oldest_id));
+		params.put("last_id", String.valueOf(last_id));
+		params.put("limit", String.valueOf(limit));
 		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
 		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 				HandleRequest.build_link(HandleRequest.GET_SHOP_ANNOUNCEMENTS, params), params,

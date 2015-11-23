@@ -81,6 +81,7 @@ public class LoyaltyCardFragment extends CoreFragment {
 		      public void onItemClick(AdapterView<?> parent, View view,
 		          int position, long id) {
 		             Store.current_shop_id = redeemAdapter.getItem_id(position);
+		             Store.current_shop_name =  ((Shop)redeemAdapter.getItem(position)).getName();
 		             Intent shopFriendActivity = new Intent(mActivity,ShopFriendActivity.class);
 		             startActivity(shopFriendActivity);
 		      }

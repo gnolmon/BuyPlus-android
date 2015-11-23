@@ -53,7 +53,6 @@ public class CanvasFragment extends CoreFragment {
 		initModels();
 		initListener();
 		initAnimations();
-		mActivity.showToastLong(mUser.toString());
 
 		return view;
 	}
