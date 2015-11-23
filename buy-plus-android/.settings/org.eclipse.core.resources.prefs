@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
 encoding//src/lc/buyplus/adapter/AddFriendAdapter.java=UTF-8
 encoding//src/lc/buyplus/adapter/RedeemAdapter.java=UTF-8
+encoding//src/lc/buyplus/customizes/Dialog.java=UTF-8
+encoding//src/lc/buyplus/fragments/LoginFragment.java=UTF-8
 encoding//src/lc/buyplus/fragments/PersonalFragment.java=UTF-8
 encoding//src/lc/buyplus/fragments/SettingFragment.java=UTF-8
 encoding//src/lc/buyplus/fragments/ShopInfoFragment.java=UTF-8

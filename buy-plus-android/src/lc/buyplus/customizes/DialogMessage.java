@@ -16,12 +16,12 @@ public class DialogMessage extends android.app.Dialog implements android.view.Vi
 	public String msg;
 	private TextView tvMsg;
 
-	public DialogMessage(Activity a, String msg) {
-		super(a);
+	public DialogMessage(Activity pa, String pmsg) {
+		super(pa);
 		// TODO Auto-generated constructor stub
-		this.c = a;
-		flag = 0;
-		this.msg  = msg;
+		this.c = pa;
+		this.flag = 0;
+		this.msg  = pmsg;
 	}
 
 	@Override

@@ -17,6 +17,8 @@ import lc.buyplus.adapter.StoreAdapter;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.customizes.CustomDialogClass;
+import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.customizes.MyTextView;
 import lc.buyplus.models.FacebookFriend;
 import lc.buyplus.models.Shop;
@@ -24,6 +26,8 @@ import lc.buyplus.models.Store;
 import lc.buyplus.models.UserAccount;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -266,6 +270,9 @@ public class LoginFragment extends CoreFragment {
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						loginbtn.setEnabled(true);
+						DialogMessage dialog = new DialogMessage(getActivity(),"Kiểm tra lại tài khoản");
+						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+						dialog.show();
 					}
 				});
 			requestQueue.add(jsObjRequest);

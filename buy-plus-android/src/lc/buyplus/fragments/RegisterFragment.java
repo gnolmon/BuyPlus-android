@@ -88,7 +88,7 @@ public class RegisterFragment extends CoreFragment implements OnClickListener {
 			} else if (cpassword.isEmpty()) {
 				Toast.makeText(this.getActivity(), "Please confirm password", 2000).show();
 			} else {
-				api_user_register(email, cpassword);
+				api_user_register(username, email, cpassword);
 				Toast.makeText(this.getActivity(), "Please check email to conplete your registation", 1000).show();
 			}
 			break;
@@ -100,10 +100,11 @@ public class RegisterFragment extends CoreFragment implements OnClickListener {
 		}
 	}
 	
-	public void api_user_register(String login_name, String password){
+	public void api_user_register(String name, String login_name, String password){
 	 	
     	Map<String, String> params = new HashMap<String, String>();
 		params.put("login_name", login_name);
+		params.put("name", name);
 		params.put("password", password);
 			RequestQueue requestQueue = Volley.newRequestQueue(this.getActivity());
 			HandleRequest jsObjRequest = new HandleRequest(Method.POST,

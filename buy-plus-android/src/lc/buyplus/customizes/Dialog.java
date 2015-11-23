@@ -32,11 +32,11 @@ public class Dialog extends android.app.Dialog{
 	View.OnClickListener onCancelButtonClickListener;
 	
 	
-	public Dialog(Context context,String title, String message) {
-		super(context, android.R.style.Theme_Translucent);
-		this.context = context;// init Context
-		this.message = message;
-		this.title = title;
+	public Dialog(Context pcontext,String ptitle, String pmessage) {
+		super(pcontext, android.R.style.Theme_Translucent);
+		this.context = pcontext;// init Context
+		this.message = pmessage;
+		this.title = ptitle;
 	}
 	
 	public void addCancelButton(String buttonCancelText){
@@ -105,7 +105,6 @@ public class Dialog extends android.app.Dialog{
 	
 	@Override
 	public void show() {
-		// TODO 自动生�?的方法存根
 		super.show();
 		// set dialog enter animations
 		view.startAnimation(AnimationUtils.loadAnimation(context, R.anim.dialog_main_show_amination));
