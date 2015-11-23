@@ -238,28 +238,38 @@ public class LoginFragment extends CoreFragment {
 					@Override
 					public void onResponse(JSONObject response) {
 						try {
-							JSONObject data = response.getJSONObject("data");
-							String accessToken = data.getString("access_token");
-							int id = Integer.parseInt(data.getString("id"));
-							String phone = data.getString("phone");
-							String email = data.getString("email");
-							String login_name = data.getString("login_name");
-							String imageUrl = data.getString("image");
-							String imageThumbnail = data.getString("image_thumbnail");
-							String username = data.getString("name");
-							int active = Integer.parseInt(data.getString("active"));
 							
-							
-							SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
-							SharedPreferences.Editor editor=pre.edit();
-							editor.clear();
-							editor.putString("login_name", editName.getText().toString());
-							editor.putString("password", editPass.getText().toString());
-							editor.commit();
-							Store.user = new UserAccount(accessToken,id,phone,email,login_name,imageUrl,imageThumbnail,username,active);;
-							Intent mainActivity = new Intent(mActivity,MainActivity.class);
-				            startActivity(mainActivity);
-				            mActivity.finish();
+							if (Integer.parseInt(response.getString("error"))==1){
+								loginbtn.setEnabled(true);
+								CustomDialogClass dialog = new CustomDialogClass(mActivity,response.getString("message"), 999);
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							}
+							else {
+								JSONObject data = response.getJSONObject("data");
+								String accessToken = data.getString("access_token");
+								int id = Integer.parseInt(data.getString("id"));
+								String phone = data.getString("phone");
+								String email = data.getString("email");
+								String login_name = data.getString("login_name");
+								String imageUrl = data.getString("image");
+								String imageThumbnail = data.getString("image_thumbnail");
+								String username = data.getString("name");
+								int active = Integer.parseInt(data.getString("active"));
+								
+								
+								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
+								SharedPreferences.Editor editor=pre.edit();
+								editor.clear();
+								editor.putString("login_name", editName.getText().toString());
+								editor.putString("password", editPass.getText().toString());
+								editor.commit();
+								Store.user = new UserAccount(accessToken,id,phone,email,login_name,imageUrl,imageThumbnail,username,active);;
+								Intent mainActivity = new Intent(mActivity,MainActivity.class);
+					            startActivity(mainActivity);
+					            mActivity.finish();
+							}
+							loginbtn.setEnabled(true);	
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -270,7 +280,7 @@ public class LoginFragment extends CoreFragment {
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						loginbtn.setEnabled(true);
-						DialogMessage dialog = new DialogMessage(getActivity(),"Kiểm tra lại tài khoản");
+						CustomDialogClass dialog = new CustomDialogClass(mActivity,"Kiểm tra mạng của bạn!", 999);
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
 					}

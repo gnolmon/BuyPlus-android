@@ -1,16 +1,34 @@
 package lc.buyplus.fragments;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.Request.Method;
+import com.android.volley.toolbox.Volley;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -20,9 +38,13 @@ import lc.buyplus.activities.ShopFriendActivity;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
+import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.customizes.CustomDialogClass;
+import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.customizes.MyAnimations;
 import lc.buyplus.customizes.MyEditText;
 import lc.buyplus.customizes.MyTextView;
+import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
 import lc.buyplus.models.UserAccount;
 
@@ -39,7 +61,8 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 	private LinearLayout rHomeBaiviet, rHomeThongtin, rHomeHinhanh;
 	private MyTextView mTitle;
 	private TextView tvPost, tvShopInfo, tvShopPhoto;
-
+	private Shop shop;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_shop_canvas, container, false);
@@ -232,8 +255,8 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 
 			@Override
 			public void onClick(View v) {
-				Intent shopFriendActivity = new Intent(mActivity, ShopFriendActivity.class);
-				startActivityForResult(shopFriendActivity,2);
+				api_get_shop_info(Store.current_shop_id);
+				
 			}
 		});
 		
@@ -264,6 +287,41 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 	@Override
 	protected void initAnimations() {
 
+	}
+	
+	@SuppressLint("NewApi")
+	public void api_get_shop_info(int shop_id) {
+
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		params.put("shop_id", String.valueOf(shop_id));
+		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
+				HandleRequest.build_link(HandleRequest.GET_SHOP_INFO, params), params,
+				new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("api_get_shop_info", response.toString());
+						try {
+							shop = new Shop(response.getJSONObject("data"));
+							if ((shop.current_customer_shop_id == null) || (shop.current_customer_shop_id == "")) {
+								CustomDialogClass dialog = new CustomDialogClass(mActivity,"Bạn chưa tham gia shop này", 999);
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							} else {
+								Intent shopFriendActivity = new Intent(mActivity, ShopFriendActivity.class);
+								startActivityForResult(shopFriendActivity,2);
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+					}
+				});
+		requestQueue.add(jsObjRequest);
 	}
 
 	public static int firstTab = 0;

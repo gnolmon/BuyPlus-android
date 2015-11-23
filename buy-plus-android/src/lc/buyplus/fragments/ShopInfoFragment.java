@@ -14,10 +14,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +40,7 @@ import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.BlurBuilder;
+import lc.buyplus.customizes.CustomDialogClass;
 import lc.buyplus.customizes.FastBlur;
 import lc.buyplus.customizes.RoundedImageView;
 import lc.buyplus.models.Announcement;
@@ -51,8 +55,8 @@ public class ShopInfoFragment extends CoreFragment {
 	private ShopAnnounmentAdapter newsAdapter;
 	private LayoutInflater inflaterActivity;
 	private TextView tvName, tvField, tvPhone, tvWeb, tvFb;
-	private Button join_leave;
-	private boolean isJoin;
+	public static Button join_leave;
+	public static boolean isJoin;
 	Shop shop;
 	private LinearLayout rlbanner;
 	private RoundedImageView imbannerStore;
@@ -74,15 +78,13 @@ public class ShopInfoFragment extends CoreFragment {
 		switch (view.getId()) {
 		case R.id.btnAgreeTerm:
 			if (isJoin) {
-				api_leave_shop(Store.current_shop_id);
-				join_leave.setText("Đã tham gia");
-				join_leave.setBackground(getResources().getDrawable(R.drawable.round_button_green));
-				isJoin = false;
+				CustomDialogClass dialog = new CustomDialogClass(mActivity,"Bạn có thực sự muốn ra khỏi Shop", 2);
+				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+				dialog.show();
 			} else {
-				api_join_shop(Store.current_shop_id);
-				join_leave.setText("Tham gia");
-				join_leave.setBackground(getResources().getDrawable(R.drawable.round_button_gray));
-				isJoin = true;
+				CustomDialogClass dialog = new CustomDialogClass(mActivity,"Bạn có thực sự muốn tham gia Shop", 2);
+				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+				dialog.show();
 			}
 			break;
 		}
@@ -131,11 +133,11 @@ public class ShopInfoFragment extends CoreFragment {
 							shop = new Shop(response.getJSONObject("data"));
 							if ((shop.current_customer_shop_id == null) || (shop.current_customer_shop_id == "")) {
 								join_leave.setText("Tham gia");
-								join_leave.setBackground(getResources().getDrawable(R.drawable.round_button_green));
+								join_leave.setBackground(getResources().getDrawable(R.drawable.round_button_gray));
 								isJoin = false;
 							} else {
 								join_leave.setText("Đã tham gia");
-								join_leave.setBackground(getResources().getDrawable(R.drawable.round_button_gray));
+								join_leave.setBackground(getResources().getDrawable(R.drawable.round_button_green));
 								isJoin = true;
 							}
 
@@ -203,47 +205,7 @@ public class ShopInfoFragment extends CoreFragment {
 
 	}
 
-	public void api_join_shop(int shop_id) {
-
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("shop_id", String.valueOf(shop_id));
-		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-		HandleRequest jsObjRequest = new HandleRequest(Method.POST, HandleRequest.JOIN_SHOP, params,
-				new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_join_shop", response.toString());
-						// code here
-					}
-				}, new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-					}
-				});
-		requestQueue.add(jsObjRequest);
-	}
-
-	public void api_leave_shop(int shop_id) {
-
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("shop_id", String.valueOf(shop_id));
-		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-		HandleRequest jsObjRequest = new HandleRequest(Method.POST, HandleRequest.LEAVE_SHOP, params,
-				new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_leave_shop", response.toString());
-						// code here
-					}
-				}, new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-					}
-				});
-		requestQueue.add(jsObjRequest);
-	}
+	
 
 	@SuppressLint("NewApi")
 	private void blur(Bitmap bkg, View view) {
