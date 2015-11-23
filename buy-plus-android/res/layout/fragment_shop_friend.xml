@@ -159,7 +159,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_divide"
             android:layout_marginTop="@dimen/margin_divide"
-            android:background="@color/white" />
+            android:background="@color/divider_tab_bottom" />
 
         <LinearLayout
             android:id="@+id/fragment_canvas_personal_tab"
@@ -175,6 +175,13 @@
                 android:src="@drawable/personal_white" />
         </LinearLayout>
 
+        <View
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_divide"
+            android:layout_marginTop="@dimen/margin_divide"
+            android:background="@color/divider_tab_bottom" />
+
         <LinearLayout
             android:id="@+id/fragment_canvas_loyaltycard_tab"
             android:layout_width="@dimen/zero"
@@ -186,7 +193,7 @@
             <ImageView
                 android:layout_width="@dimen/icon_tab"
                 android:layout_height="@dimen/icon_tab"
-                android:src="@drawable/card_white" />
+                android:src="@drawable/ticket" />
         </LinearLayout>
 
         <View
@@ -194,7 +201,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_divide"
             android:layout_marginTop="@dimen/margin_divide"
-            android:background="@color/white" />
+            android:background="@color/divider_tab_bottom" />
 
         <LinearLayout
             android:id="@+id/fragment_canvas_notifications_tab"
@@ -215,7 +222,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_divide"
             android:layout_marginTop="@dimen/margin_divide"
-            android:background="@color/white" />
+            android:background="@color/divider_tab_bottom" />
 
         <LinearLayout
             android:id="@+id/fragment_canvas_setting_tab"
