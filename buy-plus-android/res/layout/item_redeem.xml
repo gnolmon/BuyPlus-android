@@ -61,13 +61,15 @@
                         android:layout_toRightOf="@id/imNoti"
                         android:text="Có thể đổi quà"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/timestamp" />
+                        android:textSize="15dp" />
 
                     <ImageView
                         android:id="@+id/imIsExchange"
-                        android:layout_width="@dimen/icon_small"
-                        android:layout_height="@dimen/icon_small"
+                        android:layout_width="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_height="15dp"
                         android:layout_alignParentRight="true"
+                        android:src="@drawable/tick"
                         android:layout_marginLeft="@dimen/feed_item_profile_info_padd" />
                 </LinearLayout>
             </LinearLayout>

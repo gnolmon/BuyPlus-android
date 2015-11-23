@@ -6,6 +6,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,9 +14,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.customizes.RoundedImageView;
 import lc.buyplus.models.Shop;
+import lc.buyplus.models.Store;
 
 public class StoreAdapter extends BaseAdapter{
 	private Activity activity;
@@ -25,9 +28,10 @@ public class StoreAdapter extends BaseAdapter{
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
 	private OnLoadMoreListener onLoadMoreListener;
 
-	public StoreAdapter(ArrayList<Shop> shopsList, LayoutInflater inflaterActivity) {
+	public StoreAdapter(ArrayList<Shop> shopsList, LayoutInflater inflaterActivity, Activity activity) {
 		this.inflaterActivity = inflaterActivity;
 		this.storeList = shopsList;
+		this.activity = activity;
 	}
 	
 	public OnLoadMoreListener getOnLoadMoreListener() {
@@ -74,9 +78,21 @@ public class StoreAdapter extends BaseAdapter{
 		RoundedImageView avaStore = (RoundedImageView) convertView
 				.findViewById(R.id.avaStore);
 
-		Shop item = storeList.get(position);
+		final Shop item = storeList.get(position);
 
 		tvNameStore.setText(item.getName());
+		
+		tvNameStore.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Store.current_shop_id = item.getId();
+	             Intent shopInfoActivity = new Intent(activity,ShopInfoActivity.class);		             
+	             activity.startActivity(shopInfoActivity);
+				
+			}
+		});
+		
 		tvAddressStore.setText(item.getAddress());
 		
 		if (item.getImage() != null || item.getImage() != ""){
