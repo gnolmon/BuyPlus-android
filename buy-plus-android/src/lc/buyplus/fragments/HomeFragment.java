@@ -35,12 +35,12 @@ import lc.buyplus.models.Store;
 import lc.buyplus.pulltorefresh.PullToRefreshListView;
 import lc.buyplus.pulltorefresh.PullToRefreshListView.OnRefreshListener;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
 public class HomeFragment extends CoreFragment {
 	private PullToRefreshListView listView;
 	private StoreAdapter storeAdapter;
 	private LayoutInflater inflaterActivity;
-	
 	private int current_last_id = 0;
 	private boolean isLoadMore,isLoading,reload;
 	
@@ -70,8 +70,8 @@ public class HomeFragment extends CoreFragment {
 	@Override
 	protected void initViews(View v) {
 		isLoadMore = false;
-		isLoading = false;
-		storeAdapter = new StoreAdapter(Store.ShopsList, inflaterActivity);
+		isLoading = false; 
+		storeAdapter = new StoreAdapter(Store.ShopsList, inflaterActivity, mActivity);
 		listView.setAdapter(storeAdapter);
 		api_get_all_shop(0,Store.limit,"");
 		listView.setOnItemClickListener(new OnItemClickListener() {
