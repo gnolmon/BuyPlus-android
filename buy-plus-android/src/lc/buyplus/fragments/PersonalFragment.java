@@ -156,13 +156,9 @@ public class PersonalFragment extends CoreFragment {
 	@SuppressLint("NewApi")
 	private void blur(Bitmap bkg, View view) {
 		long startMs = System.currentTimeMillis();
-		float radius = 20;
+		int radius = 20;
 
-		Bitmap overlay = Bitmap.createBitmap((int) (view.getMeasuredWidth()), (int) (view.getMeasuredHeight()),
-				Bitmap.Config.ARGB_8888);
-		Canvas canvas = new Canvas(overlay);
-		canvas.translate(-view.getLeft(), -view.getTop());
-		canvas.drawBitmap(bkg, 0, 0, null);
+		Bitmap overlay = Bitmap.createScaledBitmap(bkg, (int) (view.getWidth()), (int) (view.getHeight()), true);
 		overlay = FastBlur.doBlur(overlay, (int) radius, true);
 		view.setBackground(new BitmapDrawable(getResources(), overlay));
 	}
