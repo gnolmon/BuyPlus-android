@@ -17,7 +17,7 @@ import lc.buyplus.adapter.StoreAdapter;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
-import lc.buyplus.customizes.CustomDialogClass;
+import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.customizes.MyTextView;
 import lc.buyplus.models.FacebookFriend;
@@ -241,7 +241,7 @@ public class LoginFragment extends CoreFragment {
 							
 							if (Integer.parseInt(response.getString("error"))==1){
 								loginbtn.setEnabled(true);
-								CustomDialogClass dialog = new CustomDialogClass(mActivity,response.getString("message"), 999);
+								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 							}
@@ -280,7 +280,7 @@ public class LoginFragment extends CoreFragment {
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						loginbtn.setEnabled(true);
-						CustomDialogClass dialog = new CustomDialogClass(mActivity,"Kiểm tra mạng của bạn!", 999);
+						DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
 					}

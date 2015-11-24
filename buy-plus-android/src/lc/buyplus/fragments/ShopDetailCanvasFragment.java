@@ -39,7 +39,7 @@ import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
-import lc.buyplus.customizes.CustomDialogClass;
+import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.customizes.MyAnimations;
 import lc.buyplus.customizes.MyEditText;
@@ -305,7 +305,7 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 						try {
 							shop = new Shop(response.getJSONObject("data"));
 							if ((shop.current_customer_shop_id == null) || (shop.current_customer_shop_id == "")) {
-								CustomDialogClass dialog = new CustomDialogClass(mActivity,"Bạn chưa tham gia shop này", 999);
+								DialogMessage dialog = new DialogMessage(mActivity,"Bạn chưa tham gia shop này");
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 							} else {
