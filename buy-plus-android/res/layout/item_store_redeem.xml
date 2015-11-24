@@ -64,7 +64,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_margin="5dp"
                     android:text="Điểm: "
-                    android:textColor="@color/black"
+                    android:textColor="@color/title"
                     android:textSize="13dp" />
             </LinearLayout>
 

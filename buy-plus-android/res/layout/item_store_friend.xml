@@ -10,15 +10,15 @@
 
         <lc.buyplus.customizes.RoundedImageView
             android:id="@+id/imFriend"
-            android:layout_width="120dp"
+            android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginRight="8dp" />
+            android:layout_margin="8dp" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/imFriend"
+            android:layout_toRightOf="@id/imFriend"
             android:orientation="vertical" >
 
             <TextView
@@ -27,18 +27,17 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:text="Thanh Mai"
-                android:textColor="@color/black"
-                android:textSize="30px" />
+                android:textColor="@color/maincolor"
+                android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/tvFriendId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvFriendName"
-                android:layout_toEndOf="@id/imFriend"
                 android:text="ID : 12345"
-                android:textColor="@color/timestamp"
-                android:textSize="@dimen/timestamp" />
+                android:textColor="@color/title"
+                android:textSize="10dp" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"

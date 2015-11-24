@@ -100,6 +100,24 @@ public class ShopInfoFragment extends CoreFragment {
 		join_leave = (Button) v.findViewById(R.id.btnAgreeTerm);
 		join_leave.setOnClickListener(this);
 		imbannerStore = (RoundedImageView) v.findViewById(R.id.imbannerStore);
+		imbannerStore.setImageUrl(Store.get_current_shop().getImage_thumbnail(), imageLoader);
+		imbannerStore.buildDrawingCache();
+		
+		if (imbannerStore.getWidth() > 0) {
+			BitmapDrawable drawable = (BitmapDrawable) imbannerStore.getDrawable();
+			Bitmap bmap = drawable.getBitmap();
+			blur(bmap, rlbanner);
+		} else {
+			imbannerStore.getViewTreeObserver()
+					.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+				@Override
+				public void onGlobalLayout() {
+					BitmapDrawable drawable = (BitmapDrawable) imbannerStore.getDrawable();
+					Bitmap bmap = drawable.getBitmap();
+					blur(bmap, rlbanner);
+				}
+			});
+		}
 		
 		
 		rlbanner = (LinearLayout) v.findViewById(R.id.rlbanner);

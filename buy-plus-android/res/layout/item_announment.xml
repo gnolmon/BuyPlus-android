@@ -42,15 +42,14 @@
                     android:clickable="true"
                     android:text="JackLand"
                     android:textColor="@color/actionbar"
-                    android:textSize="@dimen/feed_item_profile_name"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/feed_item_profile_name"/>
 
                 <TextView
                     android:id="@+id/tvTimestamp"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="10:00"
-                    android:textColor="@color/timestamp"
+                    android:textColor="@color/title"
                     android:textSize="@dimen/feed_item_timestamp" />
             </LinearLayout>
         </LinearLayout>

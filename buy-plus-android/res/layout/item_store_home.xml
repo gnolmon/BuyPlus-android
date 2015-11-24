@@ -35,12 +35,10 @@
                     android:id="@+id/tvNameStore"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    
                     android:clickable="true"
                     android:text="JackLand"
                     android:textColor="@color/actionbar"
-                    android:textSize="@dimen/title"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/title" />
 
                 <TextView
                     android:id="@+id/tvAddressStore"
@@ -49,7 +47,7 @@
                     android:layout_below="@id/tvNameStore"
                     android:layout_centerVertical="true"
                     android:text="JackLand"
-                    android:textColor="@color/timestamp"
+                    android:textColor="@color/title"
                     android:textSize="@dimen/title" />
             </LinearLayout>
         </RelativeLayout>

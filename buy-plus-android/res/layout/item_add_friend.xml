@@ -28,8 +28,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:text="Thanh Mai"
-                android:textColor="@color/black"
-                android:textSize="20px" />
+                android:textColor="@color/maincolor"
+                android:textSize="17dp" />
 
             <TextView
                 android:id="@+id/tvFriendId"
@@ -38,7 +38,7 @@
                 android:layout_below="@id/tvFriendName"
                 android:text="ID : 12345"
                 android:textColor="@color/timestamp"
-                android:textSize="@dimen/timestamp" />
+                android:textSize="13dp" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"

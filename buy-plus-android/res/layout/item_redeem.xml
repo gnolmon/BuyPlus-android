@@ -36,8 +36,7 @@
                         android:layout_height="wrap_content"
                         android:text="Jack Lane"
                         android:textColor="@color/actionbar"
-                        android:textSize="30px"
-                        android:textStyle="bold" />
+                        android:textSize="15dp"/>
 
                     <TextView
                         android:id="@+id/tvScore"
@@ -46,7 +45,7 @@
                         android:layout_below="@id/tvTitleShop"
                         android:text="Số điểm tích"
                         android:textColor="@color/black"
-                        android:textSize="30px" />
+                        android:textSize="13dp" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -61,7 +60,7 @@
                         android:layout_toRightOf="@id/imNoti"
                         android:text="Có thể đổi quà"
                         android:textColor="@color/black"
-                        android:textSize="15dp" />
+                        android:textSize="13dp" />
 
                     <ImageView
                         android:id="@+id/imIsExchange"
@@ -69,7 +68,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_height="15dp"
                         android:layout_alignParentRight="true"
-                        android:src="@drawable/tick"
+                        android:src="@drawable/tick_ok"
                         android:layout_marginLeft="@dimen/feed_item_profile_info_padd" />
                 </LinearLayout>
             </LinearLayout>
