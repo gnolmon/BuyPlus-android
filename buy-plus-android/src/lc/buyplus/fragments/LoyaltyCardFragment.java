@@ -183,9 +183,9 @@ public class LoyaltyCardFragment extends CoreFragment {
 						try {
 
 							Store.current_shop = new Shop(response.getJSONObject("data"));
-							Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);
+							Intent shopFriendActivity = new Intent(mActivity,ShopFriendActivity.class);
 				            Store.current_shop_name =  Store.current_shop.getName();
-				            startActivity(shopInfoActivity);
+				            startActivity(shopFriendActivity);
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
