@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
 import lc.buyplus.R;
 
@@ -11,7 +12,8 @@ public class DialogNews extends android.app.Dialog implements android.view.View.
 
 	public Activity c;
 	public Dialog d;
-	public TextView tvVN, tvEng;
+	public TextView tvShop, tvPromo, tvAll;
+	public ImageView imShop, imPromo, imAll;
 	public int flag;
 
 	public DialogNews(Activity a) {
@@ -27,16 +29,36 @@ public class DialogNews extends android.app.Dialog implements android.view.View.
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.dialog_news);
 
+		tvShop = (TextView) findViewById(R.id.tvShop);
+		tvShop.setOnClickListener(this);
+		imShop = (ImageView) findViewById(R.id.imShop);
+
+		tvPromo = (TextView) findViewById(R.id.tvPromo);
+		imPromo = (ImageView) findViewById(R.id.imPromo);
+		tvPromo.setOnClickListener(this);
+
+		tvAll = (TextView) findViewById(R.id.tvAll);
+		imAll = (ImageView) findViewById(R.id.imAll);
+		tvAll.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.tvVN:
-			flag = 1;
+		case R.id.tvShop:
+			imShop.setVisibility(View.VISIBLE);
+			imPromo.setVisibility(View.INVISIBLE);
+			imAll.setVisibility(View.INVISIBLE);
 			break;
-		case R.id.tvEng:
-			dismiss();
+		case R.id.tvPromo:
+			imShop.setVisibility(View.INVISIBLE);
+			imPromo.setVisibility(View.VISIBLE);
+			imAll.setVisibility(View.INVISIBLE);
+			break;
+		case R.id.tvAll:
+			imShop.setVisibility(View.INVISIBLE);
+			imPromo.setVisibility(View.INVISIBLE);
+			imAll.setVisibility(View.VISIBLE);
 			break;
 		default:
 			break;
@@ -51,6 +73,5 @@ public class DialogNews extends android.app.Dialog implements android.view.View.
 	public void setFlag(int flag) {
 		this.flag = flag;
 	}
-	
-	
+
 }

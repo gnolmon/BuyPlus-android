@@ -28,7 +28,7 @@ public class DialogMessage extends android.app.Dialog implements android.view.Vi
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.dialog_sort);
+		setContentView(R.layout.dialog_message);
 		tvMsg = (TextView) findViewById(R.id.tvMsg);
 		tvMsg.setText(msg);
 	}

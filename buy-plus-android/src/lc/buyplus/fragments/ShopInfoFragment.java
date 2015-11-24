@@ -78,11 +78,11 @@ public class ShopInfoFragment extends CoreFragment {
 		switch (view.getId()) {
 		case R.id.btnAgreeTerm:
 			if (isJoin) {
-				CustomDialogClass dialog = new CustomDialogClass(mActivity,"Bạn có thực sự muốn ra khỏi Shop", 2);
+				CustomDialogClass dialog = new CustomDialogClass(mActivity,"Bạn có muốn ra khỏi Shop ?", 2);
 				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 				dialog.show();
 			} else {
-				CustomDialogClass dialog = new CustomDialogClass(mActivity,"Bạn có thực sự muốn tham gia Shop", 2);
+				CustomDialogClass dialog = new CustomDialogClass(mActivity,"Bạn có muốn tham gia shop ?", 2);
 				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 				dialog.show();
 			}
