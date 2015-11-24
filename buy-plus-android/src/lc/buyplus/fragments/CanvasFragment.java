@@ -74,6 +74,7 @@ public class CanvasFragment extends CoreFragment {
 		callbackManager.onActivityResult(requestCode, resultCode, data);
 	}
 
+	public static DialogNews sortDialog;
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
@@ -108,14 +109,13 @@ public class CanvasFragment extends CoreFragment {
 			mPager.setCurrentItem(1);
 			break;
 		case R.id.idSort:
-			DialogSort sortDialog = new DialogSort(mActivity);
-			sortDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-			sortDialog.show();
 			break;
 		case R.id.imNewsDialog:
-			DialogNews newsDialog = new DialogNews(mActivity);
-			newsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-			newsDialog.show();
+			if (sortDialog == null ) {
+				sortDialog = new DialogNews(mActivity);
+			}
+			sortDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+			sortDialog.show();
 			break;
 		default:
 			break;
