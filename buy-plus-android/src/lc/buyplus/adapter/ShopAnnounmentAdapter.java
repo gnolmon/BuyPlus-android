@@ -8,6 +8,7 @@ import java.util.TimeZone;
 import com.android.volley.toolbox.ImageLoader;
 
 import android.app.Activity;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,7 +83,11 @@ public class ShopAnnounmentAdapter extends BaseAdapter {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT-7"));
 		String formattedDate = sdf.format(date);
-		timestamp.setText(formattedDate);
+		
+		CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(Long.parseLong(item.getCreated_time()),
+				System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
+		
+		timestamp.setText(timeAgo);
 		tvStatus.setText(item.getContent());
 
 		avaStore.setImageUrl(item.getShop().getImage_thumbnail(), imageLoader);

@@ -13,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,7 +84,9 @@ public class NotificationAdapter extends BaseAdapter {
 		noti.setText(item.getMessage());
 
 		TextView timeStamp = (TextView) convertView.findViewById(R.id.tvTimeStamp);
-		timeStamp.setText(item.getCreated_time());
+		CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(Long.parseLong(item.getCreated_time()),
+		System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
+		timeStamp.setText(timeAgo);
 
 
 		RoundedImageView imNoti = (RoundedImageView) convertView.findViewById(R.id.imNoti);

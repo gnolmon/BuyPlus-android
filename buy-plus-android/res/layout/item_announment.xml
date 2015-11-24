@@ -76,7 +76,6 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:scaleType="fitXY"
-                android:src="@drawable/loading_icon"
                 android:visibility="visible" />
         </LinearLayout>
     </LinearLayout>

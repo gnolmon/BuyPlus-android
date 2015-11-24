@@ -110,7 +110,7 @@ public class HomeAnnounmentFragment extends CoreFragment {
 		    }
 		    public void onScrollStateChanged(AbsListView view, int scrollState) {
 		      // TODO Auto-generated method stub
-		      if(scrollState == 0) {
+		      if(scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
 		    	  if (isLoadMore){
 		    		  isLoading = true;
 		    		  newsAdapter.getOnLoadMoreListener().onLoadMore();	

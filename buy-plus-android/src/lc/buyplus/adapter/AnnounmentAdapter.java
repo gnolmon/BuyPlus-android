@@ -21,6 +21,7 @@ import com.android.volley.toolbox.Volley;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -113,7 +114,10 @@ public class AnnounmentAdapter extends BaseAdapter {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT-7"));
 		String formattedDate = sdf.format(date);
-		timestamp.setText(formattedDate);
+		
+		CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(Long.parseLong(item.getCreated_time()),
+				System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
+		timestamp.setText(timeAgo);
 		tvStatus.setText(item.getContent());
 
 		avaStore.setImageUrl(item.getShop().getImage_thumbnail(), imageLoader);

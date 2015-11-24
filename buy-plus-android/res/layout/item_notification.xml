@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/imNoti"
                     android:text="1 ngày trước"
-                    android:textColor="@color/timestamp"
+                    android:textColor="@color/title"
                     android:textSize="@dimen/timestamp" />
             </LinearLayout>
 
@@ -52,6 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal" >
 
                 <Button
