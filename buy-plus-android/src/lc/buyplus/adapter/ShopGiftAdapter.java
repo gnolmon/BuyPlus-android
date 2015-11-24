@@ -91,6 +91,9 @@ public class ShopGiftAdapter extends BaseAdapter {
 		
 		int percent = (int) (myPoint * 100 / giftPoint);
 		pbPoint.setProgress(percent);
+		
+		TextView tvScore = (TextView) convertView.findViewById(R.id.tvScore);
+		tvScore.setText(percent + "%");
 
 		return convertView;
 	}
