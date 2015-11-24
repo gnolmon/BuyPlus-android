@@ -33,7 +33,7 @@ public class Shop {
 	public ArrayList<Gift> GiftsList = new ArrayList<Gift>();
 	public ArrayList<Friend> FriendsList = new ArrayList<Friend>();
 	public ArrayList<Announcement> AnnouncementsList = new ArrayList<Announcement>();
-	
+	public boolean canEx = false;
 	public Shop() {
 		super();
 	}
@@ -85,9 +85,7 @@ public class Shop {
 				image_thumbnail = data.getString("image_thumbnail");
 			}
 			
-			if (data.optJSONObject("lowest_point_gift") != null) {
-        	lowestPointGift = new Gift(data.getJSONObject("lowest_point_gift"));
-	        }
+			
 	        
 			if (data.optJSONObject("current_customer_shop") != null) {
 	        	JSONObject current_customer_shop = data.getJSONObject("current_customer_shop");
@@ -96,6 +94,12 @@ public class Shop {
 				current_customer_shop_created_time = current_customer_shop.getString("created_time");
 	        }
 	        
+			Log.d("sad","sad");
+			if (data.optJSONObject("lowest_point_gift") != null) {
+	        	lowestPointGift = new Gift(data.getJSONObject("lowest_point_gift"));
+	        	Log.d("sad",String.valueOf(lowestPointGift.getPoint()));
+	        	if (current_customer_shop_point > lowestPointGift.getPoint()) canEx = true;
+		    }
 			
 			if (data.optJSONArray("friends") != null) {
 				JSONArray friends = data.getJSONArray("friends");
@@ -116,6 +120,14 @@ public class Shop {
 	}
 	
 	 
+	public boolean isCanEx() {
+		return canEx;
+	}
+
+	public void setCanEx(boolean canEx) {
+		this.canEx = canEx;
+	}
+
 	public Shop(int id, String name, String address, String description,
 			String email, String phone, String website, String allow_circle,
 			String max_friend_in_circle, String facebook_id, String lat,

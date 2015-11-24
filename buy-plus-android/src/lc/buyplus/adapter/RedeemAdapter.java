@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.application.MonApplication;
@@ -75,7 +76,13 @@ public class RedeemAdapter extends BaseAdapter {
 		TextView scoreTotal = (TextView) convertView.findViewById(R.id.tvScore);
 
 		scoreTotal.setText("Số điểm tích: " + item.getCurrent_customer_shop_point());
-
+		LinearLayout canex = (LinearLayout) convertView.findViewById(R.id.tvChangeGift);
+		if (!item.canEx){
+			canex.setVisibility(View.GONE);
+		}
+		else {
+			canex.setVisibility(0);
+		}
 		name.setText(item.getName());
 		imShop.setImageUrl(item.getImage_thumbnail(), imageLoader);
 
