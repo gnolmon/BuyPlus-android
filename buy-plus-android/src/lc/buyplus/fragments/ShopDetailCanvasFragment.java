@@ -90,6 +90,7 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.fragment_canvas_back:
+			Store.current_shop = null;
 			mActivity.finish();
 			break;
 		case R.id.fragment_canvas_search:

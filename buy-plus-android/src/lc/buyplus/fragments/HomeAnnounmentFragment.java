@@ -89,9 +89,7 @@ public class HomeAnnounmentFragment extends CoreFragment {
 		      public void onItemClick(AdapterView<?> parent, View view,
 		          int position, long id) {
 		    	  Store.current_shop_id = ((Announcement)newsAdapter.getItem(position)).getShop_id();
-		    	  Store.current_shop_name =  ((Announcement)newsAdapter.getItem(position)).getShop().getName();
-		    	  Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);
-	              startActivity(shopInfoActivity);
+		    	  api_get_shop_info(Store.current_shop_id);
 		      }
 	    });
 		
@@ -177,6 +175,35 @@ public class HomeAnnounmentFragment extends CoreFragment {
 		requestQueue.add(jsObjRequest);
 	}
 
+	public void api_get_shop_info(int shop_id) {
+
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		params.put("shop_id", String.valueOf(shop_id));
+		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
+				HandleRequest.build_link(HandleRequest.GET_SHOP_INFO, params), params,
+				new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("api_get_shop_info", response.toString());
+						try {
+
+							Store.current_shop = new Shop(response.getJSONObject("data"));
+							Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);
+				            Store.current_shop_name =  Store.current_shop.getName();
+				            startActivity(shopInfoActivity);
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+					}
+				});
+		requestQueue.add(jsObjRequest);
+	}
 	public static final long serialVersionUID = 6036846677812555352L;
 
 	public static CoreActivity mActivity;

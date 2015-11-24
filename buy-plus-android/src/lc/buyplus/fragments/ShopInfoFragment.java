@@ -100,7 +100,7 @@ public class ShopInfoFragment extends CoreFragment {
 		join_leave = (Button) v.findViewById(R.id.btnAgreeTerm);
 		join_leave.setOnClickListener(this);
 		imbannerStore = (RoundedImageView) v.findViewById(R.id.imbannerStore);
-		imbannerStore.setImageUrl(Store.get_current_shop().getImage_thumbnail(), imageLoader);
+		imbannerStore.setImageUrl(Store.current_shop.getImage_thumbnail(), imageLoader);
 		imbannerStore.buildDrawingCache();
 		
 		if (imbannerStore.getWidth() > 0) {
@@ -126,6 +126,43 @@ public class ShopInfoFragment extends CoreFragment {
 		tvPhone = (TextView) v.findViewById(R.id.tvPhone);
 		tvWeb = (TextView) v.findViewById(R.id.tvWeb);
 		tvFb = (TextView) v.findViewById(R.id.tvFb);
+		
+		
+		
+		if ((Store.current_shop.current_customer_shop_id == null) || (Store.current_shop.current_customer_shop_id == "")) {
+			join_leave.setText("Tham gia");
+			join_leave.setBackground(getResources().getDrawable(R.drawable.round_button_gray));
+			isJoin = false;
+		} else {
+			join_leave.setText("Đã tham gia");
+			join_leave.setBackground(getResources().getDrawable(R.drawable.round_button_green));
+			isJoin = true;
+		}
+
+		tvName.setHint(Store.current_shop.getAddress());
+		tvField.setHint(Store.current_shop.getName());
+		tvPhone.setHint(Store.current_shop.getPhone());
+		tvWeb.setHint(Store.current_shop.getWebsite());
+		tvFb.setHint(String.valueOf(Store.current_shop.getFacebook_id()));
+
+		imbannerStore.setImageUrl(Store.current_shop.getImage_thumbnail(), imageLoader);
+		imbannerStore.buildDrawingCache();
+		
+		if (imbannerStore.getWidth() > 0) {
+			BitmapDrawable drawable = (BitmapDrawable) imbannerStore.getDrawable();
+			Bitmap bmap = drawable.getBitmap();
+			//blur(bmap, rlbanner);
+		} else {
+			imbannerStore.getViewTreeObserver()
+					.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+				@Override
+				public void onGlobalLayout() {
+					BitmapDrawable drawable = (BitmapDrawable) imbannerStore.getDrawable();
+					Bitmap bmap = drawable.getBitmap();
+					//blur(bmap, rlbanner);
+				}
+			});
+		}
 	}
 
 	@Override
@@ -149,40 +186,6 @@ public class ShopInfoFragment extends CoreFragment {
 						try {
 
 							shop = new Shop(response.getJSONObject("data"));
-							if ((shop.current_customer_shop_id == null) || (shop.current_customer_shop_id == "")) {
-								join_leave.setText("Tham gia");
-								join_leave.setBackground(getResources().getDrawable(R.drawable.round_button_gray));
-								isJoin = false;
-							} else {
-								join_leave.setText("Đã tham gia");
-								join_leave.setBackground(getResources().getDrawable(R.drawable.round_button_green));
-								isJoin = true;
-							}
-
-							tvName.setHint(shop.getAddress());
-							tvField.setHint(shop.getName());
-							tvPhone.setHint(shop.getPhone());
-							tvWeb.setHint(shop.getWebsite());
-							tvFb.setHint(String.valueOf(shop.getFacebook_id()));
-
-							imbannerStore.setImageUrl(shop.getImage_thumbnail(), imageLoader);
-							imbannerStore.buildDrawingCache();
-							
-							if (imbannerStore.getWidth() > 0) {
-								BitmapDrawable drawable = (BitmapDrawable) imbannerStore.getDrawable();
-								Bitmap bmap = drawable.getBitmap();
-								//blur(bmap, rlbanner);
-							} else {
-								imbannerStore.getViewTreeObserver()
-										.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-									@Override
-									public void onGlobalLayout() {
-										BitmapDrawable drawable = (BitmapDrawable) imbannerStore.getDrawable();
-										Bitmap bmap = drawable.getBitmap();
-										//blur(bmap, rlbanner);
-									}
-								});
-							}
 							
 							
 						} catch (JSONException e) {

@@ -15,11 +15,14 @@ import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
@@ -78,10 +81,9 @@ public class HomeFragment extends CoreFragment {
 		listView.setOnItemClickListener(new OnItemClickListener() {
 		      public void onItemClick(AdapterView<?> parent, View view,
 		          int position, long id) {
-		    	  	 Store.current_shop_id = storeAdapter.getItem_id(position);
-		             Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);
-		             Store.current_shop_name =  ((Shop) storeAdapter.getItem(position)).getName();
-		             startActivity(shopInfoActivity);
+		    	  	 Store.current_shop_id = ((Shop)storeAdapter.getItem(position)).getId();
+		    	  	 Log.d("shop_ID",String.valueOf(Store.current_shop_id));
+		    	  	 api_get_shop_info(Store.current_shop_id);
 		      }
 		    });
 		
@@ -170,6 +172,37 @@ public class HomeFragment extends CoreFragment {
 					}
 				});
 			requestQueue.add(jsObjRequest);
+	}
+	
+	
+	public void api_get_shop_info(int shop_id) {
+
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		params.put("shop_id", String.valueOf(shop_id));
+		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
+				HandleRequest.build_link(HandleRequest.GET_SHOP_INFO, params), params,
+				new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("api_get_shop_info", response.toString());
+						try {
+
+							Store.current_shop = new Shop(response.getJSONObject("data"));
+							Store.current_shop_name =  Store.current_shop.getName();
+							Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);			            
+				            startActivity(shopInfoActivity);
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+					}
+				});
+		requestQueue.add(jsObjRequest);
 	}
 	
 	public static final long serialVersionUID = 6036846677812555352L;

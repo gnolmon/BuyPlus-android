@@ -35,7 +35,6 @@
                     android:id="@+id/tvNameStore"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
                     android:text="JackLand"
                     android:textColor="@color/actionbar"
                     android:textSize="@dimen/title" />

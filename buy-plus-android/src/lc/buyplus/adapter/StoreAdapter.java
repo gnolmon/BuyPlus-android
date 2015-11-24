@@ -52,10 +52,6 @@ public class StoreAdapter extends BaseAdapter{
 		return storeList.get(position);
 	}
 	
-	public int getItem_id(int position){
-		return storeList.get(position).getId();
-	}
-	
 	@Override
 	public long getItemId(int position) {
 		return position;
@@ -82,17 +78,17 @@ public class StoreAdapter extends BaseAdapter{
 
 		tvNameStore.setText(item.getName());
 		
-		tvNameStore.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Store.current_shop_id = item.getId();
-	             Intent shopInfoActivity = new Intent(activity,ShopInfoActivity.class);		             
-	             activity.startActivity(shopInfoActivity);
-				
-			}
-		});
-		
+//		tvNameStore.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				Store.current_shop_id = item.getId();
+//	             Intent shopInfoActivity = new Intent(activity,ShopInfoActivity.class);		             
+//	             activity.startActivity(shopInfoActivity);
+//				
+//			}
+//		});
+//		
 		tvAddressStore.setText(item.getAddress());
 		
 		if (item.getImage() != null || item.getImage() != ""){

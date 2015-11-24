@@ -84,8 +84,8 @@ public class Announcement {
 
 			// code here
 			
-			if (data.optString("start_time") != "") {
-				start_time = data.getLong("start_time");
+			if (data.optString("start_time") != "" && data.optString("start_time") != "null") {
+				start_time = Long.valueOf(data.getString("start_time"));
 			}
 			if (data.optString("end_time") != "") {
 				end_time = data.getString("end_time");

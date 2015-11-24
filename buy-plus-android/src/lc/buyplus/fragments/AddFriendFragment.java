@@ -71,6 +71,7 @@ public class AddFriendFragment extends CoreFragment {
 		Intent returnIntent;
 		switch (view.getId()) {
 		case R.id.fragment_canvas_back:
+			Store.current_shop = null;
 			mActivity.finish();
 			break;
 		case R.id.fragment_canvas_home_tab:
