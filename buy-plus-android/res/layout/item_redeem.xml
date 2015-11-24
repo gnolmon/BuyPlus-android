@@ -49,6 +49,7 @@
                 </RelativeLayout>
 
                 <LinearLayout
+                    android:id="@+id/tvChangeGift"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" >
