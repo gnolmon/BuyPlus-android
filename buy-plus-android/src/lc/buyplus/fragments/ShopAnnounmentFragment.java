@@ -74,6 +74,7 @@ public class ShopAnnounmentFragment extends CoreFragment {
 		 Log.d("shop_ID_an",String.valueOf(Store.current_shop_id));
 		isLoadMore = false;
 		isLoading = false;
+		ShopAnnouncementsList.removeAll(ShopAnnouncementsList);
 		newsAdapter = new ShopAnnounmentAdapter(ShopAnnouncementsList, inflaterActivity);
 		listView.setAdapter(newsAdapter);
 		
