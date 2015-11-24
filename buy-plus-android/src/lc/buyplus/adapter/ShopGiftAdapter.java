@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.application.MonApplication;
@@ -21,6 +22,7 @@ public class ShopGiftAdapter extends BaseAdapter {
 	List<Gift> giftList;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
 	private OnLoadMoreListener onLoadMoreListener;
+	private ProgressBar pbPoint;
 	
 	public ShopGiftAdapter( List<Gift> giftList,LayoutInflater inflaterActivity) {
 		this.inflaterActivity = inflaterActivity;
@@ -80,6 +82,9 @@ public class ShopGiftAdapter extends BaseAdapter {
 
 		// user profile pic
 		imRedeem.setImageUrl(item.getImage(), imageLoader);
+		
+		pbPoint = (ProgressBar) convertView.findViewById(R.id.pbScore);
+		pbPoint.setProgress(progress);
 
 		return convertView;
 	}
