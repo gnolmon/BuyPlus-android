@@ -84,7 +84,6 @@ public class ShopGiftAdapter extends BaseAdapter {
 		imRedeem.setImageUrl(item.getImage(), imageLoader);
 		
 		pbPoint = (ProgressBar) convertView.findViewById(R.id.pbScore);
-		pbPoint.setProgress(progress);
 
 		return convertView;
 	}
