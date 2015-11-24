@@ -30,6 +30,7 @@ import lc.buyplus.adapter.StoreAdapter;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.models.Announcement;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
 import lc.buyplus.pulltorefresh.PullToRefreshListView;
@@ -78,7 +79,8 @@ public class HomeFragment extends CoreFragment {
 		      public void onItemClick(AdapterView<?> parent, View view,
 		          int position, long id) {
 		    	  	 Store.current_shop_id = storeAdapter.getItem_id(position);
-		             Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);		             
+		             Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);
+		             Store.current_shop_name =  ((Shop) storeAdapter.getItem(position)).getName();
 		             startActivity(shopInfoActivity);
 		      }
 		    });

@@ -25,7 +25,7 @@ public class Shop {
 	public String image_thumbnail;
 	
 	public String current_customer_shop_id;
-	public String current_customer_shop_point;
+	public int current_customer_shop_point = 0;
 	public String current_customer_shop_created_time;
 	
 	public Gift lowestPointGift;
@@ -92,7 +92,7 @@ public class Shop {
 			if (data.optJSONObject("current_customer_shop") != null) {
 	        	JSONObject current_customer_shop = data.getJSONObject("current_customer_shop");
 				current_customer_shop_id = current_customer_shop.getString("id");
-				current_customer_shop_point = current_customer_shop.getString("point");
+				current_customer_shop_point = Integer.parseInt(current_customer_shop.getString("point"));
 				current_customer_shop_created_time = current_customer_shop.getString("created_time");
 	        }
 	        
@@ -121,7 +121,7 @@ public class Shop {
 			String max_friend_in_circle, String facebook_id, String lat,
 			String lng, String image, String image_thumbnail,
 			String current_customer_shop_id,
-			String current_customer_shop_point,
+			int current_customer_shop_point,
 			String current_customer_shop_created_time,
 			Gift lowestPointGift) {
 		super();
@@ -265,11 +265,11 @@ public class Shop {
 		this.current_customer_shop_id = current_customer_shop_id;
 	}
 
-	public String getCurrent_customer_shop_point() {
+	public int getCurrent_customer_shop_point() {
 		return current_customer_shop_point;
 	}
 
-	public void setCurrent_customer_shop_point(String current_customer_shop_point) {
+	public void setCurrent_customer_shop_point(int current_customer_shop_point) {
 		this.current_customer_shop_point = current_customer_shop_point;
 	}
 

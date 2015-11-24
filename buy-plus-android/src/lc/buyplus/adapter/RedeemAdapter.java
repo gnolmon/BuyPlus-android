@@ -23,6 +23,7 @@ public class RedeemAdapter extends BaseAdapter {
 	List<Shop> giftItems;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
 	private OnLoadMoreListener onLoadMoreListener;
+
 	public RedeemAdapter(ArrayList<Shop> giftItems, LayoutInflater inflaterActivity) {
 		this.inflaterActivity = inflaterActivity;
 		this.giftItems = giftItems;
@@ -32,7 +33,7 @@ public class RedeemAdapter extends BaseAdapter {
 	public int getCount() {
 		return giftItems.size();
 	}
-	
+
 	public OnLoadMoreListener getOnLoadMoreListener() {
 		return onLoadMoreListener;
 	}
@@ -40,6 +41,7 @@ public class RedeemAdapter extends BaseAdapter {
 	public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
 		this.onLoadMoreListener = onLoadMoreListener;
 	}
+
 	@Override
 	public Object getItem(int position) {
 		return giftItems.get(position);
@@ -49,11 +51,11 @@ public class RedeemAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		return position;
 	}
-	
-	public int getItem_id(int position){
+
+	public int getItem_id(int position) {
 		return giftItems.get(position).getId();
 	}
-	
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (inflater == null)
@@ -72,11 +74,7 @@ public class RedeemAdapter extends BaseAdapter {
 
 		TextView scoreTotal = (TextView) convertView.findViewById(R.id.tvScore);
 
-		if (item.getCurrent_customer_shop_point() != null) {
-			scoreTotal.setText("Số điểm tích: " + item.getCurrent_customer_shop_point());
-		} else {
-			scoreTotal.setText("Sá»‘ Ä‘iá»ƒm tÃ­ch: 0");
-		}
+		scoreTotal.setText("Số điểm tích: " + item.getCurrent_customer_shop_point());
 
 		name.setText(item.getName());
 		imShop.setImageUrl(item.getImage_thumbnail(), imageLoader);

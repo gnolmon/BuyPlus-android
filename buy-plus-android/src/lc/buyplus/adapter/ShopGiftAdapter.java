@@ -14,6 +14,7 @@ import lc.buyplus.R;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.customizes.RoundedImageView;
 import lc.buyplus.models.Gift;
+import lc.buyplus.models.Store;
 
 public class ShopGiftAdapter extends BaseAdapter {
 
@@ -84,6 +85,12 @@ public class ShopGiftAdapter extends BaseAdapter {
 		imRedeem.setImageUrl(item.getImage(), imageLoader);
 		
 		pbPoint = (ProgressBar) convertView.findViewById(R.id.pbScore);
+		int myPoint = Store.current_shop.getCurrent_customer_shop_point();
+		
+		int giftPoint = item.getPoint();
+		
+		int percent = (int) (myPoint * 100 / giftPoint);
+		pbPoint.setProgress(percent);
 
 		return convertView;
 	}
