@@ -25,6 +25,7 @@
                 android:id="@+id/avaStore"
                 android:layout_width="@dimen/feed_item_profile_pic"
                 android:layout_height="@dimen/feed_item_profile_pic"
+                android:src="@drawable/square"
                 android:scaleType="fitCenter" >
             </lc.buyplus.customizes.RoundedImageView>
 

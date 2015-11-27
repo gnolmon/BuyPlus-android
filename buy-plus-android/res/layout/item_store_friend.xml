@@ -12,6 +12,7 @@
             android:id="@+id/imFriend"
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:src="@drawable/square"
             android:layout_margin="8dp" />
 
         <LinearLayout

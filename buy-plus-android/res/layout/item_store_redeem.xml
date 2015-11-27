@@ -11,6 +11,7 @@
 
         <lc.buyplus.customizes.RoundedImageView
             android:id="@+id/imRedeem"
+            android:src="@drawable/square"
             android:layout_width="80dp"
             android:layout_height="80dp" />
 
