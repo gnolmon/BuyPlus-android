@@ -134,14 +134,14 @@ public class HomeAnnounmentFragment extends CoreFragment {
 	protected void initAnimations() {
 
 	}
-
-	public void api_get_all_announcements(int type, int latest_id, int oldest_id, int mode, int search) {
+	
+	public void api_get_all_announcements(int last_id, int limit, int type, int mode, int search) {
 
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("type", String.valueOf(type));
-		params.put("latest_id", String.valueOf(latest_id));
-		params.put("oldest_id", String.valueOf(oldest_id));
+		params.put("last_id", String.valueOf(last_id));
+		params.put("limit", String.valueOf(limit));
 		params.put("mode", String.valueOf(mode));
 		params.put("search", String.valueOf(search));
 		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
@@ -151,6 +151,10 @@ public class HomeAnnounmentFragment extends CoreFragment {
 					@Override
 					public void onResponse(JSONObject response) {
 						try {
+							if (reload){
+								Store.AnnouncementsList.removeAll(Store.AnnouncementsList);
+								reload = false;
+							}
 							Log.d("api_get_all_announcements", response.toString());
 							JSONArray data_aray = response.getJSONArray("data");
 							for (int i = 0; i < data_aray.length(); i++) {

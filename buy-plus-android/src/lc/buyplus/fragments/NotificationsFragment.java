@@ -129,6 +129,7 @@ public class NotificationsFragment extends CoreFragment{
 				new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
+						Log.d("api_get_notifications", response.toString());
 						if (reload){
 							Store.NotificationsList.removeAll(Store.NotificationsList);
 							Log.d("size",String.valueOf(Store.NotificationsList.size()));

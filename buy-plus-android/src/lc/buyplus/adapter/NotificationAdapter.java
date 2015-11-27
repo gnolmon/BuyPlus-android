@@ -101,8 +101,14 @@ public class NotificationAdapter extends BaseAdapter {
 		final Button accept= (Button) convertView.findViewById(R.id.btnAgreeTerm);
 		final Button reject= (Button) convertView.findViewById(R.id.btnIgnore);
 		
-		String string = notiList.get(position).getParams();
+		final String string = notiList.get(position).getParams();
 		final String[] parts = string.split(":");
+		String param_request_id = "0";
+		if (notiList.get(position).getType()==2) 
+			 param_request_id = parts[2];
+		if (notiList.get(position).getType()==4) 
+			 param_request_id = parts[1]; 
+		final String res_id = param_request_id;
 		if (notiList.get(position).getResponse_result()==0 && (notiList.get(position).getType()==4 || notiList.get(position).getType()==2)){
 			accept.setVisibility(0);
 			reject.setVisibility(0);
@@ -115,7 +121,10 @@ public class NotificationAdapter extends BaseAdapter {
 		accept.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
-				api_response_join_shop(Integer.valueOf(parts[1]),"accept");
+				
+				Log.d("params",string);
+				Log.d("params",parts[0]);
+				api_response_join_shop(Integer.valueOf(res_id),"accept");
 				notiList.get(pos).setResponse_result(1);
 				accept.setVisibility(View.GONE);
 				reject.setVisibility(View.GONE);
@@ -124,7 +133,7 @@ public class NotificationAdapter extends BaseAdapter {
 		reject.setOnClickListener(new OnClickListener() {
 	
 			public void onClick(View v) {
-				api_response_join_shop(Integer.valueOf(parts[1]),"deny");
+				api_response_join_shop(Integer.valueOf(res_id),"deny");
 				notiList.get(pos).setResponse_result(2);
 				accept.setVisibility(View.GONE);
 				reject.setVisibility(View.GONE);
@@ -142,6 +151,8 @@ public class NotificationAdapter extends BaseAdapter {
 			params.put("access_token", Store.user.getAccessToken());
 			params.put("request_id", String.valueOf(request_id));
 			params.put("accept_type", accept_type);
+			Log.d("params",String.valueOf(request_id));
+			Log.d("params",accept_type);
 				RequestQueue requestQueue = Volley.newRequestQueue(CanvasFragment.mActivity);
 				HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 						HandleRequest.RESPONSE_REQUEST__JOIN_SHOP, params, 
