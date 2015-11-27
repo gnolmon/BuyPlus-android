@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -39,7 +40,7 @@ public class CanvasFragment extends CoreFragment {
 	private MyEditText mSearchEdittext;
 	private CallbackManager callbackManager;
 	private TextView tvStore, tvNews;
-	private ImageView imNewsDialog;
+	private ImageView imNewsDialog, imSearch;
 
 	private MyTextView mTitle;
 
@@ -61,6 +62,9 @@ public class CanvasFragment extends CoreFragment {
 		mTitleBlock.setVisibility(View.VISIBLE);
 		mSearchBlock.setVisibility(View.GONE);
 		mSearchBlock.clearAnimation();
+		InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(mContext.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(mSearchEdittext.getWindowToken(), 0);
+
 	}
 
 	public void showSearchBlock() {
@@ -75,6 +79,7 @@ public class CanvasFragment extends CoreFragment {
 	}
 
 	public static DialogNews sortDialog;
+
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
@@ -83,8 +88,19 @@ public class CanvasFragment extends CoreFragment {
 			break;
 		case R.id.fragment_canvas_search:
 			showSearchBlock();
+			mSearchEdittext.requestFocus();
+			mSearchEdittext.postDelayed(new Runnable() {
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					InputMethodManager keyboard = (InputMethodManager) mActivity
+							.getSystemService(mContext.INPUT_METHOD_SERVICE);
+					keyboard.showSoftInput(mSearchEdittext, 0);
+				}
+			}, 200);
 			break;
-		case R.id.fragment_canvas_sort:
+		case R.id.imSearch:
 
 			break;
 		case R.id.fragment_canvas_home_tab:
@@ -111,7 +127,7 @@ public class CanvasFragment extends CoreFragment {
 		case R.id.idSort:
 			break;
 		case R.id.imNewsDialog:
-			if (sortDialog == null ) {
+			if (sortDialog == null) {
 				sortDialog = new DialogNews(mActivity);
 			}
 			sortDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -277,7 +293,7 @@ public class CanvasFragment extends CoreFragment {
 		rHomeTab = (LinearLayout) v.findViewById(R.id.rhomeTab);
 		rHomeTab.setVisibility(View.VISIBLE);
 		rHidAnnouce = (LinearLayout) v.findViewById(R.id.idAnnouce);
-		
+
 		idSort = (LinearLayout) v.findViewById(R.id.idSort);
 
 		rHidNews = (LinearLayout) v.findViewById(R.id.idNews);
@@ -287,6 +303,7 @@ public class CanvasFragment extends CoreFragment {
 		tvStore = (TextView) v.findViewById(R.id.tvStore);
 
 		imNewsDialog = (ImageView) v.findViewById(R.id.imNewsDialog);
+		imSearch = (ImageView) v.findViewById(R.id.imSearch);
 	}
 
 	@Override
@@ -303,6 +320,7 @@ public class CanvasFragment extends CoreFragment {
 		rHidNews.setOnClickListener(this);
 		imNewsDialog.setOnClickListener(this);
 		idSort.setOnClickListener(this);
+		imSearch.setOnClickListener(this);
 	}
 
 	@Override
