@@ -70,6 +70,7 @@
                     android:gravity="center" >
 
                     <ImageView
+                        android:id="@+id/imSearch"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@drawable/search" />

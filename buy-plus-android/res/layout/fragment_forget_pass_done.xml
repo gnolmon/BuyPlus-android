@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/rlAnnounce"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/padding_login"
+        android:orientation="vertical" >
+
+        <lc.buyplus.customizes.MyTextView
+            android:id="@+id/edNameLogin"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/edit_padding"
+            android:text="Xin mời nhập email đăng ký hoặc username của bạn vào ô dưới đây"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_edit" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/rlAnnounce"
+        android:layout_marginLeft="@dimen/padding_login"
+        android:layout_marginRight="@dimen/padding_login"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/button_background"
+            android:text="XÁC NHẬN"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_edit" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlregister"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/rlButton"
+        android:layout_marginRight="@dimen/padding_login"
+        android:orientation="vertical" >
+
+        <lc.buyplus.customizes.MyTextView
+            android:id="@+id/tvBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:text="Trở lại"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+    </RelativeLayout>
+
+</RelativeLayout>
