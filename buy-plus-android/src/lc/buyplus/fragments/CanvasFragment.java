@@ -104,7 +104,7 @@ public class CanvasFragment extends CoreFragment {
 
 			break;
 		case R.id.fragment_canvas_home_tab:
-			mPager.setCurrentItem(0);
+			mPager.setCurrentItem(1);
 			break;
 		case R.id.fragment_canvas_personal_tab:
 			mPager.setCurrentItem(2);
@@ -269,7 +269,7 @@ public class CanvasFragment extends CoreFragment {
 		});
 
 		mPager.setCurrentItem(firstTab);
-		changeTabState(true, false, false, false, false, false);
+		changeTabState(false, false, false, true, false, false);
 
 		mSearchEdittext.setHintTextColor(getResources().getColor(R.color.white));
 	}
@@ -328,7 +328,7 @@ public class CanvasFragment extends CoreFragment {
 
 	}
 
-	public static int firstTab = 0;
+	public static int firstTab = 3;
 	public static UserAccount mUser;
 	public static CoreActivity mActivity;
 	public static CanvasFragment mInstance;
