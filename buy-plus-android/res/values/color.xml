@@ -29,7 +29,7 @@
     <color name="tab_selected">#00b169</color>
     <color name="thumbColor">#66aaaaaa</color>
     <color name="blur">#9cc3e5</color>
-    <color name="canvas">#F2F2F2</color>
+    <color name="canvas">#FFFFFF</color>
     <color name="actionbar">#26c281</color>
     <color name="actionbar_search">#29cf8a</color>
     <color name="maincolor">#26c281</color>

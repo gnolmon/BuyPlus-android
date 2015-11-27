@@ -98,6 +98,10 @@ public class PersonalFragment extends CoreFragment {
 
 		TextView user_id_txt = (TextView) v.findViewById(R.id.user_id);
 		user_id_txt.setText("Mã số cá nhân: " + CanvasFragment.mUser.getId());
+		
+		TextView userName = (TextView) v.findViewById(R.id.userName);
+		userName.setText(CanvasFragment.mUser.getLogin_name());
+		
 		String qrInputText = user_id_txt.toString();
 		// Find screen size
 
