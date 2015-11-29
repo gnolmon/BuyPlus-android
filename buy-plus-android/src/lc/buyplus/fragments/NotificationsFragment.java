@@ -86,12 +86,8 @@ public class NotificationsFragment extends CoreFragment{
 
 			public void onRefresh() {
 				reload = true;
-				if (!isLoading){
-		    		isLoading = true;
-		    		current_last_id = 0;
-					old_id = 0;
 		    		api_get_notifications(0, Store.limit);
-		    	}
+
 			}
 		});
 

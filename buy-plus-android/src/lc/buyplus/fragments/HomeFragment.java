@@ -112,12 +112,7 @@ public class HomeFragment extends CoreFragment {
 			public void onRefresh() {
 				reload = true;
 				api_get_all_shop(0,Store.limit,"");
-				if (!isLoading){
-					current_last_id = 0;
-					old_id = 0;
-		    		isLoading = true;
 		    		api_get_all_shop(0,Store.limit,"");
-		    	}
 			}
 		});
 	}
