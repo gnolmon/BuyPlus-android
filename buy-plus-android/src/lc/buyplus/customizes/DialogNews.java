@@ -1,12 +1,32 @@
 package lc.buyplus.customizes;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.Request.Method;
+import com.android.volley.toolbox.Volley;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.fragments.CanvasFragment;
+import lc.buyplus.fragments.HomeAnnounmentFragment;
+import lc.buyplus.models.Announcement;
+import lc.buyplus.models.Store;
 
 public class DialogNews extends android.app.Dialog implements android.view.View.OnClickListener {
 
@@ -40,6 +60,29 @@ public class DialogNews extends android.app.Dialog implements android.view.View.
 		tvAll = (TextView) findViewById(R.id.tvAll);
 		imAll = (ImageView) findViewById(R.id.imAll);
 		tvAll.setOnClickListener(this);
+		
+		switch (HomeAnnounmentFragment.type) {
+		case "normal":
+			imShop.setVisibility(View.VISIBLE);
+			imPromo.setVisibility(View.INVISIBLE);
+			imAll.setVisibility(View.INVISIBLE);
+			HomeAnnounmentFragment.type = "normal";
+			break;
+		case "promotion":
+			imShop.setVisibility(View.INVISIBLE);
+			imPromo.setVisibility(View.VISIBLE);
+			imAll.setVisibility(View.INVISIBLE);
+			HomeAnnounmentFragment.type = "promotion";
+			break;
+		case "all":
+			imShop.setVisibility(View.INVISIBLE);
+			imPromo.setVisibility(View.INVISIBLE);
+			imAll.setVisibility(View.VISIBLE);
+			HomeAnnounmentFragment.type = "all";
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -49,16 +92,22 @@ public class DialogNews extends android.app.Dialog implements android.view.View.
 			imShop.setVisibility(View.VISIBLE);
 			imPromo.setVisibility(View.INVISIBLE);
 			imAll.setVisibility(View.INVISIBLE);
+			HomeAnnounmentFragment.type = "normal";
+			api_get_all_announcements(0, Store.limit, HomeAnnounmentFragment.type, 0, 0);
 			break;
 		case R.id.tvPromo:
 			imShop.setVisibility(View.INVISIBLE);
 			imPromo.setVisibility(View.VISIBLE);
 			imAll.setVisibility(View.INVISIBLE);
+			HomeAnnounmentFragment.type = "promotion";
+			api_get_all_announcements(0, Store.limit, HomeAnnounmentFragment.type, 0, 0);
 			break;
 		case R.id.tvAll:
 			imShop.setVisibility(View.INVISIBLE);
 			imPromo.setVisibility(View.INVISIBLE);
 			imAll.setVisibility(View.VISIBLE);
+			HomeAnnounmentFragment.type = "all";
+			api_get_all_announcements(0, Store.limit, HomeAnnounmentFragment.type, 0, 0);
 			break;
 		default:
 			break;
@@ -73,5 +122,43 @@ public class DialogNews extends android.app.Dialog implements android.view.View.
 	public void setFlag(int flag) {
 		this.flag = flag;
 	}
+	
+	
+	public void api_get_all_announcements(int last_id, int limit, String type, int mode, int search) {
 
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		params.put("type", String.valueOf(type));
+		params.put("last_id", String.valueOf(last_id));
+		params.put("limit", String.valueOf(limit));
+		params.put("mode", String.valueOf(mode));
+		params.put("search", String.valueOf(search));
+		RequestQueue requestQueue = Volley.newRequestQueue(HomeAnnounmentFragment.mActivity);
+		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
+				HandleRequest.build_link(HandleRequest.GET_ALL_ANNOUNCEMENTS, params), params,
+				new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						try {
+							Store.AnnouncementsList.removeAll(Store.AnnouncementsList);
+							Log.d("api_get_all_announcements", response.toString());
+							JSONArray data_aray = response.getJSONArray("data");
+							for (int i = 0; i < data_aray.length(); i++) {
+								Announcement announcement = new Announcement((JSONObject) data_aray.get(i));
+								HomeAnnounmentFragment.current_last_id = announcement.getId();
+								Store.AnnouncementsList.add(announcement);
+							}
+							HomeAnnounmentFragment.newsAdapter.notifyDataSetChanged();
+						} catch (JSONException e) {
+
+							e.printStackTrace();
+						}
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+					}
+				});
+		requestQueue.add(jsObjRequest);
+	}
 }

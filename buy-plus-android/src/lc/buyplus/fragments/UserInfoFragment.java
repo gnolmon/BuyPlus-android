@@ -66,13 +66,13 @@ public class UserInfoFragment extends CoreFragment {
 			dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 			dialog.show();
 			api_update_user_information(username.getText().toString());
-			Store.user.setUsername(username.getText().toString());
+			Store.user.setLogin_name(username.getText().toString());
 		break;	
 		case R.id.btnIgnore:
 			DialogUser dialog1 = new DialogUser(mActivity,"Bạn có muốn thoát và không lưu thay đổi ?", 1);
 			dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 			dialog1.show();
-			username.setText(Store.user.getUsername());
+			username.setText(Store.user.getLogin_name());
 		break;	
 		}
 		
@@ -89,7 +89,7 @@ public class UserInfoFragment extends CoreFragment {
 		reject = (Button) v.findViewById(R.id.btnIgnore);
 		accept.setOnClickListener(this);
 		reject.setOnClickListener(this);
-		username.setText(Store.user.getUsername());
+		username.setText(Store.user.getLogin_name());
 	}
 
 	@Override

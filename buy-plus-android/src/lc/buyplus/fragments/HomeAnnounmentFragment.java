@@ -45,14 +45,14 @@ import lc.buyplus.pulltorefresh.PullToRefreshListView.OnRefreshListener;
 
 public class HomeAnnounmentFragment extends CoreFragment {
 	private PullToRefreshListView listView;
-	private AnnounmentAdapter newsAdapter;
+	public static AnnounmentAdapter newsAdapter;
 	private LayoutInflater inflaterActivity;
 	FragmentManager mFragmentManager;
 	public static Fragment homeFrg;
 
-	private int current_last_id = 0;
+	public static int current_last_id = 0;
 	private boolean isLoadMore,isLoading,reload;
-	
+	public static String type = "all";
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_announment, container, false);
@@ -83,7 +83,7 @@ public class HomeAnnounmentFragment extends CoreFragment {
 		homeFrg = this.getTargetFragment();
 		newsAdapter = new AnnounmentAdapter(Store.AnnouncementsList, inflaterActivity, mActivity, mFragmentManager);
 		listView.setAdapter(newsAdapter);
-		api_get_all_announcements(0, Store.limit, 0, 0, 0);
+		api_get_all_announcements(0, Store.limit, type, 0, 0);
 		
 		listView.setOnItemClickListener(new OnItemClickListener() {
 		      public void onItemClick(AdapterView<?> parent, View view,
@@ -96,7 +96,7 @@ public class HomeAnnounmentFragment extends CoreFragment {
 		newsAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-            	api_get_all_announcements(current_last_id, Store.limit, 0, 0, 0);
+            	api_get_all_announcements(current_last_id, Store.limit, type, 0, 0);
             }
         });
 		
@@ -123,7 +123,7 @@ public class HomeAnnounmentFragment extends CoreFragment {
 
 			public void onRefresh() {
 				reload = true;
-				api_get_all_announcements(0, Store.limit, 0, 0, 0);
+				api_get_all_announcements(0, Store.limit, type, 0, 0);
 				
 			}
 		});
@@ -135,7 +135,7 @@ public class HomeAnnounmentFragment extends CoreFragment {
 
 	}
 	
-	public void api_get_all_announcements(int last_id, int limit, int type, int mode, int search) {
+	public void api_get_all_announcements(int last_id, int limit, String type, int mode, int search) {
 
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
