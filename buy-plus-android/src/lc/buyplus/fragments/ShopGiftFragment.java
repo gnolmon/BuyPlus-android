@@ -46,7 +46,7 @@ public class ShopGiftFragment extends CoreFragment {
 	private int current_last_id = 0;
 	private boolean isLoadMore,isLoading,reload;
 	private ArrayList<Gift> GiftsList = new ArrayList<Gift>();
-	
+	private int old_id = 0;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_store_redeem, container, false);
@@ -78,7 +78,7 @@ public class ShopGiftFragment extends CoreFragment {
 		GiftsList.removeAll(GiftsList);
 		giftAdapter = new ShopGiftAdapter(GiftsList, inflaterActivity);
 		listView.setAdapter(giftAdapter);
-		api_get_shop_gifts(Store.current_shop_id,0,Store.limit);
+		//api_get_shop_gifts(Store.current_shop_id,0,Store.limit);
 		giftAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -90,18 +90,13 @@ public class ShopGiftFragment extends CoreFragment {
 		    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 		    	
 		    	if (!isLoading && firstVisibleItem + visibleItemCount == totalItemCount){
-		    		isLoadMore = true;
+		    		  isLoading = true;
+		    		  giftAdapter.getOnLoadMoreListener().onLoadMore();	
 		    	}
 		    	 
 		    }
 		    public void onScrollStateChanged(AbsListView view, int scrollState) {
 		      // TODO Auto-generated method stub
-		      if(scrollState == 0) {
-		    	  if (isLoadMore){
-		    		  isLoading = true;
-		    		  giftAdapter.getOnLoadMoreListener().onLoadMore();	
-		    	  }
-		      }
 		    }
 		 });
 		
@@ -109,8 +104,11 @@ public class ShopGiftFragment extends CoreFragment {
 
 			public void onRefresh() {
 				reload = true;
-				api_get_shop_gifts(Store.current_shop_id,0,Store.limit);
 				
+				if (!isLoading){
+		    		isLoading = true;
+		    		api_get_shop_gifts(Store.current_shop_id,0,Store.limit);
+		    	}
 			}
 		});
 	}
@@ -145,7 +143,10 @@ public class ShopGiftFragment extends CoreFragment {
 								current_last_id = gift.getId();
 								GiftsList.add(gift);
 							}
-							isLoading = false;
+							if (old_id != current_last_id) {
+								isLoading = false;
+								old_id = current_last_id;
+							}
 							giftAdapter.notifyDataSetChanged();
 						} catch (JSONException e) {
 

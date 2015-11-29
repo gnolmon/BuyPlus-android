@@ -46,7 +46,7 @@ public class ShopAnnounmentFragment extends CoreFragment {
 	private ArrayList<Announcement> ShopAnnouncementsList = new ArrayList<Announcement>();
 	private int current_last_id = 0;
 	private boolean isLoadMore,isLoading,reload;
-	
+	private int old_id = 0;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_shop_announment, container, false);
@@ -76,7 +76,7 @@ public class ShopAnnounmentFragment extends CoreFragment {
 		ShopAnnouncementsList.removeAll(ShopAnnouncementsList);
 		newsAdapter = new ShopAnnounmentAdapter(ShopAnnouncementsList, inflaterActivity);
 		listView.setAdapter(newsAdapter);
-		api_get_shop_announcements(Store.current_shop_id, 0, Store.limit, 0);
+		//api_get_shop_announcements(Store.current_shop_id, 0, Store.limit, 0);
 		
 		newsAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -89,18 +89,13 @@ public class ShopAnnounmentFragment extends CoreFragment {
 		    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 		    	
 		    	if (!isLoading && firstVisibleItem + visibleItemCount == totalItemCount){
-		    		isLoadMore = true;
+		    		isLoading = true;
+		    		  newsAdapter.getOnLoadMoreListener().onLoadMore();	
 		    	}
 		    	 
 		    }
 		    public void onScrollStateChanged(AbsListView view, int scrollState) {
 		      // TODO Auto-generated method stub
-		      if(scrollState == 0) {
-		    	  if (isLoadMore){
-		    		  isLoading = true;
-		    		  newsAdapter.getOnLoadMoreListener().onLoadMore();	
-		    	  }
-		      }
 		    }
 		 });
 		
@@ -108,8 +103,11 @@ public class ShopAnnounmentFragment extends CoreFragment {
 
 			public void onRefresh() {
 				reload = true;
-				api_get_shop_announcements(Store.current_shop_id, 0, Store.limit, 0);
 				
+				if (!isLoading){
+		    		isLoading = true;
+		    		api_get_shop_announcements(Store.current_shop_id, 0, Store.limit, 0);
+		    	}
 			}
 		});
 	}
@@ -149,7 +147,10 @@ public class ShopAnnounmentFragment extends CoreFragment {
 							}
 							
 							newsAdapter.notifyDataSetChanged();
-							isLoading = false;
+							if (old_id != current_last_id) {
+								isLoading = false;
+								old_id = current_last_id;
+							}
 						} catch (JSONException e) {
 
 							e.printStackTrace();

@@ -49,6 +49,7 @@ public class ShopFriendFragment  extends CoreFragment {
 	private LayoutInflater inflaterActivity;
 	private ImageView imAdd;
 	private int current_last_id = 0;
+	private int old_id = 0;
 	private boolean isLoadMore,isLoading,reload;
 	private ArrayList<Friend> FriendsList = new ArrayList<Friend>();
 	
@@ -83,7 +84,7 @@ public class ShopFriendFragment  extends CoreFragment {
 		FriendsList.removeAll(FriendsList);
 		friendAdapter = new ShopFriendAdapter(FriendsList, inflaterActivity);
 		listView.setAdapter(friendAdapter);
-		api_get_shop_friends(Store.current_shop_id,0,Store.limit);
+		//api_get_shop_friends(Store.current_shop_id,0,Store.limit);
 		imAdd = (ImageView) v.findViewById(R.id.imAdd);
 		friendAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -96,18 +97,13 @@ public class ShopFriendFragment  extends CoreFragment {
 		    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 		    	
 		    	if (!isLoading && firstVisibleItem + visibleItemCount == totalItemCount){
-		    		isLoadMore = true;
+		    		isLoading = true;
+		    		  friendAdapter.getOnLoadMoreListener().onLoadMore();
 		    	}
 		    	 
 		    }
 		    public void onScrollStateChanged(AbsListView view, int scrollState) {
 		      // TODO Auto-generated method stub
-		      if(scrollState == 0) {
-		    	  if (isLoadMore){
-		    		  isLoading = true;
-		    		  friendAdapter.getOnLoadMoreListener().onLoadMore();	
-		    	  }
-		      }
 		    }
 		 });
 		
@@ -115,7 +111,11 @@ public class ShopFriendFragment  extends CoreFragment {
 
 			public void onRefresh() {
 				reload = true;
-				api_get_shop_friends(Store.current_shop_id,0,Store.limit);
+				if (!isLoading){
+		    		isLoading = true;
+		    		api_get_shop_friends(Store.current_shop_id,0,Store.limit);
+		    	}
+				
 				
 			}
 		});
@@ -160,7 +160,10 @@ public class ShopFriendFragment  extends CoreFragment {
 								current_last_id = friend.getId();
 								FriendsList.add(friend);
 							}
-							isLoading = false;
+							if (old_id != current_last_id) {
+								isLoading = false;
+								old_id = current_last_id;
+							}
 							friendAdapter.notifyDataSetChanged();
 						} catch (JSONException e) {
 

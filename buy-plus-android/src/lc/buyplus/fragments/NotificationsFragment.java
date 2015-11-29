@@ -38,7 +38,7 @@ public class NotificationsFragment extends CoreFragment{
 	private PullToRefreshListView listView;
 	private NotificationAdapter notiAdapter;
 	private LayoutInflater inflaterActivity;
-	
+	private int old_id = 0;
 	private int current_last_id = 0;
 	private boolean isLoadMore,isLoading,reload;
 	
@@ -55,7 +55,8 @@ public class NotificationsFragment extends CoreFragment{
 		listView = (PullToRefreshListView ) view.findViewById(R.id.listNoti);
 		notiAdapter = new NotificationAdapter(Store.NotificationsList, inflaterActivity);
 		listView.setAdapter(notiAdapter);
-		api_get_notifications(0, Store.limit);
+		//Store.NotificationsList.removeAll(Store.NotificationsList);
+		//api_get_notifications(0, Store.limit);
 		
 		notiAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -67,17 +68,15 @@ public class NotificationsFragment extends CoreFragment{
 		    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 		    	
 		    	if (!isLoading && firstVisibleItem + visibleItemCount == totalItemCount){
-		    		isLoadMore = true;
+		    		isLoading = true;
+		    		 notiAdapter.getOnLoadMoreListener().onLoadMore();
 		    	}
 		    	 
 		    }
 		    public void onScrollStateChanged(AbsListView view, int scrollState) {
 		      // TODO Auto-generated method stub
 		      if(scrollState == 0) {
-		    	  if (isLoadMore){
-		    		  isLoading = true;
-		    		  notiAdapter.getOnLoadMoreListener().onLoadMore();
-		    		  Log.d("isLoad",String.valueOf(Store.NotificationsList.size()));  	
+		    	  if (isLoadMore){	
 		    	  }
 		      }
 		    }
@@ -87,9 +86,10 @@ public class NotificationsFragment extends CoreFragment{
 
 			public void onRefresh() {
 				reload = true;
-				Log.d("sixxxxxze",String.valueOf(Store.NotificationsList.size()));
-				api_get_notifications(0, Store.limit);
-				
+				if (!isLoading){
+		    		isLoading = true;
+		    		api_get_notifications(0, Store.limit);
+		    	}
 			}
 		});
 
@@ -142,7 +142,10 @@ public class NotificationsFragment extends CoreFragment{
 								current_last_id = notification.getId();
 								Store.NotificationsList.add(notification);
 							}
-							isLoading = false;
+							if (old_id != current_last_id) {
+								isLoading = false;
+								old_id = current_last_id;
+							}
 							notiAdapter.notifyDataSetChanged();
 						} catch (JSONException e) {
 

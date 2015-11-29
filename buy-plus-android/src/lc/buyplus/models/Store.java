@@ -11,7 +11,7 @@ public class Store {
 	public static ArrayList<FacebookFriend> FacebookFriendsList = new ArrayList<FacebookFriend>();
 	public static UserAccount user;
 	
-	public static int limit = 6;
+	public static int limit = 8;
 	public static String current_shop_name;
 	public static int current_shop_id; 
 	public static Shop current_shop; 

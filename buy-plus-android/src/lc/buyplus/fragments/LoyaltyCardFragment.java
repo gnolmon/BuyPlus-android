@@ -49,7 +49,7 @@ public class LoyaltyCardFragment extends CoreFragment {
 	private RedeemAdapter redeemAdapter;
 	private int current_last_id = 0;
 	private boolean isLoadMore,isLoading,reload;
-	
+	private int old_id = 0;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_redeem, container, false);
@@ -76,7 +76,7 @@ public class LoyaltyCardFragment extends CoreFragment {
 	protected void initViews(View v) {
 		redeemAdapter = new RedeemAdapter(Store.MyShopsList, inflaterActivity);
 		listView.setAdapter(redeemAdapter);
-		api_get_my_shop(0,Store.limit,0);
+		//api_get_my_shop(0,Store.limit,0);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 		      public void onItemClick(AdapterView<?> parent, View view,
 		          int position, long id) {
@@ -95,18 +95,13 @@ public class LoyaltyCardFragment extends CoreFragment {
 		    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 		    	
 		    	if (!isLoading && firstVisibleItem + visibleItemCount == totalItemCount){
-		    		isLoadMore = true;
+		    		isLoading = true;
+		    		redeemAdapter.getOnLoadMoreListener().onLoadMore();
 		    	}
 		    	 
 		    }
 		    public void onScrollStateChanged(AbsListView view, int scrollState) {
 		      // TODO Auto-generated method stub
-		      if(scrollState == 0) {
-		    	  if (isLoadMore){
-		    		  isLoading = true;
-		    		  redeemAdapter.getOnLoadMoreListener().onLoadMore();	
-		    	  }
-		      }
 		    }
 		 });
 		
@@ -114,8 +109,10 @@ public class LoyaltyCardFragment extends CoreFragment {
 
 			public void onRefresh() {
 				reload = true;
-				api_get_my_shop(0,Store.limit,0);
-				
+				if (!isLoading){
+		    		isLoading = true;
+		    		api_get_my_shop(0,Store.limit,0);
+		    	}
 			}
 		});
 	}
@@ -153,7 +150,10 @@ public class LoyaltyCardFragment extends CoreFragment {
 								}
 							}
 							redeemAdapter.notifyDataSetChanged();
-							isLoading = false;
+							if (old_id != current_last_id) {
+								isLoading = false;
+								old_id = current_last_id;
+							}
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
