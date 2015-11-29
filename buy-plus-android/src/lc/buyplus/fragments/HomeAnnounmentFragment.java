@@ -121,6 +121,8 @@ public class HomeAnnounmentFragment extends CoreFragment {
 				
 				if (!isLoading){
 		    		isLoading = true;
+		    		current_last_id = 0;
+					old_id = 0;
 		    		api_get_all_announcements(0, Store.limit, type, 0, 0);
 		    	}
 			}

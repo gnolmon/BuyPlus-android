@@ -113,6 +113,8 @@ public class ShopFriendFragment  extends CoreFragment {
 				reload = true;
 				if (!isLoading){
 		    		isLoading = true;
+		    		current_last_id = 0;
+					old_id = 0;
 		    		api_get_shop_friends(Store.current_shop_id,0,Store.limit);
 		    	}
 				
