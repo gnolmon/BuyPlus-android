@@ -41,5 +41,6 @@
     <color name="list_divider">#b5b5b5</color>
     <color name="divider_tab_bottom">#93e1c0</color>
     <color name="divider_top">#b5b5b5</color>
+    <color name="dark_slate_gray">#2F4F4F</color>
 
 </resources>

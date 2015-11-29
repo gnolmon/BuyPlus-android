@@ -1,6 +1,5 @@
 package lc.buyplus.fragments;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,10 +22,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 import lc.buyplus.R;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.AnnounmentAdapter;
@@ -34,36 +32,33 @@ import lc.buyplus.adapter.OnLoadMoreListener;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.cores.PullAndLoadListView;
 import lc.buyplus.models.Announcement;
-import lc.buyplus.models.Friend;
-import lc.buyplus.models.Gift;
-import lc.buyplus.models.Notification;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
-import lc.buyplus.pulltorefresh.PullToRefreshListView;
 import lc.buyplus.pulltorefresh.PullToRefreshListView.OnRefreshListener;
 
 public class HomeAnnounmentFragment extends CoreFragment {
-	private PullToRefreshListView listView;
+	private PullAndLoadListView listView;
 	public static AnnounmentAdapter newsAdapter;
 	private LayoutInflater inflaterActivity;
 	FragmentManager mFragmentManager;
 	public static Fragment homeFrg;
 
 	public static int current_last_id = 0;
-	private boolean isLoadMore,isLoading,reload;
+	private boolean isLoadMore, isLoading, reload;
 	public static String type = "all";
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_announment, container, false);
-		listView = (PullToRefreshListView) view.findViewById(R.id.listAnnounment);
+		listView = (PullAndLoadListView) view.findViewById(R.id.listAnnounment);
 		inflaterActivity = inflater;
 		initViews(view);
 		initModels();
 		initAnimations();
 		mFragmentManager = getFragmentManager();
-		
-		
+
 		return view;
 	}
 
@@ -84,57 +79,45 @@ public class HomeAnnounmentFragment extends CoreFragment {
 		newsAdapter = new AnnounmentAdapter(Store.AnnouncementsList, inflaterActivity, mActivity, mFragmentManager);
 		listView.setAdapter(newsAdapter);
 		api_get_all_announcements(0, Store.limit, type, 0, 0);
-		
-		listView.setOnItemClickListener(new OnItemClickListener() {
-		      public void onItemClick(AdapterView<?> parent, View view,
-		          int position, long id) {
-		    	  Store.current_shop_id = ((Announcement)newsAdapter.getItem(position)).getShop_id();
-		    	  api_get_shop_info(Store.current_shop_id);
-		      }
-	    });
-		
-		newsAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-            	api_get_all_announcements(current_last_id, Store.limit, type, 0, 0);
-            }
-        });
-		
-		listView.setOnScrollListener(new OnScrollListener(){
-		    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-		    	
-		    	if (!isLoading && firstVisibleItem + visibleItemCount == totalItemCount){
-		    		isLoadMore = true;
-		    	}
-		    	 
-		    }
-		    public void onScrollStateChanged(AbsListView view, int scrollState) {
-		      // TODO Auto-generated method stub
-		      if(scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
-		    	  if (isLoadMore){
-		    		  isLoading = true;
-		    		  newsAdapter.getOnLoadMoreListener().onLoadMore();	
-		    	  }
-		      }
-		    }
-		 });
-		
-		listView.setOnRefreshListener(new OnRefreshListener() {
 
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Store.current_shop_id = ((Announcement) newsAdapter.getItem(position)).getShop_id();
+				api_get_shop_info(Store.current_shop_id);
+			}
+		});
+
+		newsAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+			@Override
+			public void onLoadMore() {
+				api_get_all_announcements(current_last_id, Store.limit, type, 0, 0);
+			}
+		});
+
+		listView.setOnLoadMoreListener(new OnLoadMoreListener() {
+
+			@Override
+			public void onLoadMore() {
+				// TODO Auto-generated method stub
+				newsAdapter.getOnLoadMoreListener().onLoadMore();
+			}
+		});
+
+		listView.setOnRefreshListener(new lc.buyplus.cores.PullToRefreshListView.OnRefreshListener() {
+			
+			@Override
 			public void onRefresh() {
-				reload = true;
 				api_get_all_announcements(0, Store.limit, type, 0, 0);
 				
 			}
 		});
-		
 	}
 
 	@Override
 	protected void initAnimations() {
 
 	}
-	
+
 	public void api_get_all_announcements(int last_id, int limit, String type, int mode, int search) {
 
 		Map<String, String> params = new HashMap<String, String>();
@@ -151,7 +134,7 @@ public class HomeAnnounmentFragment extends CoreFragment {
 					@Override
 					public void onResponse(JSONObject response) {
 						try {
-							if (reload){
+							if (reload) {
 								Store.AnnouncementsList.removeAll(Store.AnnouncementsList);
 								reload = false;
 							}
@@ -194,9 +177,9 @@ public class HomeAnnounmentFragment extends CoreFragment {
 						try {
 
 							Store.current_shop = new Shop(response.getJSONObject("data"));
-							Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);
-				            Store.current_shop_name =  Store.current_shop.getName();
-				            startActivity(shopInfoActivity);
+							Intent shopInfoActivity = new Intent(mActivity, ShopInfoActivity.class);
+							Store.current_shop_name = Store.current_shop.getName();
+							startActivity(shopInfoActivity);
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
@@ -208,6 +191,7 @@ public class HomeAnnounmentFragment extends CoreFragment {
 				});
 		requestQueue.add(jsObjRequest);
 	}
+
 	public static final long serialVersionUID = 6036846677812555352L;
 
 	public static CoreActivity mActivity;
