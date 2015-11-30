@@ -11,6 +11,28 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
   	<uses-permission android:name="android.permission.INTERNET"/>
+  	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  	    <!-- GCM requires a Google account. -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+ 
+    <!-- Keeps the processor from sleeping when a message is received. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />	
+    
+    <!-- This app has permission to register and receive data message. -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+ 
+    <!-- Network State Permissions to detect Internet status -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+ 
+    <!-- Permission to vibrate -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    
+    <!-- Creates a custom permission so only this app can receive its messages. -->
+    <permission
+        android:name="lc.buyplus.pushnotifications.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+ 
+    <uses-permission android:name="lc.buyplus.pushnotifications.permission.C2D_MESSAGE" />
   		
     <application
         android:name="lc.buyplus.application.MonApplication"

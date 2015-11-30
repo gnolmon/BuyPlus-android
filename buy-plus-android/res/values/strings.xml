@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+
     <string name="canvas_title_home">Cửa hàng</string>
     <string name="canvas_title_personal">Cá nhân</string>
     <string name="canvas_title_loyaltycard">Thẻ tích điểm</string>
     <string name="canvas_title_notifications">Thông báo</string>
     <string name="canvas_title_setting">Cài đặt</string>
-    
-	<!-- APPLICATION -->
+
+    <!-- APPLICATION -->
     <string name="app_name">Buy Plus</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    
+
     <!-- BLE -->
     <string name="ble_not_support">Sorry, your device not support BLE.</string>
-	<string name="ble_paired">Paired.</string>
-	
-	<!-- PULL TO REFRESH -->
-	<string name="pull_to_refresh_pull_label">Pull to refresh…</string>
+    <string name="ble_paired">Paired.</string>
+
+    <!-- PULL TO REFRESH -->
+    <string name="pull_to_refresh_pull_label">Pull to refresh…</string>
     <string name="pull_to_refresh_release_label">Release to refresh…</string>
     <string name="pull_to_refresh_refreshing_label">Loading…</string>
 
@@ -25,12 +25,34 @@
     <string name="pull_to_refresh_from_bottom_pull_label">@string/pull_to_refresh_pull_label</string>
     <string name="pull_to_refresh_from_bottom_release_label">@string/pull_to_refresh_release_label</string>
     <string name="pull_to_refresh_from_bottom_refreshing_label">@string/pull_to_refresh_refreshing_label</string>
-    
     <string name="facebook_app_id">474226309417351</string>
-    
     <string name="guide">Tính năng &amp; Hướng dẫn</string>
     <string name="ptr_pull_to_refresh"></string>
     <string name="ptr_release_to_refresh"></string>
     <string name="ptr_refreshing"></string>
     <string name="ptr_last_updated"></string>
+
+    <!-- NOTIFICATION -->
+    <string name="gcm_defaultSenderId"></string>
+    <string name="easygcm_sender_id"></string> 
+    <string name="title_activity_main">Push Notifications</string>
+    <string name="error_config">Please set the %1$s constant and recompile the app.</string>
+    <string name="already_registered">Device is already registered on server.</string>
+    <string name="gcm_registered">From GCM: device successfully registered!</string>
+    <string name="gcm_unregistered">From GCM: device successfully unregistered!</string>
+    <string name="gcm_message">From GCM: you got message!</string>
+    <string name="gcm_error">From GCM: error (%1$s).</string>
+    <string name="gcm_recoverable_error">From GCM: recoverable error (%1$s).</string>
+    <string name="gcm_deleted">From GCM: server deleted %1$d pending messages!</string>
+    <string name="server_registering">Trying (attempt %1$d/%2$d) to register device on Demo Server.</string>
+    <string name="server_registered">From Demo Server: successfully added device!</string>
+    <string name="server_unregistered">From Demo Server: successfully removed device!</string>
+    <string name="server_register_error">Could not register device on Demo Server after %1$d attempts.</string>
+    <string name="server_unregister_error">Could not unregister device on Demo Server (%1$s).</string>
+    <string name="options_register">Register</string>
+    <string name="options_unregister">Unregister</string>
+    <string name="options_clear">Clear</string>
+    <string name="options_exit">Exit</string>
+    
+
 </resources>
