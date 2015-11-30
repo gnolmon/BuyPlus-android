@@ -67,6 +67,7 @@ public class UserInfoFragment extends CoreFragment {
 			dialog.show();
 			api_update_user_information(username.getText().toString());
 			Store.user.setLogin_name(username.getText().toString());
+			PersonalFragment.userName.setText(Store.user.getLogin_name());
 		break;	
 		case R.id.btnIgnore:
 			DialogUser dialog1 = new DialogUser(mActivity,"Bạn có muốn thoát và không lưu thay đổi ?", 1);

@@ -225,9 +225,20 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 			public void onPageScrollStateChanged(int arg0) {
 			}
 		});
+		
+		if ((Store.current_shop.current_customer_shop_id == null) || (Store.current_shop.current_customer_shop_id == "")) {
+			firstTab = 1;
+		} else {
+			firstTab = 0;
+		}
 
 		mPager.setCurrentItem(firstTab);
-		changeTabState(true, false, false);
+		if (firstTab==0){
+			changeTabState(true, false, false);
+		}else{
+			changeTabState(false, true, false);
+		}
+		
 
 	}
 

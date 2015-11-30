@@ -80,6 +80,7 @@ public class LoyaltyCardFragment extends CoreFragment {
 		listView.setOnItemClickListener(new OnItemClickListener() {
 		      public void onItemClick(AdapterView<?> parent, View view,
 		          int position, long id) {
+		    	  	listView.setEnabled(false);
 		             Store.current_shop_id = ((Shop)redeemAdapter.getItem(position)).getId();
 		             api_get_shop_info(Store.current_shop_id);
 		      }
@@ -160,6 +161,7 @@ public class LoyaltyCardFragment extends CoreFragment {
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						listView.onRefreshComplete();
+						isLoading = false;
 					}
 				});
 		requestQueue.add(jsObjRequest);
@@ -186,10 +188,12 @@ public class LoyaltyCardFragment extends CoreFragment {
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
+						listView.setEnabled(true);
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
+						listView.setEnabled(true);
 					}
 				});
 		requestQueue.add(jsObjRequest);

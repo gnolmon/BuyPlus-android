@@ -88,6 +88,7 @@ public class HomeAnnounmentFragment extends CoreFragment {
 		listView.setOnItemClickListener(new OnItemClickListener() {
 		      public void onItemClick(AdapterView<?> parent, View view,
 		          int position, long id) {
+		    	  listView.setEnabled(false);
 		    	  Store.current_shop_id = ((Announcement)newsAdapter.getItem(position)).getShop_id();
 		    	  api_get_shop_info(Store.current_shop_id);
 		      }
@@ -118,7 +119,7 @@ public class HomeAnnounmentFragment extends CoreFragment {
 
 			public void onRefresh() {
 				reload = true;
-		    		api_get_all_announcements(0, Store.limit, type, 0, 0);
+		    	api_get_all_announcements(0, Store.limit, type, 0, 0);
 
 			}
 		});
@@ -172,6 +173,7 @@ public class HomeAnnounmentFragment extends CoreFragment {
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						listView.onRefreshComplete();
+						isLoading = false;
 					}
 				});
 		requestQueue.add(jsObjRequest);
@@ -195,13 +197,16 @@ public class HomeAnnounmentFragment extends CoreFragment {
 							Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);
 				            Store.current_shop_name =  Store.current_shop.getName();
 				            startActivity(shopInfoActivity);
+				            
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
+						listView.setEnabled(true);
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
+						listView.setEnabled(true);
 					}
 				});
 		requestQueue.add(jsObjRequest);

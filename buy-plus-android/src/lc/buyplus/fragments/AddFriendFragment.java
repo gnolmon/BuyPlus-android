@@ -19,13 +19,17 @@ import com.google.zxing.WriterException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -33,6 +37,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import lc.buyplus.R;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.AddFriendAdapter;
@@ -41,6 +46,7 @@ import lc.buyplus.adapter.ShopFriendAdapter;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.models.Friend;
 import lc.buyplus.models.Store;
 import lc.buyplus.models.UserAccount;
@@ -125,6 +131,19 @@ public class AddFriendFragment extends CoreFragment {
 		
 		imFb = (ImageView) v.findViewById(R.id.imFb);
 		txtFind = (EditText) v.findViewById(R.id.search_params);
+		txtFind.setOnKeyListener(new OnKeyListener() {
+		    public boolean onKey(View v, int keyCode, KeyEvent event) {
+		        // If the event is a key-down event on the "enter" button
+		        if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+		            (keyCode == KeyEvent.KEYCODE_ENTER)) {
+		        	search_params = String.valueOf(txtFind.getText());
+					api_search_friends_for_shop(Store.current_shop_id, search_params);
+		          return true;
+		        }
+		        return false;
+		    }
+		});
+		
 		imFb.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -224,15 +243,24 @@ public void api_search_friends_for_shop(int shop_id, String search){
 						try {
 							Log.d("api_search_friends_for_shop", response.toString());
 							ArrayList<Friend> FriendsList = new ArrayList<Friend>();
+							
 							JSONArray data_aray = response.getJSONArray("data");
-							for (int i = 0; i < data_aray.length(); i++) {
-								Friend friend = new Friend((JSONObject) data_aray.get(i));
-								FriendsList.add(friend);
-								
-	                        }
-							addFriendAdapter = new AddFriendAdapter(FriendsList, inflaterActivity);
-							listFriendFb.setAdapter(addFriendAdapter);
-							addFriendAdapter.notifyDataSetChanged();	
+							if (data_aray.length()==0){
+								DialogMessage dialog = new DialogMessage(mActivity, "Người dùng này hiện không tồn tại trong hệ thống");
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							}
+							else{
+								for (int i = 0; i < data_aray.length(); i++) {
+									Friend friend = new Friend((JSONObject) data_aray.get(i));
+									FriendsList.add(friend);
+									
+		                        }
+								addFriendAdapter = new AddFriendAdapter(FriendsList, inflaterActivity);
+								listFriendFb.setAdapter(addFriendAdapter);
+								addFriendAdapter.notifyDataSetChanged();	
+							}
+							
 						} catch (JSONException e) {
 
 							e.printStackTrace();

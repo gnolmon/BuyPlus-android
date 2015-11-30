@@ -124,6 +124,7 @@ public class ShopFriendActivity extends CoreActivity {
 	}
 	@Override
 	public void onBackPressed() {
-		moveTaskToBack(true);
+		finish();
+		//moveTaskToBack(true);
 	}
 }

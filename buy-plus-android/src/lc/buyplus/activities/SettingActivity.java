@@ -59,6 +59,7 @@ public class SettingActivity extends CoreActivity {
 	}
 	@Override
 	public void onBackPressed() {
-		moveTaskToBack(true);
+		finish();
+		//moveTaskToBack(true);
 	}
 }

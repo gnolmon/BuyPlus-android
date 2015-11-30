@@ -82,6 +82,7 @@ public class HomeFragment extends CoreFragment {
 		          int position, long id) {
 		    	  	 Store.current_shop_id = ((Shop)storeAdapter.getItem(position)).getId();
 		    	  	 Log.d("shop_ID",String.valueOf(Store.current_shop_id));
+		    	  	listView.setEnabled(false);
 		    	  	 api_get_shop_info(Store.current_shop_id);
 		      }
 		    });
@@ -112,7 +113,6 @@ public class HomeFragment extends CoreFragment {
 			public void onRefresh() {
 				reload = true;
 				api_get_all_shop(0,Store.limit,"");
-		    		api_get_all_shop(0,Store.limit,"");
 			}
 		});
 	}
@@ -166,6 +166,7 @@ public class HomeFragment extends CoreFragment {
 					public void onErrorResponse(VolleyError error) {
 						Log.d("api_get_all_shop",error.toString());
 						listView.onRefreshComplete();
+						isLoading = false;
 					}
 				});
 			requestQueue.add(jsObjRequest);
@@ -185,18 +186,21 @@ public class HomeFragment extends CoreFragment {
 					public void onResponse(JSONObject response) {
 						Log.d("api_get_shop_info", response.toString());
 						try {
-
+							
 							Store.current_shop = new Shop(response.getJSONObject("data"));
 							Store.current_shop_name =  Store.current_shop.getName();
 							Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);			            
 				            startActivity(shopInfoActivity);
+				           
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
+						listView.setEnabled(true);
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
+						listView.setEnabled(true);
 					}
 				});
 		requestQueue.add(jsObjRequest);

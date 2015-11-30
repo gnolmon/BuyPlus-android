@@ -77,7 +77,7 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 					ShopInfoFragment.isJoin = false;
 				} else {
 					api_join_shop(Store.current_shop_id);
-					ShopInfoFragment.join_leave.setText("Đã Tham gia");
+					ShopInfoFragment.join_leave.setText("Đã tham gia");
 					ShopInfoFragment.join_leave.setBackground(c.getResources().getDrawable(R.drawable.round_button_green));
 					ShopInfoFragment.isJoin = true;
 				}

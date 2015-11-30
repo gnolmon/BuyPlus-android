@@ -100,14 +100,6 @@ public class AnnounmentAdapter extends BaseAdapter {
 		Announcement item = announcementList.get(position);
 
 		name.setText(item.getShop().getName());
-		name.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				 Intent shopInfoActivity = new Intent(activity,ShopInfoActivity.class);     
-				 activity.startActivity(shopInfoActivity);
-			}
-		});
 		
 		long unixSeconds = item.getStart_time();
 		Date date = new Date(unixSeconds*1000L);
