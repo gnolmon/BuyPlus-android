@@ -9,17 +9,17 @@ public final class CommonUtilities {
     static final String SERVER_URL = "http://10.0.2.2/gcm_server_php/register.php"; 
 
     // Google project id
-    static final String SENDER_ID = ""; 
+    public static final String SENDER_ID = ""; 
 
     /**
      * Tag used on log messages.
      */
     static final String TAG = "AndroidHive GCM";
 
-    static final String DISPLAY_MESSAGE_ACTION =
+    public static final String DISPLAY_MESSAGE_ACTION =
             "com.androidhive.pushnotifications.DISPLAY_MESSAGE";
 
-    static final String EXTRA_MESSAGE = "message";
+    public static final String EXTRA_MESSAGE = "message";
 
     /**
      * Notifies UI to display a message.
