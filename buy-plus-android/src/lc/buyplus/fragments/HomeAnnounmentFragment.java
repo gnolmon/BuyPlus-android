@@ -44,7 +44,7 @@ import lc.buyplus.pulltorefresh.PullToRefreshListView;
 import lc.buyplus.pulltorefresh.PullToRefreshListView.OnRefreshListener;
 
 public class HomeAnnounmentFragment extends CoreFragment {
-	private PullToRefreshListView listView;
+	public static PullToRefreshListView listView;
 	public static AnnounmentAdapter newsAdapter;
 	private LayoutInflater inflaterActivity;
 	FragmentManager mFragmentManager;

@@ -101,7 +101,7 @@ public class FriendAdapter extends BaseAdapter {
 		return convertView;
 	}
 	
-	public void api_send_request_join_shop_to_friend(int shop_id, int temp_id){
+	public void api_send_request_join_shop_to_friend(int shop_id, String temp_id){
 	 	
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", Store.user.getAccessToken());

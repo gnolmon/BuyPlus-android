@@ -42,7 +42,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
 public class HomeFragment extends CoreFragment {
-	private PullToRefreshListView listView;
+	public static PullToRefreshListView listView;
 	public static StoreAdapter storeAdapter;
 	private LayoutInflater inflaterActivity;
 	public static int current_last_id = 0;

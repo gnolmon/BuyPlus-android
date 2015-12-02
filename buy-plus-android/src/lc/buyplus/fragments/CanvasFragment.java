@@ -43,6 +43,7 @@ import lc.buyplus.customizes.DialogSort;
 import lc.buyplus.customizes.MyAnimations;
 import lc.buyplus.customizes.MyEditText;
 import lc.buyplus.customizes.MyTextView;
+import lc.buyplus.models.Announcement;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
 import lc.buyplus.models.UserAccount;
@@ -50,8 +51,7 @@ import lc.buyplus.models.UserAccount;
 public class CanvasFragment extends CoreFragment {
 
 	private static final long serialVersionUID = 1L;
-	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab, rHidAnnouce, rHidNews,
-			rHidSort;
+	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab, rHidAnnouce, rHidNews,rHidSort;
 	private LinearLayout rHomeTab;
 	private LinearLayout mSearchTab, mSortTab;
 	private LinearLayout mSearchBlock, mTitleBlock, idSort;
@@ -62,6 +62,8 @@ public class CanvasFragment extends CoreFragment {
 	private ImageView imNewsDialog, imSearch;
 	private MyTextView mTitle;
 	private boolean isSearching = false;
+	private boolean isHomeRefresh = false;
+	private boolean isAnnoRefresh = false;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		callbackManager = CallbackManager.Factory.create();
@@ -125,6 +127,21 @@ public class CanvasFragment extends CoreFragment {
 
 			break;
 		case R.id.fragment_canvas_home_tab:
+			if ((mPager.getCurrentItem()==0)){
+				if ((isHomeRefresh==false)){
+					isHomeRefresh = true;
+					api_get_all_shop(0, Store.limit, Store.Shop_Search_param);
+					if (Store.ShopsList.size()>0) HomeFragment.listView.setSelection(0);
+				}
+			}
+			else if ((mPager.getCurrentItem()==1)){
+				if ( (isAnnoRefresh == false)){
+					isAnnoRefresh = true;
+					api_get_all_announcements(0, Store.limit, HomeAnnounmentFragment.type, 0, 0);
+					if (Store.AnnouncementsList.size()>0) HomeAnnounmentFragment.listView.setSelection(0);
+				}
+			}
+			else	
 			mPager.setCurrentItem(1);
 			break;
 		case R.id.fragment_canvas_personal_tab:
@@ -419,6 +436,7 @@ public void api_get_all_shop(int last_id, int limit, String search){
 							}
 							HomeFragment.storeAdapter.notifyDataSetChanged();
 							isSearching = false;
+							isHomeRefresh = false;
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
@@ -432,4 +450,44 @@ public void api_get_all_shop(int last_id, int limit, String search){
 				});
 			requestQueue.add(jsObjRequest);
 	}
+
+public void api_get_all_announcements(int last_id, int limit, String type, int mode, int search) {
+
+	Map<String, String> params = new HashMap<String, String>();
+	params.put("access_token", CanvasFragment.mUser.getAccessToken());
+	params.put("type", String.valueOf(type));
+	params.put("last_id", String.valueOf(last_id));
+	params.put("limit", String.valueOf(limit));
+	params.put("mode", String.valueOf(mode));
+	params.put("search", String.valueOf(search));
+	RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+	HandleRequest jsObjRequest = new HandleRequest(Method.GET,
+			HandleRequest.build_link(HandleRequest.GET_ALL_ANNOUNCEMENTS, params), params,
+			new Response.Listener<JSONObject>() {
+				@Override
+				public void onResponse(JSONObject response) {
+					try {
+						
+						Store.AnnouncementsList.removeAll(Store.AnnouncementsList);
+
+						JSONArray data_aray = response.getJSONArray("data");
+						for (int i = 0; i < data_aray.length(); i++) {
+							Announcement announcement = new Announcement((JSONObject) data_aray.get(i));
+							HomeAnnounmentFragment.current_last_id = announcement.getId();
+							Store.AnnouncementsList.add(announcement);
+						}
+						HomeAnnounmentFragment.newsAdapter.notifyDataSetChanged();
+						isAnnoRefresh = false;
+					} catch (JSONException e) {
+
+						e.printStackTrace();
+					}
+				}
+			}, new Response.ErrorListener() {
+				@Override
+				public void onErrorResponse(VolleyError error) {
+				}
+			});
+	requestQueue.add(jsObjRequest);
+}
 }

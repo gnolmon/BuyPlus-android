@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import android.util.Log;
 
 public class FacebookFriend {
-	int id;
+	String id;
 	String name;
 	String picture;
 	
@@ -15,18 +15,18 @@ public class FacebookFriend {
 	}
 	
 	public FacebookFriend(JSONObject data) {
+		
 		try {
-			if (data.optString ("id") != "") {
-				id = Integer.parseInt(data.getString("id"));
-	        }
-			if (data.optString ("name") != "") {
-				name = data.getString("name");
-	        }
-			if (data.optJSONObject("picture") != null) {
-				JSONObject yy = data.getJSONObject("picture");
-				JSONObject kk = yy.getJSONObject("data");
-				picture = kk.getString("url");
-	        }
+
+		id = data.getString("id");
+
+		name = data.getString("name");
+		Log.d("facename",name);
+		Log.d("facename1",data.getString("name"));
+		JSONObject yy = data.getJSONObject("picture");
+		JSONObject kk = yy.getJSONObject("data");
+		picture = kk.getString("url");
+
 
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
@@ -35,11 +35,11 @@ public class FacebookFriend {
 		}
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
