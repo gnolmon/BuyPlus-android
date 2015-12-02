@@ -43,9 +43,9 @@ import android.widget.TextView;
 
 public class HomeFragment extends CoreFragment {
 	private PullToRefreshListView listView;
-	private StoreAdapter storeAdapter;
+	public static StoreAdapter storeAdapter;
 	private LayoutInflater inflaterActivity;
-	private int current_last_id = 0;
+	public static int current_last_id = 0;
 	private boolean isLoading,reload;
 	private int old_id = 0;
 	@Override
@@ -90,7 +90,7 @@ public class HomeFragment extends CoreFragment {
 		storeAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-            	api_get_all_shop(current_last_id, Store.limit, "");
+            	api_get_all_shop(current_last_id, Store.limit, Store.Shop_Search_param);
             }
         });
 		
@@ -112,7 +112,7 @@ public class HomeFragment extends CoreFragment {
 
 			public void onRefresh() {
 				reload = true;
-				api_get_all_shop(0,Store.limit,"");
+				api_get_all_shop(0,Store.limit,Store.Shop_Search_param);
 			}
 		});
 	}

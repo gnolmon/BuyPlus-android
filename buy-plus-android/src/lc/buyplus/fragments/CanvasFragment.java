@@ -1,5 +1,17 @@
 package lc.buyplus.fragments;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.Request.Method;
+import com.android.volley.toolbox.Volley;
 import com.facebook.CallbackManager;
 
 import android.content.Intent;
@@ -10,9 +22,12 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnKeyListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,11 +36,15 @@ import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
+import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.customizes.DialogNews;
 import lc.buyplus.customizes.DialogSort;
 import lc.buyplus.customizes.MyAnimations;
 import lc.buyplus.customizes.MyEditText;
 import lc.buyplus.customizes.MyTextView;
+import lc.buyplus.models.Shop;
+import lc.buyplus.models.Store;
 import lc.buyplus.models.UserAccount;
 
 public class CanvasFragment extends CoreFragment {
@@ -41,9 +60,8 @@ public class CanvasFragment extends CoreFragment {
 	private CallbackManager callbackManager;
 	private TextView tvStore, tvNews;
 	private ImageView imNewsDialog, imSearch;
-
 	private MyTextView mTitle;
-
+	private boolean isSearching = false;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		callbackManager = CallbackManager.Factory.create();
@@ -84,6 +102,9 @@ public class CanvasFragment extends CoreFragment {
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.fragnemt_canvas_search_cancel:
+			mSearchEdittext.setText("");
+			Store.Shop_Search_param = "";
+        	api_get_all_shop(0, Store.limit, Store.Shop_Search_param);
 			hideSearchBlock();
 			break;
 		case R.id.fragment_canvas_search:
@@ -304,6 +325,21 @@ public class CanvasFragment extends CoreFragment {
 
 		imNewsDialog = (ImageView) v.findViewById(R.id.imNewsDialog);
 		imSearch = (ImageView) v.findViewById(R.id.imSearch);
+		
+		mSearchEdittext.setOnKeyListener(new OnKeyListener() {
+		    public boolean onKey(View v, int keyCode, KeyEvent event) {
+		        // If the event is a key-down event on the "enter" button
+		        if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+		            (keyCode == KeyEvent.KEYCODE_ENTER) && (isSearching==false)) {
+		        	isSearching = true;
+		        	Store.Shop_Search_param = String.valueOf(mSearchEdittext.getText());
+		        	api_get_all_shop(0, Store.limit, Store.Shop_Search_param);
+		        	mPager.setCurrentItem(0);
+		          return true;
+		        }
+		        return false;
+		    }
+		});
 	}
 
 	@Override
@@ -347,5 +383,53 @@ public class CanvasFragment extends CoreFragment {
 			mInstance = new CanvasFragment();
 		}
 		return mInstance;
+	}
+	
+public void api_get_all_shop(int last_id, int limit, String search){
+	 	
+    	Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		params.put("last_id", String.valueOf(last_id));
+		params.put("limit", String.valueOf(limit));
+		params.put("search", String.valueOf(search));
+			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
+					HandleRequest.build_link(HandleRequest.GET_ALL_SHOP, params), params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Store.ShopsList.removeAll(Store.ShopsList);
+						
+						try {
+							Log.d("api_get_all_shop",response.toString());
+							JSONArray data_aray = response.getJSONArray("data");
+							if (data_aray.length()==0){
+								DialogMessage dialog = new DialogMessage(mActivity, "Cửa hàng này hiện không tồn tại trong hệ thống");
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							}
+							else{	
+								for (int i = 0; i < data_aray.length(); i++) {								 
+		                            Shop shop = new Shop((JSONObject) data_aray.get(i));
+		                            	if (shop != null){
+		                            		HomeFragment.current_last_id = shop.getId();
+		                            		Store.ShopsList.add(shop);
+		                            	}
+		                        }
+							}
+							HomeFragment.storeAdapter.notifyDataSetChanged();
+							isSearching = false;
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				}, 
+				new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						Log.d("api_get_all_shop",error.toString());
+					}
+				});
+			requestQueue.add(jsObjRequest);
 	}
 }
