@@ -15,8 +15,8 @@
             android:id="@+id/avaStore"
             android:layout_width="@dimen/image_normal"
             android:layout_height="@dimen/image_normal"
-            android:src="@drawable/square"
-            android:layout_gravity="center" >
+            android:layout_gravity="center"
+            android:src="@drawable/square" >
         </lc.buyplus.customizes.RoundedImageView>
 
         <RelativeLayout
@@ -25,7 +25,7 @@
             android:paddingLeft="@dimen/feed_item_padding_left_right"
             android:paddingRight="@dimen/feed_item_padding_left_right" >
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -33,7 +33,7 @@
 
                 <TextView
                     android:id="@+id/tvNameStore"
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="JackLand"
                     android:textColor="@color/actionbar"
@@ -44,11 +44,19 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvNameStore"
-                    android:layout_centerVertical="true"
                     android:text="JackLand"
                     android:textColor="@color/title"
                     android:textSize="@dimen/title" />
-            </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imJoinShop"
+                    android:layout_marginLeft="@dimen/padding_standard"
+                    android:layout_toRightOf="@id/tvNameStore"
+                    android:layout_width="@dimen/icon_small"
+                    android:layout_height="@dimen/icon_small"
+                    android:src="@drawable/joinshop" />
+
+            </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
 

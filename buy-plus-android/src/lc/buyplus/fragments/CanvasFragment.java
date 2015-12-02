@@ -51,7 +51,8 @@ import lc.buyplus.models.UserAccount;
 public class CanvasFragment extends CoreFragment {
 
 	private static final long serialVersionUID = 1L;
-	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab, rHidAnnouce, rHidNews,rHidSort;
+	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mSettingTab, rHidAnnouce, rHidNews,rHidSort;
+	RelativeLayout mNotiTab;
 	private LinearLayout rHomeTab;
 	private LinearLayout mSearchTab, mSortTab;
 	private LinearLayout mSearchBlock, mTitleBlock, idSort;
@@ -318,7 +319,7 @@ public class CanvasFragment extends CoreFragment {
 		mHomeTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_home_tab);
 		mPersonalTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_personal_tab);
 		mLoyaltyCardTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_loyaltycard_tab);
-		mNotiTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_notifications_tab);
+		mNotiTab = (RelativeLayout) v.findViewById(R.id.fragment_canvas_notifications_tab);
 		mSettingTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_setting_tab);
 		mTitle = (MyTextView) v.findViewById(R.id.fragment_canvas_title);
 		mSettingTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_setting_tab);

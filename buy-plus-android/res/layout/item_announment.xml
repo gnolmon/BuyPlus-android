@@ -14,7 +14,7 @@
         android:paddingBottom="@dimen/feed_item_padding_top_bottom"
         android:paddingTop="@dimen/feed_item_padding_top_bottom" >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -30,7 +30,9 @@
             </lc.buyplus.customizes.RoundedImageView>
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:id="@+id/lnName"
+                android:layout_toRightOf="@id/avaStore"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/padding_standard" >
@@ -51,7 +53,34 @@
                     android:textColor="@color/title"
                     android:textSize="@dimen/feed_item_timestamp" />
             </LinearLayout>
-        </LinearLayout>
+            <RelativeLayout
+                android:layout_toRightOf="@id/lnName"
+                android:layout_alignParentRight="true"
+                android:layout_width="150dp"
+                android:layout_height="50dp">
+
+                    <ImageView
+                        android:id="@+id/imSaleOff"
+                        android:layout_width="150dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:src="@drawable/saleoff" />
+
+                    <TextView
+                        android:id="@+id/tvTimeSale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="45dp"
+                        android:layout_marginBottom="7dp"
+                        android:text="10:00"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/feed_item_timestamp" />
+
+            </RelativeLayout>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tvStatus"
