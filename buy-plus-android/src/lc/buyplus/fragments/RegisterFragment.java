@@ -3,6 +3,7 @@ package lc.buyplus.fragments;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.android.volley.Request.Method;
@@ -12,6 +13,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.facebook.CallbackManager;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +27,7 @@ import lc.buyplus.R;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.customizes.MyEditText;
 import lc.buyplus.customizes.MyTextView;
 
@@ -80,16 +84,23 @@ public class RegisterFragment extends CoreFragment implements OnClickListener {
 			String cpassword = edCfPass.getText().toString();
 			String email = edEmail.getText().toString();
 			if (username.isEmpty()) {
-				Toast.makeText(this.getActivity(), "Please input username", 2000).show();
+				DialogMessage dialog = new DialogMessage(mActivity,"Hãy điền tên của bạn");
+				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+				dialog.show();
 			} else if (email.isEmpty()) {
-				Toast.makeText(this.getActivity(), "Please input email", 2000).show();
+				DialogMessage dialog = new DialogMessage(mActivity,"Hãy điền email của bạn");
+				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+				dialog.show();
 			} else if (password.isEmpty()) {
-				Toast.makeText(this.getActivity(), "Please input password", 2000).show();
+				DialogMessage dialog = new DialogMessage(mActivity,"Hãy điền mật khẩu của bạn");
+				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+				dialog.show();
 			} else if (cpassword.isEmpty()) {
-				Toast.makeText(this.getActivity(), "Please confirm password", 2000).show();
+				DialogMessage dialog = new DialogMessage(mActivity,"Hãy xác nhận mật khẩu của bạn");
+				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+				dialog.show();
 			} else {
 				api_user_register(username, email, cpassword);
-				Toast.makeText(this.getActivity(), "Please check email to conplete your registation", 1000).show();
 			}
 			break;
 		case R.id.btbBack:
@@ -113,12 +124,30 @@ public class RegisterFragment extends CoreFragment implements OnClickListener {
 					@Override
 					public void onResponse(JSONObject response) {
 						Log.d("api_user_register",response.toString());
-						mFragmentManager.beginTransaction().replace(R.id.canvas, LoginFragment.getInstance(mActivity)).commit();
+						try {
+							if (Integer.parseInt(response.getString("error"))==1){
+								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							}else{
+								DialogMessage dialog = new DialogMessage(mActivity,"Đăng kí thành công");
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+								mFragmentManager.beginTransaction().replace(R.id.canvas, LoginFragment.getInstance(mActivity)).commit();
+							}
+						} catch (NumberFormatException | JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
 					}
 					}, 
 					new Response.ErrorListener() {
 						@Override
 						public void onErrorResponse(VolleyError error) {
+							DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra lại kết nốt của bạn");
+							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+							dialog.show();
 						}
 					});
 			requestQueue.add(jsObjRequest);
