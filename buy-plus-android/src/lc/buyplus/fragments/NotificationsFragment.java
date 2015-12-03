@@ -1,7 +1,6 @@
 package lc.buyplus.fragments;
 
 import lc.buyplus.R;
-import lc.buyplus.activities.AnnouncementDetailActivity;
 import lc.buyplus.activities.LoginActivity;
 import lc.buyplus.adapter.NotificationAdapter;
 import lc.buyplus.adapter.OnLoadMoreListener;
@@ -9,7 +8,6 @@ import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.DialogMessage;
-import lc.buyplus.models.Announcement;
 import lc.buyplus.models.Notification;
 import lc.buyplus.models.Store;
 import lc.buyplus.pulltorefresh.PullToRefreshListView;
@@ -39,9 +37,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class NotificationsFragment extends CoreFragment{
 	private PullToRefreshListView listView;
@@ -73,17 +69,6 @@ public class NotificationsFragment extends CoreFragment{
             	api_get_notifications(current_last_id, Store.limit);
             }
         });
-		
-		listView.setOnItemClickListener(new OnItemClickListener() {
-		      public void onItemClick(AdapterView<?> parent, View view,
-		          int position, long id) {
-		    	  listView.setEnabled(false);
-		    	  Store.current_announcement = (Announcement)newsAdapter.getItem(position);
-		    	  Intent mainActivity = new Intent(mActivity,AnnouncementDetailActivity.class);
-		           startActivity(mainActivity);
-		      }
-	    });
-		
 		listView.setOnScrollListener(new OnScrollListener(){
 		    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 		    	
