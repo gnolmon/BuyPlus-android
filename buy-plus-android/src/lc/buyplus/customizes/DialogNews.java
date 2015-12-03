@@ -63,18 +63,21 @@ public class DialogNews extends android.app.Dialog implements android.view.View.
 		
 		switch (HomeAnnounmentFragment.type) {
 		case "normal":
+			if (Store.AnnouncementsList.size()>0) HomeAnnounmentFragment.listView.setSelection(0);
 			imShop.setVisibility(View.VISIBLE);
 			imPromo.setVisibility(View.INVISIBLE);
 			imAll.setVisibility(View.INVISIBLE);
 			HomeAnnounmentFragment.type = "normal";
 			break;
 		case "promotion":
+			if (Store.AnnouncementsList.size()>0) HomeAnnounmentFragment.listView.setSelection(0);
 			imShop.setVisibility(View.INVISIBLE);
 			imPromo.setVisibility(View.VISIBLE);
 			imAll.setVisibility(View.INVISIBLE);
 			HomeAnnounmentFragment.type = "promotion";
 			break;
 		case "all":
+			if (Store.AnnouncementsList.size()>0) HomeAnnounmentFragment.listView.setSelection(0);
 			imShop.setVisibility(View.INVISIBLE);
 			imPromo.setVisibility(View.INVISIBLE);
 			imAll.setVisibility(View.VISIBLE);

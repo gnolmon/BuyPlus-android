@@ -59,8 +59,8 @@ public class CanvasFragment extends CoreFragment {
 	private LinearLayout mSearchBlockCancel;
 	private MyEditText mSearchEdittext;
 	private CallbackManager callbackManager;
-	private TextView tvStore, tvNews;
-	private ImageView imNewsDialog, imSearch;
+	private TextView tvStore, tvNews,tvNumNoti;
+	private ImageView imNewsDialog, imSearch ,imJoinShop;
 	private MyTextView mTitle;
 	private boolean isSearching = false;
 	private boolean isHomeRefresh = false;
@@ -152,6 +152,8 @@ public class CanvasFragment extends CoreFragment {
 			mPager.setCurrentItem(3);
 			break;
 		case R.id.fragment_canvas_notifications_tab:
+			tvNumNoti.setVisibility(View.GONE);
+			imJoinShop.setVisibility(View.GONE);
 			mPager.setCurrentItem(4);
 			break;
 		case R.id.fragment_canvas_setting_tab:
@@ -340,7 +342,8 @@ public class CanvasFragment extends CoreFragment {
 		// TextView, ImageView
 		tvNews = (TextView) v.findViewById(R.id.tvNews);
 		tvStore = (TextView) v.findViewById(R.id.tvStore);
-
+		tvNumNoti = (TextView) v.findViewById(R.id.tvNumNoti);
+		imJoinShop = (ImageView) v.findViewById(R.id.imJoinShop);
 		imNewsDialog = (ImageView) v.findViewById(R.id.imNewsDialog);
 		imSearch = (ImageView) v.findViewById(R.id.imSearch);
 		
@@ -358,6 +361,9 @@ public class CanvasFragment extends CoreFragment {
 		        return false;
 		    }
 		});
+		tvNumNoti.setVisibility(View.GONE);
+		imJoinShop.setVisibility(View.GONE);
+		api_get_num_unread_notifications();
 	}
 
 	@Override
@@ -490,5 +496,37 @@ public void api_get_all_announcements(int last_id, int limit, String type, int m
 				}
 			});
 	requestQueue.add(jsObjRequest);
+}
+
+public void api_get_num_unread_notifications(){
+ 	
+	Map<String, String> params = new HashMap<String, String>();
+	params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
+				HandleRequest.build_link(HandleRequest.NUM_UNREAD_NOTIFICATIONS, params), params, 
+				new Response.Listener<JSONObject>() {
+				@Override
+				public void onResponse(JSONObject response) {
+					
+					try {
+						Log.d("api_get_all_shop",response.toString());
+						JSONObject data = response.getJSONObject("data");
+						tvNumNoti.setText(data.getString("total"));
+						if (Integer.parseInt(data.getString("total")) > 0) {
+							tvNumNoti.setVisibility(View.VISIBLE);
+							imJoinShop.setVisibility(View.VISIBLE);
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+			}, 
+			new Response.ErrorListener() {
+				@Override
+				public void onErrorResponse(VolleyError error) {
+				}
+			});
+		requestQueue.add(jsObjRequest);
 }
 }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.activities.ShopInfoActivity;
@@ -70,12 +71,17 @@ public class StoreAdapter extends BaseAdapter{
 		TextView tvNameStore = (TextView) convertView.findViewById(R.id.tvNameStore);
 		
 		TextView tvAddressStore = (TextView) convertView.findViewById(R.id.tvAddressStore);
+		ImageView imJoinShop = (ImageView) convertView.findViewById(R.id.imJoinShop);
 		
 		RoundedImageView avaStore = (RoundedImageView) convertView
 				.findViewById(R.id.avaStore);
 
 		final Shop item = storeList.get(position);
-
+		if (item.isJoin == true){
+			imJoinShop.setVisibility(View.VISIBLE);
+		}else{
+			imJoinShop.setVisibility(View.GONE);
+		}
 		tvNameStore.setText(item.getName());
 		
 //		tvNameStore.setOnClickListener(new OnClickListener() {

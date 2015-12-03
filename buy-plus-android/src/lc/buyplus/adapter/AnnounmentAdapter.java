@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.activities.ShopInfoActivity;
@@ -92,7 +93,9 @@ public class AnnounmentAdapter extends BaseAdapter {
 		TextView name = (TextView) convertView.findViewById(R.id.tvNameStore);
 
 		TextView timestamp = (TextView) convertView.findViewById(R.id.tvTimestamp);
-
+		ImageView imSaleOff = (ImageView) convertView.findViewById(R.id.imSaleOff);
+		TextView tvTimeSale = (TextView) convertView.findViewById(R.id.tvTimeSale);
+		
 		TextView tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
 		RoundedImageView avaStore = (RoundedImageView) convertView.findViewById(R.id.avaStore);
 		FeedImageView feedImageView = (FeedImageView) convertView.findViewById(R.id.imFeed);
@@ -112,8 +115,16 @@ public class AnnounmentAdapter extends BaseAdapter {
 		timestamp.setText(timeAgo);
 		tvStatus.setText(item.getContent());
 
+		
 		avaStore.setImageUrl(item.getShop().getImage_thumbnail(), imageLoader);
-
+		
+		if (item.getType()==2){
+			imSaleOff.setVisibility(View.VISIBLE);
+			tvTimeSale.setVisibility(View.VISIBLE);
+		}else {
+			imSaleOff.setVisibility(View.GONE);
+			tvTimeSale.setVisibility(View.GONE);
+		}
 		// Feed image
 		if (item.getPhotos().size() > 0) {
 			feedImageView.setImageUrl(item.getPhotos().get(0).getImage(), imageLoader);

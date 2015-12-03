@@ -34,6 +34,7 @@ public class Shop {
 	public ArrayList<Friend> FriendsList = new ArrayList<Friend>();
 	public ArrayList<Announcement> AnnouncementsList = new ArrayList<Announcement>();
 	public boolean canEx = false;
+	public boolean isJoin = false;
 	public Shop() {
 		super();
 	}
@@ -92,6 +93,7 @@ public class Shop {
 				current_customer_shop_id = current_customer_shop.getString("id");
 				current_customer_shop_point = Integer.parseInt(current_customer_shop.getString("point"));
 				current_customer_shop_created_time = current_customer_shop.getString("created_time");
+				isJoin = true;
 	        }
 	        
 			Log.d("sad","sad");
@@ -155,6 +157,15 @@ public class Shop {
 		this.current_customer_shop_point = current_customer_shop_point;
 		this.current_customer_shop_created_time = current_customer_shop_created_time;
 		this.lowestPointGift = lowestPointGift;
+	}
+
+	
+	public boolean isJoin() {
+		return isJoin;
+	}
+
+	public void setJoin(boolean isJoin) {
+		this.isJoin = isJoin;
 	}
 
 	public int getId() {

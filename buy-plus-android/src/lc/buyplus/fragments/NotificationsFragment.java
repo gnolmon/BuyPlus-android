@@ -57,7 +57,7 @@ public class NotificationsFragment extends CoreFragment{
 		listView.setAdapter(notiAdapter);
 		//Store.NotificationsList.removeAll(Store.NotificationsList);
 		//api_get_notifications(0, Store.limit);
-		
+		api_read_notifications();
 		notiAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -158,6 +158,27 @@ public class NotificationsFragment extends CoreFragment{
 					public void onErrorResponse(VolleyError error) {
 						// stopping swipe refresh
 						listView.onRefreshComplete();
+					}
+				});
+		requestQueue.add(jsObjRequest);
+	}
+	
+	public void api_read_notifications() {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+		HandleRequest jsObjRequest = new HandleRequest(Method.POST,
+				HandleRequest.READ_NOTIFICATIONS, params,
+				new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+
+
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+
 					}
 				});
 		requestQueue.add(jsObjRequest);
