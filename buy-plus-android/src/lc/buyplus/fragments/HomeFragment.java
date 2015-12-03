@@ -15,8 +15,11 @@ import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,12 +30,14 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import lc.buyplus.R;
+import lc.buyplus.activities.LoginActivity;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.OnLoadMoreListener;
 import lc.buyplus.adapter.StoreAdapter;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.models.Announcement;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
@@ -140,19 +145,39 @@ public class HomeFragment extends CoreFragment {
 							reload = false;
 						}
 						try {
-							Log.d("api_get_all_shop",response.toString());
-							JSONArray data_aray = response.getJSONArray("data");
-							for (int i = 0; i < data_aray.length(); i++) {								 
-	                            Shop shop = new Shop((JSONObject) data_aray.get(i));
-	                            	if (shop != null){
-	                            		current_last_id = shop.getId();
-	                            		Store.ShopsList.add(shop);
-	                            	}
-	                        }
-							storeAdapter.notifyDataSetChanged();
-							if (old_id != current_last_id) {
-								isLoading = false;
-								old_id = current_last_id;
+							if (Integer.parseInt(response.getString("error"))==2){
+								DialogMessage dialog = new DialogMessage(mActivity,"Phiên truy nhập của bạn đã hết, hãy đăng nhập lại");
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
+								SharedPreferences.Editor editor=pre.edit();
+								//editor.clear();
+								editor.putBoolean("immediate_login", false);
+								editor.commit();
+								Intent loginActivity = new Intent(mActivity,LoginActivity.class);
+							    startActivity(loginActivity);
+							    mActivity.finish();
+
+							}
+							if (Integer.parseInt(response.getString("error"))==1){
+								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							}else{
+								Log.d("api_get_all_shop",response.toString());
+								JSONArray data_aray = response.getJSONArray("data");
+								for (int i = 0; i < data_aray.length(); i++) {								 
+		                            Shop shop = new Shop((JSONObject) data_aray.get(i));
+		                            	if (shop != null){
+		                            		current_last_id = shop.getId();
+		                            		Store.ShopsList.add(shop);
+		                            	}
+		                        }
+								storeAdapter.notifyDataSetChanged();
+								if (old_id != current_last_id) {
+									isLoading = false;
+									old_id = current_last_id;
+								}
 							}
 						} catch (JSONException e) {
 							e.printStackTrace();
@@ -167,6 +192,9 @@ public class HomeFragment extends CoreFragment {
 						Log.d("api_get_all_shop",error.toString());
 						listView.onRefreshComplete();
 						isLoading = false;
+						DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+						dialog.show();
 					}
 				});
 			requestQueue.add(jsObjRequest);
@@ -186,12 +214,30 @@ public class HomeFragment extends CoreFragment {
 					public void onResponse(JSONObject response) {
 						Log.d("api_get_shop_info", response.toString());
 						try {
-							
-							Store.current_shop = new Shop(response.getJSONObject("data"));
-							Store.current_shop_name =  Store.current_shop.getName();
-							Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);			            
-				            startActivity(shopInfoActivity);
-				           
+							if (Integer.parseInt(response.getString("error"))==2){
+								DialogMessage dialog = new DialogMessage(mActivity,"Phiên truy nhập của bạn đã hết, hãy đăng nhập lại");
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
+								SharedPreferences.Editor editor=pre.edit();
+								//editor.clear();
+								editor.putBoolean("immediate_login", false);
+								editor.commit();
+								Intent loginActivity = new Intent(mActivity,LoginActivity.class);
+							    startActivity(loginActivity);
+							    mActivity.finish();
+
+							}
+							if (Integer.parseInt(response.getString("error"))==1){
+								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							}else{
+								Store.current_shop = new Shop(response.getJSONObject("data"));
+								Store.current_shop_name =  Store.current_shop.getName();
+								Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);			            
+					            startActivity(shopInfoActivity);
+							}
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
@@ -201,6 +247,9 @@ public class HomeFragment extends CoreFragment {
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						listView.setEnabled(true);
+						DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+						dialog.show();
 					}
 				});
 		requestQueue.add(jsObjRequest);

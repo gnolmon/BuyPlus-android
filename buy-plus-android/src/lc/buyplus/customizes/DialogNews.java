@@ -39,7 +39,7 @@ public class DialogNews extends android.app.Dialog implements android.view.View.
 	public DialogNews(Activity a) {
 		super(a);
 		// TODO Auto-generated constructor stub
-		this.c = a;
+		this.c = CanvasFragment.mActivity;
 		flag = 0;
 	}
 

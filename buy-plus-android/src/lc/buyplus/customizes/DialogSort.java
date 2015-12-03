@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.fragments.CanvasFragment;
 
 public class DialogSort extends android.app.Dialog implements android.view.View.OnClickListener {
 
@@ -17,7 +18,7 @@ public class DialogSort extends android.app.Dialog implements android.view.View.
 	public DialogSort(Activity a) {
 		super(a);
 		// TODO Auto-generated constructor stub
-		this.c = a;
+		this.c =CanvasFragment.mActivity;
 		flag = 0;
 	}
 

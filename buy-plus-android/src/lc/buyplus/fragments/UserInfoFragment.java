@@ -15,6 +15,7 @@ import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -29,12 +30,14 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import lc.buyplus.R;
 import lc.buyplus.activities.AddFriendActivity;
+import lc.buyplus.activities.LoginActivity;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.ShopFriendAdapter;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.CustomDialogClass;
+import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.customizes.DialogUser;
 import lc.buyplus.models.Friend;
 import lc.buyplus.models.Store;
@@ -62,17 +65,15 @@ public class UserInfoFragment extends CoreFragment {
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.btnAgreeTerm:
-			DialogUser dialog = new DialogUser(mActivity,"Bạn có muốn lưu thay đổi không?", 1);
+			DialogUser dialog = new DialogUser(mActivity,"Bạn có muốn lưu thay đổi không?", 1,username.getText().toString());
 			dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 			dialog.show();
-			api_update_user_information(username.getText().toString());
-			Store.user.setLogin_name(username.getText().toString());
-			PersonalFragment.userName.setText(Store.user.getLogin_name());
+			
 		break;	
 		case R.id.btnIgnore:
-			DialogUser dialog1 = new DialogUser(mActivity,"Bạn có muốn thoát và không lưu thay đổi ?", 1);
-			dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-			dialog1.show();
+//			DialogUser dialog1 = new DialogUser(mActivity,"Bạn có muốn thoát và không lưu thay đổi ?", 1);
+//			dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//			dialog1.show();
 			username.setText(Store.user.getLogin_name());
 		break;	
 		}
@@ -98,28 +99,6 @@ public class UserInfoFragment extends CoreFragment {
 
 	}
 
-public void api_update_user_information(String name){
-	 	
-    	Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("name", String.valueOf(name));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
-					HandleRequest.UPDATE_USER_INFORMATION, params, 
-					new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_join_shop",response.toString());
-						// code here
-					}
-					}, 
-					new Response.ErrorListener() {
-						@Override
-						public void onErrorResponse(VolleyError error) {
-						}
-					});
-			requestQueue.add(jsObjRequest);
-	}
 
 	public static final long serialVersionUID = 6036846677812555352L;
 

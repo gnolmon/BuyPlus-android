@@ -16,6 +16,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -33,6 +35,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.activities.LoginActivity;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.ShopAnnounmentAdapter;
 import lc.buyplus.application.MonApplication;
@@ -41,6 +44,7 @@ import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.BlurBuilder;
 import lc.buyplus.customizes.CustomDialogClass;
+import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.customizes.FastBlur;
 import lc.buyplus.customizes.RoundedImageView;
 import lc.buyplus.models.Announcement;
@@ -68,7 +72,7 @@ public class ShopInfoFragment extends CoreFragment {
 		initViews(view);
 		initModels();
 		initAnimations();
-		api_get_shop_info(Store.current_shop_id);
+		//api_get_shop_info(Store.current_shop_id);
 		return view;
 	}
 
@@ -184,10 +188,28 @@ public class ShopInfoFragment extends CoreFragment {
 					public void onResponse(JSONObject response) {
 						Log.d("api_get_shop_info", response.toString());
 						try {
+							if (Integer.parseInt(response.getString("error"))==2){
+								DialogMessage dialog = new DialogMessage(mActivity,"Phiên truy nhập của bạn đã hết, hãy đăng nhập lại");
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
+								SharedPreferences.Editor editor=pre.edit();
+								//editor.clear();
+								editor.putBoolean("immediate_login", false);
+								editor.commit();
+								Intent loginActivity = new Intent(mActivity,LoginActivity.class);
+							    startActivity(loginActivity);
+							    mActivity.finish();
 
-							shop = new Shop(response.getJSONObject("data"));
+							}else
+							if (Integer.parseInt(response.getString("error"))==1){
+								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							}else{
+								shop = new Shop(response.getJSONObject("data"));
 							
-							
+							}
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
@@ -195,6 +217,9 @@ public class ShopInfoFragment extends CoreFragment {
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
+						DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+						dialog.show();
 					}
 				});
 		requestQueue.add(jsObjRequest);

@@ -41,7 +41,7 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 	public CustomDialogClass(Activity pa,String pmsg,int pflag) {
 		super(pa);
 		// TODO Auto-generated constructor stub
-		this.c = pa;
+		this.c = CanvasFragment.mActivity;
 		this.flag = pflag;
 		this.msg = pmsg;
 	}

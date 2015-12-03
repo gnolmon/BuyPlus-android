@@ -220,7 +220,7 @@ public class AddFriendFragment extends CoreFragment {
 						Log.d("api_send_request_join_shop_to_friend",response.toString());
 						try {
 							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+								DialogMessage dialog = new DialogMessage(mActivity,"Phiên truy nhập của bạn đã hết, hãy đăng nhập lại");
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
@@ -232,7 +232,7 @@ public class AddFriendFragment extends CoreFragment {
 							    startActivity(loginActivity);
 							    mActivity.finish();
 
-							}
+							}else
 							if (Integer.parseInt(response.getString("error"))==1){
 								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -248,6 +248,9 @@ public class AddFriendFragment extends CoreFragment {
 					new Response.ErrorListener() {
 						@Override
 						public void onErrorResponse(VolleyError error) {
+							DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+							dialog.show();
 						}
 					});
 			requestQueue.add(jsObjRequest);
@@ -268,7 +271,7 @@ public void api_search_friends_for_shop(int shop_id, String search){
 					public void onResponse(JSONObject response) {
 						try {
 							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+								DialogMessage dialog = new DialogMessage(mActivity,"Phiên truy nhập của bạn đã hết, hãy đăng nhập lại");
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
@@ -280,7 +283,7 @@ public void api_search_friends_for_shop(int shop_id, String search){
 							    startActivity(loginActivity);
 							    mActivity.finish();
 
-							}
+							}else
 							if (Integer.parseInt(response.getString("error"))==1){
 								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -314,6 +317,9 @@ public void api_search_friends_for_shop(int shop_id, String search){
 				new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
+						DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+						dialog.show();
 					}
 				});
 			requestQueue.add(jsObjRequest);

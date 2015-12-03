@@ -57,12 +57,12 @@ public class UserSecureFragment extends CoreFragment {
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.btnAgreeTerm:
-			DialogUser dialog = new DialogUser(mActivity,"Bạn có muốn lưu thay đổi không?", 1);
+			DialogUser dialog = new DialogUser(mActivity,"Bạn có muốn lưu thay đổi không?", 1,"");
 			dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 			dialog.show();
 		break;	
 		case R.id.btnIgnore:
-			DialogUser dialog1 = new DialogUser(mActivity,"Bạn có muốn thoát và không lưu thay đổi ?", 1);
+			DialogUser dialog1 = new DialogUser(mActivity,"Bạn có muốn thoát và không lưu thay đổi ?", 1,"");
 			dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 			dialog1.show();
 		break;	

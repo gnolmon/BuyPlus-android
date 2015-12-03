@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.fragments.CanvasFragment;
 
 public class DialogMessage extends android.app.Dialog implements android.view.View.OnClickListener {
 
@@ -19,7 +20,7 @@ public class DialogMessage extends android.app.Dialog implements android.view.Vi
 	public DialogMessage(Activity pa, String pmsg) {
 		super(pa);
 		// TODO Auto-generated constructor stub
-		this.c = pa;
+		this.c = CanvasFragment.mActivity;
 		this.flag = 0;
 		this.msg  = pmsg;
 	}

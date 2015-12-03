@@ -165,7 +165,7 @@ public class ShopFriendFragment  extends CoreFragment {
 					            startActivity(loginActivity);
 					            mActivity.finish();
 								
-							}
+							}else
 							if (Integer.parseInt(response.getString("error"))==1){
 								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

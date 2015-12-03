@@ -15,6 +15,7 @@ import com.android.volley.toolbox.Volley;
 import com.facebook.CallbackManager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.activities.LoginActivity;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
@@ -425,25 +427,45 @@ public void api_get_all_shop(int last_id, int limit, String search){
 						Store.ShopsList.removeAll(Store.ShopsList);
 						
 						try {
-							Log.d("api_get_all_shop",response.toString());
-							JSONArray data_aray = response.getJSONArray("data");
-							if (data_aray.length()==0){
-								DialogMessage dialog = new DialogMessage(mActivity, "Cửa hàng này hiện không tồn tại trong hệ thống");
+							if (Integer.parseInt(response.getString("error"))==2){
+								DialogMessage dialog = new DialogMessage(mActivity,"Phiên truy nhập của bạn đã hết, hãy đăng nhập lại");
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
+								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
+								SharedPreferences.Editor editor=pre.edit();
+								//editor.clear();
+								editor.putBoolean("immediate_login", false);
+								editor.commit();
+								Intent loginActivity = new Intent(mActivity,LoginActivity.class);
+							    startActivity(loginActivity);
+							    mActivity.finish();
+
+							}else
+							if (Integer.parseInt(response.getString("error"))==1){
+								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							}else{
+								Log.d("api_get_all_shop",response.toString());
+								JSONArray data_aray = response.getJSONArray("data");
+								if (data_aray.length()==0){
+									DialogMessage dialog = new DialogMessage(mActivity, "Cửa hàng này hiện không tồn tại trong hệ thống");
+									dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+									dialog.show();
+								}
+								else{	
+									for (int i = 0; i < data_aray.length(); i++) {								 
+			                            Shop shop = new Shop((JSONObject) data_aray.get(i));
+			                            	if (shop != null){
+			                            		HomeFragment.current_last_id = shop.getId();
+			                            		Store.ShopsList.add(shop);
+			                            	}
+			                        }
+								}
+								HomeFragment.storeAdapter.notifyDataSetChanged();
+								isSearching = false;
+								isHomeRefresh = false;
 							}
-							else{	
-								for (int i = 0; i < data_aray.length(); i++) {								 
-		                            Shop shop = new Shop((JSONObject) data_aray.get(i));
-		                            	if (shop != null){
-		                            		HomeFragment.current_last_id = shop.getId();
-		                            		Store.ShopsList.add(shop);
-		                            	}
-		                        }
-							}
-							HomeFragment.storeAdapter.notifyDataSetChanged();
-							isSearching = false;
-							isHomeRefresh = false;
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
@@ -452,7 +474,9 @@ public void api_get_all_shop(int last_id, int limit, String search){
 				new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						Log.d("api_get_all_shop",error.toString());
+						DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+						dialog.show();
 					}
 				});
 			requestQueue.add(jsObjRequest);
@@ -474,17 +498,36 @@ public void api_get_all_announcements(int last_id, int limit, String type, int m
 				@Override
 				public void onResponse(JSONObject response) {
 					try {
-						
-						Store.AnnouncementsList.removeAll(Store.AnnouncementsList);
+						if (Integer.parseInt(response.getString("error"))==2){
+							DialogMessage dialog = new DialogMessage(mActivity,"Phiên truy nhập của bạn đã hết, hãy đăng nhập lại");
+							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+							dialog.show();
+							SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
+							SharedPreferences.Editor editor=pre.edit();
+							//editor.clear();
+							editor.putBoolean("immediate_login", false);
+							editor.commit();
+							Intent loginActivity = new Intent(mActivity,LoginActivity.class);
+						    startActivity(loginActivity);
+						    mActivity.finish();
 
-						JSONArray data_aray = response.getJSONArray("data");
-						for (int i = 0; i < data_aray.length(); i++) {
-							Announcement announcement = new Announcement((JSONObject) data_aray.get(i));
-							HomeAnnounmentFragment.current_last_id = announcement.getId();
-							Store.AnnouncementsList.add(announcement);
+						}else
+						if (Integer.parseInt(response.getString("error"))==1){
+							DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
+							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+							dialog.show();
+						}else{
+							Store.AnnouncementsList.removeAll(Store.AnnouncementsList);
+	
+							JSONArray data_aray = response.getJSONArray("data");
+							for (int i = 0; i < data_aray.length(); i++) {
+								Announcement announcement = new Announcement((JSONObject) data_aray.get(i));
+								HomeAnnounmentFragment.current_last_id = announcement.getId();
+								Store.AnnouncementsList.add(announcement);
+							}
+							HomeAnnounmentFragment.newsAdapter.notifyDataSetChanged();
+							isAnnoRefresh = false;
 						}
-						HomeAnnounmentFragment.newsAdapter.notifyDataSetChanged();
-						isAnnoRefresh = false;
 					} catch (JSONException e) {
 
 						e.printStackTrace();
@@ -493,6 +536,9 @@ public void api_get_all_announcements(int last_id, int limit, String type, int m
 			}, new Response.ErrorListener() {
 				@Override
 				public void onErrorResponse(VolleyError error) {
+					DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+					dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+					dialog.show();
 				}
 			});
 	requestQueue.add(jsObjRequest);
@@ -510,12 +556,32 @@ public void api_get_num_unread_notifications(){
 				public void onResponse(JSONObject response) {
 					
 					try {
-						Log.d("api_get_all_shop",response.toString());
-						JSONObject data = response.getJSONObject("data");
-						tvNumNoti.setText(data.getString("total"));
-						if (Integer.parseInt(data.getString("total")) > 0) {
-							tvNumNoti.setVisibility(View.VISIBLE);
-							imJoinShop.setVisibility(View.VISIBLE);
+						if (Integer.parseInt(response.getString("error"))==2){
+							DialogMessage dialog = new DialogMessage(mActivity,"Phiên truy nhập của bạn đã hết, hãy đăng nhập lại");
+							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+							dialog.show();
+							SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
+							SharedPreferences.Editor editor=pre.edit();
+							//editor.clear();
+							editor.putBoolean("immediate_login", false);
+							editor.commit();
+							Intent loginActivity = new Intent(mActivity,LoginActivity.class);
+						    startActivity(loginActivity);
+						    mActivity.finish();
+
+						}else
+						if (Integer.parseInt(response.getString("error"))==1){
+							DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
+							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+							dialog.show();
+						}else{
+							Log.d("api_get_all_shop",response.toString());
+							JSONObject data = response.getJSONObject("data");
+							tvNumNoti.setText(data.getString("total"));
+							if (Integer.parseInt(data.getString("total")) > 0) {
+								tvNumNoti.setVisibility(View.VISIBLE);
+								imJoinShop.setVisibility(View.VISIBLE);
+							}
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -525,6 +591,9 @@ public void api_get_num_unread_notifications(){
 			new Response.ErrorListener() {
 				@Override
 				public void onErrorResponse(VolleyError error) {
+					DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+					dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+					dialog.show();
 				}
 			});
 		requestQueue.add(jsObjRequest);
