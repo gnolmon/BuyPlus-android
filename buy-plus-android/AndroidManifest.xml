@@ -84,6 +84,14 @@
             android:name="lc.buyplus.activities.SettingNotificationActivity"
             android:label="@string/app_name" >
         </activity>
+         <activity
+            android:name="lc.buyplus.activities.AnnouncementDetailActivity"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="lc.buyplus.activities.HomeNotiActivity"
+            android:label="@string/app_name" >
+        </activity>
         <activity android:name="com.facebook.FacebookActivity"
         android:configChanges=
             "keyboard|keyboardHidden|screenLayout|screenSize|orientation"

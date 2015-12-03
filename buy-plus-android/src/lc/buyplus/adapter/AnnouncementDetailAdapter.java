@@ -35,18 +35,19 @@ import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.RoundedImageView;
 import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.models.Announcement;
+import lc.buyplus.models.Photo;
 
 public class AnnouncementDetailAdapter extends BaseAdapter {
 
 	public CoreActivity activity;
 	private LayoutInflater inflater;
 	private LayoutInflater inflaterActivity;
-	ArrayList<Announcement> announcementList;
+	ArrayList<Photo> announcementList;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
 	FragmentManager mFragmentManager;
 	private OnLoadMoreListener onLoadMoreListener;
 	
-	public AnnouncementDetailAdapter(ArrayList<Announcement> announcementList, LayoutInflater inflaterActivity, CoreActivity activity, FragmentManager mFragmentManager) {
+	public AnnouncementDetailAdapter(ArrayList<Photo> announcementList, LayoutInflater inflaterActivity, CoreActivity activity, FragmentManager mFragmentManager) {
 		this.inflaterActivity = inflaterActivity;
 		this.announcementList = announcementList;
 		this.activity = activity;
@@ -85,49 +86,25 @@ public class AnnouncementDetailAdapter extends BaseAdapter {
 
 		if (imageLoader == null)
 			imageLoader = MonApplication.getInstance().getImageLoader();
-
+		Photo item = announcementList.get(position);
 		TextView tvDescription = (TextView) convertView.findViewById(R.id.tvDescription);
-		
+		tvDescription.setText(item.getCaption());
 		FeedImageView feedImageView = (FeedImageView) convertView.findViewById(R.id.imShopImage);
+		// Feed image
+		Log.d("image",item.getImage());
+		feedImageView.setImageUrl(item.getImage(), imageLoader);
+		feedImageView.setVisibility(View.VISIBLE);
+		feedImageView.setResponseObserver(new FeedImageView.ResponseObserver() {
+			@Override
+			public void onError() {
+			}
 
-
+			@Override
+			public void onSuccess() {
+			}
+		});
 		return convertView;
 	}
 
 	
-	public void api_get_shop_announcements(int shop_id, int type, int latest_id, int oldest_id) {
-
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("shop_id", String.valueOf(shop_id));
-		params.put("type", String.valueOf(type));
-		params.put("latest_id", String.valueOf(latest_id));
-		params.put("oldest_id", String.valueOf(oldest_id));
-		RequestQueue requestQueue = Volley.newRequestQueue(this.activity);
-		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-				HandleRequest.build_link(HandleRequest.GET_SHOP_ANNOUNCEMENTS, params), params,
-				new Response.Listener<JSONObject>() {
-
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_get_shop_announcements", response.toString());
-						try {
-							ArrayList<Announcement> AnnouncementsList = new ArrayList<Announcement>();
-							JSONArray data_aray = response.getJSONArray("data");
-							for (int i = 0; i < data_aray.length(); i++) {
-								Announcement announcement = new Announcement((JSONObject) data_aray.get(i));
-								AnnouncementsList.add(announcement);
-							}
-						} catch (JSONException e) {
-
-							e.printStackTrace();
-						}
-					}
-				}, new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-					}
-				});
-		requestQueue.add(jsObjRequest);
-	}
 }

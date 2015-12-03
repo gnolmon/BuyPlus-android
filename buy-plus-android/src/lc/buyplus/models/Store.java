@@ -15,6 +15,7 @@ public class Store {
 	public static String current_shop_name;
 	public static int current_shop_id; 
 	public static Shop current_shop; 
+	public static Announcement current_announcement; 
 	public static String Shop_Search_param = "";
 	public static Shop get_current_shop(){
 		for (int i=0;i<ShopsList.size();i++){
