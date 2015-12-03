@@ -15,6 +15,9 @@ import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +30,7 @@ import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
 import lc.buyplus.R;
 import lc.buyplus.activities.AddFriendActivity;
+import lc.buyplus.activities.LoginActivity;
 import lc.buyplus.activities.ShopFriendActivity;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.OnLoadMoreListener;
@@ -34,6 +38,7 @@ import lc.buyplus.adapter.ShopFriendAdapter;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.models.Announcement;
 import lc.buyplus.models.Friend;
 import lc.buyplus.models.Gift;
@@ -145,23 +150,44 @@ public class ShopFriendFragment  extends CoreFragment {
 				new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
-						Log.d("api_get_shop_friends", response.toString());
+						
 						try {
-							if (reload){
-								FriendsList.removeAll(FriendsList);
-								reload = false;
+							if (Integer.parseInt(response.getString("error"))==2){
+								DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
+								SharedPreferences.Editor editor=pre.edit();
+								//editor.clear();
+								editor.putBoolean("immediate_login", false);
+								editor.commit();
+								Intent loginActivity = new Intent(mActivity,LoginActivity.class);
+					            startActivity(loginActivity);
+					            mActivity.finish();
+								
 							}
-							JSONArray data_aray = response.getJSONArray("data");
-							for (int i = 0; i < data_aray.length(); i++) {
-								Friend friend = new Friend((JSONObject) data_aray.get(i));
-								current_last_id = friend.getId();
-								FriendsList.add(friend);
+							if (Integer.parseInt(response.getString("error"))==1){
+								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							}else{
+								if (reload){
+									FriendsList.removeAll(FriendsList);
+									reload = false;
+								}
+								JSONArray data_aray = response.getJSONArray("data");
+								for (int i = 0; i < data_aray.length(); i++) {
+									Friend friend = new Friend((JSONObject) data_aray.get(i));
+									current_last_id = friend.getId();
+									FriendsList.add(friend);
+								}
+								if (old_id != current_last_id) {
+									isLoading = false;
+									old_id = current_last_id;
+								}
+								friendAdapter.notifyDataSetChanged();
 							}
-							if (old_id != current_last_id) {
-								isLoading = false;
-								old_id = current_last_id;
-							}
-							friendAdapter.notifyDataSetChanged();
+							
 						} catch (JSONException e) {
 
 							e.printStackTrace();
@@ -172,6 +198,9 @@ public class ShopFriendFragment  extends CoreFragment {
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						listView.onRefreshComplete();
+						DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+						dialog.show();
 					}
 				});
 		requestQueue.add(jsObjRequest);

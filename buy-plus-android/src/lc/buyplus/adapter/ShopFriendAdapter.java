@@ -93,15 +93,22 @@ public class ShopFriendAdapter extends BaseAdapter {
 		tvID.setText("ID:" +item.getId());
 		
 		final Button delBtn = (Button) convertView.findViewById(R.id.btnDelFriend);
-		delBtn.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
+		
+		
+		if (item.getCircle_id()<=0){
+			delBtn.setText("Đang chờ");
+		}else{
+			delBtn.setOnClickListener(new OnClickListener() {
 				
-				api_remove_friend_from_shop(Store.current_shop_id,item.getId());
-				friendList.remove(pos);
-				notifyDataSetChanged();
-			}
-		});
+				public void onClick(View v) {
+					
+					api_remove_friend_from_shop(Store.current_shop_id,item.getId());
+					friendList.remove(pos);
+					notifyDataSetChanged();
+				}
+			});
+		}
+		
 
 		RoundedImageView imNoti = (RoundedImageView) convertView.findViewById(R.id.imFriend);
 

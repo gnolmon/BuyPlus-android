@@ -13,6 +13,7 @@ import com.android.volley.toolbox.Volley;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -65,6 +66,11 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 		switch (v.getId()) {
 		case R.id.btnYes:
 			if (flag == 1){
+				SharedPreferences pre=getContext().getSharedPreferences("buy_pus", 0);
+				SharedPreferences.Editor editor=pre.edit();
+				//editor.clear();
+				editor.putBoolean("immediate_login", false);
+				editor.commit();
 				Intent loginActivity = new Intent(c,LoginActivity.class);
 	            c.startActivity(loginActivity);
 	            c.finish();

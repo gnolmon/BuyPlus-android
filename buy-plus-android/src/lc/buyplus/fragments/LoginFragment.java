@@ -64,7 +64,6 @@ public class LoginFragment extends CoreFragment {
 	private MyTextView registerbtn;
 	private LoginButton loginButton;
 	private CallbackManager callbackManager;
-	private String faceBookAccessToken,appFaceBookAccessToken;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		FacebookSdk.sdkInitialize(mActivity.getApplicationContext());
@@ -80,7 +79,6 @@ public class LoginFragment extends CoreFragment {
 			
 			@Override
 			public void onSuccess(LoginResult result) {
-				faceBookAccessToken = result.getAccessToken().toString();
 				GraphRequest request = GraphRequest.newMeRequest(
                 result.getAccessToken(),
                 new GraphRequest.GraphJSONObjectCallback() {
@@ -91,8 +89,7 @@ public class LoginFragment extends CoreFragment {
                         // Application code
                     	 
                         response.getError();
-                        //Log.e("JSON:", object.toString());
-                        Log.d("accessToken", faceBookAccessToken);
+
                         try {
                              String user_id = object.getString("id");
                              String user_name = object.getString("name");
@@ -173,10 +170,30 @@ public class LoginFragment extends CoreFragment {
 		registerbtn = (MyTextView)v.findViewById(R.id.btnRegister);
 		
 		SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
-		String login_name = pre.getString("login_name", "");
+		String login_name_edit = pre.getString("login_name", "");
 		String password = pre.getString("password", "");
-		editName.setText(login_name);
+		editName.setText(login_name_edit);
 		editPass.setText(password);
+		boolean immediate_login = pre.getBoolean("immediate_login", false);
+		if (immediate_login == true){
+			String accessToken = pre.getString("accessToken", "");
+			String phone = pre.getString("phone", "");
+			String email = pre.getString("email", "");
+			String login_name = pre.getString("login_name", "");
+			String imageUrl = pre.getString("imageUrl", "");
+			String imageThumbnail = pre.getString("imageThumbnail", "");
+			String username = pre.getString("username", "");
+			int id = pre.getInt("id", 0);
+			int active = pre.getInt("active", 0);
+			Store.user = new UserAccount(accessToken,id,phone,email,login_name,imageUrl,imageThumbnail,username,active);
+			Intent mainActivity = new Intent(mActivity,MainActivity.class);
+            startActivity(mainActivity);
+            mActivity.finish();
+		}
+		
+		
+		
+		
 		loginbtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -259,10 +276,20 @@ public class LoginFragment extends CoreFragment {
 								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
 								SharedPreferences.Editor editor=pre.edit();
 								editor.clear();
-								editor.putString("login_name", editName.getText().toString());
+								editor.putString("login_name_edit", editName.getText().toString());
 								editor.putString("password", editPass.getText().toString());
+								editor.putString("accessToken", accessToken);
+								editor.putString("phone", phone);
+								editor.putString("email", email);
+								editor.putString("login_name", login_name);
+								editor.putString("imageUrl", imageUrl);
+								editor.putString("imageThumbnail", imageThumbnail);
+								editor.putString("username", username);
+								editor.putInt("id", id);
+								editor.putInt("active", active);
+								editor.putBoolean("immediate_login", true);
 								editor.commit();
-								Store.user = new UserAccount(accessToken,id,phone,email,login_name,imageUrl,imageThumbnail,username,active);;
+								Store.user = new UserAccount(accessToken,id,phone,email,login_name,imageUrl,imageThumbnail,username,active);
 								Intent mainActivity = new Intent(mActivity,MainActivity.class);
 					            startActivity(mainActivity);
 					            mActivity.finish();

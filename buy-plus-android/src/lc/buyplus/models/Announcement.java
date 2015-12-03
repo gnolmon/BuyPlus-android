@@ -18,7 +18,8 @@ public class Announcement {
 	public ArrayList<Photo> photos = new ArrayList<Photo>();
 	public Shop shop;
 	public Long start_time = (long) 0;
-	public String end_time;
+	public Long end_time = (long) 0;
+
 
 	public Announcement() {
 		super();
@@ -26,7 +27,7 @@ public class Announcement {
 	}
 
 	public Announcement(int id, int shop_id, String content, int type, String created_time, String updated_time,
-			int active, ArrayList<Photo> photos, Shop shop, Long start_time, String end_time) {
+			int active, ArrayList<Photo> photos, Shop shop, Long start_time, Long end_time) {
 		super();
 		this.id = id;
 		this.shop_id = shop_id;
@@ -87,10 +88,9 @@ public class Announcement {
 			if (data.optString("start_time") != "" && data.optString("start_time") != "null") {
 				start_time = Long.valueOf(data.getString("start_time"));
 			}
-			if (data.optString("start_time") != "" && data.optString("end_time") != "null") {
-				end_time = data.getString("end_time");
+			if (data.optString("end_time") != "" && data.optString("end_time") != "null") {
+				end_time = Long.valueOf(data.getString("end_time"));
 			}
-			
 			
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
@@ -179,11 +179,11 @@ public class Announcement {
 		this.start_time = start_time;
 	}
 
-	public String getEnd_time() {
+	public Long getEnd_time() {
 		return end_time;
 	}
 
-	public void setEnd_time(String end_time) {
+	public void setEnd_time(Long end_time) {
 		this.end_time = end_time;
 	}
 }

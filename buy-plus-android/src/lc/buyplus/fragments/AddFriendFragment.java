@@ -18,6 +18,7 @@ import com.google.zxing.WriterException;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -39,6 +40,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import lc.buyplus.R;
+import lc.buyplus.activities.LoginActivity;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.AddFriendAdapter;
 import lc.buyplus.adapter.FriendAdapter;
@@ -216,7 +218,31 @@ public class AddFriendFragment extends CoreFragment {
 					@Override
 					public void onResponse(JSONObject response) {
 						Log.d("api_send_request_join_shop_to_friend",response.toString());
-						// code here
+						try {
+							if (Integer.parseInt(response.getString("error"))==2){
+								DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
+								SharedPreferences.Editor editor=pre.edit();
+								//editor.clear();
+								editor.putBoolean("immediate_login", false);
+								editor.commit();
+								Intent loginActivity = new Intent(mActivity,LoginActivity.class);
+							    startActivity(loginActivity);
+							    mActivity.finish();
+
+							}
+							if (Integer.parseInt(response.getString("error"))==1){
+								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							}
+						} catch (NumberFormatException | JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
 					}
 					}, 
 					new Response.ErrorListener() {
@@ -241,26 +267,44 @@ public void api_search_friends_for_shop(int shop_id, String search){
 					@Override
 					public void onResponse(JSONObject response) {
 						try {
-							Log.d("api_search_friends_for_shop", response.toString());
-							ArrayList<Friend> FriendsList = new ArrayList<Friend>();
-							
-							JSONArray data_aray = response.getJSONArray("data");
-							if (data_aray.length()==0){
-								DialogMessage dialog = new DialogMessage(mActivity, "Người dùng này hiện không tồn tại trong hệ thống");
+							if (Integer.parseInt(response.getString("error"))==2){
+								DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
+								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
+								SharedPreferences.Editor editor=pre.edit();
+								//editor.clear();
+								editor.putBoolean("immediate_login", false);
+								editor.commit();
+								Intent loginActivity = new Intent(mActivity,LoginActivity.class);
+							    startActivity(loginActivity);
+							    mActivity.finish();
+
 							}
-							else{
-								for (int i = 0; i < data_aray.length(); i++) {
-									Friend friend = new Friend((JSONObject) data_aray.get(i));
-									FriendsList.add(friend);
-									
-		                        }
-								addFriendAdapter = new AddFriendAdapter(FriendsList, inflaterActivity);
-								listFriendFb.setAdapter(addFriendAdapter);
-								addFriendAdapter.notifyDataSetChanged();	
+							if (Integer.parseInt(response.getString("error"))==1){
+								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							}else{
+								ArrayList<Friend> FriendsList = new ArrayList<Friend>();
+								
+								JSONArray data_aray = response.getJSONArray("data");
+								if (data_aray.length()==0){
+									DialogMessage dialog = new DialogMessage(mActivity, "Người dùng này hiện không tồn tại trong hệ thống");
+									dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+									dialog.show();
+								}
+								else{
+									for (int i = 0; i < data_aray.length(); i++) {
+										Friend friend = new Friend((JSONObject) data_aray.get(i));
+										FriendsList.add(friend);
+										
+			                        }
+									addFriendAdapter = new AddFriendAdapter(FriendsList, inflaterActivity);
+									listFriendFb.setAdapter(addFriendAdapter);
+									addFriendAdapter.notifyDataSetChanged();	
+								}
 							}
-							
 						} catch (JSONException e) {
 
 							e.printStackTrace();

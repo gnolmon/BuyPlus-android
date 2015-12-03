@@ -103,7 +103,7 @@ public class PersonalFragment extends CoreFragment {
 		userName = (TextView) v.findViewById(R.id.userName);
 		userName.setText(CanvasFragment.mUser.getLogin_name());
 		
-		String qrInputText = user_id_txt.toString();
+		String qrInputText = "http://buyplus.vn/user/"+user_id_txt.toString();
 		// Find screen size
 
 		Point point = new Point();
@@ -120,7 +120,6 @@ public class PersonalFragment extends CoreFragment {
 			Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
 			ImageView myImage = (ImageView) v.findViewById(R.id.QR_code);
 			myImage.setImageBitmap(bitmap);
-			Log.d("QRCODE", "asdsd");
 
 		} catch (WriterException e) {
 			e.printStackTrace();

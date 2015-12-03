@@ -105,10 +105,13 @@ public class AnnounmentAdapter extends BaseAdapter {
 		name.setText(item.getShop().getName());
 		
 		long unixSeconds = item.getStart_time();
-		Date date = new Date(unixSeconds*1000L);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date_start = new Date(unixSeconds*1000L);
+		unixSeconds = item.getEnd_time();
+		Date date_end = new Date(unixSeconds*1000L);
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm MM-dd");
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT-7"));
-		String formattedDate = sdf.format(date);
+		String formattedDate = sdf.format(date_start) +" đến "+ sdf.format(date_end);
+		tvTimeSale.setText(formattedDate);
 		
 		CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(Long.parseLong(item.getCreated_time()),
 				System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);

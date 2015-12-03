@@ -528,5 +528,11 @@ public void api_get_num_unread_notifications(){
 				}
 			});
 		requestQueue.add(jsObjRequest);
-}
+	}
+
+	@Override
+	public void onResume(){
+	    super.onResume();
+	    api_get_num_unread_notifications();
+	}
 }
