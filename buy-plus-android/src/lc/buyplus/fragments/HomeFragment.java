@@ -86,8 +86,7 @@ public class HomeFragment extends CoreFragment {
 		      public void onItemClick(AdapterView<?> parent, View view,
 		          int position, long id) {
 		    	  	 Store.current_shop_id = ((Shop)storeAdapter.getItem(position)).getId();
-		    	  	 Log.d("shop_ID",String.valueOf(Store.current_shop_id));
-		    	  	listView.setEnabled(false);
+		    	  	 listView.setEnabled(false);
 		    	  	 api_get_shop_info(Store.current_shop_id);
 		      }
 		    });

@@ -107,9 +107,11 @@ public class CanvasFragment extends CoreFragment {
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.fragnemt_canvas_search_cancel:
-			mSearchEdittext.setText("");
-			Store.Shop_Search_param = "";
-        	api_get_all_shop(0, Store.limit, Store.Shop_Search_param);
+			if (Store.Shop_Search_param != ""){
+				mSearchEdittext.setText("");
+				Store.Shop_Search_param = "";
+	        	api_get_all_shop(0, Store.limit, Store.Shop_Search_param);
+			}
 			hideSearchBlock();
 			break;
 		case R.id.fragment_canvas_search:
@@ -348,12 +350,14 @@ public class CanvasFragment extends CoreFragment {
 		imJoinShop = (ImageView) v.findViewById(R.id.imJoinShop);
 		imNewsDialog = (ImageView) v.findViewById(R.id.imNewsDialog);
 		imSearch = (ImageView) v.findViewById(R.id.imSearch);
-		
+		isSearching=false;
 		mSearchEdittext.setOnKeyListener(new OnKeyListener() {
 		    public boolean onKey(View v, int keyCode, KeyEvent event) {
+		    	Log.d("search",String.valueOf(isSearching));
 		        // If the event is a key-down event on the "enter" button
 		        if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
 		            (keyCode == KeyEvent.KEYCODE_ENTER) && (isSearching==false)) {
+		        	
 		        	isSearching = true;
 		        	Store.Shop_Search_param = String.valueOf(mSearchEdittext.getText());
 		        	api_get_all_shop(0, Store.limit, Store.Shop_Search_param);
@@ -463,12 +467,14 @@ public void api_get_all_shop(int last_id, int limit, String search){
 			                        }
 								}
 								HomeFragment.storeAdapter.notifyDataSetChanged();
-								isSearching = false;
-								isHomeRefresh = false;
+								
+								
 							}
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
+						isSearching = false;
+						isHomeRefresh = false;
 					}
 				}, 
 				new Response.ErrorListener() {

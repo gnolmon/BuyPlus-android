@@ -55,8 +55,8 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/sort" 
-                android:visibility="invisible"/>
+                android:src="@drawable/sort"
+                android:visibility="invisible" />
         </LinearLayout>
     </LinearLayout>
 
@@ -68,13 +68,66 @@
         android:layout_centerVertical="true"
         android:background="@color/divider_top" />
 
-    <TextView
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="@dimen/zero"
         android:layout_weight="1"
-        android:background="@color/white" >
-    </TextView>
+        android:background="@drawable/bg_parent_rounded_corner"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/feed_item_padding_top_bottom"
+        android:paddingTop="@dimen/feed_item_padding_top_bottom" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/feed_item_padding_left_right"
+            android:paddingRight="@dimen/feed_item_padding_left_right" >
+
+            <lc.buyplus.customizes.RoundedImageView
+                android:id="@+id/avaStore"
+                android:layout_width="@dimen/feed_item_profile_pic"
+                android:layout_height="@dimen/feed_item_profile_pic"
+                android:scaleType="fitCenter"
+                android:src="@drawable/square" >
+            </lc.buyplus.customizes.RoundedImageView>
+
+            <LinearLayout
+                android:id="@+id/lnName"
+                android:layout_toRightOf="@id/avaStore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/padding_standard" >
+
+                <TextView
+                    android:id="@+id/tvNameStore"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="JackLand"
+                    android:textColor="@color/actionbar"
+                    android:textSize="@dimen/feed_item_profile_name"/>
+
+                <TextView
+                    android:id="@+id/tvTimestamp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="10:00"
+                    android:textColor="@color/title"
+                    android:textSize="@dimen/feed_item_timestamp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingLeft="@dimen/padding_standard"
+            android:paddingRight="@dimen/padding_standard"
+            android:paddingTop="@dimen/feed_item_status_pad_top"
+            android:textColor="@color/title" />
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"

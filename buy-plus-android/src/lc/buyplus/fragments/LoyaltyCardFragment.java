@@ -85,9 +85,11 @@ public class LoyaltyCardFragment extends CoreFragment {
 		listView.setOnItemClickListener(new OnItemClickListener() {
 		      public void onItemClick(AdapterView<?> parent, View view,
 		          int position, long id) {
-		    	  	listView.setEnabled(false);
-		             Store.current_shop_id = ((Shop)redeemAdapter.getItem(position)).getId();
-		             api_get_shop_info(Store.current_shop_id);
+		             Store.current_shop =((Shop)redeemAdapter.getItem(position));
+		             Store.current_shop_id = Store.current_shop.getId();
+						Intent shopFriendActivity = new Intent(mActivity,ShopFriendActivity.class);
+			            Store.current_shop_name =  Store.current_shop.getName();
+			            startActivity(shopFriendActivity);
 		      }
 		    });
 		redeemAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -195,59 +197,6 @@ public class LoyaltyCardFragment extends CoreFragment {
 		requestQueue.add(jsObjRequest);
 	}
 	
-	public void api_get_shop_info(int shop_id) {
-
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		params.put("shop_id", String.valueOf(shop_id));
-		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-				HandleRequest.build_link(HandleRequest.GET_SHOP_INFO, params), params,
-				new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_get_shop_info", response.toString());
-						try {
-							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(mActivity,"Phiên truy nhập của bạn đã hết, hãy đăng nhập lại");
-								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-								dialog.show();
-								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
-								SharedPreferences.Editor editor=pre.edit();
-								//editor.clear();
-								editor.putBoolean("immediate_login", false);
-								editor.commit();
-								Intent loginActivity = new Intent(mActivity,LoginActivity.class);
-							    startActivity(loginActivity);
-							    mActivity.finish();
-
-							}
-							if (Integer.parseInt(response.getString("error"))==1){
-								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
-								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-								dialog.show();
-							}else{
-								Store.current_shop = new Shop(response.getJSONObject("data"));
-								Intent shopFriendActivity = new Intent(mActivity,ShopFriendActivity.class);
-					            Store.current_shop_name =  Store.current_shop.getName();
-					            startActivity(shopFriendActivity);
-							}
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-						listView.setEnabled(true);
-					}
-				}, new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-						listView.setEnabled(true);
-						DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
-						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-						dialog.show();
-					}
-				});
-		requestQueue.add(jsObjRequest);
-	}
 	public static final long serialVersionUID = 6036846677812555352L;
 	
 	public static CoreActivity mActivity;
