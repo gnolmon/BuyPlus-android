@@ -33,7 +33,7 @@
     <string name="ptr_last_updated"></string>
 
     <!-- NOTIFICATION -->
-    <string name="gcm_defaultSenderId"></string>
+    <string name="gcm_defaultSenderId">799363142235</string>
     <string name="easygcm_sender_id"></string> 
     <string name="title_activity_main">Push Notifications</string>
     <string name="error_config">Please set the %1$s constant and recompile the app.</string>
@@ -54,5 +54,11 @@
     <string name="options_clear">Clear</string>
     <string name="options_exit">Exit</string>
     
+    <string name="gcm_send_message">Token retrieved and sent to server! You can now use gcmsender to
+        send downstream messages to this app.</string>
+    <string name="registering_message">Generating InstanceID token...</string>
+    <string name="token_error_message">An error occurred while either fetching the InstanceID token,
+        sending the fetched token to the server or subscribing to the PubSub topic. Please try
+        running the sample again.</string>
 
 </resources>
