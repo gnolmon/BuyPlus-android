@@ -29,10 +29,10 @@
     
     <!-- Creates a custom permission so only this app can receive its messages. -->
     <permission
-        android:name="lc.buyplus.pushnotifications.permission.C2D_MESSAGE"
+        android:name="lc.buyplus.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
  
-    <uses-permission android:name="lc.buyplus.pushnotifications.permission.C2D_MESSAGE" />
+    <uses-permission android:name="lc.buyplus.permission.C2D_MESSAGE" />
   		
     <application
         android:name="lc.buyplus.application.MonApplication"
@@ -42,6 +42,8 @@
         android:theme="@style/DarkMoonTheme" >
         <meta-data android:name="com.facebook.sdk.ApplicationId"
 		            android:value="@string/facebook_app_id" />
+        <meta-data android:name="com.google.android.gms.version"
+          android:value="@integer/google_play_services_version" />
         <activity
             android:name="lc.buyplus.activities.MainActivity"
             android:label="@string/app_name" >
@@ -97,6 +99,40 @@
             "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
         android:theme="@android:style/Theme.Translucent.NoTitleBar"
         android:label="@string/app_name" />
+        
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="lc.buyplus" />
+            </intent-filter>
+        </receiver>
+        <!-- [END gcm_receiver] -->
+
+        <!-- [START gcm_listener] -->
+        <service
+            android:name="lc.buyplus.gcm.MyGcmListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+        <!-- [END gcm_listener] -->
+        <!-- [START instanceId_listener] -->
+        <service
+            android:name="lc.buyplus.gcm.MyInstanceIDListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID"/>
+            </intent-filter>
+        </service>
+        <!-- [END instanceId_listener] -->
+        <service
+            android:name="lc.buyplus.gcm.RegistrationIntentService"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>
