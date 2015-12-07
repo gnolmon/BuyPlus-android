@@ -16,9 +16,8 @@ import lc.buyplus.models.Announcement;
 import lc.buyplus.models.Notification;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
-import lc.buyplus.pulltorefresh.PullToRefreshListView;
-import lc.buyplus.pulltorefresh.PullToRefreshListView.OnRefreshListener;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,26 +45,31 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 
-public class NotificationsFragment extends CoreFragment{
-	private PullToRefreshListView listView;
+public class NotificationsFragment extends CoreFragment implements OnRefreshListener{
+	private ListView listView;
 	private NotificationAdapter notiAdapter;
 	private LayoutInflater inflaterActivity;
 	private int old_id = 0;
 	private int current_last_id = 0;
 	private boolean isLoadMore,isLoading,reload;
-	
+	private SwipeRefreshLayout swipeView;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_notifications, container, false);
 		initViews(view);
 		initModels();
 		initAnimations();
-		
+		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swipe_view);
+		swipeView.setOnRefreshListener(this);
+	    swipeView.setColorSchemeColors(Color.GREEN, Color.GREEN, Color.GREEN, Color.GREEN);
+	    // swipeView.setDistanceToTriggerSync(20);// in dips
+	    //swipeView.setSize(SwipeRefreshLayout.DEFAULT);// LARGE also can be used
 		inflaterActivity = inflater;
 		isLoadMore = false;
 		isLoading = false;
-		listView = (PullToRefreshListView ) view.findViewById(R.id.listNoti);
+		listView = (ListView ) view.findViewById(R.id.listNoti);
 		notiAdapter = new NotificationAdapter(Store.NotificationsList, inflaterActivity);
 		listView.setAdapter(notiAdapter);
 		//Store.NotificationsList.removeAll(Store.NotificationsList);
@@ -154,18 +158,16 @@ public class NotificationsFragment extends CoreFragment{
 		    }
 		 });
 		
-		listView.setOnRefreshListener(new OnRefreshListener() {
-
-			public void onRefresh() {
-				reload = true;
-		    		api_get_notifications(0, Store.limit);
-
-			}
-		});
 
 		return view;
 	}
 		
+	@Override
+	public void onRefresh() {
+		reload = true;
+		swipeView.setRefreshing(true);
+		api_get_notifications(0, Store.limit);
+	}
 	
 	@Override
 	public void onClick(View view) {
@@ -237,19 +239,17 @@ public class NotificationsFragment extends CoreFragment{
 								}
 								notiAdapter.notifyDataSetChanged();
 							}
+							
 						} catch (JSONException e) {
 
 							e.printStackTrace();
 						}
-						// stopping swipe refresh
-						
-						listView.onRefreshComplete();
+						swipeView.setRefreshing(false);
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						// stopping swipe refresh
-						listView.onRefreshComplete();
+						swipeView.setRefreshing(false);
 						DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();

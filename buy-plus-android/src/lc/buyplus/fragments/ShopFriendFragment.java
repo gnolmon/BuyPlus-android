@@ -19,6 +19,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,11 +47,8 @@ import lc.buyplus.models.Gift;
 import lc.buyplus.models.Notification;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
-import lc.buyplus.pulltorefresh.PullToRefreshListView;
-import lc.buyplus.pulltorefresh.PullToRefreshListView.OnRefreshListener;
-
-public class ShopFriendFragment  extends CoreFragment {
-	private PullToRefreshListView listView;
+public class ShopFriendFragment  extends CoreFragment implements OnRefreshListener {
+	private ListView listView;
 	private ShopFriendAdapter friendAdapter;
 	private LayoutInflater inflaterActivity;
 	private ImageView imAdd;
@@ -57,11 +56,17 @@ public class ShopFriendFragment  extends CoreFragment {
 	private int old_id = 0;
 	private boolean isLoadMore,isLoading,reload;
 	private ArrayList<Friend> FriendsList = new ArrayList<Friend>();
-	
+	private SwipeRefreshLayout swipeView;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_store_friend, container, false);
-		listView = (PullToRefreshListView) view.findViewById(R.id.listFriend);
+		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swipe_view);
+		swipeView.setOnRefreshListener(this);
+	    swipeView.setColorSchemeColors(Color.GREEN, Color.GREEN, Color.GREEN, Color.GREEN);
+	    // swipeView.setDistanceToTriggerSync(20);// in dips
+	    //swipeView.setSize(SwipeRefreshLayout.DEFAULT);// LARGE also can be used
+	    
+		listView = (ListView) view.findViewById(R.id.listFriend);
 		inflaterActivity = inflater;
 		initViews(view);
 		initModels();
@@ -70,7 +75,14 @@ public class ShopFriendFragment  extends CoreFragment {
 		
 		return view;
 	}
-
+	
+	@Override
+	public void onRefresh() {
+		reload = true;
+		swipeView.setRefreshing(true);
+		api_get_shop_friends(Store.current_shop_id,0,Store.limit);
+	}
+	
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
@@ -112,15 +124,6 @@ public class ShopFriendFragment  extends CoreFragment {
 		    }
 		 });
 		
-		listView.setOnRefreshListener(new OnRefreshListener() {
-
-			public void onRefresh() {
-				reload = true;
-
-		    	api_get_shop_friends(Store.current_shop_id,0,Store.limit);
-
-			}
-		});
 		
 		imAdd.setOnClickListener(new OnClickListener() {
 
@@ -192,12 +195,12 @@ public class ShopFriendFragment  extends CoreFragment {
 
 							e.printStackTrace();
 						}
-						listView.onRefreshComplete();
+						swipeView.setRefreshing(false);
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						listView.onRefreshComplete();
+						swipeView.setRefreshing(false);
 						DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();

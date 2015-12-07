@@ -1,6 +1,5 @@
 package lc.buyplus.fragments;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,19 +15,19 @@ import com.android.volley.toolbox.Volley;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import lc.buyplus.R;
 import lc.buyplus.activities.LoginActivity;
 import lc.buyplus.activities.ShopInfoActivity;
@@ -38,25 +37,28 @@ import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.DialogMessage;
-import lc.buyplus.models.Announcement;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
-import lc.buyplus.pulltorefresh.PullToRefreshListView;
-import lc.buyplus.pulltorefresh.PullToRefreshListView.OnRefreshListener;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TextView;
 
-public class HomeFragment extends CoreFragment {
-	public static PullToRefreshListView listView;
+public class HomeFragment extends CoreFragment implements OnRefreshListener{
+	public static ListView listView;
 	public static StoreAdapter storeAdapter;
 	private LayoutInflater inflaterActivity;
 	public static int current_last_id = 0;
 	private boolean isLoading,reload;
 	private int old_id = 0;
+	private SwipeRefreshLayout swipeView;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
-		listView = (PullToRefreshListView) view.findViewById(R.id.listStore);
+		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swipe_view);
+		swipeView.setOnRefreshListener(this);
+	    swipeView.setColorSchemeColors(Color.GREEN, Color.GREEN, Color.GREEN, Color.GREEN);
+	    // swipeView.setDistanceToTriggerSync(20);// in dips
+	    //swipeView.setSize(SwipeRefreshLayout.DEFAULT);// LARGE also can be used
+ 
+		listView = (ListView) view.findViewById(R.id.listStore);
 		inflaterActivity = inflater;
 		initViews(view);
 		initModels();
@@ -65,6 +67,14 @@ public class HomeFragment extends CoreFragment {
 		
 		return view;
 	}
+	
+	@Override
+	public void onRefresh() {
+		reload = true;
+		swipeView.setRefreshing(true);
+		api_get_all_shop(0,Store.limit,Store.Shop_Search_param);
+	}
+	
 	@Override
 	public void onClick(View view) {
 		switch(view.getId()) {
@@ -112,13 +122,13 @@ public class HomeFragment extends CoreFragment {
 		    }
 		 });
 		
-		listView.setOnRefreshListener(new OnRefreshListener() {
-
-			public void onRefresh() {
-				reload = true;
-				api_get_all_shop(0,Store.limit,Store.Shop_Search_param);
-			}
-		});
+//		listView.setOnRefreshListener(new OnRefreshListener() {
+//
+//			public void onRefresh() {
+//				reload = true;
+//				api_get_all_shop(0,Store.limit,Store.Shop_Search_param);
+//			}
+//		});
 	}
 
 	@Override
@@ -178,18 +188,19 @@ public class HomeFragment extends CoreFragment {
 									old_id = current_last_id;
 								}
 							}
+							
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
 												
-						listView.onRefreshComplete();
+						swipeView.setRefreshing(false);
 					}
 				}, 
 				new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						Log.d("api_get_all_shop",error.toString());
-						listView.onRefreshComplete();
+						swipeView.setRefreshing(false);
 						isLoading = false;
 						DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -276,4 +287,5 @@ public class HomeFragment extends CoreFragment {
 		// TODO Auto-generated method stub
 		
 	}
+	
 }
