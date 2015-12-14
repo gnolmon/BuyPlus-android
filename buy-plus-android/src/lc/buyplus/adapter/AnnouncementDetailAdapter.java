@@ -88,7 +88,13 @@ public class AnnouncementDetailAdapter extends BaseAdapter {
 			imageLoader = MonApplication.getInstance().getImageLoader();
 		Photo item = announcementList.get(position);
 		TextView tvDescription = (TextView) convertView.findViewById(R.id.tvDescription);
-		tvDescription.setText(item.getCaption());
+		if (item.getCaption() == "null"){
+			tvDescription.setText("");
+		}else {
+			tvDescription.setText(item.getCaption());
+		}
+			
+		
 		FeedImageView feedImageView = (FeedImageView) convertView.findViewById(R.id.imShopImage);
 		// Feed image
 		Log.d("image",item.getImage());

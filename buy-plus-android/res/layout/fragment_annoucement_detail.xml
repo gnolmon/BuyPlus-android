@@ -118,6 +118,7 @@
                     android:textSize="@dimen/feed_item_timestamp" />
             </LinearLayout>
             <RelativeLayout
+                android:id="@+id/rlintro"
                 android:layout_toRightOf="@id/lnName"
                 android:layout_alignParentRight="true"
                 android:layout_width="150dp"
@@ -144,9 +145,10 @@
                         android:textSize="10dp" />
 
             </RelativeLayout>
-        </RelativeLayout>
+        
 
         <TextView
+            android:layout_below="@id/rlintro"
             android:id="@+id/tvStatus"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -157,12 +159,14 @@
             android:textColor="@color/title" />
 
         <ListView
+            android:layout_below="@id/tvStatus"
             android:id="@+id/listImage"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="@color/white"
             android:scaleType="fitXY"
             android:visibility="visible" />
+        </RelativeLayout>
     </LinearLayout>
 
     <TextView
