@@ -17,18 +17,36 @@
 package lc.buyplus.gcm;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import lc.buyplus.R;
+import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.customizes.DialogMessage;
+import lc.buyplus.fragments.CanvasFragment;
+import lc.buyplus.fragments.LoginFragment;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.Request.Method;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class RegistrationIntentService extends IntentService {
 
@@ -55,7 +73,9 @@ public class RegistrationIntentService extends IntentService {
                     GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
             // [END get_token]
             Log.i(TAG, "GCM Registration Token: " + token);
-
+            TelephonyManager tManager = (TelephonyManager)getSystemService(Context.TELECOM_SERVICE);
+            String uuid = tManager.getDeviceId();
+            api_register_device_token(token,token,"android",uuid);
             // TODO: Implement this method to send any registration to your app's servers.
             sendRegistrationToServer(token);
 
@@ -104,5 +124,43 @@ public class RegistrationIntentService extends IntentService {
         }
     }
     // [END subscribe_topics]
+    
+public void api_register_device_token(String device_token, String gcm_device_token, String type, String uuid){
+	 	
+    	Map<String, String> params = new HashMap<String, String>();
+		params.put("device_token", device_token);
+		params.put("gcm_device_token", gcm_device_token);
+		params.put("type", type);
+		params.put("uuid", uuid);
+			RequestQueue requestQueue = Volley.newRequestQueue(CanvasFragment.mActivity);
+			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
+					HandleRequest.REGISTER_DIVICE_TOKEN, params, 
+					new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("api_user_register",response.toString());
+						try {
+							if (Integer.parseInt(response.getString("error"))==1){
+								DialogMessage dialog = new DialogMessage(CanvasFragment.mActivity,response.getString("message"));
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							}else{
+							}
+						} catch (NumberFormatException | JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 
+					}
+					}, 
+					new Response.ErrorListener() {
+						@Override
+						public void onErrorResponse(VolleyError error) {
+							DialogMessage dialog = new DialogMessage(CanvasFragment.mActivity,"Kiểm tra lại kết nốt của bạn");
+							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+							dialog.show();
+						}
+					});
+			requestQueue.add(jsObjRequest);
+	}
 }
