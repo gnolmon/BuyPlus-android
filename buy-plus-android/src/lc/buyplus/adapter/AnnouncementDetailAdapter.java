@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.application.MonApplication;
@@ -36,6 +37,7 @@ import lc.buyplus.customizes.RoundedImageView;
 import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.models.Announcement;
 import lc.buyplus.models.Photo;
+import lc.buyplus.models.Store;
 
 public class AnnouncementDetailAdapter extends BaseAdapter {
 
@@ -46,14 +48,15 @@ public class AnnouncementDetailAdapter extends BaseAdapter {
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
 	FragmentManager mFragmentManager;
 	private OnLoadMoreListener onLoadMoreListener;
-	
-	public AnnouncementDetailAdapter(ArrayList<Photo> announcementList, LayoutInflater inflaterActivity, CoreActivity activity, FragmentManager mFragmentManager) {
+
+	public AnnouncementDetailAdapter(ArrayList<Photo> announcementList, LayoutInflater inflaterActivity,
+			CoreActivity activity, FragmentManager mFragmentManager) {
 		this.inflaterActivity = inflaterActivity;
 		this.announcementList = announcementList;
 		this.activity = activity;
 		this.mFragmentManager = mFragmentManager;
 	}
-	
+
 	public OnLoadMoreListener getOnLoadMoreListener() {
 		return onLoadMoreListener;
 	}
@@ -86,31 +89,92 @@ public class AnnouncementDetailAdapter extends BaseAdapter {
 
 		if (imageLoader == null)
 			imageLoader = MonApplication.getInstance().getImageLoader();
-		Photo item = announcementList.get(position);
-		TextView tvDescription = (TextView) convertView.findViewById(R.id.tvDescription);
-		if (item.getCaption() == "null"){
-			tvDescription.setText("");
-		}else {
-			tvDescription.setText(item.getCaption());
-		}
-			
-		
-		FeedImageView feedImageView = (FeedImageView) convertView.findViewById(R.id.imShopImage);
-		// Feed image
-		Log.d("image",item.getImage());
-		feedImageView.setImageUrl(item.getImage(), imageLoader);
-		feedImageView.setVisibility(View.VISIBLE);
-		feedImageView.setResponseObserver(new FeedImageView.ResponseObserver() {
-			@Override
-			public void onError() {
+
+		if (position == 0) {
+			RoundedImageView avaStore = (RoundedImageView) convertView.findViewById(R.id.avaStore);
+			avaStore.setImageUrl(Store.current_announcement.getShop().getImage_thumbnail(), imageLoader);
+
+			TextView name = (TextView) convertView.findViewById(R.id.tvNameStore);
+			name.setText(Store.current_announcement.getShop().getName());
+
+			TextView timestamp = (TextView) convertView.findViewById(R.id.tvTimestamp);
+			CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
+					Long.parseLong(Store.current_announcement.getCreated_time()), System.currentTimeMillis(),
+					DateUtils.SECOND_IN_MILLIS);
+			timestamp.setText(timeAgo);
+
+			TextView tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
+			tvStatus.setText(Store.current_announcement.getContent());
+
+			ImageView imSaleOff = (ImageView) convertView.findViewById(R.id.imSaleOff);
+			TextView tvTimeSale = (TextView) convertView.findViewById(R.id.tvTimeSale);
+
+			long unixSeconds = Store.current_announcement.getStart_time();
+			Date date_start = new Date(unixSeconds * 1000L);
+			unixSeconds = Store.current_announcement.getEnd_time();
+			Date date_end = new Date(unixSeconds * 1000L);
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm MM-dd");
+			sdf.setTimeZone(TimeZone.getTimeZone("GMT-7"));
+			String formattedDate = sdf.format(date_start) + " đến " + sdf.format(date_end);
+			tvTimeSale.setText(formattedDate);
+
+			if (Store.current_announcement.getType() == 2) {
+				imSaleOff.setVisibility(View.VISIBLE);
+				tvTimeSale.setVisibility(View.VISIBLE);
+			} else {
+				imSaleOff.setVisibility(View.GONE);
+				tvTimeSale.setVisibility(View.GONE);
 			}
 
-			@Override
-			public void onSuccess() {
+			Photo item = announcementList.get(position);
+			TextView tvDescription = (TextView) convertView.findViewById(R.id.tvDescription);
+			if (item.getCaption() == "null") {
+				tvDescription.setText("");
+			} else {
+				tvDescription.setText(item.getCaption());
 			}
-		});
+
+			FeedImageView feedImageView = (FeedImageView) convertView.findViewById(R.id.imShopImage);
+			// Feed image
+			Log.d("image", item.getImage());
+			feedImageView.setImageUrl(item.getImage(), imageLoader);
+			feedImageView.setVisibility(View.VISIBLE);
+			feedImageView.setResponseObserver(new FeedImageView.ResponseObserver() {
+				@Override
+				public void onError() {
+				}
+
+				@Override
+				public void onSuccess() {
+				}
+			});
+		} else {
+			RelativeLayout rlShopDescription = (RelativeLayout) convertView.findViewById(R.id.rlshop);
+			rlShopDescription.setVisibility(View.GONE);
+			Photo item = announcementList.get(position);
+			TextView tvDescription = (TextView) convertView.findViewById(R.id.tvDescription);
+			if (item.getCaption() == "null") {
+				tvDescription.setText("");
+			} else {
+				tvDescription.setText(item.getCaption());
+			}
+
+			FeedImageView feedImageView = (FeedImageView) convertView.findViewById(R.id.imShopImage);
+			// Feed image
+			Log.d("image", item.getImage());
+			feedImageView.setImageUrl(item.getImage(), imageLoader);
+			feedImageView.setVisibility(View.VISIBLE);
+			feedImageView.setResponseObserver(new FeedImageView.ResponseObserver() {
+				@Override
+				public void onError() {
+				}
+
+				@Override
+				public void onSuccess() {
+				}
+			});
+		}
 		return convertView;
 	}
 
-	
 }

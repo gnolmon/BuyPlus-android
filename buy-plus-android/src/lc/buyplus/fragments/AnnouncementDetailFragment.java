@@ -142,39 +142,7 @@ public class AnnouncementDetailFragment extends CoreFragment {
 		mNotiTab.setOnClickListener(this);
 		mSettingTab.setOnClickListener(this);
 		mBack.setOnClickListener(this);
-		RoundedImageView avaStore = (RoundedImageView) v.findViewById(R.id.avaStore);
-		avaStore.setImageUrl(Store.current_announcement.getShop().getImage_thumbnail(), imageLoader);
 		
-		TextView name = (TextView) v.findViewById(R.id.tvNameStore);
-		name.setText(Store.current_announcement.getShop().getName());
-		
-		TextView timestamp = (TextView) v.findViewById(R.id.tvTimestamp);
-		CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(Long.parseLong(Store.current_announcement.getCreated_time()),
-				System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
-		timestamp.setText(timeAgo);
-		
-		TextView tvStatus = (TextView) v.findViewById(R.id.tvStatus);
-		tvStatus.setText(Store.current_announcement.getContent());
-		
-		ImageView imSaleOff = (ImageView) v.findViewById(R.id.imSaleOff);
-		TextView tvTimeSale = (TextView) v.findViewById(R.id.tvTimeSale);
-		
-		long unixSeconds = Store.current_announcement.getStart_time();
-		Date date_start = new Date(unixSeconds*1000L);
-		unixSeconds = Store.current_announcement.getEnd_time();
-		Date date_end = new Date(unixSeconds*1000L);
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm MM-dd");
-		sdf.setTimeZone(TimeZone.getTimeZone("GMT-7"));
-		String formattedDate = sdf.format(date_start) +" đến "+ sdf.format(date_end);
-		tvTimeSale.setText(formattedDate);
-		
-		if (Store.current_announcement.getType()==2){
-			imSaleOff.setVisibility(View.VISIBLE);
-			tvTimeSale.setVisibility(View.VISIBLE);
-		}else {
-			imSaleOff.setVisibility(View.GONE);
-			tvTimeSale.setVisibility(View.GONE);
-		}
 	}
 
 	@Override
