@@ -118,11 +118,36 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 					@Override
 					public void onResponse(JSONObject response) {
 						Log.d("api_join_shop", response.toString());
-						// code here
+						try {
+							if (Integer.parseInt(response.getString("error"))==2){
+								DialogMessage dialog = new DialogMessage(activity,activity.getResources().getString(R.string.end_session));
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+								SharedPreferences pre=activity.getSharedPreferences("buy_pus", 0);
+								SharedPreferences.Editor editor=pre.edit();
+								//editor.clear();
+								editor.putBoolean("immediate_login", false);
+								editor.commit();
+								Intent loginActivity = new Intent(activity,LoginActivity.class);
+								activity.startActivity(loginActivity);
+							    activity.finish();
+
+							}
+							if (Integer.parseInt(response.getString("error"))==1){
+								DialogMessage dialog = new DialogMessage(activity,response.getString("message"));
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
+						DialogMessage dialog = new DialogMessage(activity,activity.getResources().getString(R.string.connect_problem));
+						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+						dialog.show();
 					}
 				});
 		requestQueue.add(jsObjRequest);
@@ -139,11 +164,36 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 					@Override
 					public void onResponse(JSONObject response) {
 						Log.d("api_leave_shop", response.toString());
-						// code here
+						try {
+							if (Integer.parseInt(response.getString("error"))==2){
+								DialogMessage dialog = new DialogMessage(activity,activity.getResources().getString(R.string.end_session));
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+								SharedPreferences pre=activity.getSharedPreferences("buy_pus", 0);
+								SharedPreferences.Editor editor=pre.edit();
+								//editor.clear();
+								editor.putBoolean("immediate_login", false);
+								editor.commit();
+								Intent loginActivity = new Intent(activity,LoginActivity.class);
+								activity.startActivity(loginActivity);
+							    activity.finish();
+
+							}
+							if (Integer.parseInt(response.getString("error"))==1){
+								DialogMessage dialog = new DialogMessage(activity,response.getString("message"));
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
+						DialogMessage dialog = new DialogMessage(activity,activity.getResources().getString(R.string.connect_problem));
+						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+						dialog.show();
 					}
 				});
 		requestQueue.add(jsObjRequest);

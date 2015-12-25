@@ -54,6 +54,8 @@
     <string name="options_clear">Clear</string>
     <string name="options_exit">Exit</string>
     
+	<string name="connect_problem">Không kết nối được mạng.</string>
+	<string name="end_session">Phiên đăng nhập đã kết thúc, hãy đăng nhập lại.</string>
     <string name="gcm_send_message">Token retrieved and sent to server! You can now use gcmsender to
         send downstream messages to this app.</string>
     <string name="registering_message">Generating InstanceID token...</string>

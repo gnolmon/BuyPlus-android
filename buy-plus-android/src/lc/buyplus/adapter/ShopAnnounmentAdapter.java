@@ -80,7 +80,7 @@ public class ShopAnnounmentAdapter extends BaseAdapter {
 		name.setText(item.getShop().getName());
 		long unixSeconds = item.getStart_time();
 		Date date = new Date(unixSeconds*1000L);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT-7"));
 		String formattedDate = sdf.format(date);
 		

@@ -82,8 +82,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/feed_item_padding_left_right"
-            android:paddingRight="@dimen/feed_item_padding_left_right" >
+            android:paddingLeft="@dimen/feed_item_padding_left_right">
 
             <lc.buyplus.customizes.RoundedImageView
                 android:id="@+id/avaStore"
