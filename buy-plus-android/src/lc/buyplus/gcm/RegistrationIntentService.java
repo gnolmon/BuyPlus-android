@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.preference.PreferenceManager;
+import android.provider.Settings.Secure;
 import android.support.v4.content.LocalBroadcastManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -73,9 +74,7 @@ public class RegistrationIntentService extends IntentService {
                     GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
             // [END get_token]
             Log.i(TAG, "GCM Registration Token: " + token);
-            TelephonyManager tManager = (TelephonyManager)getSystemService(Context.TELECOM_SERVICE);
-            String uuid = tManager.getDeviceId();
-            api_register_device_token(token,token,"android",uuid);
+            
             // TODO: Implement this method to send any registration to your app's servers.
             sendRegistrationToServer(token);
 
@@ -107,7 +106,9 @@ public class RegistrationIntentService extends IntentService {
      * @param token The new token.
      */
     private void sendRegistrationToServer(String token) {
-        // Add custom implementation, as needed.
+    	TelephonyManager tManager = (TelephonyManager)CanvasFragment.mActivity.getSystemService(Context.TELEPHONY_SERVICE );
+    	String uuid = Secure.getString(this.getContentResolver(),Secure.ANDROID_ID);
+        api_register_device_token(token,token,"android",uuid);
     }
 
     /**
@@ -128,10 +129,13 @@ public class RegistrationIntentService extends IntentService {
 public void api_register_device_token(String device_token, String gcm_device_token, String type, String uuid){
 	 	
     	Map<String, String> params = new HashMap<String, String>();
+    	params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		
 		params.put("device_token", device_token);
 		params.put("gcm_device_token", gcm_device_token);
 		params.put("type", type);
 		params.put("uuid", uuid);
+		Log.i(TAG, "OK!: " + device_token);
 			RequestQueue requestQueue = Volley.newRequestQueue(CanvasFragment.mActivity);
 			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.REGISTER_DIVICE_TOKEN, params, 

@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/canvas"
-    android:scrollbars="vertical"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:scrollbars="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -158,14 +158,12 @@
             android:textColor="@color/title" />
 
         <ListView
-            android:layout_below="@id/tvStatus"
             android:id="@+id/listImage"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="@color/white"
             android:scaleType="fitXY"
             android:visibility="visible" />
-        </RelativeLayout>
     </LinearLayout>
 
     <TextView
