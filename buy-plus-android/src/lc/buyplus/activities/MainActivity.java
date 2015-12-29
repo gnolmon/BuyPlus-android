@@ -38,11 +38,12 @@ public class MainActivity extends CoreActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_demo);
 		initViews();
-		initModels();
+		
 		initListeners();
 		initAnimations();
 		FragmentManager mFragmentManager = getSupportFragmentManager();
 		mFragmentManager.beginTransaction().add(R.id.canvas, SplashFragment.getInstance(MainActivity.this)).commit();
+		initModels();
 	}
 		
 //		makeJsonArrayRequest(NetworkConfig.URL_JSON_ARRAY_REQUEST, new JSONArrayRequestListener() {

@@ -103,7 +103,7 @@ public class ShopFriendAdapter extends BaseAdapter {
 		
 		
 		if (item.getCircle_id()<=0){
-			delBtn.setText("Ä�ang chá»�");
+			delBtn.setText("Đang chờ");
 		}else{
 			delBtn.setOnClickListener(new OnClickListener() {
 				

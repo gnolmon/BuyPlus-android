@@ -86,15 +86,16 @@ public class AddFriendAdapter extends BaseAdapter {
 		tvID.setText("ID:" +item.getId());
 		final Button addFriend = (Button) convertView.findViewById(R.id.btnAddFriend);
 		addFriend.setText("Thêm Bạn");
-		if (friendList.get(position).getHas_joined()==1){
-			addFriend.setText("Đã vào");
-			addFriend.setEnabled(false);
-		}else{
+		addFriend.setEnabled(true);
+//		if (friendList.get(position).getHas_joined()==1){
+//			addFriend.setText("Đã vào");
+//			addFriend.setEnabled(false);
+//		}else{
 			if (friendList.get(position).getHas_requested()==1){
 				addFriend.setText("Đang chờ");
 				addFriend.setEnabled(false);
 			}
-		}
+//		}
 		addFriend.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {

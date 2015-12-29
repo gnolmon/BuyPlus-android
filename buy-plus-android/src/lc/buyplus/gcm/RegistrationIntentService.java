@@ -176,9 +176,9 @@ public void api_register_device_token(String device_token, String gcm_device_tok
 					new Response.ErrorListener() {
 						@Override
 						public void onErrorResponse(VolleyError error) {
-							DialogMessage dialog = new DialogMessage(CanvasFragment.mActivity,CanvasFragment.mActivity.getResources().getString(R.string.connect_problem));
-							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-							dialog.show();
+//							DialogMessage dialog = new DialogMessage(CanvasFragment.mActivity,CanvasFragment.mActivity.getResources().getString(R.string.connect_problem));
+//							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//							dialog.show();
 						}
 					});
 			requestQueue.add(jsObjRequest);
