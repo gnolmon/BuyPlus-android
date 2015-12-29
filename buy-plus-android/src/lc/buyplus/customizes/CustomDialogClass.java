@@ -3,6 +3,7 @@ package lc.buyplus.customizes;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.android.volley.RequestQueue;
@@ -120,21 +121,21 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 						Log.d("api_join_shop", response.toString());
 						try {
 							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(activity,activity.getResources().getString(R.string.end_session));
+								DialogMessage dialog = new DialogMessage(c,c.getResources().getString(R.string.end_session));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
-								SharedPreferences pre=activity.getSharedPreferences("buy_pus", 0);
+								SharedPreferences pre=c.getSharedPreferences("buy_pus", 0);
 								SharedPreferences.Editor editor=pre.edit();
 								//editor.clear();
 								editor.putBoolean("immediate_login", false);
 								editor.commit();
-								Intent loginActivity = new Intent(activity,LoginActivity.class);
-								activity.startActivity(loginActivity);
-							    activity.finish();
+								Intent loginActivity = new Intent(c,LoginActivity.class);
+								c.startActivity(loginActivity);
+							    c.finish();
 
 							}
 							if (Integer.parseInt(response.getString("error"))==1){
-								DialogMessage dialog = new DialogMessage(activity,response.getString("message"));
+								DialogMessage dialog = new DialogMessage(c,response.getString("message"));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 							}
@@ -145,7 +146,7 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						DialogMessage dialog = new DialogMessage(activity,activity.getResources().getString(R.string.connect_problem));
+						DialogMessage dialog = new DialogMessage(c,c.getResources().getString(R.string.connect_problem));
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
 					}
@@ -166,21 +167,21 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 						Log.d("api_leave_shop", response.toString());
 						try {
 							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(activity,activity.getResources().getString(R.string.end_session));
+								DialogMessage dialog = new DialogMessage(c,c.getResources().getString(R.string.end_session));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
-								SharedPreferences pre=activity.getSharedPreferences("buy_pus", 0);
+								SharedPreferences pre=c.getSharedPreferences("buy_pus", 0);
 								SharedPreferences.Editor editor=pre.edit();
 								//editor.clear();
 								editor.putBoolean("immediate_login", false);
 								editor.commit();
-								Intent loginActivity = new Intent(activity,LoginActivity.class);
-								activity.startActivity(loginActivity);
-							    activity.finish();
+								Intent loginActivity = new Intent(c,LoginActivity.class);
+								c.startActivity(loginActivity);
+							    c.finish();
 
 							}
 							if (Integer.parseInt(response.getString("error"))==1){
-								DialogMessage dialog = new DialogMessage(activity,response.getString("message"));
+								DialogMessage dialog = new DialogMessage(c,response.getString("message"));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 							}
@@ -191,7 +192,7 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						DialogMessage dialog = new DialogMessage(activity,activity.getResources().getString(R.string.connect_problem));
+						DialogMessage dialog = new DialogMessage(c,c.getResources().getString(R.string.connect_problem));
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
 					}

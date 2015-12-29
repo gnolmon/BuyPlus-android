@@ -84,19 +84,19 @@ public class RegisterFragment extends CoreFragment implements OnClickListener {
 			String cpassword = edCfPass.getText().toString();
 			String email = edEmail.getText().toString();
 			if (username.isEmpty()) {
-				DialogMessage dialog = new DialogMessage(mActivity,"Hãy điền tên của bạn");
+				DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.fill_name));
 				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 				dialog.show();
 			} else if (email.isEmpty()) {
-				DialogMessage dialog = new DialogMessage(mActivity,"Hãy điền email của bạn");
+				DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.fill_email));
 				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 				dialog.show();
 			} else if (password.isEmpty()) {
-				DialogMessage dialog = new DialogMessage(mActivity,"Hãy điền mật khẩu của bạn");
+				DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.fill_pass));
 				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 				dialog.show();
 			} else if (cpassword.isEmpty()) {
-				DialogMessage dialog = new DialogMessage(mActivity,"Hãy xác nhận mật khẩu của bạn");
+				DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.fill_pass_confirm));
 				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 				dialog.show();
 			} else {
@@ -130,7 +130,7 @@ public class RegisterFragment extends CoreFragment implements OnClickListener {
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 							}else{
-								DialogMessage dialog = new DialogMessage(mActivity,"Đăng kí thành công");
+								DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.register_success));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 								mFragmentManager.beginTransaction().replace(R.id.canvas, LoginFragment.getInstance(mActivity)).commit();

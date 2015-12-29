@@ -16,6 +16,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -23,6 +24,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -79,6 +81,8 @@ public class ShopInfoFragment extends CoreFragment {
 	@SuppressLint("NewApi")
 	@Override
 	public void onClick(View view) {
+		Intent returnIntent;
+		Uri uri;
 		switch (view.getId()) {
 		case R.id.btnAgreeTerm:
 			if (isJoin) {
@@ -91,6 +95,27 @@ public class ShopInfoFragment extends CoreFragment {
 				dialog.show();
 			}
 			break;
+		case R.id.tvFb:
+			uri = Uri.parse("https://www.facebook.com/groups/867716866646587/");
+			returnIntent = new Intent(Intent.ACTION_VIEW, uri);
+			try {
+				startActivity(returnIntent);
+			} catch (ActivityNotFoundException e) {
+				DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+				dialog.show();
+			}
+			break;
+		case R.id.tvWeb:
+			uri = Uri.parse("https://buyplus.vn");
+			returnIntent = new Intent(Intent.ACTION_VIEW, uri);
+			try {
+				startActivity(returnIntent);
+			} catch (ActivityNotFoundException e) {
+				DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+				dialog.show();
+			}
 		}
 	}
 
@@ -130,7 +155,8 @@ public class ShopInfoFragment extends CoreFragment {
 		tvPhone = (TextView) v.findViewById(R.id.tvPhone);
 		tvWeb = (TextView) v.findViewById(R.id.tvWeb);
 		tvFb = (TextView) v.findViewById(R.id.tvFb);
-		
+		tvWeb.setOnClickListener(this);
+		tvFb.setOnClickListener(this);
 		
 		
 		if ((Store.current_shop.current_customer_shop_id == null) || (Store.current_shop.current_customer_shop_id == "")) {
@@ -189,7 +215,8 @@ public class ShopInfoFragment extends CoreFragment {
 						Log.d("api_get_shop_info", response.toString());
 						try {
 							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(mActivity,"Phiên truy nhập của bạn đã hết, hãy đăng nhập lại");
+								DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.end_session));
+
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
@@ -217,7 +244,7 @@ public class ShopInfoFragment extends CoreFragment {
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+						DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
 					}

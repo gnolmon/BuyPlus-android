@@ -44,19 +44,19 @@ public class SettingFragment extends CoreFragment {
 			dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 			dialog.show();
 			break;
-		case R.id.rlSettingNoti:
-			Intent settingNotiActivity = new Intent(mActivity, SettingNotificationActivity.class);
-			startActivity(settingNotiActivity);
-			break;
+//		case R.id.rlSettingNoti:
+//			Intent settingNotiActivity = new Intent(mActivity, SettingNotificationActivity.class);
+//			startActivity(settingNotiActivity);
+//			break;
 		case R.id.rlBuyplusInfo:
 			Intent buyplusInfoActivity = new Intent(mActivity, BuyPlusInfoActivity.class);
 			startActivity(buyplusInfoActivity);
 			break;
-		case R.id.rlLanguage:
-			LanguageDialog lanDialog = new LanguageDialog(mActivity);
-			lanDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-			lanDialog.show();
-			break;
+//		case R.id.rlLanguage:
+//			LanguageDialog lanDialog = new LanguageDialog(mActivity);
+//			lanDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//			lanDialog.show();
+//			break;
 		case R.id.rlSettingUser:
 			Intent userActivity = new Intent(mActivity, UserActivity.class);
 			startActivity(userActivity);
@@ -72,8 +72,8 @@ public class SettingFragment extends CoreFragment {
 	protected void initViews(View v) {
 		logout = (TextView) v.findViewById(R.id.tvLogout);
 		logout.setOnClickListener(this);
-		rlSettingNoti = (RelativeLayout) v.findViewById(R.id.rlSettingNoti);
-		rlSettingNoti.setOnClickListener(this);
+		//rlSettingNoti = (RelativeLayout) v.findViewById(R.id.rlSettingNoti);
+		//rlSettingNoti.setOnClickListener(this);
 
 		rlBuyplusInfo = (RelativeLayout) v.findViewById(R.id.rlBuyplusInfo);
 		rlBuyplusInfo.setOnClickListener(this);
@@ -81,8 +81,8 @@ public class SettingFragment extends CoreFragment {
 		rlSettingUser = (RelativeLayout) v.findViewById(R.id.rlSettingUser);
 		rlSettingUser.setOnClickListener(this);
 
-		rlLanguage = (RelativeLayout) v.findViewById(R.id.rlLanguage);
-		rlLanguage.setOnClickListener(this);
+		//rlLanguage = (RelativeLayout) v.findViewById(R.id.rlLanguage);
+		//rlLanguage.setOnClickListener(this);
 	}
 
 	@Override

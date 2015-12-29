@@ -15,6 +15,9 @@ import com.android.volley.toolbox.Volley;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +25,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.activities.LoginActivity;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.fragments.HomeAnnounmentFragment;
@@ -145,21 +149,21 @@ public class DialogNews extends android.app.Dialog implements android.view.View.
 
 						try {
 							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(activity,activity.getResources().getString(R.string.end_session));
+								DialogMessage dialog = new DialogMessage(c,c.getResources().getString(R.string.end_session));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
-								SharedPreferences pre=activity.getSharedPreferences("buy_pus", 0);
+								SharedPreferences pre=c.getSharedPreferences("buy_pus", 0);
 								SharedPreferences.Editor editor=pre.edit();
 								//editor.clear();
 								editor.putBoolean("immediate_login", false);
 								editor.commit();
-								Intent loginActivity = new Intent(activity,LoginActivity.class);
-								activity.startActivity(loginActivity);
-							    activity.finish();
+								Intent loginActivity = new Intent(c,LoginActivity.class);
+								c.startActivity(loginActivity);
+							    c.finish();
 
 							}
 							if (Integer.parseInt(response.getString("error"))==1){
-								DialogMessage dialog = new DialogMessage(activity,response.getString("message"));
+								DialogMessage dialog = new DialogMessage(c,response.getString("message"));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 							}else{
@@ -180,7 +184,7 @@ public class DialogNews extends android.app.Dialog implements android.view.View.
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						DialogMessage dialog = new DialogMessage(activity,activity.getResources().getString(R.string.connect_problem));
+						DialogMessage dialog = new DialogMessage(c,c.getResources().getString(R.string.connect_problem));
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
 					}

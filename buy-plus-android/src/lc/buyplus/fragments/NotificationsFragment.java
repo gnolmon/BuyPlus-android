@@ -209,7 +209,8 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 						}
 						try {
 							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(mActivity,"Phiên truy nhập của bạn đã hết, hãy đăng nhập lại");
+								DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.end_session));
+
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
@@ -250,7 +251,7 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						swipeView.setRefreshing(false);
-						DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+						DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
 					}
@@ -270,7 +271,8 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 
 						try {
 							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(mActivity,"Phiên truy nhập của bạn đã hết, hãy đăng nhập lại");
+								DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.end_session));
+
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
@@ -296,7 +298,7 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+						DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
 					}
@@ -318,7 +320,8 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 						Log.d("api_get_shop_info", response.toString());
 						try {
 							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(mActivity,"Phiên truy nhập của bạn đã hết, hãy đăng nhập lại");
+								DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.end_session));
+
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
@@ -350,7 +353,7 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						listView.setEnabled(true);
-						DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+						DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
 					}

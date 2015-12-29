@@ -293,7 +293,7 @@ public void api_search_friends_for_shop(int shop_id, String search){
 								
 								JSONArray data_aray = response.getJSONArray("data");
 								if (data_aray.length()==0){
-									DialogMessage dialog = new DialogMessage(mActivity, "Người dùng này hiện không tồn tại trong hệ thống");
+									DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.not_found_friend));
 									dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 									dialog.show();
 								}

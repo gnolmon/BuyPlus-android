@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.android.volley.Request.Method;
@@ -13,6 +14,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +27,11 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.activities.LoginActivity;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.HandleRequest;
+import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.customizes.RoundedImageView;
 import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.models.Friend;
@@ -96,7 +103,7 @@ public class ShopFriendAdapter extends BaseAdapter {
 		
 		
 		if (item.getCircle_id()<=0){
-			delBtn.setText("Đang chờ");
+			delBtn.setText("Ä�ang chá»�");
 		}else{
 			delBtn.setOnClickListener(new OnClickListener() {
 				
@@ -136,21 +143,21 @@ public class ShopFriendAdapter extends BaseAdapter {
 						Log.d("api_remove_friend_from_shop",response.toString());
 						try {
 							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(activity,activity.getResources().getString(R.string.end_session));
+								DialogMessage dialog = new DialogMessage(CanvasFragment.mActivity,CanvasFragment.mActivity.getResources().getString(R.string.end_session));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
-								SharedPreferences pre=activity.getSharedPreferences("buy_pus", 0);
+								SharedPreferences pre=CanvasFragment.mActivity.getSharedPreferences("buy_pus", 0);
 								SharedPreferences.Editor editor=pre.edit();
 								//editor.clear();
 								editor.putBoolean("immediate_login", false);
 								editor.commit();
-								Intent loginActivity = new Intent(activity,LoginActivity.class);
-								activity.startActivity(loginActivity);
-							    activity.finish();
+								Intent loginActivity = new Intent(CanvasFragment.mActivity,LoginActivity.class);
+								CanvasFragment.mActivity.startActivity(loginActivity);
+								CanvasFragment.mActivity.finish();
 
 							}
 							if (Integer.parseInt(response.getString("error"))==1){
-								DialogMessage dialog = new DialogMessage(activity,response.getString("message"));
+								DialogMessage dialog = new DialogMessage(CanvasFragment.mActivity,response.getString("message"));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 							}
@@ -162,7 +169,7 @@ public class ShopFriendAdapter extends BaseAdapter {
 					new Response.ErrorListener() {
 						@Override
 						public void onErrorResponse(VolleyError error) {
-							DialogMessage dialog = new DialogMessage(activity,activity.getResources().getString(R.string.connect_problem));
+							DialogMessage dialog = new DialogMessage(CanvasFragment.mActivity,CanvasFragment.mActivity.getResources().getString(R.string.connect_problem));
 							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 							dialog.show();
 						}

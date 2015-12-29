@@ -305,7 +305,7 @@ public class LoginFragment extends CoreFragment {
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						loginbtn.setEnabled(true);
-						DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+						DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
 					}

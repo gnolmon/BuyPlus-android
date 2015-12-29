@@ -150,7 +150,8 @@ public class LoyaltyCardFragment extends CoreFragment implements OnRefreshListen
 						Log.d("api_get_my_shop", response.toString());
 						try {
 							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(mActivity,"Phiên truy nhập của bạn đã hết, hãy đăng nhập lại");
+								DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.end_session));
+
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
@@ -196,7 +197,7 @@ public class LoyaltyCardFragment extends CoreFragment implements OnRefreshListen
 					public void onErrorResponse(VolleyError error) {
 						swipeView.setRefreshing(false);
 						isLoading = false;
-						DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+						DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
 					}

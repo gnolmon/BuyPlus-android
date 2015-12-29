@@ -55,7 +55,17 @@
     <string name="options_exit">Exit</string>
     
 	<string name="connect_problem">Không kết nối được mạng.</string>
+	<string name="not_found_shop">Cửa hàng này hiện không tồn tại trong hệ thống.</string>
+	<string name="not_found_friend">Người dùng này hiện không tồn tại trong hệ thống.</string>
 	<string name="end_session">Phiên đăng nhập đã kết thúc, hãy đăng nhập lại.</string>
+	<string name="is_not_join">Bạn chưa tham gia shop này.</string>
+	
+	<string name="register_success">Đăng kí thành công.</string>
+	<string name="fill_name">Hãy điền tên của bạn.</string>
+	<string name="fill_email">Hãy điền email của bạn.</string>
+	<string name="fill_pass">Hãy điền mật khẩu của bạn.</string>
+	<string name="fill_pass_confirm">Hãy xác nhận mật khẩu của bạn.</string>
+	
     <string name="gcm_send_message">Token retrieved and sent to server! You can now use gcmsender to
         send downstream messages to this app.</string>
     <string name="registering_message">Generating InstanceID token...</string>

@@ -317,7 +317,8 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 						Log.d("api_get_shop_info", response.toString());
 						try {
 							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(mActivity,"Phiên truy nhập của bạn đã hết, hãy đăng nhập lại");
+								DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.end_session));
+
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
@@ -337,7 +338,8 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 							}else{
 								shop = new Shop(response.getJSONObject("data"));
 								if ((shop.current_customer_shop_id == null) || (shop.current_customer_shop_id == "")) {
-									DialogMessage dialog = new DialogMessage(mActivity,"Bạn chưa tham gia shop này");
+									DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.is_not_join));
+
 									dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 									dialog.show();
 								} else {
@@ -352,7 +354,7 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+						DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
 					}

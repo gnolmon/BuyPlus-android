@@ -28,6 +28,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import lc.buyplus.R;
+import lc.buyplus.activities.LoginActivity;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.fragments.CanvasFragment;
@@ -144,12 +145,27 @@ public void api_register_device_token(String device_token, String gcm_device_tok
 					public void onResponse(JSONObject response) {
 						Log.d("api_user_register",response.toString());
 						try {
-							if (Integer.parseInt(response.getString("error"))==1){
-								DialogMessage dialog = new DialogMessage(CanvasFragment.mActivity,response.getString("message"));
-								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-								dialog.show();
-							}else{
-							}
+							if (Integer.parseInt(response.getString("error"))==2){
+                                DialogMessage dialog = new DialogMessage(CanvasFragment.mActivity,CanvasFragment.mActivity.getResources().getString(R.string.end_session));
+
+                                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                dialog.show();
+                                SharedPreferences pre=getSharedPreferences("buy_pus", 0);
+                                SharedPreferences.Editor editor=pre.edit();
+                                //editor.clear();
+                                editor.putBoolean("immediate_login", false);
+                                editor.commit();
+                                Intent loginActivity = new Intent(CanvasFragment.mActivity,LoginActivity.class);
+                                CanvasFragment.mActivity.startActivity(loginActivity);
+                                CanvasFragment.mActivity.finish();
+
+                            }else
+                            if (Integer.parseInt(response.getString("error"))==1){
+                                DialogMessage dialog = new DialogMessage(CanvasFragment.mActivity,response.getString("message"));
+                                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                dialog.show();
+                            }else{           
+                            }
 						} catch (NumberFormatException | JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -160,7 +176,7 @@ public void api_register_device_token(String device_token, String gcm_device_tok
 					new Response.ErrorListener() {
 						@Override
 						public void onErrorResponse(VolleyError error) {
-							DialogMessage dialog = new DialogMessage(CanvasFragment.mActivity,"Kiểm tra lại kết nốt của bạn");
+							DialogMessage dialog = new DialogMessage(CanvasFragment.mActivity,CanvasFragment.mActivity.getResources().getString(R.string.connect_problem));
 							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 							dialog.show();
 						}

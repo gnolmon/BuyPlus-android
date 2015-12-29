@@ -12,6 +12,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
 import android.content.Intent;
@@ -41,6 +42,7 @@ import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.customizes.MyTextView;
+import lc.buyplus.customizes.RoundedImageView;
 import lc.buyplus.models.Friend;
 import lc.buyplus.models.Store;
 
@@ -48,6 +50,8 @@ public class HomeNotiFragment extends CoreFragment {
 	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab,mBack;
 	Display display;
 	private MyTextView mTitle;
+	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
+	RoundedImageView avaStore;
 	private LayoutInflater inflaterActivity;
 
 
@@ -115,7 +119,10 @@ public class HomeNotiFragment extends CoreFragment {
 		mBack.setOnClickListener(this);
 		TextView name = (TextView) v.findViewById(R.id.tvNameStore);
 		name.setText(Store.current_notification.getParams());
-		
+		if (imageLoader == null)
+			imageLoader = MonApplication.getInstance().getImageLoader();
+		avaStore = (RoundedImageView) v.findViewById(R.id.avaStore);
+		avaStore.setImageUrl(Store.current_notification.getImage(), imageLoader);
 		TextView timestamp = (TextView) v.findViewById(R.id.tvTimestamp);
 		CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(Long.parseLong(Store.current_notification.getCreated_time()),
 				System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
