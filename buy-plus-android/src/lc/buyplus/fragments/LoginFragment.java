@@ -103,21 +103,21 @@ public class LoginFragment extends CoreFragment {
                             		    HttpMethod.GET,
                             		    new GraphRequest.Callback() {
                             		        public void onCompleted(GraphResponse response) {
-                            		        	try {
-                            		        		Log.e("JSON:", response.toString());
-                            		        		JSONObject jobj = new JSONObject(response.getRawResponse());
-                        							JSONArray data_aray = jobj.getJSONArray("data");
-                        							for (int i = 0; i < data_aray.length(); i++) {
-                        								FacebookFriend facebookFriend = new FacebookFriend((JSONObject) data_aray.get(i));
-                        	                            	if (facebookFriend != null){
-                        	                            		Store.FacebookFriendsList.add(facebookFriend);
-                        	                            	}
-                        	                        }
-      
-                        							
-                        						} catch (JSONException e) {
-                        							e.printStackTrace();
-                        						}	
+//                            		        	try {
+//                            		        		Log.e("JSON:", response.toString());
+//                            		        		JSONObject jobj = new JSONObject(response.getRawResponse());
+//                        							JSONArray data_aray = jobj.getJSONArray("data");
+//                        							for (int i = 0; i < data_aray.length(); i++) {
+//                        								FacebookFriend facebookFriend = new FacebookFriend((JSONObject) data_aray.get(i));
+//                        	                            	if (facebookFriend != null){
+//                        	                            		Store.FacebookFriendsList.add(facebookFriend);
+//                        	                            	}
+//                        	                        }
+//      
+//                        							
+//                        						} catch (JSONException e) {
+//                        							e.printStackTrace();
+//                        						}	
                             		        }
                             		    }
                             		).executeAsync();
