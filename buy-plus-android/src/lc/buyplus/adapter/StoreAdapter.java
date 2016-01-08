@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.bumptech.glide.Glide;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,13 +17,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.activities.ShopInfoActivity;
+import lc.buyplus.adapter.AnnounmentAdapter.ViewHolder;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.customizes.RoundedImageView;
+import lc.buyplus.customizes.RoundedViewImage;
+import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
 
 public class StoreAdapter extends BaseAdapter{
-	private Activity activity;
 	private LayoutInflater inflater;
 	private LayoutInflater inflaterActivity;
 	ArrayList<Shop> storeList;
@@ -32,7 +35,15 @@ public class StoreAdapter extends BaseAdapter{
 	public StoreAdapter(ArrayList<Shop> shopsList, LayoutInflater inflaterActivity, Activity activity) {
 		this.inflaterActivity = inflaterActivity;
 		this.storeList = shopsList;
-		this.activity = activity;
+	}
+	
+	static class ViewHolder {
+		public TextView tvNameStore;
+		
+		TextView tvAddressStore;
+		ImageView imJoinShop;
+		
+		RoundedViewImage avaStore;
 	}
 	
 	public OnLoadMoreListener getOnLoadMoreListener() {
@@ -60,29 +71,37 @@ public class StoreAdapter extends BaseAdapter{
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		ViewHolder viewHolder;
 		if (inflater == null)
 			inflater = inflaterActivity;
-		if (convertView == null)
+		if (convertView == null){
 			convertView = inflater.inflate(R.layout.item_store_home, null);
+			viewHolder = new ViewHolder();
+			viewHolder.tvNameStore = (TextView) convertView.findViewById(R.id.tvNameStore);
+			
+			viewHolder.tvAddressStore = (TextView) convertView.findViewById(R.id.tvAddressStore);
+			viewHolder.imJoinShop = (ImageView) convertView.findViewById(R.id.imJoinShop);
+			
+			viewHolder.avaStore = (RoundedViewImage) convertView
+					.findViewById(R.id.avaStore);
+			convertView.setTag(viewHolder);
+		} else{
+			viewHolder = (ViewHolder) convertView.getTag();
+		}
+			
 
 		if (imageLoader == null)
 			imageLoader = MonApplication.getInstance().getImageLoader();
 
-		TextView tvNameStore = (TextView) convertView.findViewById(R.id.tvNameStore);
 		
-		TextView tvAddressStore = (TextView) convertView.findViewById(R.id.tvAddressStore);
-		ImageView imJoinShop = (ImageView) convertView.findViewById(R.id.imJoinShop);
-		
-		RoundedImageView avaStore = (RoundedImageView) convertView
-				.findViewById(R.id.avaStore);
 
 		final Shop item = storeList.get(position);
 		if (item.isJoin == true){
-			imJoinShop.setVisibility(View.VISIBLE);
+			viewHolder.imJoinShop.setVisibility(View.VISIBLE);
 		}else{
-			imJoinShop.setVisibility(View.GONE);
+			viewHolder.imJoinShop.setVisibility(View.INVISIBLE);
 		}
-		tvNameStore.setText(item.getName());
+		viewHolder.tvNameStore.setText(item.getName());
 		
 //		tvNameStore.setOnClickListener(new OnClickListener() {
 //			
@@ -95,10 +114,12 @@ public class StoreAdapter extends BaseAdapter{
 //			}
 //		});
 //		
-		tvAddressStore.setText(item.getAddress());
+		viewHolder.tvAddressStore.setText(item.getAddress());
 		
 		if (item.getImage() != null || item.getImage() != ""){
-			avaStore.setImageUrl(item.getImage(), imageLoader);
+			Glide.with(CanvasFragment.mActivity).load(item.getImage()).centerCrop()
+			.placeholder(R.drawable.loading_icon).crossFade().into(viewHolder.avaStore);
+			//avaStore.setImageUrl(item.getImage(), imageLoader);
 		}
 		
 		

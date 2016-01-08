@@ -11,13 +11,13 @@
         android:orientation="horizontal"
         android:padding="@dimen/padding_standard" >
 
-        <lc.buyplus.customizes.RoundedImageView
+        <lc.buyplus.customizes.RoundedViewImage
             android:id="@+id/avaStore"
             android:layout_width="@dimen/image_normal"
             android:layout_height="@dimen/image_normal"
             android:layout_gravity="center"
             android:src="@drawable/square" >
-        </lc.buyplus.customizes.RoundedImageView>
+        </lc.buyplus.customizes.RoundedViewImage>
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -50,10 +50,10 @@
 
                 <ImageView
                     android:id="@+id/imJoinShop"
-                    android:layout_marginLeft="@dimen/padding_standard"
-                    android:layout_toRightOf="@id/tvNameStore"
                     android:layout_width="@dimen/icon_small"
                     android:layout_height="@dimen/icon_small"
+                    android:layout_marginLeft="@dimen/padding_standard"
+                    android:layout_toRightOf="@id/tvNameStore"
                     android:src="@drawable/joinshop" />
 
             </RelativeLayout>
