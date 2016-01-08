@@ -98,7 +98,7 @@
                 android:textSize="15dp" />
         </RelativeLayout>
 
-        <lc.buyplus.cores.FeedImageView
+        <ImageView
             android:id="@+id/imShopImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

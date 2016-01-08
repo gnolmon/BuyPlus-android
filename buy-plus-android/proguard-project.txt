@@ -31,6 +31,14 @@
     @com.google.android.gms.common.annotation.KeepName *;
 }
 
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+    **[] $VALUES;
+    public *;
+}
+
+-keep class com.bumptech.glide.integration.volley.VolleyGlideModule
+
 -keepnames class * implements android.os.Parcelable {
     public static final ** CREATOR;
 }
