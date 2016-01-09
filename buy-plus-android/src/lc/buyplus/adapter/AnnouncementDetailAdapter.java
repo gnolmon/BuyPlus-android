@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,12 +37,14 @@ import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.activities.LoginActivity;
 import lc.buyplus.activities.ShopInfoActivity;
+import lc.buyplus.adapter.AnnounmentAdapter.ViewHolder;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.FeedImageView;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.customizes.RoundedImageView;
+import lc.buyplus.customizes.RoundedViewImage;
 import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.models.Announcement;
 import lc.buyplus.models.Photo;
@@ -64,6 +67,16 @@ public class AnnouncementDetailAdapter extends BaseAdapter {
 		this.announcementList = announcementList;
 		this.activity = activity;
 		this.mFragmentManager = mFragmentManager;
+	}
+
+	static class ViewHolder {
+		public RoundedViewImage avaStore;
+		public TextView name;
+		public TextView timestamp;
+		public TextView tvStatus;
+		public ImageView imSaleOff;
+		public TextView tvTimeSale;
+		public ImageView feedImageView;
 	}
 
 	public OnLoadMoreListener getOnLoadMoreListener() {
@@ -91,32 +104,39 @@ public class AnnouncementDetailAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		ViewHolder viewHolder;
 		if (inflater == null)
 			inflater = inflaterActivity;
-		if (convertView == null)
+		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.item_announcement_detail, null);
+			viewHolder = new ViewHolder();
+			viewHolder.avaStore = (RoundedViewImage) convertView.findViewById(R.id.avaStore);
+			viewHolder.name = (TextView) convertView.findViewById(R.id.tvNameStore);
+			viewHolder.timestamp = (TextView) convertView.findViewById(R.id.tvTimestamp);
+			viewHolder.tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
+			viewHolder.imSaleOff = (ImageView) convertView.findViewById(R.id.imSaleOff);
+			viewHolder.tvTimeSale = (TextView) convertView.findViewById(R.id.tvTimeSale);
+			viewHolder.feedImageView = (ImageView) convertView.findViewById(R.id.imShopImage);
+			convertView.setTag(viewHolder);
+		} else {
+			viewHolder = (ViewHolder) convertView.getTag();
+		}
 
 		if (imageLoader == null)
 			imageLoader = MonApplication.getInstance().getImageLoader();
 
 		if (position == 0) {
-			RoundedImageView avaStore = (RoundedImageView) convertView.findViewById(R.id.avaStore);
-			avaStore.setImageUrl(Store.current_announcement.getShop().getImage_thumbnail(), imageLoader);
 
-			TextView name = (TextView) convertView.findViewById(R.id.tvNameStore);
-			name.setText(Store.current_announcement.getShop().getName());
-
-			TextView timestamp = (TextView) convertView.findViewById(R.id.tvTimestamp);
 			CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
 					Long.parseLong(Store.current_announcement.getCreated_time()), System.currentTimeMillis(),
 					DateUtils.SECOND_IN_MILLIS);
-			timestamp.setText(timeAgo);
-
-			TextView tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
-			tvStatus.setText(Store.current_announcement.getContent());
-
-			ImageView imSaleOff = (ImageView) convertView.findViewById(R.id.imSaleOff);
-			TextView tvTimeSale = (TextView) convertView.findViewById(R.id.tvTimeSale);
+			viewHolder.timestamp.setText(timeAgo);
+			// viewHolder.avaStore.setImageUrl(Store.current_announcement.getShop().getImage_thumbnail(),
+			// imageLoader);
+			Glide.with(CanvasFragment.mActivity).load(Store.current_announcement.getShop().getImage_thumbnail())
+					.centerCrop().placeholder(R.drawable.loading_icon).crossFade().into(viewHolder.avaStore);
+			viewHolder.name.setText(Store.current_announcement.getShop().getName());
+			viewHolder.tvStatus.setText(Store.current_announcement.getContent());
 
 			long unixSeconds = Store.current_announcement.getStart_time();
 			Date date_start = new Date(unixSeconds * 1000L);
@@ -125,14 +145,14 @@ public class AnnouncementDetailAdapter extends BaseAdapter {
 			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm MM-dd");
 			sdf.setTimeZone(TimeZone.getTimeZone("GMT-7"));
 			String formattedDate = sdf.format(date_start) + " đến " + sdf.format(date_end);
-			tvTimeSale.setText(formattedDate);
+			viewHolder.tvTimeSale.setText(formattedDate);
 
 			if (Store.current_announcement.getType() == 2) {
-				imSaleOff.setVisibility(View.VISIBLE);
-				tvTimeSale.setVisibility(View.VISIBLE);
+				viewHolder.imSaleOff.setVisibility(View.VISIBLE);
+				viewHolder.tvTimeSale.setVisibility(View.VISIBLE);
 			} else {
-				imSaleOff.setVisibility(View.GONE);
-				tvTimeSale.setVisibility(View.GONE);
+				viewHolder.imSaleOff.setVisibility(View.GONE);
+				viewHolder.tvTimeSale.setVisibility(View.GONE);
 			}
 
 			Photo item = announcementList.get(position);
@@ -142,40 +162,34 @@ public class AnnouncementDetailAdapter extends BaseAdapter {
 			} else {
 				tvDescription.setText(item.getCaption());
 			}
-			
-			name.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					Store.current_shop_id = ( Store.current_announcement.getShop_id());
-		    	  	 api_get_shop_info(Store.current_shop_id);
-					
-				}
-			});
-			avaStore.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					Store.current_shop_id = ( Store.current_announcement.getShop_id());
-		    	  	 api_get_shop_info(Store.current_shop_id);
-					
-				}
-			});
-			
-			FeedImageView feedImageView = (FeedImageView) convertView.findViewById(R.id.imShopImage);
-			// Feed image
-			Log.d("image", item.getImage());
-			feedImageView.setImageUrl(item.getImage(), imageLoader);
-			feedImageView.setVisibility(View.VISIBLE);
-			feedImageView.setResponseObserver(new FeedImageView.ResponseObserver() {
-				@Override
-				public void onError() {
-				}
+
+			viewHolder.name.setOnClickListener(new OnClickListener() {
 
 				@Override
-				public void onSuccess() {
+				public void onClick(View v) {
+					Store.current_shop_id = (Store.current_announcement.getShop_id());
+					api_get_shop_info(Store.current_shop_id);
+
 				}
 			});
+			viewHolder.avaStore.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Store.current_shop_id = (Store.current_announcement.getShop_id());
+					api_get_shop_info(Store.current_shop_id);
+
+				}
+			});
+
+			// Feed image
+			Log.d("image", item.getImage());
+			// viewHolder.feedImageView.setImageUrl(item.getImage(),
+			// imageLoader);
+			Glide.with(CanvasFragment.mActivity).load(item.getImage()).centerCrop().placeholder(R.drawable.loading_icon)
+					.crossFade().into(viewHolder.feedImageView);
+			viewHolder.feedImageView.setVisibility(View.VISIBLE);
+
 		} else {
 			RelativeLayout rlShopDescription = (RelativeLayout) convertView.findViewById(R.id.rlshop);
 			rlShopDescription.setVisibility(View.GONE);
@@ -187,24 +201,18 @@ public class AnnouncementDetailAdapter extends BaseAdapter {
 				tvDescription.setText(item.getCaption());
 			}
 
-			FeedImageView feedImageView = (FeedImageView) convertView.findViewById(R.id.imShopImage);
 			// Feed image
 			Log.d("image", item.getImage());
-			feedImageView.setImageUrl(item.getImage(), imageLoader);
-			feedImageView.setVisibility(View.VISIBLE);
-			feedImageView.setResponseObserver(new FeedImageView.ResponseObserver() {
-				@Override
-				public void onError() {
-				}
+			// viewHolder.feedImageView.setImageUrl(item.getImage(),
+			// imageLoader);
+			Glide.with(CanvasFragment.mActivity).load(item.getImage()).centerCrop().placeholder(R.drawable.loading_icon)
+					.crossFade().into(viewHolder.feedImageView);
+			viewHolder.feedImageView.setVisibility(View.VISIBLE);
 
-				@Override
-				public void onSuccess() {
-				}
-			});
 		}
 		return convertView;
 	}
-	
+
 	public void api_get_shop_info(int shop_id) {
 
 		Map<String, String> params = new HashMap<String, String>();
@@ -218,28 +226,29 @@ public class AnnouncementDetailAdapter extends BaseAdapter {
 					public void onResponse(JSONObject response) {
 						Log.d("api_get_shop_info", response.toString());
 						try {
-							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(activity,activity.getResources().getString(R.string.end_session));
+							if (Integer.parseInt(response.getString("error")) == 2) {
+								DialogMessage dialog = new DialogMessage(activity,
+										activity.getResources().getString(R.string.end_session));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
-								SharedPreferences pre=activity.getSharedPreferences("buy_pus", 0);
-								SharedPreferences.Editor editor=pre.edit();
-								//editor.clear();
+								SharedPreferences pre = activity.getSharedPreferences("buy_pus", 0);
+								SharedPreferences.Editor editor = pre.edit();
+								// editor.clear();
 								editor.putBoolean("immediate_login", false);
 								editor.commit();
-								Intent loginActivity = new Intent(activity,LoginActivity.class);
+								Intent loginActivity = new Intent(activity, LoginActivity.class);
 								activity.startActivity(loginActivity);
-							    activity.finish();
+								activity.finish();
 
 							}
-							if (Integer.parseInt(response.getString("error"))==1){
-								DialogMessage dialog = new DialogMessage(activity,response.getString("message"));
+							if (Integer.parseInt(response.getString("error")) == 1) {
+								DialogMessage dialog = new DialogMessage(activity, response.getString("message"));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
-							}else{
+							} else {
 								Store.current_shop = new Shop(response.getJSONObject("data"));
-								Store.current_shop_name =  Store.current_shop.getName();
-								Intent shopInfoActivity = new Intent(activity,ShopInfoActivity.class);			            
+								Store.current_shop_name = Store.current_shop.getName();
+								Intent shopInfoActivity = new Intent(activity, ShopInfoActivity.class);
 								activity.startActivity(shopInfoActivity);
 							}
 						} catch (JSONException e) {
@@ -249,7 +258,8 @@ public class AnnouncementDetailAdapter extends BaseAdapter {
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						DialogMessage dialog = new DialogMessage(activity,activity.getResources().getString(R.string.connect_problem));
+						DialogMessage dialog = new DialogMessage(activity,
+								activity.getResources().getString(R.string.connect_problem));
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
 					}
