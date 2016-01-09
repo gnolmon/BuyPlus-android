@@ -3,16 +3,21 @@ package lc.buyplus.adapter;
 import java.util.List;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.bumptech.glide.Glide;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.adapter.AnnounmentAdapter.ViewHolder;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.customizes.RoundedImageView;
+import lc.buyplus.customizes.RoundedViewImage;
+import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.models.Gift;
 import lc.buyplus.models.Store;
 
@@ -24,10 +29,19 @@ public class ShopGiftAdapter extends BaseAdapter {
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
 	private OnLoadMoreListener onLoadMoreListener;
 	private ProgressBar pbPoint;
-	
-	public ShopGiftAdapter( List<Gift> giftList,LayoutInflater inflaterActivity) {
+
+	public ShopGiftAdapter(List<Gift> giftList, LayoutInflater inflaterActivity) {
 		this.inflaterActivity = inflaterActivity;
 		this.giftList = giftList;
+	}
+
+	static class ViewHolder {
+		public TextView storeName;
+		public TextView tvContentRedeem;
+		public TextView tvPoint;
+		public RoundedViewImage imRedeem;
+		public ProgressBar pbPoint;
+		public TextView tvScore;
 	}
 
 	@Override
@@ -35,7 +49,7 @@ public class ShopGiftAdapter extends BaseAdapter {
 		// TODO Auto-generated method stub
 		return giftList.size();
 	}
-	
+
 	public OnLoadMoreListener getOnLoadMoreListener() {
 		return onLoadMoreListener;
 	}
@@ -58,42 +72,48 @@ public class ShopGiftAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+
+		ViewHolder viewHolder;
 		if (inflater == null)
 			inflater = (LayoutInflater) inflaterActivity;
-		
-		if (convertView == null)
+
+		if (convertView == null) {
+			viewHolder = new ViewHolder();
 			convertView = inflater.inflate(R.layout.item_store_redeem, null);
+
+			viewHolder.storeName = (TextView) convertView.findViewById(R.id.tvstoreTitle);
+			viewHolder.tvContentRedeem = (TextView) convertView.findViewById(R.id.tvContentRedeem);
+			viewHolder.tvPoint = (TextView) convertView.findViewById(R.id.tvPoint);
+			viewHolder.imRedeem = (RoundedViewImage) convertView.findViewById(R.id.imRedeem);
+			viewHolder.pbPoint = (ProgressBar) convertView.findViewById(R.id.pbScore);
+			viewHolder.tvScore = (TextView) convertView.findViewById(R.id.tvScore);
+
+			convertView.setTag(viewHolder);
+		} else {
+			viewHolder = (ViewHolder) convertView.getTag();
+		}
 
 		if (imageLoader == null)
 			imageLoader = MonApplication.getInstance().getImageLoader();
 		Gift item = giftList.get(position);
 
-		TextView storeName = (TextView) convertView.findViewById(R.id.tvstoreTitle);
-		storeName.setText("" + item.getName());
-
-		TextView tvContentRedeem = (TextView) convertView.findViewById(R.id.tvContentRedeem);
-		tvContentRedeem.setText("" + item.getDescription());
-
-		TextView tvPoint = (TextView) convertView.findViewById(R.id.tvPoint);
-		tvPoint.setText("Diem: " + item.getPoint());
-
-		RoundedImageView imRedeem = (RoundedImageView) convertView.findViewById(R.id.imRedeem);
+		viewHolder.storeName.setText("" + item.getName());
+		viewHolder.tvContentRedeem.setText("" + item.getDescription());
+		viewHolder.tvPoint.setText("Diem: " + item.getPoint());
 
 		// name.setText(item.getName());
 
 		// user profile pic
-		imRedeem.setImageUrl(item.getImage(), imageLoader);
-		
-		pbPoint = (ProgressBar) convertView.findViewById(R.id.pbScore);
+		// viewHolder.imRedeem.setImageUrl(item.getImage(), imageLoader);
+		Glide.with(CanvasFragment.mActivity).load(item.getImage()).centerCrop().placeholder(R.drawable.loading_icon)
+				.crossFade().into(viewHolder.imRedeem);
+
 		int myPoint = Store.current_shop.getCurrent_customer_shop_point();
-		
 		int giftPoint = item.getPoint();
-		
 		int percent = (int) (myPoint * 100 / giftPoint);
 		pbPoint.setProgress(percent);
-		
-		TextView tvScore = (TextView) convertView.findViewById(R.id.tvScore);
-		tvScore.setText(percent + "%");
+
+		viewHolder.tvScore.setText(percent + "%");
 
 		return convertView;
 	}
