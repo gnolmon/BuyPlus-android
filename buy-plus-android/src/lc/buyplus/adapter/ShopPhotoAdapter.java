@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.bumptech.glide.Glide;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,8 +15,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.adapter.AnnounmentAdapter.ViewHolder;
 import lc.buyplus.application.MonApplication;
+import lc.buyplus.customizes.RoundedViewImage;
+import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.models.Photo;
 
 public class ShopPhotoAdapter extends BaseAdapter {
@@ -30,6 +35,10 @@ public class ShopPhotoAdapter extends BaseAdapter {
 		this.inflaterActivity = inflaterActivity;
 		this.PhotosList = PhotosList;
 		this.imageWidth = imageWidth;
+	}
+
+	static class ViewHolder {
+		public NetworkImageView thumbNail;
 	}
 
 	@Override
@@ -49,23 +58,32 @@ public class ShopPhotoAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		ViewHolder viewHolder;
 		if (inflater == null)
 			inflater = inflaterActivity;
-		if (convertView == null)
+		if (convertView == null){
 			convertView = inflater.inflate(R.layout.item_store_photo, null);
+			viewHolder = new ViewHolder();
+			// Grid thumbnail image view
+			viewHolder.thumbNail = (NetworkImageView) convertView.findViewById(R.id.thumbnail);
+			convertView.setTag(viewHolder);
+		} else {
+			viewHolder = (ViewHolder) convertView.getTag();
+		}
+
 
 		if (imageLoader == null)
 			imageLoader = MonApplication.getInstance().getImageLoader();
 
-		// Grid thumbnail image view
-		NetworkImageView thumbNail = (NetworkImageView) convertView.findViewById(R.id.thumbnail);
+		
 
 		Photo p = PhotosList.get(position);
 
-		thumbNail.setScaleType(ImageView.ScaleType.CENTER_CROP);
-		thumbNail.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageWidth));
-		thumbNail.setImageUrl(p.getImage(), imageLoader);
-
+		viewHolder.thumbNail.setScaleType(ImageView.ScaleType.CENTER_CROP);
+		viewHolder.thumbNail.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageWidth));
+		viewHolder.thumbNail.setImageUrl(p.getImage(), imageLoader);
+		//Glide.with(CanvasFragment.mActivity).load(p.getImage()).centerCrop()
+		//.placeholder(R.drawable.loading_icon).crossFade().into(viewHolder.thumbNail);
 		return convertView;
 	}
 
