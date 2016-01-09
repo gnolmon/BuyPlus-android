@@ -43,8 +43,8 @@ public class ShopAnnounmentAdapter extends BaseAdapter {
 		public TextView name;
 		public TextView timestamp;
 		public TextView tvStatus;
-		public RoundedViewImage avaStore;
-		public ImageView feedImageView;
+		public RoundedImageView avaStore;
+		public FeedImageView feedImageView;
 	}
 	
 	public OnLoadMoreListener getOnLoadMoreListener() {
@@ -82,8 +82,8 @@ public class ShopAnnounmentAdapter extends BaseAdapter {
 			viewHolder.name = (TextView) convertView.findViewById(R.id.tvNameStore);
 			viewHolder.timestamp = (TextView) convertView.findViewById(R.id.tvTimestamp);
 			viewHolder.tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
-			viewHolder.avaStore = (RoundedViewImage) convertView.findViewById(R.id.avaStore);
-			viewHolder.feedImageView = (ImageView) convertView.findViewById(R.id.imFeed);
+			viewHolder.avaStore = (RoundedImageView) convertView.findViewById(R.id.avaStore);
+			viewHolder.feedImageView = (FeedImageView) convertView.findViewById(R.id.imFeed);
 			
 			convertView.setTag(viewHolder);
 		} else {
@@ -110,15 +110,15 @@ public class ShopAnnounmentAdapter extends BaseAdapter {
 		viewHolder.timestamp.setText(timeAgo);
 		viewHolder.tvStatus.setText(item.getContent());
 
-		//viewHolder.avaStore.setImageUrl(item.getShop().getImage_thumbnail(), imageLoader);
-		Glide.with(CanvasFragment.mActivity).load(item.getShop().getImage_thumbnail()).centerCrop()
-		.placeholder(R.drawable.loading_icon).crossFade().into(viewHolder.avaStore);
+		viewHolder.avaStore.setImageUrl(item.getShop().getImage_thumbnail(), imageLoader);
+		//Glide.with(CanvasFragment.mActivity).load(item.getShop().getImage_thumbnail()).centerCrop()
+		//.placeholder(R.drawable.loading_icon).crossFade().into(viewHolder.avaStore);
 		
 		// Feed image
 		if (item.getPhotos().size() > 0) {
-			//viewHolder.feedImageView.setImageUrl(item.getPhotos().get(0).getImage(), imageLoader);
-			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(0).getImage()).centerCrop()
-			.placeholder(R.drawable.loading_icon).crossFade().into(viewHolder.feedImageView);
+			viewHolder.feedImageView.setImageUrl(item.getPhotos().get(0).getImage(), imageLoader);
+			//Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(0).getImage()).centerCrop()
+			//.placeholder(R.drawable.loading_icon).crossFade().into(viewHolder.feedImageView);
 			viewHolder.feedImageView.setVisibility(View.VISIBLE);
 			
 		} else {

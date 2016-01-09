@@ -70,13 +70,15 @@ public class AnnouncementDetailAdapter extends BaseAdapter {
 	}
 
 	static class ViewHolder {
-		public RoundedViewImage avaStore;
+		public RoundedImageView avaStore;
 		public TextView name;
 		public TextView timestamp;
 		public TextView tvStatus;
 		public ImageView imSaleOff;
 		public TextView tvTimeSale;
-		public ImageView feedImageView;
+		public FeedImageView feedImageView;
+		public TextView tvDescription;
+		public RelativeLayout rlShopDescription;
 	}
 
 	public OnLoadMoreListener getOnLoadMoreListener() {
@@ -110,13 +112,15 @@ public class AnnouncementDetailAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.item_announcement_detail, null);
 			viewHolder = new ViewHolder();
-			viewHolder.avaStore = (RoundedViewImage) convertView.findViewById(R.id.avaStore);
+			viewHolder.avaStore = (RoundedImageView) convertView.findViewById(R.id.avaStore);
 			viewHolder.name = (TextView) convertView.findViewById(R.id.tvNameStore);
 			viewHolder.timestamp = (TextView) convertView.findViewById(R.id.tvTimestamp);
 			viewHolder.tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
 			viewHolder.imSaleOff = (ImageView) convertView.findViewById(R.id.imSaleOff);
 			viewHolder.tvTimeSale = (TextView) convertView.findViewById(R.id.tvTimeSale);
-			viewHolder.feedImageView = (ImageView) convertView.findViewById(R.id.imShopImage);
+			viewHolder.feedImageView = (FeedImageView) convertView.findViewById(R.id.imShopImage);
+			viewHolder.tvDescription = (TextView) convertView.findViewById(R.id.tvDescription);
+			viewHolder.rlShopDescription = (RelativeLayout) convertView.findViewById(R.id.rlshop);
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
@@ -126,15 +130,14 @@ public class AnnouncementDetailAdapter extends BaseAdapter {
 			imageLoader = MonApplication.getInstance().getImageLoader();
 
 		if (position == 0) {
-
 			CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
 					Long.parseLong(Store.current_announcement.getCreated_time()), System.currentTimeMillis(),
 					DateUtils.SECOND_IN_MILLIS);
 			viewHolder.timestamp.setText(timeAgo);
-			// viewHolder.avaStore.setImageUrl(Store.current_announcement.getShop().getImage_thumbnail(),
-			// imageLoader);
-			Glide.with(CanvasFragment.mActivity).load(Store.current_announcement.getShop().getImage_thumbnail())
-					.centerCrop().placeholder(R.drawable.loading_icon).crossFade().into(viewHolder.avaStore);
+			viewHolder.avaStore.setImageUrl(Store.current_announcement.getShop().getImage_thumbnail(),
+			imageLoader);
+			//Glide.with(CanvasFragment.mActivity).load(Store.current_announcement.getShop().getImage_thumbnail())
+			//		.centerCrop().placeholder(R.drawable.loading_icon).crossFade().into(viewHolder.avaStore);
 			viewHolder.name.setText(Store.current_announcement.getShop().getName());
 			viewHolder.tvStatus.setText(Store.current_announcement.getContent());
 
@@ -156,11 +159,10 @@ public class AnnouncementDetailAdapter extends BaseAdapter {
 			}
 
 			Photo item = announcementList.get(position);
-			TextView tvDescription = (TextView) convertView.findViewById(R.id.tvDescription);
 			if (item.getCaption() == "null") {
-				tvDescription.setText("");
+				viewHolder.tvDescription.setText("");
 			} else {
-				tvDescription.setText(item.getCaption());
+				viewHolder.tvDescription.setText(item.getCaption());
 			}
 
 			viewHolder.name.setOnClickListener(new OnClickListener() {
@@ -184,15 +186,14 @@ public class AnnouncementDetailAdapter extends BaseAdapter {
 
 			// Feed image
 			Log.d("image", item.getImage());
-			// viewHolder.feedImageView.setImageUrl(item.getImage(),
-			// imageLoader);
-			Glide.with(CanvasFragment.mActivity).load(item.getImage()).centerCrop().placeholder(R.drawable.loading_icon)
-					.crossFade().into(viewHolder.feedImageView);
+			viewHolder.feedImageView.setImageUrl(item.getImage(),
+			imageLoader);
+			//Glide.with(CanvasFragment.mActivity).load(item.getImage()).centerCrop().placeholder(R.drawable.loading_icon)
+			//		.crossFade().into(viewHolder.feedImageView);
 			viewHolder.feedImageView.setVisibility(View.VISIBLE);
 
 		} else {
-			RelativeLayout rlShopDescription = (RelativeLayout) convertView.findViewById(R.id.rlshop);
-			rlShopDescription.setVisibility(View.GONE);
+			viewHolder.rlShopDescription.setVisibility(View.GONE);
 			Photo item = announcementList.get(position);
 			TextView tvDescription = (TextView) convertView.findViewById(R.id.tvDescription);
 			if (item.getCaption() == "null") {
@@ -203,10 +204,10 @@ public class AnnouncementDetailAdapter extends BaseAdapter {
 
 			// Feed image
 			Log.d("image", item.getImage());
-			// viewHolder.feedImageView.setImageUrl(item.getImage(),
-			// imageLoader);
-			Glide.with(CanvasFragment.mActivity).load(item.getImage()).centerCrop().placeholder(R.drawable.loading_icon)
-					.crossFade().into(viewHolder.feedImageView);
+			viewHolder.feedImageView.setImageUrl(item.getImage(),
+			imageLoader);
+			//Glide.with(CanvasFragment.mActivity).load(item.getImage()).centerCrop().placeholder(R.drawable.loading_icon)
+			//		.crossFade().into(viewHolder.feedImageView);
 			viewHolder.feedImageView.setVisibility(View.VISIBLE);
 
 		}

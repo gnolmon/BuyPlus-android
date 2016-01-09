@@ -20,13 +20,13 @@
             android:orientation="horizontal"
             android:paddingLeft="@dimen/feed_item_padding_left_right" >
 
-            <lc.buyplus.customizes.RoundedViewImage
+            <lc.buyplus.customizes.RoundedImageView
                 android:id="@+id/avaStore"
                 android:layout_width="@dimen/feed_item_profile_pic"
                 android:layout_height="@dimen/feed_item_profile_pic"
                 android:scaleType="fitCenter"
                 android:src="@drawable/square" >
-            </lc.buyplus.customizes.RoundedViewImage>
+            </lc.buyplus.customizes.RoundedImageView>
 
             <LinearLayout
                 android:id="@+id/lnName"
@@ -98,7 +98,7 @@
                 android:textSize="15dp" />
         </RelativeLayout>
 
-        <ImageView
+        <lc.buyplus.cores.FeedImageView
             android:id="@+id/imShopImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
