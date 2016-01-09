@@ -37,7 +37,7 @@
                 android:layout_height="@dimen/person_ava_width"
                 android:layout_below="@id/btnAgreeTerm"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/back_white" />
+                android:src="@drawable/loading_icon" />
 
             <TextView
                 android:id="@+id/storeName"

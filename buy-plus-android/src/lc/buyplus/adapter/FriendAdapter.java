@@ -13,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,6 +30,7 @@ import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.activities.LoginActivity;
 import lc.buyplus.activities.ShopInfoActivity;
+import lc.buyplus.adapter.AnnounmentAdapter.ViewHolder;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.DialogMessage;
@@ -48,6 +50,12 @@ public class FriendAdapter extends BaseAdapter {
 	public FriendAdapter( List<FacebookFriend> friendList,LayoutInflater inflaterActivity) {
 		this.inflaterActivity = inflaterActivity;
 		this.friendList = friendList;
+	}
+	static class ViewHolder {
+		public TextView nameFriend;
+		public TextView tvID;
+		public Button addFriend;
+		public RoundedImageView imNoti;
 	}
 
 	@Override
@@ -70,40 +78,55 @@ public class FriendAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		final ViewHolder viewHolder;
 		if (inflater == null)
 			inflater = (LayoutInflater) inflaterActivity;
-		if (convertView == null)
+		if (convertView == null){
 			convertView = inflater.inflate(R.layout.item_add_friend, null);
+			viewHolder = new ViewHolder();
+			
+			viewHolder.nameFriend = (TextView) convertView.findViewById(R.id.tvFriendName);
+			viewHolder.tvID = (TextView) convertView.findViewById(R.id.tvFriendId);
+			viewHolder.addFriend = (Button) convertView.findViewById(R.id.btnAddFriend);
+			viewHolder.imNoti = (RoundedImageView) convertView.findViewById(R.id.imFriend);
+			
+			convertView.setTag(viewHolder);
+		} else {
+			viewHolder = (ViewHolder) convertView.getTag();
+		}
+			
 
 		if (imageLoader == null)
 			imageLoader = MonApplication.getInstance().getImageLoader();
+		
+		
+		
 		final FacebookFriend item = friendList.get(position);
 		final int pos = position;
-		TextView nameFriend = (TextView) convertView.findViewById(R.id.tvFriendName);
-		nameFriend.setText(item.getName());
-
-		
 		//TextView tvID = (TextView) convertView.findViewById(R.id.tvFriendId);
 		//tvID.setText("ID:" +item.getId());
 
-		TextView tvID = (TextView) convertView.findViewById(R.id.tvFriendId);
-		tvID.setText("ID:" +String.valueOf(item.getId()));
-		final Button addFriend = (Button) convertView.findViewById(R.id.btnAddFriend);
-		addFriend.setOnClickListener(new OnClickListener() {
+		
+		
+		viewHolder.nameFriend.setText(item.getName());
+		viewHolder.tvID.setText("ID:" +String.valueOf(item.getId()));
+		viewHolder.addFriend.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
 				
 				api_send_request_join_shop_to_friend(Store.current_shop_id,item.getId());
-				addFriend.setText("Dang cho");
-				addFriend.setEnabled(false);
+				viewHolder.addFriend.setText("Dang cho");
+				viewHolder.addFriend.setEnabled(false);
 			}
 		});
-		RoundedImageView imNoti = (RoundedImageView) convertView.findViewById(R.id.imFriend);
+		
 
 		// name.setText(item.getName());
 
 		// user profile pic
-		imNoti.setImageUrl(item.getPicture(), imageLoader);
+		//viewHolder.imNoti.setImageUrl(item.getPicture(), imageLoader);
+		Glide.with(CanvasFragment.mActivity).load(item.getPicture()).centerCrop()
+		.placeholder(R.drawable.loading_icon).crossFade().into(viewHolder.imNoti);
 
 		return convertView;
 	}

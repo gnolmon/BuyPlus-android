@@ -10,31 +10,32 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-  	<uses-permission android:name="android.permission.INTERNET"/>
-  	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-  	<uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
-  	    <!-- GCM requires a Google account. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" >
+    </uses-permission>
+    <!-- GCM requires a Google account. -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
- 
+
     <!-- Keeps the processor from sleeping when a message is received. -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />	
-    
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <!-- This app has permission to register and receive data message. -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
- 
+
     <!-- Network State Permissions to detect Internet status -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
- 
+
     <!-- Permission to vibrate -->
     <uses-permission android:name="android.permission.VIBRATE" />
-    
+
     <!-- Creates a custom permission so only this app can receive its messages. -->
     <permission
         android:name="lc.buyplus.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
- 
+
     <uses-permission android:name="lc.buyplus.permission.C2D_MESSAGE" />
-  		
+
     <application
         android:name="lc.buyplus.application.MonApplication"
         android:allowBackup="true"
@@ -42,35 +43,40 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:theme="@style/DarkMoonTheme" >
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-		            android:value="@string/facebook_app_id" />
-        <meta-data android:name="com.google.android.gms.version"
-          android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.bumptech.glide.integration.volley.VolleyGlideModule"
+            android:value="GlideModule" />
+
         <activity
             android:name="lc.buyplus.activities.MainActivity"
-            android:label="@string/app_name" 
-            android:screenOrientation="portrait">
-            
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="lc.buyplus.activities.ShopInfoActivity"
-            android:label="@string/app_name" 
-            android:screenOrientation="portrait">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="lc.buyplus.activities.ShopFriendActivity"
-            android:label="@string/app_name" 
-            android:screenOrientation="portrait">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="lc.buyplus.activities.AddFriendActivity"
-            android:label="@string/app_name" 
-            android:screenOrientation="portrait">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="lc.buyplus.activities.LoginActivity"
-            android:label="@string/app_name" 
-            android:screenOrientation="portrait">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -79,50 +85,52 @@
         </activity>
         <activity
             android:name="lc.buyplus.activities.UserActivity"
-            android:label="@string/app_name" 
-            android:screenOrientation="portrait">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="lc.buyplus.activities.BuyPlusInfoActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="lc.buyplus.activities.TermActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="lc.buyplus.activities.SettingNotificationActivity"
-            android:label="@string/app_name" 
-            android:screenOrientation="portrait">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
-         <activity
+        <activity
             android:name="lc.buyplus.activities.AnnouncementDetailActivity"
-            android:label="@string/app_name" 
-            android:screenOrientation="portrait">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
-         <activity
+        <activity
             android:name="lc.buyplus.activities.HomeNotiActivity"
-            android:label="@string/app_name" 
-            android:screenOrientation="portrait">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.facebook.FacebookActivity"
-        android:configChanges=
-            "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-        android:theme="@android:style/Theme.Translucent.NoTitleBar"
-        android:label="@string/app_name" />
-        
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="lc.buyplus" />
             </intent-filter>
         </receiver>
         <!-- [END gcm_receiver] -->
+
 
         <!-- [START gcm_listener] -->
         <service
@@ -136,15 +144,15 @@
         <!-- [START instanceId_listener] -->
         <service
             android:name="lc.buyplus.gcm.MyInstanceIDListenerService"
-            android:exported="false">
+            android:exported="false" >
             <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID"/>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
         <!-- [END instanceId_listener] -->
         <service
             android:name="lc.buyplus.gcm.RegistrationIntentService"
-            android:exported="false">
+            android:exported="false" >
         </service>
     </application>
 

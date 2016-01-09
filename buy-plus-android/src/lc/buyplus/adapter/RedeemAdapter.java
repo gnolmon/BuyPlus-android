@@ -4,17 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.bumptech.glide.Glide;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.adapter.AnnounmentAdapter.ViewHolder;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.customizes.RoundedImageView;
+import lc.buyplus.customizes.RoundedViewImage;
+import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.models.Shop;
 
 public class RedeemAdapter extends BaseAdapter {
@@ -28,6 +33,13 @@ public class RedeemAdapter extends BaseAdapter {
 	public RedeemAdapter(ArrayList<Shop> giftItems, LayoutInflater inflaterActivity) {
 		this.inflaterActivity = inflaterActivity;
 		this.giftItems = giftItems;
+	}
+
+	static class ViewHolder {
+		public TextView name;
+		public TextView scoreTotal;
+		public RoundedViewImage imShop;
+		public LinearLayout canex;
 	}
 
 	@Override
@@ -59,33 +71,40 @@ public class RedeemAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		ViewHolder viewHolder;
 		if (inflater == null)
 			inflater = inflaterActivity;
-		if (convertView == null)
+		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.item_redeem, null);
+			viewHolder = new ViewHolder();
+
+			viewHolder.name = (TextView) convertView.findViewById(R.id.tvTitleShop);
+			viewHolder.scoreTotal = (TextView) convertView.findViewById(R.id.tvScore);
+			viewHolder.imShop = (RoundedViewImage) convertView.findViewById(R.id.imShop);
+			viewHolder.canex = (LinearLayout) convertView.findViewById(R.id.tvChangeGift);
+
+			convertView.setTag(viewHolder);
+		} else {
+			viewHolder = (ViewHolder) convertView.getTag();
+		}
 
 		if (imageLoader == null)
 			imageLoader = MonApplication.getInstance().getImageLoader();
 
-		TextView name = (TextView) convertView.findViewById(R.id.tvTitleShop);
-
-		RoundedImageView imShop = (RoundedImageView) convertView.findViewById(R.id.imShop);
-
 		Shop item = giftItems.get(position);
 
-		TextView scoreTotal = (TextView) convertView.findViewById(R.id.tvScore);
+		viewHolder.scoreTotal.setText("Số điểm tích: " + item.getCurrent_customer_shop_point());
 
-		scoreTotal.setText("Số điểm tích: " + item.getCurrent_customer_shop_point());
-		LinearLayout canex = (LinearLayout) convertView.findViewById(R.id.tvChangeGift);
-		if (!item.canEx){
-			canex.setVisibility(View.GONE);
+		if (!item.canEx) {
+			viewHolder.canex.setVisibility(View.GONE);
+		} else {
+			viewHolder.canex.setVisibility(0);
 		}
-		else {
-			canex.setVisibility(0);
-		}
-		name.setText(item.getName());
-		imShop.setImageUrl(item.getImage_thumbnail(), imageLoader);
-
+		viewHolder.name.setText(item.getName());
+		
+		//viewHolder.imShop.setImageUrl(item.getImage_thumbnail(), imageLoader);
+		Glide.with(CanvasFragment.mActivity).load(item.getImage_thumbnail()).centerCrop()
+		.placeholder(R.drawable.loading_icon).crossFade().into(viewHolder.imShop);
 		return convertView;
 
 	}
