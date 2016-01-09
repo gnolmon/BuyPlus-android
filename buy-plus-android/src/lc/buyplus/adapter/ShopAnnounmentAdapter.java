@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.bumptech.glide.Glide;
 
 import android.app.Activity;
 import android.text.format.DateUtils;
@@ -13,11 +14,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.adapter.AnnounmentAdapter.ViewHolder;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.FeedImageView;
 import lc.buyplus.customizes.RoundedImageView;
+import lc.buyplus.customizes.RoundedViewImage;
+import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.models.Announcement;
 
 public class ShopAnnounmentAdapter extends BaseAdapter {
@@ -32,6 +37,14 @@ public class ShopAnnounmentAdapter extends BaseAdapter {
 	public ShopAnnounmentAdapter(ArrayList<Announcement> announcementList, LayoutInflater inflaterActivity) {
 		this.inflaterActivity = inflaterActivity;
 		this.announcementList = announcementList;
+	}
+	
+	static class ViewHolder {
+		public TextView name;
+		public TextView timestamp;
+		public TextView tvStatus;
+		public RoundedViewImage avaStore;
+		public ImageView feedImageView;
 	}
 	
 	public OnLoadMoreListener getOnLoadMoreListener() {
@@ -59,25 +72,32 @@ public class ShopAnnounmentAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		ViewHolder viewHolder;
 		if (inflater == null)
 			inflater = inflaterActivity;
-		if (convertView == null)
+		if (convertView == null){
+			viewHolder = new ViewHolder();
 			convertView = inflater.inflate(R.layout.item_shop_announment, null);
+			
+			viewHolder.name = (TextView) convertView.findViewById(R.id.tvNameStore);
+			viewHolder.timestamp = (TextView) convertView.findViewById(R.id.tvTimestamp);
+			viewHolder.tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
+			viewHolder.avaStore = (RoundedViewImage) convertView.findViewById(R.id.avaStore);
+			viewHolder.feedImageView = (ImageView) convertView.findViewById(R.id.imFeed);
+			
+			convertView.setTag(viewHolder);
+		} else {
+			viewHolder = (ViewHolder) convertView.getTag();
+		}
+			
 
 		if (imageLoader == null)
 			imageLoader = MonApplication.getInstance().getImageLoader();
 
-		TextView name = (TextView) convertView.findViewById(R.id.tvNameStore);
-
-		TextView timestamp = (TextView) convertView.findViewById(R.id.tvTimestamp);
-
-		TextView tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
-		RoundedImageView avaStore = (RoundedImageView) convertView.findViewById(R.id.avaStore);
-		FeedImageView feedImageView = (FeedImageView) convertView.findViewById(R.id.imFeed);
 
 		Announcement item = announcementList.get(position);
 
-		name.setText(item.getShop().getName());
+		viewHolder.name.setText(item.getShop().getName());
 		long unixSeconds = item.getStart_time();
 		Date date = new Date(unixSeconds*1000L);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
@@ -87,26 +107,22 @@ public class ShopAnnounmentAdapter extends BaseAdapter {
 		CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(Long.parseLong(item.getCreated_time()),
 				System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
 		
-		timestamp.setText(timeAgo);
-		tvStatus.setText(item.getContent());
+		viewHolder.timestamp.setText(timeAgo);
+		viewHolder.tvStatus.setText(item.getContent());
 
-		avaStore.setImageUrl(item.getShop().getImage_thumbnail(), imageLoader);
-
+		//viewHolder.avaStore.setImageUrl(item.getShop().getImage_thumbnail(), imageLoader);
+		Glide.with(CanvasFragment.mActivity).load(item.getShop().getImage_thumbnail()).centerCrop()
+		.placeholder(R.drawable.loading_icon).crossFade().into(viewHolder.avaStore);
+		
 		// Feed image
 		if (item.getPhotos().size() > 0) {
-			feedImageView.setImageUrl(item.getPhotos().get(0).getImage(), imageLoader);
-			feedImageView.setVisibility(View.VISIBLE);
-			feedImageView.setResponseObserver(new FeedImageView.ResponseObserver() {
-				@Override
-				public void onError() {
-				}
-
-				@Override
-				public void onSuccess() {
-				}
-			});
+			//viewHolder.feedImageView.setImageUrl(item.getPhotos().get(0).getImage(), imageLoader);
+			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(0).getImage()).centerCrop()
+			.placeholder(R.drawable.loading_icon).crossFade().into(viewHolder.feedImageView);
+			viewHolder.feedImageView.setVisibility(View.VISIBLE);
+			
 		} else {
-			feedImageView.setVisibility(View.GONE);
+			viewHolder.feedImageView.setVisibility(View.GONE);
 		}
 
 		return convertView;
