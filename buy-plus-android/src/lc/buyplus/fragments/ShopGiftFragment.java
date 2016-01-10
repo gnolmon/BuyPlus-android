@@ -49,7 +49,7 @@ public class ShopGiftFragment extends CoreFragment implements OnRefreshListener 
 	private ShopGiftAdapter giftAdapter;
 	private LayoutInflater inflaterActivity;
 	private int current_last_id = 0;
-	private boolean isLoadMore,isLoading,reload;
+	private boolean isLoading,reload;
 	private ArrayList<Gift> GiftsList = new ArrayList<Gift>();
 	private int old_id = 0;
 	private SwipeRefreshLayout swipeView;
@@ -91,7 +91,6 @@ public class ShopGiftFragment extends CoreFragment implements OnRefreshListener 
 
 	@Override
 	protected void initViews(View v) {
-		isLoadMore = false;
 		isLoading = false;
 		GiftsList.removeAll(GiftsList);
 		giftAdapter = new ShopGiftAdapter(GiftsList, inflaterActivity);

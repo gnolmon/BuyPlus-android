@@ -111,7 +111,7 @@ public class ShopGiftAdapter extends BaseAdapter {
 		int myPoint = Store.current_shop.getCurrent_customer_shop_point();
 		int giftPoint = item.getPoint();
 		int percent = (int) (myPoint * 100 / giftPoint);
-		pbPoint.setProgress(percent);
+		viewHolder.pbPoint.setProgress(percent);
 
 		viewHolder.tvScore.setText(percent + "%");
 

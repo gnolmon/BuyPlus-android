@@ -54,7 +54,7 @@ public class ShopFriendFragment  extends CoreFragment implements OnRefreshListen
 	private ImageView imAdd;
 	private int current_last_id = 0;
 	private int old_id = 0;
-	private boolean isLoadMore,isLoading,reload;
+	private boolean isLoading,reload;
 	private ArrayList<Friend> FriendsList = new ArrayList<Friend>();
 	private SwipeRefreshLayout swipeView;
 	@Override
@@ -96,7 +96,6 @@ public class ShopFriendFragment  extends CoreFragment implements OnRefreshListen
 
 	@Override
 	protected void initViews(View v) {
-		isLoadMore = false;
 		isLoading = false;
 		FriendsList.removeAll(FriendsList);
 		friendAdapter = new ShopFriendAdapter(FriendsList, inflaterActivity);

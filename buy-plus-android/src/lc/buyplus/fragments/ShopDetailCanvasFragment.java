@@ -228,11 +228,14 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 			}
 		});
 		
-		if ((Store.current_shop.current_customer_shop_id == null) || (Store.current_shop.current_customer_shop_id == "")) {
-			firstTab = 1;
-		} else {
-			firstTab = 0;
+		if (Store.current_shop!=null){
+			if ((Store.current_shop.current_customer_shop_id == null) || (Store.current_shop.current_customer_shop_id == "")) {
+				firstTab = 1;
+			} else {
+				firstTab = 0;
+			}
 		}
+			
 
 		mPager.setCurrentItem(firstTab);
 		if (firstTab==0){
@@ -268,7 +271,16 @@ public class ShopDetailCanvasFragment extends CoreFragment {
 
 			@Override
 			public void onClick(View v) {
-				api_get_shop_info(Store.current_shop_id);
+				//api_get_shop_info(Store.current_shop_id);
+				if ((Store.current_shop.current_customer_shop_id == null) || (Store.current_shop.current_customer_shop_id == "")) {
+					DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.is_not_join));
+
+					dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+					dialog.show();
+				} else {
+					Intent shopFriendActivity = new Intent(mActivity, ShopFriendActivity.class);
+					startActivityForResult(shopFriendActivity,2);
+				}
 				
 			}
 		});
