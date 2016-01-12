@@ -36,6 +36,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.activities.LoginActivity;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
@@ -422,7 +423,7 @@ public void api_get_all_shop(int last_id, int limit, String search){
 		params.put("last_id", String.valueOf(last_id));
 		params.put("limit", String.valueOf(limit));
 		params.put("search", String.valueOf(search));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 					HandleRequest.build_link(HandleRequest.GET_ALL_SHOP, params), params, 
 					new Response.Listener<JSONObject>() {
@@ -497,7 +498,7 @@ public void api_get_all_announcements(int last_id, int limit, String type, int m
 	params.put("limit", String.valueOf(limit));
 	params.put("mode", String.valueOf(mode));
 	params.put("search", String.valueOf(search));
-	RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+	RequestQueue requestQueue =  MonApplication.getInstance().getRequestQueue();
 	HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 			HandleRequest.build_link(HandleRequest.GET_ALL_ANNOUNCEMENTS, params), params,
 			new Response.Listener<JSONObject>() {
@@ -554,7 +555,7 @@ public void api_get_num_unread_notifications(){
  	
 	Map<String, String> params = new HashMap<String, String>();
 	params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+		RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 				HandleRequest.build_link(HandleRequest.NUM_UNREAD_NOTIFICATIONS, params), params, 
 				new Response.Listener<JSONObject>() {

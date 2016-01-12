@@ -40,7 +40,6 @@ import lc.buyplus.customizes.RoundedViewImage;
 import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.models.Friend;
 import lc.buyplus.models.Store;
-
 public class ShopFriendAdapter extends BaseAdapter {
 
 	private LayoutInflater inflaterActivity;
@@ -152,7 +151,7 @@ public class ShopFriendAdapter extends BaseAdapter {
 		params.put("shop_id", String.valueOf(shop_id));
 		params.put("friend_id", String.valueOf(friend_id));
 		Log.d("sadd", params.toString());
-		RequestQueue requestQueue = Volley.newRequestQueue(CanvasFragment.mActivity);
+		RequestQueue requestQueue =  MonApplication.getInstance().getRequestQueue();
 		HandleRequest jsObjRequest = new HandleRequest(Method.POST, HandleRequest.REMOVE_FRIEND_FROM_CIRCLE, params,
 				new Response.Listener<JSONObject>() {
 					@Override

@@ -34,6 +34,7 @@ import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.AnnounmentAdapter;
 import lc.buyplus.adapter.OnLoadMoreListener;
 import lc.buyplus.adapter.ShopAnnounmentAdapter;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
@@ -44,7 +45,6 @@ import lc.buyplus.models.Gift;
 import lc.buyplus.models.Notification;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
-
 public class ShopAnnounmentFragment extends CoreFragment implements OnRefreshListener {
 	private ListView listView;
 	private ShopAnnounmentAdapter newsAdapter;
@@ -54,9 +54,11 @@ public class ShopAnnounmentFragment extends CoreFragment implements OnRefreshLis
 	private boolean isLoadMore,isLoading,reload;
 	private int old_id = 0;
 	private SwipeRefreshLayout swipeView;
+	View footer;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_shop_announment, container, false);
+		footer = inflater.inflate(R.layout.loadmore, null);
 		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swipe_view);
 		swipeView.setOnRefreshListener(this);
 	    swipeView.setColorSchemeColors(Color.GREEN, Color.GREEN, Color.GREEN, Color.GREEN);
@@ -90,6 +92,7 @@ public class ShopAnnounmentFragment extends CoreFragment implements OnRefreshLis
 
 	@Override
 	protected void initViews(View v) {
+		listView.addFooterView(footer);
 		isLoadMore = false;
 		isLoading = false;
 		ShopAnnouncementsList.removeAll(ShopAnnouncementsList);
@@ -100,6 +103,7 @@ public class ShopAnnounmentFragment extends CoreFragment implements OnRefreshLis
 		newsAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
+            	listView.addFooterView(footer);
             	api_get_shop_announcements(Store.current_shop_id, current_last_id, Store.limit, 0);
             }
         });
@@ -133,7 +137,7 @@ public class ShopAnnounmentFragment extends CoreFragment implements OnRefreshLis
 		params.put("type", String.valueOf(type));
 		params.put("last_id", String.valueOf(last_id));
 		params.put("limit", String.valueOf(limit));
-		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+		RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 				HandleRequest.build_link(HandleRequest.GET_SHOP_ANNOUNCEMENTS, params), params,
 				new Response.Listener<JSONObject>() {
@@ -173,7 +177,7 @@ public class ShopAnnounmentFragment extends CoreFragment implements OnRefreshLis
 										ShopAnnouncementsList.add(announcement);
 									}
 								}
-								
+								listView.removeFooterView(footer);
 								newsAdapter.notifyDataSetChanged();
 								if (old_id != current_last_id) {
 									isLoading = false;

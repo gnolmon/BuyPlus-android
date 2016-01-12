@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 import lc.buyplus.R;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
@@ -117,7 +118,7 @@ public class RegisterFragment extends CoreFragment implements OnClickListener {
 		params.put("login_name", login_name);
 		params.put("name", name);
 		params.put("password", password);
-			RequestQueue requestQueue = Volley.newRequestQueue(this.getActivity());
+			RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.USER_REGISTER, params, 
 					new Response.Listener<JSONObject>() {

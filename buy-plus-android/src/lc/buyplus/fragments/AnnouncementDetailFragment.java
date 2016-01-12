@@ -121,7 +121,8 @@ public class AnnouncementDetailFragment extends CoreFragment {
 	}
 
 	@Override
-	protected void initViews(View v) {ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
+	protected void initViews(View v) {
+		ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
 		if (imageLoader == null)
 			imageLoader = MonApplication.getInstance().getImageLoader();
 		homeFrg = this.getTargetFragment();

@@ -13,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -28,11 +29,13 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import lc.buyplus.R;
 import lc.buyplus.activities.LoginActivity;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.OnLoadMoreListener;
 import lc.buyplus.adapter.StoreAdapter;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
@@ -49,21 +52,22 @@ public class HomeFragment extends CoreFragment implements OnRefreshListener{
 	private boolean isLoading,reload;
 	private int old_id = 0;
 	private SwipeRefreshLayout swipeView;
+	View footer;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
+		footer = inflater.inflate(R.layout.loadmore, null);
 		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swipe_view);
 		swipeView.setOnRefreshListener(this);
 	    swipeView.setColorSchemeColors(Color.GREEN, Color.GREEN, Color.GREEN, Color.GREEN);
 	    // swipeView.setDistanceToTriggerSync(20);// in dips
 	    //swipeView.setSize(SwipeRefreshLayout.DEFAULT);// LARGE also can be used
- 
 		listView = (ListView) view.findViewById(R.id.listStore);
 		inflaterActivity = inflater;
 		initViews(view);
 		initModels();
 		initAnimations();
-		
 		
 		return view;
 	}
@@ -88,6 +92,8 @@ public class HomeFragment extends CoreFragment implements OnRefreshListener{
 
 	@Override
 	protected void initViews(View v) {
+		
+        listView.addFooterView(footer);
 		isLoading = false; 
 		storeAdapter = new StoreAdapter(Store.ShopsList, inflaterActivity, mActivity);
 		listView.setAdapter(storeAdapter);
@@ -104,6 +110,7 @@ public class HomeFragment extends CoreFragment implements OnRefreshListener{
 		storeAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
+            	listView.addFooterView(footer);
             	api_get_all_shop(current_last_id, Store.limit, Store.Shop_Search_param);
             }
         });
@@ -143,7 +150,7 @@ public class HomeFragment extends CoreFragment implements OnRefreshListener{
 		params.put("last_id", String.valueOf(last_id));
 		params.put("limit", String.valueOf(limit));
 		params.put("search", String.valueOf(search));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			RequestQueue requestQueue =  MonApplication.getInstance().getRequestQueue();
 			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 					HandleRequest.build_link(HandleRequest.GET_ALL_SHOP, params), params, 
 					new Response.Listener<JSONObject>() {
@@ -155,7 +162,7 @@ public class HomeFragment extends CoreFragment implements OnRefreshListener{
 						}
 						try {
 							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(mActivity,"Phiên truy nhập của bạn đã hết, hãy đăng nhập lại");
+								DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.end_session));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
@@ -182,6 +189,7 @@ public class HomeFragment extends CoreFragment implements OnRefreshListener{
 		                            		Store.ShopsList.add(shop);
 		                            	}
 		                        }
+								listView.removeFooterView(footer);
 								storeAdapter.notifyDataSetChanged();
 								if (old_id != current_last_id) {
 									isLoading = false;
@@ -202,7 +210,7 @@ public class HomeFragment extends CoreFragment implements OnRefreshListener{
 						Log.d("api_get_all_shop",error.toString());
 						swipeView.setRefreshing(false);
 						isLoading = false;
-						DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+						DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
 					}
@@ -216,7 +224,7 @@ public class HomeFragment extends CoreFragment implements OnRefreshListener{
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
-		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+		RequestQueue requestQueue =  MonApplication.getInstance().getRequestQueue();
 		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 				HandleRequest.build_link(HandleRequest.GET_SHOP_INFO, params), params,
 				new Response.Listener<JSONObject>() {
@@ -225,7 +233,7 @@ public class HomeFragment extends CoreFragment implements OnRefreshListener{
 						Log.d("api_get_shop_info", response.toString());
 						try {
 							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(mActivity,"Phiên truy nhập của bạn đã hết, hãy đăng nhập lại");
+								DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.end_session));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
@@ -257,7 +265,7 @@ public class HomeFragment extends CoreFragment implements OnRefreshListener{
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						listView.setEnabled(true);
-						DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra mạng của bạn!");
+						DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
 					}

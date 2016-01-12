@@ -14,6 +14,7 @@ import lc.buyplus.R;
 import lc.buyplus.activities.MainActivity;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.StoreAdapter;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
@@ -246,7 +247,7 @@ public class LoginFragment extends CoreFragment {
     	Map<String, String> params = new HashMap<String, String>();
 		params.put("login_name", name);
 		params.put("password", password);
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			RequestQueue requestQueue =  MonApplication.getInstance().getRequestQueue();
 			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.USER_LOGIN, params, 
 					new Response.Listener<JSONObject>() {
@@ -322,7 +323,7 @@ public class LoginFragment extends CoreFragment {
 		//params.put("phone", phone);
 		params.put("name", name);
 		params.put("facebook_id", facebook_id);
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.LOGIN_FACEBOOK, params, 
 					new Response.Listener<JSONObject>() {
@@ -365,7 +366,7 @@ public class LoginFragment extends CoreFragment {
 	 	
     	Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.LOGOUT, params, 
 					new Response.Listener<JSONObject>() {
@@ -386,7 +387,7 @@ public class LoginFragment extends CoreFragment {
 	public void api_authenticate_forget_password(){
 	 	
     	Map<String, String> params = new HashMap<String, String>();
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.AUTHENTICATE_FORGET_PASSWORD, params, 
 					new Response.Listener<JSONObject>() {
@@ -410,7 +411,7 @@ public class LoginFragment extends CoreFragment {
     	params.put("token", token);
     	params.put("email", email);
     	params.put("password", password);
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.FORGET_PASSWORD, params, 
 					new Response.Listener<JSONObject>() {

@@ -40,7 +40,6 @@ import lc.buyplus.customizes.RoundedViewImage;
 import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.models.Notification;
 import lc.buyplus.models.Store;
-
 public class NotificationAdapter extends BaseAdapter {
 
 	private LayoutInflater inflaterActivity;
@@ -178,7 +177,7 @@ public class NotificationAdapter extends BaseAdapter {
 		params.put("accept_type", accept_type);
 		Log.d("params", String.valueOf(request_id));
 		Log.d("params", accept_type);
-		RequestQueue requestQueue = Volley.newRequestQueue(CanvasFragment.mActivity);
+		RequestQueue requestQueue =  MonApplication.getInstance().getRequestQueue();
 		HandleRequest jsObjRequest = new HandleRequest(Method.POST, HandleRequest.RESPONSE_REQUEST__JOIN_SHOP, params,
 				new Response.Listener<JSONObject>() {
 					@Override

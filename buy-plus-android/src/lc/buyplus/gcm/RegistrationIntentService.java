@@ -29,6 +29,7 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import lc.buyplus.R;
 import lc.buyplus.activities.LoginActivity;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.fragments.CanvasFragment;
@@ -137,7 +138,7 @@ public void api_register_device_token(String device_token, String gcm_device_tok
 		params.put("type", type);
 		params.put("uuid", uuid);
 		Log.i(TAG, "OK!: " + device_token);
-			RequestQueue requestQueue = Volley.newRequestQueue(CanvasFragment.mActivity);
+			RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.REGISTER_DIVICE_TOKEN, params, 
 					new Response.Listener<JSONObject>() {

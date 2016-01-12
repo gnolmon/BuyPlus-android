@@ -136,10 +136,11 @@ public class FriendAdapter extends BaseAdapter {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", Store.user.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
-		params.put("temp_id", String.valueOf(temp_id));
-			RequestQueue requestQueue = Volley.newRequestQueue(CanvasFragment.mActivity);
-			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
-					HandleRequest.SEND_REQUEST_JOIN_SHOP_TO_FRIEND, params, 
+		params.put("shop_id", String.valueOf(shop_id));
+   		params.put("temp_id", String.valueOf(temp_id));
+   			RequestQueue requestQueue =  MonApplication.getInstance().getRequestQueue();
+		  			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
+		    					HandleRequest.SEND_REQUEST_JOIN_SHOP_TO_FRIEND, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {

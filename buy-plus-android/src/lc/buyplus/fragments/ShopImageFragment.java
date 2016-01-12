@@ -37,6 +37,7 @@ import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.ShopPhotoAdapter;
 import lc.buyplus.configs.AppConfigs;
 import lc.buyplus.adapter.ShopPhotoAdapter;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
@@ -100,7 +101,7 @@ public class ShopImageFragment extends CoreFragment {
 		params.put("shop_id", String.valueOf(shop_id));
 		params.put("latest_id", String.valueOf(latest_id));
 		params.put("oldest_id", String.valueOf(oldest_id));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			RequestQueue requestQueue =MonApplication.getInstance().getRequestQueue();
 			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 					HandleRequest.build_link(HandleRequest.GET_SHOP_ANNOUNCEMENT_IMAGES, params), params, 
 					new Response.Listener<JSONObject>() {

@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.activities.LoginActivity;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.fragments.PersonalFragment;
@@ -95,7 +96,7 @@ public void api_update_user_information(String name){
     	Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("name", String.valueOf(name));
-			RequestQueue requestQueue = Volley.newRequestQueue(c);
+			RequestQueue requestQueue =  MonApplication.getInstance().getRequestQueue();
 			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.UPDATE_USER_INFORMATION, params, 
 					new Response.Listener<JSONObject>() {

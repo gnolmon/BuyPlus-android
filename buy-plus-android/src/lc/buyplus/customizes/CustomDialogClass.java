@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Button;
 import lc.buyplus.R;
 import lc.buyplus.activities.LoginActivity;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.fragments.ShopInfoFragment;
@@ -113,7 +114,7 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
-		RequestQueue requestQueue = Volley.newRequestQueue(c);
+		RequestQueue requestQueue =  MonApplication.getInstance().getRequestQueue();
 		HandleRequest jsObjRequest = new HandleRequest(Method.POST, HandleRequest.JOIN_SHOP, params,
 				new Response.Listener<JSONObject>() {
 					@Override
@@ -159,7 +160,7 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
-		RequestQueue requestQueue = Volley.newRequestQueue(c);
+		RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 		HandleRequest jsObjRequest = new HandleRequest(Method.POST, HandleRequest.LEAVE_SHOP, params,
 				new Response.Listener<JSONObject>() {
 					@Override

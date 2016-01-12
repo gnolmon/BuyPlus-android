@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.activities.LoginActivity;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.fragments.HomeAnnounmentFragment;
@@ -140,7 +141,7 @@ public class DialogNews extends android.app.Dialog implements android.view.View.
 		params.put("limit", String.valueOf(limit));
 		params.put("mode", String.valueOf(mode));
 		params.put("search", String.valueOf(search));
-		RequestQueue requestQueue = Volley.newRequestQueue(HomeAnnounmentFragment.mActivity);
+		RequestQueue requestQueue =  MonApplication.getInstance().getRequestQueue();
 		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 				HandleRequest.build_link(HandleRequest.GET_ALL_ANNOUNCEMENTS, params), params,
 				new Response.Listener<JSONObject>() {

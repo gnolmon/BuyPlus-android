@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -40,7 +41,8 @@ public class PersonalFragment extends CoreFragment {
 	private RoundedImageView imAvaUser;
 	public static TextView userName;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
-
+	ImageView myImage;
+	String qrInputText;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_personal, container, false);
@@ -82,20 +84,7 @@ public class PersonalFragment extends CoreFragment {
 		imAvaUser.buildDrawingCache();
 		rlBackground = (LinearLayout) v.findViewById(R.id.rlBackground);
 
-		if (imAvaUser.getWidth() > 0) {
-			BitmapDrawable drawable = (BitmapDrawable) imAvaUser.getDrawable();
-			Bitmap bmap = drawable.getBitmap();
-			blur(bmap, rlBackground);
-		} else {
-			imAvaUser.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-				@Override
-				public void onGlobalLayout() {
-					BitmapDrawable drawable = (BitmapDrawable) imAvaUser.getDrawable();
-					Bitmap bmap = drawable.getBitmap();
-					blur(bmap, rlBackground);
-				}
-			});
-		}
+		
 
 		TextView user_id_txt = (TextView) v.findViewById(R.id.user_id);
 		user_id_txt.setText("Mã số cá nhân: " + CanvasFragment.mUser.getId());
@@ -103,9 +92,8 @@ public class PersonalFragment extends CoreFragment {
 		userName = (TextView) v.findViewById(R.id.userName);
 		userName.setText(CanvasFragment.mUser.getLogin_name());
 		
-		String qrInputText = "http://buyplus.vn/user/"+user_id_txt.toString();
-		// Find screen size
-
+		qrInputText = "http://buyplus.vn/user/"+user_id_txt.toString();
+		myImage = (ImageView) v.findViewById(R.id.QR_code);
 		Point point = new Point();
 		display.getSize(point);
 		int width = point.x;
@@ -118,12 +106,14 @@ public class PersonalFragment extends CoreFragment {
 				BarcodeFormat.QR_CODE.toString(), smallerDimension);
 		try {
 			Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
-			ImageView myImage = (ImageView) v.findViewById(R.id.QR_code);
+			
 			myImage.setImageBitmap(bitmap);
 
 		} catch (WriterException e) {
 			e.printStackTrace();
 		}
+		new LongOperation().execute("");
+		
 	}
 
 	@Override
@@ -166,4 +156,39 @@ public class PersonalFragment extends CoreFragment {
 		overlay = FastBlur.doBlur(overlay, (int) radius, true);
 		view.setBackground(new BitmapDrawable(getResources(), overlay));
 	}
+	
+	private class LongOperation extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+        	if (imAvaUser.getWidth() > 0) {
+    			BitmapDrawable drawable = (BitmapDrawable) imAvaUser.getDrawable();
+    			Bitmap bmap = drawable.getBitmap();
+    			blur(bmap, rlBackground);
+    		} else {
+    			imAvaUser.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+    				@Override
+    				public void onGlobalLayout() {
+    					BitmapDrawable drawable = (BitmapDrawable) imAvaUser.getDrawable();
+    					Bitmap bmap = drawable.getBitmap();
+    					blur(bmap, rlBackground);
+    				}
+    			});
+    		}
+        	
+        	
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+        }
+
+        @Override
+        protected void onPreExecute() {}
+
+        @Override
+        protected void onProgressUpdate(Void... values) {}
+    }
 }

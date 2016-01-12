@@ -39,6 +39,7 @@ import lc.buyplus.activities.MainActivity;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.AnnounmentAdapter;
 import lc.buyplus.adapter.OnLoadMoreListener;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
@@ -61,9 +62,12 @@ public class HomeAnnounmentFragment extends CoreFragment implements OnRefreshLis
 	private boolean isLoading,reload;
 	public static String type = "all";
 	private SwipeRefreshLayout swipeView;
+	View footer;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_announment, container, false);
+		footer = inflater.inflate(R.layout.loadmore, null);
 		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swipe_view);
 		swipeView.setOnRefreshListener(this);
 	    swipeView.setColorSchemeColors(Color.GREEN, Color.GREEN, Color.GREEN, Color.GREEN);
@@ -100,6 +104,7 @@ public class HomeAnnounmentFragment extends CoreFragment implements OnRefreshLis
 
 	@Override
 	protected void initViews(View v) {
+		listView.addFooterView(footer);
 		homeFrg = this.getTargetFragment();
 		newsAdapter = new AnnounmentAdapter(Store.AnnouncementsList, inflaterActivity, mActivity, mFragmentManager);
 		listView.setAdapter(newsAdapter);
@@ -118,6 +123,7 @@ public class HomeAnnounmentFragment extends CoreFragment implements OnRefreshLis
 		newsAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
+            	listView.addFooterView(footer);
             	api_get_all_announcements(current_last_id, Store.limit, type, 0, 0);
             }
         });
@@ -152,7 +158,7 @@ public class HomeAnnounmentFragment extends CoreFragment implements OnRefreshLis
 		params.put("limit", String.valueOf(limit));
 		params.put("mode", String.valueOf(mode));
 		params.put("search", String.valueOf(search));
-		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+		RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 				HandleRequest.build_link(HandleRequest.GET_ALL_ANNOUNCEMENTS, params), params,
 				new Response.Listener<JSONObject>() {
@@ -190,6 +196,7 @@ public class HomeAnnounmentFragment extends CoreFragment implements OnRefreshLis
 									current_last_id = announcement.getId();
 									Store.AnnouncementsList.add(announcement);
 								}
+								listView.removeFooterView(footer);
 								newsAdapter.notifyDataSetChanged();
 								if (old_id != current_last_id) {
 									isLoading = false;

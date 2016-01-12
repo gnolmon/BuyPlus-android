@@ -29,6 +29,7 @@ import android.widget.ListView;
 import lc.buyplus.R;
 import lc.buyplus.activities.AddFriendActivity;
 import lc.buyplus.adapter.ShopFriendAdapter;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
@@ -91,7 +92,7 @@ public class UserSecureFragment extends CoreFragment {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
-		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+		RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 				HandleRequest.build_link(HandleRequest.GET_SHOP_FRIENDS, params), params,
 				new Response.Listener<JSONObject>() {

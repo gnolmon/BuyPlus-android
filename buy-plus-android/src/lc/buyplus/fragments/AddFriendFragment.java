@@ -45,6 +45,7 @@ import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.AddFriendAdapter;
 import lc.buyplus.adapter.FriendAdapter;
 import lc.buyplus.adapter.ShopFriendAdapter;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
@@ -52,6 +53,7 @@ import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.models.Friend;
 import lc.buyplus.models.Store;
 import lc.buyplus.models.UserAccount;
+
 
 public class AddFriendFragment extends CoreFragment {
 	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab;
@@ -211,7 +213,7 @@ public class AddFriendFragment extends CoreFragment {
 		params.put("access_token", Store.user.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
 		params.put("temp_id", String.valueOf(temp_id));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			RequestQueue requestQueue =  MonApplication.getInstance().getRequestQueue();
 			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.SEND_REQUEST_JOIN_SHOP_TO_FRIEND, params, 
 					new Response.Listener<JSONObject>() {
@@ -263,7 +265,7 @@ public void api_search_friends_for_shop(int shop_id, String search){
 		params.put("search", String.valueOf(search));
 		params.put("shop_id", String.valueOf(shop_id));
 		Log.d("search", String.valueOf(search));
-			RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+			RequestQueue requestQueue =  MonApplication.getInstance().getRequestQueue();
 			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 					HandleRequest.build_link(HandleRequest.SEARCH_FRIENDS_FOR_SHOP, params), params, 
 					new Response.Listener<JSONObject>() {

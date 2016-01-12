@@ -37,6 +37,7 @@ import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.AnnounmentAdapter;
 import lc.buyplus.adapter.OnLoadMoreListener;
 import lc.buyplus.adapter.RedeemAdapter;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
@@ -56,9 +57,11 @@ public class LoyaltyCardFragment extends CoreFragment implements OnRefreshListen
 	private boolean isLoadMore,isLoading,reload;
 	private SwipeRefreshLayout swipeView;
 	private int old_id = 0;
+	View footer;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_redeem, container, false);
+		footer = inflater.inflate(R.layout.loadmore, null);
 		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swipe_view);
 		swipeView.setOnRefreshListener(this);
 	    swipeView.setColorSchemeColors(Color.GREEN, Color.GREEN, Color.GREEN, Color.GREEN);
@@ -94,6 +97,7 @@ public class LoyaltyCardFragment extends CoreFragment implements OnRefreshListen
 
 	@Override
 	protected void initViews(View v) {
+		listView.addFooterView(footer);
 		redeemAdapter = new RedeemAdapter(Store.MyShopsList, inflaterActivity);
 		listView.setAdapter(redeemAdapter);
 		//api_get_my_shop(0,Store.limit,0);
@@ -110,6 +114,7 @@ public class LoyaltyCardFragment extends CoreFragment implements OnRefreshListen
 		redeemAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
+            	listView.addFooterView(footer);
             	api_get_my_shop(current_last_id,Store.limit,0);
             }
         });
@@ -141,7 +146,7 @@ public class LoyaltyCardFragment extends CoreFragment implements OnRefreshListen
 		params.put("last_id", String.valueOf(last_id));
 		params.put("limit", String.valueOf(limit));
 		params.put("mode", String.valueOf(mode));
-		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+		RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 				HandleRequest.build_link(HandleRequest.GET_MY_SHOP, params), params,
 				new Response.Listener<JSONObject>() {
@@ -181,6 +186,7 @@ public class LoyaltyCardFragment extends CoreFragment implements OnRefreshListen
 										Store.MyShopsList.add(shop);
 									}
 								}
+								listView.removeFooterView(footer);
 								redeemAdapter.notifyDataSetChanged();
 								if (old_id != current_last_id) {
 									isLoading = false;

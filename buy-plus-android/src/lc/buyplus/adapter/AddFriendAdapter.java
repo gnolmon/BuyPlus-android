@@ -25,14 +25,17 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.activities.LoginActivity;
 import lc.buyplus.activities.ShopInfoActivity;
+import lc.buyplus.adapter.AnnounmentAdapter.ViewHolder;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.customizes.RoundedImageView;
+import lc.buyplus.customizes.RoundedViewImage;
 import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.models.Friend;
 import lc.buyplus.models.Store;
@@ -43,7 +46,14 @@ public class AddFriendAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	List<Friend> friendList;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
-
+	
+	static class ViewHolder {
+		public TextView nameFriend;
+		public TextView tvID;
+		public Button addFriend;
+		public RoundedImageView imNoti;
+	}
+	
 	public AddFriendAdapter( List<Friend> friendList,LayoutInflater inflaterActivity) {
 		this.inflaterActivity = inflaterActivity;
 		this.friendList = friendList;
@@ -69,50 +79,56 @@ public class AddFriendAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		final ViewHolder viewHolder;
 		if (inflater == null)
 			inflater = (LayoutInflater) inflaterActivity;
-		if (convertView == null)
-			convertView = inflater.inflate(R.layout.item_add_friend, null);
-
+		if (convertView == null) {
+			viewHolder = new ViewHolder();
+			convertView = inflater.inflate(R.layout.item_store_friend, null);
+			
+			viewHolder.nameFriend = (TextView) convertView.findViewById(R.id.tvFriendName);
+			viewHolder.tvID = (TextView) convertView.findViewById(R.id.tvFriendId);
+			viewHolder.addFriend = (Button) convertView.findViewById(R.id.btnDelFriend);
+			viewHolder.imNoti = (RoundedImageView) convertView.findViewById(R.id.imFriend);
+			
+			convertView.setTag(viewHolder);
+		} else {
+			viewHolder = (ViewHolder) convertView.getTag();
+		}
 		if (imageLoader == null)
 			imageLoader = MonApplication.getInstance().getImageLoader();
 		final Friend item = friendList.get(position);
 		final int pos = position;
-		TextView nameFriend = (TextView) convertView.findViewById(R.id.tvFriendName);
-		nameFriend.setText(item.getName());
+		viewHolder.nameFriend.setText(item.getName());
 
 		
-		TextView tvID = (TextView) convertView.findViewById(R.id.tvFriendId);
-		tvID.setText("ID:" +item.getId());
-		final Button addFriend = (Button) convertView.findViewById(R.id.btnAddFriend);
-		addFriend.setText("Thêm Bạn");
-		addFriend.setEnabled(true);
+		viewHolder.tvID.setText("ID:" +item.getId());
+		viewHolder.addFriend.setText("Thêm Bạn");
+		viewHolder.addFriend.setEnabled(true);
 //		if (friendList.get(position).getHas_joined()==1){
 //			addFriend.setText("Đã vào");
 //			addFriend.setEnabled(false);
 //		}else{
 			if (friendList.get(position).getHas_requested()==1){
-				addFriend.setText("Đang chờ");
-				addFriend.setEnabled(false);
+				viewHolder.addFriend.setText("Đang chờ");
+				viewHolder.addFriend.setEnabled(false);
 			}
 //		}
-		addFriend.setOnClickListener(new OnClickListener() {
+		viewHolder.addFriend.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
 				
 				api_send_request_join_shop_to_friend(Store.current_shop_id,item.getId());
-				addFriend.setText("Đang chờ");
-				addFriend.setEnabled(false);
+				viewHolder.addFriend.setText("Đang chờ");
+				viewHolder.addFriend.setEnabled(false);
 				friendList.get(pos).setHas_requested(1);
 			}
 		});
 
-		RoundedImageView imNoti = (RoundedImageView) convertView.findViewById(R.id.imFriend);
-
 		// name.setText(item.getName());
 
 		// user profile pic
-		imNoti.setImageUrl(item.getImage(), imageLoader);
+		viewHolder.imNoti.setImageUrl(item.getImage(), imageLoader);
 
 		return convertView;
 	}
@@ -123,7 +139,7 @@ public void api_send_request_join_shop_to_friend(int shop_id, int temp_id){
 		params.put("access_token", Store.user.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
 		params.put("temp_id", String.valueOf(temp_id));
-			RequestQueue requestQueue = Volley.newRequestQueue(CanvasFragment.mActivity);
+			RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.SEND_REQUEST_JOIN_SHOP_TO_FRIEND, params, 
 					new Response.Listener<JSONObject>() {

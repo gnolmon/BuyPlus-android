@@ -8,6 +8,7 @@ import lc.buyplus.activities.ShopFriendActivity;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.NotificationAdapter;
 import lc.buyplus.adapter.OnLoadMoreListener;
+import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
@@ -55,9 +56,11 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 	private int current_last_id = 0;
 	private boolean isLoadMore,isLoading,reload;
 	private SwipeRefreshLayout swipeView;
+	View footer;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_notifications, container, false);
+		footer = inflater.inflate(R.layout.loadmore, null);
 		initViews(view);
 		initModels();
 		initAnimations();
@@ -71,6 +74,7 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 		isLoading = false;
 		listView = (ListView ) view.findViewById(R.id.listNoti);
 		notiAdapter = new NotificationAdapter(Store.NotificationsList, inflaterActivity);
+		listView.addFooterView(footer);
 		listView.setAdapter(notiAdapter);
 		//Store.NotificationsList.removeAll(Store.NotificationsList);
 		//api_get_notifications(0, Store.limit);
@@ -78,6 +82,7 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 		notiAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
+            	listView.addFooterView(footer);
             	api_get_notifications(current_last_id, Store.limit);
             }
         });
@@ -195,7 +200,7 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("last_id", String.valueOf(last_id));
 		params.put("limit", String.valueOf(limit));
-		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+		RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 				HandleRequest.build_link(HandleRequest.GET_NOTIFICATIONS, params), params,
 				new Response.Listener<JSONObject>() {
@@ -238,6 +243,7 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 									isLoading = false;
 									old_id = current_last_id;
 								}
+								listView.removeFooterView(footer);
 								notiAdapter.notifyDataSetChanged();
 							}
 							
@@ -262,7 +268,7 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 	public void api_read_notifications() {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
-		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+		RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 		HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 				HandleRequest.READ_NOTIFICATIONS, params,
 				new Response.Listener<JSONObject>() {
@@ -311,7 +317,7 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
-		RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+		RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 				HandleRequest.build_link(HandleRequest.GET_SHOP_INFO, params), params,
 				new Response.Listener<JSONObject>() {
