@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -117,8 +118,7 @@ public class StoreAdapter extends BaseAdapter{
 		viewHolder.tvAddressStore.setText(item.getAddress());
 		
 		if (item.getImage() != null || item.getImage() != ""){
-			Glide.with(CanvasFragment.mActivity).load(item.getImage()).centerCrop()
-			.placeholder(R.drawable.loading_icon).crossFade().into(viewHolder.avaStore);
+			Glide.with(CanvasFragment.mActivity).load(item.getImage()).placeholder(viewHolder.avaStore.getDrawable()).centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.avaStore);
 			//avaStore.setImageUrl(item.getImage(), imageLoader);
 		}
 		

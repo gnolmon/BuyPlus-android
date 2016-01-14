@@ -15,8 +15,8 @@
             android:id="@+id/avaStore"
             android:layout_width="@dimen/image_normal"
             android:layout_height="@dimen/image_normal"
-            android:layout_gravity="center"
-            android:src="@drawable/square" >
+            android:scaleType="fitCenter"
+            android:src="@drawable/loading_icon" >
         </lc.buyplus.customizes.RoundedViewImage>
 
         <RelativeLayout
