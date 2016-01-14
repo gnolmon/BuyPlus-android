@@ -100,9 +100,8 @@
                 android:id="@+id/imFeed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
                 android:scaleType="fitXY"
-                android:visibility="visible" />
+                android:src="@drawable/loading_icon"/>
         </LinearLayout>
     </LinearLayout>
 

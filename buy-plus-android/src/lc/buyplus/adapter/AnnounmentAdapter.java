@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -148,8 +149,8 @@ public class AnnounmentAdapter extends BaseAdapter {
 		// viewHolder.avaStore.setImageUrl(item.getShop().getImage_thumbnail(),
 		// imageLoader);
 
-		Glide.with(CanvasFragment.mActivity).load(item.getShop().getImage_thumbnail()).centerCrop()
-				.placeholder(R.drawable.loading_icon).crossFade().into(viewHolder.avaStore);
+		Glide.with(CanvasFragment.mActivity).load(item.getShop().getImage_thumbnail()).placeholder(viewHolder.avaStore.getDrawable()).centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE)
+				.into(viewHolder.avaStore);
 		viewHolder.name.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -180,8 +181,7 @@ public class AnnounmentAdapter extends BaseAdapter {
 		if (item.getPhotos().size() > 0) {
 			// viewHolder.feedImageView.setImageUrl(item.getPhotos().get(0).getImage(),
 			// imageLoader);
-			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(0).getImage()).centerCrop()
-					.placeholder(R.drawable.loading_icon).crossFade().into(viewHolder.feedImageView);
+			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(0).getImage()).placeholder(viewHolder.feedImageView.getDrawable()).centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView);
 			viewHolder.feedImageView.setVisibility(View.VISIBLE);
 			
 		} else {
