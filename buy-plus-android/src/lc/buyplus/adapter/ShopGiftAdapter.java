@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,8 +106,8 @@ public class ShopGiftAdapter extends BaseAdapter {
 
 		// user profile pic
 		// viewHolder.imRedeem.setImageUrl(item.getImage(), imageLoader);
-		Glide.with(CanvasFragment.mActivity).load(item.getImage()).centerCrop().placeholder(R.drawable.loading_icon)
-				.crossFade().into(viewHolder.imRedeem);
+		Glide.with(CanvasFragment.mActivity).load(item.getImage()).placeholder(viewHolder.imRedeem.getDrawable()).centerCrop()
+		.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.imRedeem);
 
 		int myPoint = Store.current_shop.getCurrent_customer_shop_point();
 		int giftPoint = item.getPoint();
