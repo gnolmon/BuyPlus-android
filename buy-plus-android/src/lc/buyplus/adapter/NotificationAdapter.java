@@ -14,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -40,6 +41,7 @@ import lc.buyplus.customizes.RoundedViewImage;
 import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.models.Notification;
 import lc.buyplus.models.Store;
+
 public class NotificationAdapter extends BaseAdapter {
 
 	private LayoutInflater inflaterActivity;
@@ -162,8 +164,8 @@ public class NotificationAdapter extends BaseAdapter {
 			}
 		});
 		// imNoti.setImageUrl(item.getImage(), imageLoader);
-		Glide.with(CanvasFragment.mActivity).load(item.getImage()).centerCrop().placeholder(R.drawable.loading_icon)
-				.crossFade().into(viewHolder.imNoti);
+		Glide.with(CanvasFragment.mActivity).load(item.getImage()).placeholder(viewHolder.imNoti.getDrawable()).centerCrop()
+		.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.imNoti);
 
 		return convertView;
 	}
@@ -177,7 +179,7 @@ public class NotificationAdapter extends BaseAdapter {
 		params.put("accept_type", accept_type);
 		Log.d("params", String.valueOf(request_id));
 		Log.d("params", accept_type);
-		RequestQueue requestQueue =  MonApplication.getInstance().getRequestQueue();
+		RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 		HandleRequest jsObjRequest = new HandleRequest(Method.POST, HandleRequest.RESPONSE_REQUEST__JOIN_SHOP, params,
 				new Response.Listener<JSONObject>() {
 					@Override

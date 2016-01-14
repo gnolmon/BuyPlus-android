@@ -181,7 +181,9 @@ public class AnnounmentAdapter extends BaseAdapter {
 		if (item.getPhotos().size() > 0) {
 			// viewHolder.feedImageView.setImageUrl(item.getPhotos().get(0).getImage(),
 			// imageLoader);
-			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(0).getImage()).placeholder(viewHolder.feedImageView.getDrawable()).centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView);
+			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(0).getImage())
+					.placeholder(viewHolder.feedImageView.getDrawable()).centerCrop()
+					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView);
 			viewHolder.feedImageView.setVisibility(View.VISIBLE);
 			
 		} else {
