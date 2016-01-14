@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -103,8 +104,7 @@ public class RedeemAdapter extends BaseAdapter {
 		viewHolder.name.setText(item.getName());
 		
 		//viewHolder.imShop.setImageUrl(item.getImage_thumbnail(), imageLoader);
-		Glide.with(CanvasFragment.mActivity).load(item.getImage_thumbnail()).centerCrop()
-		.placeholder(R.drawable.loading_icon).crossFade().into(viewHolder.imShop);
+		Glide.with(CanvasFragment.mActivity).load(item.getImage_thumbnail()).placeholder(viewHolder.imShop.getDrawable()).centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.imShop);
 		return convertView;
 
 	}
