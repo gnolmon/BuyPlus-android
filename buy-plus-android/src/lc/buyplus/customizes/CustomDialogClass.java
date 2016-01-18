@@ -80,14 +80,10 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 			if (flag == 2){
 				if (ShopInfoFragment.isJoin) {
 					api_leave_shop(Store.current_shop_id);
-					ShopInfoFragment.join_leave.setText("Ttham gia");
-					ShopInfoFragment.join_leave.setBackground(c.getResources().getDrawable(R.drawable.round_button_gray));
-					ShopInfoFragment.isJoin = false;
+					
 				} else {
 					api_join_shop(Store.current_shop_id);
-					ShopInfoFragment.join_leave.setText("Đã tham gia");
-					ShopInfoFragment.join_leave.setBackground(c.getResources().getDrawable(R.drawable.round_button_green));
-					ShopInfoFragment.isJoin = true;
+					
 				}
 			}
 			
@@ -135,11 +131,15 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 							    c.finish();
 
 							}
-							if (Integer.parseInt(response.getString("error"))==1){
+							else if (Integer.parseInt(response.getString("error"))==1){
 								DialogMessage dialog = new DialogMessage(c,response.getString("message"));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
-							}
+							}else{
+								ShopInfoFragment.join_leave.setText("Đã tham gia");
+								ShopInfoFragment.join_leave.setBackground(c.getResources().getDrawable(R.drawable.round_button_green));
+								ShopInfoFragment.isJoin = true;
+							} 
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
@@ -181,10 +181,14 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 							    c.finish();
 
 							}
-							if (Integer.parseInt(response.getString("error"))==1){
+							else if (Integer.parseInt(response.getString("error"))==1){
 								DialogMessage dialog = new DialogMessage(c,response.getString("message"));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
+							} else {
+								ShopInfoFragment.join_leave.setText("Tham gia");
+								ShopInfoFragment.join_leave.setBackground(c.getResources().getDrawable(R.drawable.round_button_gray));
+								ShopInfoFragment.isJoin = false;
 							}
 						} catch (JSONException e) {
 							e.printStackTrace();

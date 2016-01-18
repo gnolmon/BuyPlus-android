@@ -73,6 +73,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
                         android:layout_marginBottom="7dp"
+                        android:layout_marginRight="30dp"
                         android:text="10:00"
                         android:textColor="@color/white"
                         android:textSize="10dp" />
@@ -89,7 +90,15 @@
             android:paddingRight="@dimen/padding_standard"
             android:paddingTop="@dimen/feed_item_status_pad_top"
             android:textColor="@color/title" />
-
+		<TextView
+            android:id="@+id/tvSeemore"
+            android:text="Xem thêm"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingLeft="@dimen/padding_standard"
+            android:paddingRight="@dimen/padding_standard"
+            android:textColor="@color/actionbar" />
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

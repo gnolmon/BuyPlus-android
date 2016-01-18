@@ -33,7 +33,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import lc.buyplus.R;
@@ -41,10 +40,8 @@ import lc.buyplus.activities.LoginActivity;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
-import lc.buyplus.cores.FeedImageView;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.DialogMessage;
-import lc.buyplus.customizes.RoundedImageView;
 import lc.buyplus.customizes.RoundedViewImage;
 import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.models.Announcement;
@@ -76,6 +73,7 @@ public class AnnounmentAdapter extends BaseAdapter {
 		public TextView tvTimeSale;
 
 		public TextView tvStatus;
+		public TextView tvSeemore;
 		public RoundedViewImage avaStore;
 		public ImageView feedImageView;
 	}
@@ -105,7 +103,7 @@ public class AnnounmentAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ViewHolder viewHolder;
+		final ViewHolder viewHolder;
 		if (inflater == null)
 			inflater = inflaterActivity;
 		if (convertView == null) {
@@ -118,6 +116,8 @@ public class AnnounmentAdapter extends BaseAdapter {
 			viewHolder.tvTimeSale = (TextView) convertView.findViewById(R.id.tvTimeSale);
 
 			viewHolder.tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
+			viewHolder.tvSeemore = (TextView) convertView.findViewById(R.id.tvSeemore);
+			
 			viewHolder.avaStore = (RoundedViewImage) convertView.findViewById(R.id.avaStore);
 			viewHolder.feedImageView = (ImageView) convertView.findViewById(R.id.imFeed);
 			convertView.setTag(viewHolder);
@@ -136,16 +136,35 @@ public class AnnounmentAdapter extends BaseAdapter {
 		Date date_start = new Date(unixSeconds * 1000L);
 		unixSeconds = item.getEnd_time();
 		Date date_end = new Date(unixSeconds * 1000L);
-		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM");
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT-7"));
-		String formattedDate = sdf.format(date_start) + " đến " + sdf.format(date_end);
+		String formattedDate = sdf.format(date_start) + " - " + sdf.format(date_end);
 		viewHolder.tvTimeSale.setText(formattedDate);
 
-		CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(Long.parseLong(item.getCreated_time()),
+		CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(1000*Long.parseLong(item.getCreated_time()),
 				System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
 		viewHolder.timestamp.setText(timeAgo);
-		viewHolder.tvStatus.setText(item.getContent());
+		
+		
+		if (item.getContent().length()>200){
+			viewHolder.tvStatus.setText(item.getContent().substring(0, 200)+"...");
+			
+			viewHolder.tvSeemore.setVisibility(View.VISIBLE);
+			viewHolder.tvSeemore.setOnClickListener(new OnClickListener() {
 
+				@Override
+				public void onClick(View v) {
+					viewHolder.tvStatus.setText(item.getContent());
+					viewHolder.tvSeemore.setVisibility(View.GONE);
+				}
+			});
+		}
+		else {
+			viewHolder.tvStatus.setText(item.getContent());
+			viewHolder.tvSeemore.setVisibility(View.GONE);
+		}
+		
+		
 		// viewHolder.avaStore.setImageUrl(item.getShop().getImage_thumbnail(),
 		// imageLoader);
 

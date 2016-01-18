@@ -582,7 +582,8 @@ public void api_get_num_unread_notifications(){
 							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 							dialog.show();
 						}else{
-							Log.d("api_get_all_shop",response.toString());
+							tvNumNoti.setVisibility(View.GONE);
+							imJoinShop.setVisibility(View.GONE);
 							JSONObject data = response.getJSONObject("data");
 							tvNumNoti.setText(data.getString("total"));
 							if (Integer.parseInt(data.getString("total")) > 0) {

@@ -64,8 +64,7 @@
 	<string name="fill_name">Hãy điền tên của bạn.</string>
 	<string name="fill_email">Hãy điền email của bạn.</string>
 	<string name="fill_pass">Hãy điền mật khẩu của bạn.</string>
-	<string name="fill_pass_confirm">Hãy xác nhận mật khẩu của bạn.</string>
-	
+	<string name="fill_pass_confirm">Hãy xác nhận mật khẩu của bạn.</string>	
     <string name="gcm_send_message">Token retrieved and sent to server! You can now use gcmsender to
         send downstream messages to this app.</string>
     <string name="registering_message">Generating InstanceID token...</string>

@@ -55,30 +55,30 @@
 
             <RelativeLayout
                 android:id="@+id/rlintro"
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
                 android:layout_alignParentRight="true"
-                android:layout_toRightOf="@id/lnName" >
+                android:layout_width="fill_parent"
+                android:layout_height="50dp">
 
-                <ImageView
-                    android:id="@+id/imSaleOff"
-                    android:layout_width="150dp"
-                    android:layout_height="80dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:src="@drawable/saleoff" />
+                    <ImageView
+                        android:id="@+id/imSaleOff"
+                        android:layout_width="150dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:src="@drawable/saleoff" />
 
-                <TextView
-                    android:id="@+id/tvTimeSale"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginBottom="7dp"
-                    android:layout_marginRight="5dp"
-                    android:text="10:00"
-                    android:textColor="@color/white"
-                    android:textSize="10dp" />
+                    <TextView
+                        android:id="@+id/tvTimeSale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="7dp"
+                        android:layout_marginRight="30dp"
+                        android:text="10:00"
+                        android:textColor="@color/white"
+                        android:textSize="10dp" />
+
             </RelativeLayout>
 
             <TextView
@@ -86,16 +86,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rlintro"
-                android:text="Mô tả"
-                android:textSize="20dp" />
+                android:text="Mô tả"/>
 
             <TextView
                 android:id="@+id/tvDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvStatus"
-                android:text="Mô tả"
-                android:textSize="15dp" />
+                android:text="Mô tả"/>
         </RelativeLayout>
 
         <lc.buyplus.cores.FeedImageView

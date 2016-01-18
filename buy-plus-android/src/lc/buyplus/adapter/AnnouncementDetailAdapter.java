@@ -131,7 +131,7 @@ public class AnnouncementDetailAdapter extends BaseAdapter {
 
 		if (position == 0) {
 			CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
-					Long.parseLong(Store.current_announcement.getCreated_time()), System.currentTimeMillis(),
+					1000*Long.parseLong(Store.current_announcement.getCreated_time()), System.currentTimeMillis(),
 					DateUtils.SECOND_IN_MILLIS);
 			viewHolder.timestamp.setText(timeAgo);
 			viewHolder.avaStore.setImageUrl(Store.current_announcement.getShop().getImage_thumbnail(),
@@ -145,9 +145,9 @@ public class AnnouncementDetailAdapter extends BaseAdapter {
 			Date date_start = new Date(unixSeconds * 1000L);
 			unixSeconds = Store.current_announcement.getEnd_time();
 			Date date_end = new Date(unixSeconds * 1000L);
-			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm MM-dd");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM");
 			sdf.setTimeZone(TimeZone.getTimeZone("GMT-7"));
-			String formattedDate = sdf.format(date_start) + " đến " + sdf.format(date_end);
+			String formattedDate = sdf.format(date_start) + " - " + sdf.format(date_end);
 			viewHolder.tvTimeSale.setText(formattedDate);
 
 			if (Store.current_announcement.getType() == 2) {
