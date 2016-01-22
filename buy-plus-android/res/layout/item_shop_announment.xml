@@ -42,6 +42,7 @@
                     android:clickable="true"
                     android:text="JackLand"
                     android:textColor="@color/actionbar"
+                    android:background="?android:attr/selectableItemBackground"
                     android:textSize="@dimen/feed_item_profile_name" />
 
                 <TextView

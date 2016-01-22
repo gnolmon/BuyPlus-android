@@ -164,14 +164,14 @@ public class PersonalFragment extends CoreFragment {
         	if (imAvaUser.getWidth() > 0) {
     			BitmapDrawable drawable = (BitmapDrawable) imAvaUser.getDrawable();
     			Bitmap bmap = drawable.getBitmap();
-    			blur(bmap, rlBackground);
+    			//blur(bmap, rlBackground);
     		} else {
     			imAvaUser.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
     				@Override
     				public void onGlobalLayout() {
     					BitmapDrawable drawable = (BitmapDrawable) imAvaUser.getDrawable();
     					Bitmap bmap = drawable.getBitmap();
-    					blur(bmap, rlBackground);
+    					//blur(bmap, rlBackground);
     				}
     			});
     		}

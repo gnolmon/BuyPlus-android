@@ -123,6 +123,7 @@ public class ShopInfoFragment extends CoreFragment {
 
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void initViews(View v) {
 
@@ -135,7 +136,7 @@ public class ShopInfoFragment extends CoreFragment {
 		if (imbannerStore.getWidth() > 0) {
 			BitmapDrawable drawable = (BitmapDrawable) imbannerStore.getDrawable();
 			Bitmap bmap = drawable.getBitmap();
-			blur(bmap, rlbanner);
+			//blur(bmap, rlbanner);
 		} else {
 			imbannerStore.getViewTreeObserver()
 					.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
@@ -143,7 +144,7 @@ public class ShopInfoFragment extends CoreFragment {
 				public void onGlobalLayout() {
 					BitmapDrawable drawable = (BitmapDrawable) imbannerStore.getDrawable();
 					Bitmap bmap = drawable.getBitmap();
-					blur(bmap, rlbanner);
+					//blur(bmap, rlbanner);
 				}
 			});
 		}
