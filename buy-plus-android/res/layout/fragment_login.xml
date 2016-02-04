@@ -48,7 +48,7 @@
             android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/edit_padding"
             android:background="#00000000"
-            android:hint="Nhập tên đăng nhập"
+            android:hint="Nhập email"
             android:singleLine="true"
             android:textColor="@color/white"
             android:textColorHint="@color/white"

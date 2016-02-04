@@ -318,9 +318,7 @@ public class LoginFragment extends CoreFragment {
 	 	
     	Map<String, String> params = new HashMap<String, String>();
 		params.put("facebook_access_token", facebook_access_token);
-		Log.d("facebook_access_token",facebook_access_token);
 		params.put("email", email);
-		//params.put("phone", phone);
 		params.put("name", name);
 		params.put("facebook_id", facebook_id);
 			RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
@@ -357,6 +355,9 @@ public class LoginFragment extends CoreFragment {
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						Log.d("api_user_login_facebook",error.toString());
+						DialogMessage dialog = new DialogMessage(mActivity,error.toString());
+						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+						dialog.show();
 					}
 				});
 			requestQueue.add(jsObjRequest);
