@@ -46,6 +46,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.configs.NetworkConfig;
+import lc.buyplus.customizes.FontsOverride;
 import lc.buyplus.dialogs.DialogProgress;
 import lc.buyplus.dialogs.DialogYesNo;
 import lc.buyplus.interfaces.ImageRequestListener;
@@ -73,6 +74,7 @@ public abstract class CoreActivity extends FragmentActivity implements Serializa
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		FontsOverride.setDefaultFont(this, "DEFAULT", "fonts/helvetica.ttf");
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 //        setStatusBarColor(findViewById(R.id.statusBarBackground),getResources().getColor(R.color.actionbar));
 	}

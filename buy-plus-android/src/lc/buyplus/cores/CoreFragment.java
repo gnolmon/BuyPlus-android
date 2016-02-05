@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.View.OnClickListener;
+import lc.buyplus.customizes.FontsOverride;
 
 public abstract class CoreFragment extends Fragment implements OnClickListener, Serializable {
 
@@ -32,6 +33,7 @@ public abstract class CoreFragment extends Fragment implements OnClickListener, 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		FontsOverride.setDefaultFont(getContext(), "DEFAULT", "fonts/helvetica.ttf");
 		mFragmentManager = getFragmentManager();
 		mContext = (CoreActivity) getActivity();
 	}

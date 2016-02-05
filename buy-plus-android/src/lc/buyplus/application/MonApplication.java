@@ -2,6 +2,7 @@ package lc.buyplus.application;
 
 import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
+import lc.buyplus.customizes.FontsOverride;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,6 +27,7 @@ public class MonApplication extends MultiDexApplication  {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		FontsOverride.setDefaultFont(this, "DEFAULT", "fonts/helvetica.ttf");
 		mInstance = this;
 	}
 	

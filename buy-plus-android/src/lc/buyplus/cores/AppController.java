@@ -1,6 +1,7 @@
 package lc.buyplus.cores;
 
 import lc.buyplus.application.LruBitmapCache;
+import lc.buyplus.customizes.FontsOverride;
 import android.app.Application;
 import android.text.TextUtils;
 
@@ -22,6 +23,7 @@ public class AppController extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		FontsOverride.setDefaultFont(this, "DEFAULT", "helvetica.ttf");
 		mInstance = this;
 	}
 
