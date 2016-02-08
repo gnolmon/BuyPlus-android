@@ -65,6 +65,9 @@ public class LoginFragment extends CoreFragment {
 	private MyTextView registerbtn;
 	private LoginButton loginButton;
 	private CallbackManager callbackManager;
+	String user_id;
+	String user_name;
+	String email;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		FacebookSdk.sdkInitialize(mActivity.getApplicationContext());
@@ -80,6 +83,7 @@ public class LoginFragment extends CoreFragment {
 			
 			@Override
 			public void onSuccess(LoginResult result) {
+				
 				GraphRequest request = GraphRequest.newMeRequest(
                 result.getAccessToken(),
                 new GraphRequest.GraphJSONObjectCallback() {
@@ -89,39 +93,14 @@ public class LoginFragment extends CoreFragment {
                             GraphResponse response) {
                         // Application code
                     	 
-                        response.getError();
 
                         try {
-                             String user_id = object.getString("id");
-                             String user_name = object.getString("name");
-                             String email = object.getString("email");
-                             
+                             user_id = object.getString("id");
+                             user_name = object.getString("name");
+                             email = object.getString("email");
+                             Log.d("FB", "Value: " + AccessToken.getCurrentAccessToken().getToken() + "-" + user_id + user_name + email);
                              api_user_login_facebook(AccessToken.getCurrentAccessToken().getToken(), email, "", user_name, user_id);
-                             new GraphRequest(
-                            		    AccessToken.getCurrentAccessToken(),
-                            		    "/"+user_id+"/taggable_friends",
-                            		    null,
-                            		    HttpMethod.GET,
-                            		    new GraphRequest.Callback() {
-                            		        public void onCompleted(GraphResponse response) {
-//                            		        	try {
-//                            		        		Log.e("JSON:", response.toString());
-//                            		        		JSONObject jobj = new JSONObject(response.getRawResponse());
-//                        							JSONArray data_aray = jobj.getJSONArray("data");
-//                        							for (int i = 0; i < data_aray.length(); i++) {
-//                        								FacebookFriend facebookFriend = new FacebookFriend((JSONObject) data_aray.get(i));
-//                        	                            	if (facebookFriend != null){
-//                        	                            		Store.FacebookFriendsList.add(facebookFriend);
-//                        	                            	}
-//                        	                        }
-//      
-//                        							
-//                        						} catch (JSONException e) {
-//                        							e.printStackTrace();
-//                        						}	
-                            		        }
-                            		    }
-                            		).executeAsync();
+                             
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -321,6 +300,7 @@ public class LoginFragment extends CoreFragment {
 		params.put("email", email);
 		params.put("name", name);
 		params.put("facebook_id", facebook_id);
+		Log.d("FB", "GO here:1");
 			RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.LOGIN_FACEBOOK, params, 
@@ -339,7 +319,7 @@ public class LoginFragment extends CoreFragment {
 							String imageThumbnail = data.getString("image_thumbnail");
 							String username = data.getString("name");
 							int active = Integer.parseInt(data.getString("active"));
-							
+							Log.d("FB", "GO here:");
 							
 							Store.user = new UserAccount(accessToken,id,phone,email,login_name,imageUrl,imageThumbnail,username,active);
 							Intent mainActivity = new Intent(mActivity,MainActivity.class);
