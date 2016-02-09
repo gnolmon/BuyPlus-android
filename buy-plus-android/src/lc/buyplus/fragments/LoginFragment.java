@@ -25,10 +25,12 @@ import lc.buyplus.models.FacebookFriend;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
 import lc.buyplus.models.UserAccount;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -63,6 +65,7 @@ public class LoginFragment extends CoreFragment {
 	private EditText editPass;
 	private Button loginbtn;
 	private MyTextView registerbtn;
+	private MyTextView ForgetPassbtn;
 	private LoginButton loginButton;
 	private CallbackManager callbackManager;
 	String user_id;
@@ -148,7 +151,7 @@ public class LoginFragment extends CoreFragment {
 		editPass = (EditText)v.findViewById(R.id.edPass);
 		loginbtn = (Button)v.findViewById(R.id.btnLogin);
 		registerbtn = (MyTextView)v.findViewById(R.id.btnRegister);
-		
+		ForgetPassbtn = (MyTextView)v.findViewById(R.id.btnForgetPass);
 		SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
 		String login_name_edit = pre.getString("login_name", "");
 		String password = pre.getString("password", "");
@@ -188,6 +191,22 @@ public class LoginFragment extends CoreFragment {
 			@Override
 			public void onClick(View arg0) {
 				mFragmentManager.beginTransaction().replace(R.id.canvas, RegisterFragment.getInstance(mActivity)).commit();
+			}
+		});
+		ForgetPassbtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Intent returnIntent;
+				Uri uri;
+				uri = Uri.parse("http://buyplus.vn/site/forgot_password");
+				returnIntent = new Intent(Intent.ACTION_VIEW, uri);
+				try {
+					startActivity(returnIntent);
+				} catch (ActivityNotFoundException e) {
+					DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+					dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+					dialog.show();
+				}
 			}
 		});
 	}

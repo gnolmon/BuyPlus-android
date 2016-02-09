@@ -68,7 +68,7 @@ public class ShopImageFragment extends CoreFragment {
 		initAnimations();
 		inflaterActivity = inflater;
 		gridView = (GridView) view.findViewById(R.id.grid_view);
-		api_get_shop_announcement_images(Store.current_shop_id,0,0);
+		api_get_shop_product_images(Store.current_shop_id,0,0);
 	
 		return view;
 	}
@@ -94,20 +94,20 @@ public class ShopImageFragment extends CoreFragment {
 
 	}
 
-	public void api_get_shop_announcement_images(int shop_id, int latest_id, int oldest_id){
+	public void api_get_shop_product_images(int shop_id, int last_id, int limit){
 	 	
     	Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
-		params.put("latest_id", String.valueOf(latest_id));
-		params.put("oldest_id", String.valueOf(oldest_id));
+		params.put("last_id", String.valueOf(last_id));
+		//params.put("limit", String.valueOf(limit));
 			RequestQueue requestQueue =MonApplication.getInstance().getRequestQueue();
 			HandleRequest jsObjRequest = new HandleRequest(Method.GET,
-					HandleRequest.build_link(HandleRequest.GET_SHOP_ANNOUNCEMENT_IMAGES, params), params, 
+					HandleRequest.build_link(HandleRequest.GET_SHOP_PRODUCT_IMAGES, params), params, 
 					new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
-						Log.d("api_get_shop_announcement_images",response.toString());
+						Log.d("api_get_shop_product_images",response.toString());
 						try {
 							if (Integer.parseInt(response.getString("error"))==2){
 								DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.end_session));

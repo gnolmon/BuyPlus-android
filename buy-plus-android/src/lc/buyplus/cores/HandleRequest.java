@@ -47,7 +47,7 @@ public class HandleRequest extends Request<JSONObject>{
     public static final String LEAVE_SHOP = "http://buyplus.vn/api/leave_shop/";
     public static final String GET_ADDED_POINT_HISTORY = "http://buyplus.vn/api/get_added_point_history/";
     public static final String GET_ADDED_POINT_IN_SHOP = "API URL: http://buyplus.vn/api/get_added_point_in_shop/";
-    public static final String GET_SHOP_ANNOUNCEMENT_IMAGES = "http://buyplus.vn/api/get_shop_announcement_images/";
+    public static final String GET_SHOP_PRODUCT_IMAGES = "http://buyplus.vn/api/get_shop_product_images/";
     public static final String REMOVE_FRIEND_FROM_CIRCLE = "http://buyplus.vn/api/remove_friend_from_circle/";
     public static final String SEARCH_FRIENDS_FOR_SHOP = "http://buyplus.vn/api/search_friends_for_shop/";
     public static final String UPDATE_USER_INFORMATION = "http://buyplus.vn/api/update_user_information/";

@@ -171,7 +171,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="Hình ảnh"
+                    android:text="Sản Phẩm"
                     android:textColor="@color/title"
                     android:textSize="15dp" />
             </LinearLayout>

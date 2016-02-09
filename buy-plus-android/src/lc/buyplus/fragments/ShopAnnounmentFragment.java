@@ -26,9 +26,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView.OnItemClickListener;
 import lc.buyplus.R;
+import lc.buyplus.activities.AnnouncementDetailActivity;
 import lc.buyplus.activities.LoginActivity;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.AnnounmentAdapter;
@@ -99,6 +102,17 @@ public class ShopAnnounmentFragment extends CoreFragment implements OnRefreshLis
 		newsAdapter = new ShopAnnounmentAdapter(ShopAnnouncementsList, inflaterActivity);
 		listView.setAdapter(newsAdapter);
 		//api_get_shop_announcements(Store.current_shop_id, 0, Store.limit, 0);
+		
+		listView.setOnItemClickListener(new OnItemClickListener() {
+		      public void onItemClick(AdapterView<?> parent, View view,
+		          int position, long id) {
+		    	  listView.setEnabled(false);
+		    	  Store.current_announcement = (Announcement)newsAdapter.getItem(position);
+		    	  Intent mainActivity = new Intent(mActivity,AnnouncementDetailActivity.class);
+		           startActivity(mainActivity);
+		      }
+	    });
+		
 		
 		newsAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override

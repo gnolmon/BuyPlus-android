@@ -61,9 +61,6 @@ public class AnnouncementDetailFragment extends CoreFragment {
 	private LayoutInflater inflaterActivity;
 	FragmentManager mFragmentManager;
 	public static Fragment homeFrg;
-	private int old_id = 0;
-	public static int current_last_id = 0;
-	private boolean isLoading,reload;
 	public static String type = "all";
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

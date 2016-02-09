@@ -136,6 +136,7 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 							}else{
+								Store.current_shop.setCurrent_customer_shop_id(String.valueOf(Store.user.getId()));
 								ShopInfoFragment.join_leave.setText("Đã tham gia");
 								ShopInfoFragment.join_leave.setBackground(c.getResources().getDrawable(R.drawable.round_button_green));
 								ShopInfoFragment.isJoin = true;
@@ -186,6 +187,7 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 							} else {
+								Store.current_shop.setCurrent_customer_shop_id("");
 								ShopInfoFragment.join_leave.setText("Tham gia");
 								ShopInfoFragment.join_leave.setBackground(c.getResources().getDrawable(R.drawable.round_button_gray));
 								ShopInfoFragment.isJoin = false;
