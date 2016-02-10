@@ -155,6 +155,7 @@ public class LoginFragment extends CoreFragment {
 		SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
 		String login_name_edit = pre.getString("login_name", "");
 		String password = pre.getString("password", "");
+		editName.requestFocus();
 		editName.setText(login_name_edit);
 		editPass.setText(password);
 		boolean immediate_login = pre.getBoolean("immediate_login", false);

@@ -37,7 +37,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import lc.buyplus.R;
+import lc.buyplus.activities.AnnouncementDetailActivity;
 import lc.buyplus.activities.LoginActivity;
+import lc.buyplus.activities.MapShopActivity;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.ShopAnnounmentAdapter;
 import lc.buyplus.application.MonApplication;
@@ -116,6 +118,16 @@ public class ShopInfoFragment extends CoreFragment {
 				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 				dialog.show();
 			}
+			
+		case R.id.tvName:
+			Intent mainActivity = new Intent(mActivity,MapShopActivity.class);
+			try {
+				startActivity(mainActivity);
+			} catch (ActivityNotFoundException e) {
+				DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+				dialog.show();
+			}
 		}
 	}
 
@@ -158,7 +170,7 @@ public class ShopInfoFragment extends CoreFragment {
 		tvFb = (TextView) v.findViewById(R.id.tvFb);
 		tvWeb.setOnClickListener(this);
 		tvFb.setOnClickListener(this);
-		
+		tvName.setOnClickListener(this);
 		
 		if ((Store.current_shop.current_customer_shop_id == null) || (Store.current_shop.current_customer_shop_id == "")) {
 			join_leave.setText("Tham gia");
