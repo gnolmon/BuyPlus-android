@@ -75,7 +75,7 @@ public class AnnounmentAdapter extends BaseAdapter {
 		public TextView tvStatus;
 		public TextView tvSeemore;
 		public RoundedViewImage avaStore;
-		public ImageView feedImageView;
+		public ImageView feedImageView, feedImageView2, feedImageView3, feedImageView4;
 	}
 
 	public OnLoadMoreListener getOnLoadMoreListener() {
@@ -104,31 +104,51 @@ public class AnnounmentAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		final ViewHolder viewHolder;
+		final Announcement item = announcementList.get(position);
 		if (inflater == null)
 			inflater = inflaterActivity;
-		if (convertView == null) {
+		viewHolder = new ViewHolder();
+		if (item.getPhotos().size() == 1) {
+			Log.d("IM", "Vao 1");
 			convertView = inflater.inflate(R.layout.item_announment, null);
-			viewHolder = new ViewHolder();
-
-			viewHolder.name = (TextView) convertView.findViewById(R.id.tvNameStore);
-			viewHolder.timestamp = (TextView) convertView.findViewById(R.id.tvTimestamp);
-			viewHolder.imSaleOff = (ImageView) convertView.findViewById(R.id.imSaleOff);
-			viewHolder.tvTimeSale = (TextView) convertView.findViewById(R.id.tvTimeSale);
-
-			viewHolder.tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
-			viewHolder.tvSeemore = (TextView) convertView.findViewById(R.id.tvSeemore);
-			
-			viewHolder.avaStore = (RoundedViewImage) convertView.findViewById(R.id.avaStore);
 			viewHolder.feedImageView = (ImageView) convertView.findViewById(R.id.imFeed);
-			convertView.setTag(viewHolder);
-		} else {
-			viewHolder = (ViewHolder) convertView.getTag();
 		}
+		if (item.getPhotos().size() == 2) {
+			Log.d("IM", "Vao 2");
+			convertView = inflater.inflate(R.layout.item_announment_2, null);
+			viewHolder.feedImageView = (ImageView) convertView.findViewById(R.id.imFeed);
+			viewHolder.feedImageView2 = (ImageView) convertView.findViewById(R.id.imFeed2);
+		}
+		if (item.getPhotos().size() == 3) {
+			Log.d("IM", "Vao 3");
+			convertView = inflater.inflate(R.layout.item_announment_3, null);
+			viewHolder.feedImageView = (ImageView) convertView.findViewById(R.id.imFeed);
+			viewHolder.feedImageView2 = (ImageView) convertView.findViewById(R.id.imFeed2);
+			viewHolder.feedImageView3 = (ImageView) convertView.findViewById(R.id.imFeed3);
+		}
+		if (item.getPhotos().size() == 4) {
+			Log.d("IM", "Vao 4");
+			convertView = inflater.inflate(R.layout.item_announment_4, null);
+			viewHolder.feedImageView = (ImageView) convertView.findViewById(R.id.imFeed);
+			viewHolder.feedImageView2 = (ImageView) convertView.findViewById(R.id.imFeed2);
+			viewHolder.feedImageView3 = (ImageView) convertView.findViewById(R.id.imFeed3);
+			viewHolder.feedImageView4 = (ImageView) convertView.findViewById(R.id.imFeed4);
+		}
+
+		viewHolder.name = (TextView) convertView.findViewById(R.id.tvNameStore);
+		viewHolder.timestamp = (TextView) convertView.findViewById(R.id.tvTimestamp);
+		viewHolder.imSaleOff = (ImageView) convertView.findViewById(R.id.imSaleOff);
+		viewHolder.tvTimeSale = (TextView) convertView.findViewById(R.id.tvTimeSale);
+
+		viewHolder.tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
+		viewHolder.tvSeemore = (TextView) convertView.findViewById(R.id.tvSeemore);
+
+		viewHolder.avaStore = (RoundedViewImage) convertView.findViewById(R.id.avaStore);
+
+		convertView.setTag(viewHolder);
 
 		if (imageLoader == null)
 			imageLoader = MonApplication.getInstance().getImageLoader();
-
-		final Announcement item = announcementList.get(position);
 
 		viewHolder.name.setText(item.getShop().getName());
 
@@ -141,14 +161,13 @@ public class AnnounmentAdapter extends BaseAdapter {
 		String formattedDate = sdf.format(date_start) + " - " + sdf.format(date_end);
 		viewHolder.tvTimeSale.setText(formattedDate);
 
-		CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(1000*Long.parseLong(item.getCreated_time()),
+		CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(1000 * Long.parseLong(item.getCreated_time()),
 				System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
 		viewHolder.timestamp.setText(timeAgo);
-		
-		
-		if (item.getContent().length()>200){
-			viewHolder.tvStatus.setText(item.getContent().substring(0, 200)+"...");
-			
+
+		if (item.getContent().length() > 200) {
+			viewHolder.tvStatus.setText(item.getContent().substring(0, 200) + "...");
+
 			viewHolder.tvSeemore.setVisibility(View.VISIBLE);
 			viewHolder.tvSeemore.setOnClickListener(new OnClickListener() {
 
@@ -158,17 +177,16 @@ public class AnnounmentAdapter extends BaseAdapter {
 					viewHolder.tvSeemore.setVisibility(View.GONE);
 				}
 			});
-		}
-		else {
+		} else {
 			viewHolder.tvStatus.setText(item.getContent());
 			viewHolder.tvSeemore.setVisibility(View.GONE);
 		}
-		
-		
+
 		// viewHolder.avaStore.setImageUrl(item.getShop().getImage_thumbnail(),
 		// imageLoader);
 
-		Glide.with(CanvasFragment.mActivity).load(item.getShop().getImage_thumbnail()).placeholder(viewHolder.avaStore.getDrawable()).centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE)
+		Glide.with(CanvasFragment.mActivity).load(item.getShop().getImage_thumbnail())
+				.placeholder(viewHolder.avaStore.getDrawable()).centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE)
 				.into(viewHolder.avaStore);
 		viewHolder.name.setOnClickListener(new OnClickListener() {
 
@@ -196,17 +214,76 @@ public class AnnounmentAdapter extends BaseAdapter {
 			viewHolder.imSaleOff.setVisibility(View.GONE);
 			viewHolder.tvTimeSale.setVisibility(View.GONE);
 		}
-		// Feed image
-		if (item.getPhotos().size() > 0) {
-			// viewHolder.feedImageView.setImageUrl(item.getPhotos().get(0).getImage(),
-			// imageLoader);
+
+		switch (item.getPhotos().size()) {
+		case 0:
+			viewHolder.feedImageView.setVisibility(View.GONE);
+			break;
+		case 1:
 			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(0).getImage())
 					.placeholder(viewHolder.feedImageView.getDrawable()).centerCrop()
 					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView);
 			viewHolder.feedImageView.setVisibility(View.VISIBLE);
-			
-		} else {
-			viewHolder.feedImageView.setVisibility(View.GONE);
+			break;
+		case 2:
+			// image 1
+			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(0).getImage())
+					.placeholder(viewHolder.feedImageView.getDrawable())
+					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView);
+			viewHolder.feedImageView.setVisibility(View.VISIBLE);
+
+			// image 2
+			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(1).getImage())
+					.placeholder(viewHolder.feedImageView2.getDrawable())
+					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView2);
+			viewHolder.feedImageView2.setVisibility(View.VISIBLE);
+			break;
+		case 3:
+			// image 1
+			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(0).getImage())
+					.placeholder(viewHolder.feedImageView.getDrawable())
+					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView);
+			viewHolder.feedImageView.setVisibility(View.VISIBLE);
+
+			Log.d("IM", item.getPhotos().get(1).getImage() + "");
+
+			// image 2
+			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(1).getImage())
+					.placeholder(viewHolder.feedImageView2.getDrawable())
+					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView2);
+			viewHolder.feedImageView2.setVisibility(View.VISIBLE);
+
+			// image 3
+			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(2).getImage())
+					.placeholder(viewHolder.feedImageView3.getDrawable())
+					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView3);
+			viewHolder.feedImageView3.setVisibility(View.VISIBLE);
+			break;
+		case 4:
+			// image 1
+			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(0).getImage())
+					.placeholder(viewHolder.feedImageView.getDrawable())
+					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView);
+			viewHolder.feedImageView.setVisibility(View.VISIBLE);
+
+			// image 2
+			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(1).getImage())
+					.placeholder(viewHolder.feedImageView2.getDrawable())
+					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView2);
+			viewHolder.feedImageView2.setVisibility(View.VISIBLE);
+
+			// image 3
+			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(2).getImage())
+					.placeholder(viewHolder.feedImageView3.getDrawable())
+					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView3);
+			viewHolder.feedImageView3.setVisibility(View.VISIBLE);
+
+			// image 4
+			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(3).getImage())
+					.placeholder(viewHolder.feedImageView4.getDrawable())
+					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView4);
+			viewHolder.feedImageView4.setVisibility(View.VISIBLE);
+			break;
 		}
 
 		return convertView;
@@ -217,7 +294,7 @@ public class AnnounmentAdapter extends BaseAdapter {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		params.put("shop_id", String.valueOf(shop_id));
-		RequestQueue requestQueue =  MonApplication.getInstance().getRequestQueue();
+		RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 				HandleRequest.build_link(HandleRequest.GET_SHOP_INFO, params), params,
 				new Response.Listener<JSONObject>() {
