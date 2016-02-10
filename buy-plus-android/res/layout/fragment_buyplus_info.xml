@@ -329,7 +329,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="Email: hotro@buyplus.vn"
+                    android:text="Email: qhkh.buyplus@gmail.com"
                     android:textColor="@color/title"
                     android:textSize="15dp" />
 
@@ -354,7 +354,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="Điện thoại hỗ trợ: 04 1234 1234"
+                    android:text="Điện thoại hỗ trợ: 0971.854.899 "
                     android:textColor="@color/title"
                     android:textSize="15dp" />
 
