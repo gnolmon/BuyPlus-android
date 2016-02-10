@@ -1,5 +1,6 @@
 package lc.buyplus.activities;
 
+import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
@@ -181,7 +182,29 @@ public class MainActivity extends CoreActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
     }
-
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("destroy","destroy");
+        SharedPreferences pre=getSharedPreferences("buy_pus", 0);
+    	boolean immediate_login = pre.getBoolean("immediate_login", false);
+    	if (immediate_login==false){
+    		LoginManager.getInstance().logOut();
+    	} ;
+    }
+    
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d("stop","stop");
+        SharedPreferences pre=getSharedPreferences("buy_pus", 0);
+    	boolean immediate_login = pre.getBoolean("immediate_login", false);
+    	if (immediate_login==false){
+    		LoginManager.getInstance().logOut();
+    	} ;
+    }
+	
     /**
      * Check the device to make sure it has the Google Play Services APK. If
      * it doesn't, display a dialog that allows users to download the APK from

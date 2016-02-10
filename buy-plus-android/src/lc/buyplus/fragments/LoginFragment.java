@@ -56,6 +56,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -358,6 +359,7 @@ public class LoginFragment extends CoreFragment {
 						DialogMessage dialog = new DialogMessage(mActivity,error.toString());
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
+						LoginManager.getInstance().logOut();
 					}
 				});
 			requestQueue.add(jsObjRequest);

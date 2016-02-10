@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
+import com.facebook.login.LoginManager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -71,6 +72,11 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 				SharedPreferences pre=getContext().getSharedPreferences("buy_pus", 0);
 				SharedPreferences.Editor editor=pre.edit();
 				//editor.clear();
+				boolean immediate_login = pre.getBoolean("immediate_login", false);
+				if (immediate_login==false){
+					LoginManager.getInstance().logOut();
+				} 
+				
 				editor.putBoolean("immediate_login", false);
 				editor.commit();
 				Intent loginActivity = new Intent(c,LoginActivity.class);
