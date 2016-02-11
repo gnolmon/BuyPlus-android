@@ -118,6 +118,7 @@ public class ShopInfoFragment extends CoreFragment {
 				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 				dialog.show();
 			}
+			break;
 			
 		case R.id.tvName:
 			Intent mainActivity = new Intent(mActivity,MapShopActivity.class);
@@ -128,6 +129,7 @@ public class ShopInfoFragment extends CoreFragment {
 				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 				dialog.show();
 			}
+			break;
 		}
 	}
 
