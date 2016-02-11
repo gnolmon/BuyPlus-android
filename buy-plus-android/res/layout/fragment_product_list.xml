@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black" >
+
+    <RelativeLayout
+        android:id="@+id/rlshop"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/feed_item_padding_left_right" >
+
+        <lc.buyplus.customizes.RoundedImageView
+            android:id="@+id/avaStore"
+            android:layout_width="@dimen/feed_item_profile_pic"
+            android:layout_height="@dimen/feed_item_profile_pic"
+            android:layout_alignParentLeft="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/square" >
+        </lc.buyplus.customizes.RoundedImageView>
+
+        
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/avaStore"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/padding_standard" >
+
+            <TextView
+                android:id="@+id/tvNameStore"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:text="JackLand"
+                android:textColor="@color/actionbar"
+                android:textSize="@dimen/feed_item_profile_name" />
+
+            <TextView
+                android:id="@+id/tvTimestamp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="10:00"
+                android:textColor="@color/white"
+                android:textSize="@dimen/feed_item_timestamp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnClose"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/close" />
+        <View
+            android:id="@+id/devide"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white"
+            android:layout_below="@id/avaStore"
+            android:visibility="visible" />
+    </RelativeLayout>
+    
+    
+
+    <ListView
+        android:id="@+id/listproduct"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/rlshop"
+        android:layout_centerVertical="true"
+        android:divider="@color/white"
+        android:dividerHeight="1dp" >
+    </ListView>
+
+</RelativeLayout>

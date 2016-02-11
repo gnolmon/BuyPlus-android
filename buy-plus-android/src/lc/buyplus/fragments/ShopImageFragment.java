@@ -13,7 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -129,15 +129,15 @@ public class ShopImageFragment extends CoreFragment {
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 							}else{
-								ArrayList<Photo> PhotosList = new ArrayList<Photo>();
+							
 								JSONArray data_aray = response.getJSONArray("data");
 								for (int i = 0; i < data_aray.length(); i++) {
 									Photo photo = new Photo((JSONObject) data_aray.get(i));
-									PhotosList.add(photo);
+									Store.PhotosList.add(photo);
 		                        }
 						        InitilizeGridLayout();
 						        
-						        photoAdapter = new ShopPhotoAdapter(inflaterActivity, PhotosList, columnWidth);
+						        photoAdapter = new ShopPhotoAdapter(inflaterActivity, Store.PhotosList, columnWidth);
 						        gridView.setAdapter(photoAdapter);
 							}
 						} catch (JSONException e) {
@@ -207,6 +207,7 @@ public class ShopImageFragment extends CoreFragment {
 		gridView.setHorizontalSpacing((int) padding);
 		gridView.setVerticalSpacing((int) padding);
 	}
+	@SuppressLint("NewApi")
 	public int getScreenWidth(Context context) {
         int columnWidth;
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);

@@ -6,12 +6,12 @@ import java.util.List;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import lc.buyplus.R;
-import lc.buyplus.activities.ProductListActivity;
 import lc.buyplus.activities.ProductShowActivity;
 import lc.buyplus.adapter.AnnounmentAdapter.ViewHolder;
 import lc.buyplus.application.MonApplication;
@@ -29,22 +28,21 @@ import lc.buyplus.customizes.RoundedViewImage;
 import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.models.Photo;
 
-public class ShopPhotoAdapter extends BaseAdapter {
+public class ProductListAdapter extends BaseAdapter {
 
 	private LayoutInflater inflaterActivity;
 	private LayoutInflater inflater;
 	private List<Photo> PhotosList = new ArrayList<Photo>();
-	private int imageWidth;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
 
-	public ShopPhotoAdapter(LayoutInflater inflaterActivity, List<Photo> PhotosList, int imageWidth) {
+	public ProductListAdapter(LayoutInflater inflaterActivity, List<Photo> PhotosList) {
 		this.inflaterActivity = inflaterActivity;
 		this.PhotosList = PhotosList;
-		this.imageWidth = imageWidth;
 	}
 
 	static class ViewHolder {
-		public NetworkImageView thumbNail;
+		public NetworkImageView imProduct;
+		public TextView tvpoint, tvprice, tvdiscount, tvprice_after;
 	}
 
 	@Override
@@ -68,10 +66,14 @@ public class ShopPhotoAdapter extends BaseAdapter {
 		if (inflater == null)
 			inflater = inflaterActivity;
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.item_store_photo, null);
+			convertView = inflater.inflate(R.layout.item_product_list, null);
 			viewHolder = new ViewHolder();
-			// Grid thumbnail image view
-			viewHolder.thumbNail = (NetworkImageView) convertView.findViewById(R.id.thumbnail);
+			
+			viewHolder.imProduct = (NetworkImageView) convertView.findViewById(R.id.imProduct);
+			viewHolder.tvpoint = (TextView) convertView.findViewById(R.id.tvpoint);
+			viewHolder.tvprice = (TextView) convertView.findViewById(R.id.tvprice);
+			viewHolder.tvprice_after = (TextView) convertView.findViewById(R.id.tvprice_after);
+
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
@@ -80,27 +82,18 @@ public class ShopPhotoAdapter extends BaseAdapter {
 		if (imageLoader == null)
 			imageLoader = MonApplication.getInstance().getImageLoader();
 		Photo p = PhotosList.get(position);
+		
+		viewHolder.imProduct.setImageUrl(p.getImage(),
+				imageLoader);
+		viewHolder.tvpoint.setText("Điểm số: " + p.getPoint());
+		viewHolder.tvprice.setText("Giá gốc: " + p.getPrice());
+		viewHolder.tvprice_after.setText("Giá khuyến mãi: " + p.getPrice_after_discount());
 
-		viewHolder.thumbNail.setScaleType(ImageView.ScaleType.CENTER_CROP);
-		viewHolder.thumbNail.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageWidth));
-		viewHolder.thumbNail.setImageUrl(p.getImage(), imageLoader);
-
-		//final int pos = position;
-		viewHolder.thumbNail.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(CanvasFragment.mActivity, ProductListActivity.class);
-//				Bundle location = new Bundle();
-//				location.putInt("location", pos);
-//				intent.putExtras(location);
-				Log.d("PR", "step1");
-				CanvasFragment.mActivity.startActivity(intent);
-				Log.d("PR", "step11");
-			}
-		});
-		// Glide.with(CanvasFragment.mActivity).load(p.getImage()).centerCrop()
-		// .placeholder(R.drawable.loading_icon).crossFade().into(viewHolder.thumbNail);
+//		Glide.with(CanvasFragment.mActivity).load(p.getImage())
+//		.placeholder(viewHolder.imProduct.getDrawable()).centerCrop()
+//		.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.imProduct);
+		
+		
 		return convertView;
 	}
 

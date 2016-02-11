@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_standard" >
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/imProduct"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:scaleType="fitXY" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/imProduct"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tvpoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Diem so: 200"
+            android:textColor="@color/actionbar"
+            android:textSize="@dimen/feed_item_profile_name" />
+
+        <TextView
+            android:id="@+id/tvprice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvpoint"
+            android:text="Gia goc: 20000"
+            android:textColor="@color/white"
+            android:textSize="@dimen/feed_item_timestamp" />
+
+        <TextView
+            android:id="@+id/tvprice_after"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvprice"
+            android:text="Gia khuyen mai: 16000"
+            android:textColor="@color/white"
+            android:textSize="@dimen/feed_item_timestamp" />
+    </RelativeLayout>
+
+</RelativeLayout>

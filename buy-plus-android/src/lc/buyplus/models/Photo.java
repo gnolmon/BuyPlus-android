@@ -9,7 +9,45 @@ public class Photo {
 	public int active;
 	public String caption;
 	public String image;
+	public String point;
+	public String price;
+	public String discount;
+	public String price_after_discount;
 	
+	
+	
+	public String getPoint() {
+		return point;
+	}
+
+	public void setPoint(String point) {
+		this.point = point;
+	}
+
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
+	public String getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(String discount) {
+		this.discount = discount;
+	}
+
+	public String getPrice_after_discount() {
+		return price_after_discount;
+	}
+
+	public void setPrice_after_discount(String price_after_discount) {
+		this.price_after_discount = price_after_discount;
+	}
+
 	public Photo() {
 		super();
 	}
@@ -28,6 +66,18 @@ public class Photo {
 	        }
 			if (data.optString ("caption") != "") {
 				caption = data.getString("caption");
+	        }
+			if (data.optString ("point") != "") {
+				point = data.getString("point");
+	        }
+			if (data.optString ("price") != "") {
+				price = data.getString("price");
+	        }
+			if (data.optString ("discount") != "") {
+				discount = data.getString("discount");
+	        }
+			if (data.optString ("price_after_discount") != "") {
+				price_after_discount = data.getString("price_after_discount");
 	        }
 		} catch (NumberFormatException e) {
 			e.printStackTrace();

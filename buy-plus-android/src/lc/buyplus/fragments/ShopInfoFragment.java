@@ -98,7 +98,7 @@ public class ShopInfoFragment extends CoreFragment {
 			}
 			break;
 		case R.id.tvFb:
-			uri = Uri.parse("https://www.facebook.com/groups/867716866646587/");
+			uri = Uri.parse("https://www.facebook.com/" + Store.get_current_shop().getFacebook_id());
 			returnIntent = new Intent(Intent.ACTION_VIEW, uri);
 			try {
 				startActivity(returnIntent);
@@ -109,7 +109,7 @@ public class ShopInfoFragment extends CoreFragment {
 			}
 			break;
 		case R.id.tvWeb:
-			uri = Uri.parse("https://buyplus.vn");
+			uri = Uri.parse("https://" + Store.get_current_shop().getWebsite());
 			returnIntent = new Intent(Intent.ACTION_VIEW, uri);
 			try {
 				startActivity(returnIntent);

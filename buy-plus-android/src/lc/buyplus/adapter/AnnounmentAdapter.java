@@ -255,7 +255,7 @@ public class AnnounmentAdapter extends BaseAdapter {
 
 			// image 3
 			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(2).getImage())
-					.placeholder(viewHolder.feedImageView3.getDrawable())
+					.placeholder(viewHolder.feedImageView3.getDrawable()).centerCrop()
 					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView3);
 			viewHolder.feedImageView3.setVisibility(View.VISIBLE);
 			break;
