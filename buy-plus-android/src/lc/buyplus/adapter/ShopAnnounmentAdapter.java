@@ -104,7 +104,7 @@ public class ShopAnnounmentAdapter extends BaseAdapter {
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT-7"));
 		String formattedDate = sdf.format(date);
 		
-		CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(Long.parseLong(item.getCreated_time()),
+		CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(1000 * Long.parseLong(item.getCreated_time()),
 				System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
 		
 		viewHolder.timestamp.setText(timeAgo);

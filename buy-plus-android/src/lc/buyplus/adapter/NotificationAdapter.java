@@ -113,8 +113,9 @@ public class NotificationAdapter extends BaseAdapter {
 			imageLoader = MonApplication.getInstance().getImageLoader();
 		Notification item = notiList.get(position);
 
-		CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(Long.parseLong(item.getCreated_time()),
+		CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(1000 * Long.parseLong(item.getCreated_time()),
 				System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
+		
 		viewHolder.noti.setText(item.getMessage());
 		viewHolder.timeStamp.setText(timeAgo);
 
