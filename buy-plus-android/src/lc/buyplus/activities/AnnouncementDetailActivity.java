@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import lc.buyplus.R;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.fragments.AnnouncementDetailFragment;
+import lc.buyplus.fragments.HomeAnnounmentFragment;
 import lc.buyplus.fragments.SettingTermFragment;
 
 public class AnnouncementDetailActivity extends CoreActivity {
@@ -59,6 +60,7 @@ public class AnnouncementDetailActivity extends CoreActivity {
 
 	@Override
 	public void onBackPressed() {
+		HomeAnnounmentFragment.listView.setEnabled(true);
 		finish();
 		// moveTaskToBack(true);
 	}

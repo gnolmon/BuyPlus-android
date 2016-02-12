@@ -228,20 +228,20 @@ public class AnnounmentAdapter extends BaseAdapter {
 		case 2:
 			// image 1
 			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(0).getImage())
-					.placeholder(viewHolder.feedImageView.getDrawable())
+					.placeholder(viewHolder.feedImageView.getDrawable()).centerCrop()
 					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView);
 			viewHolder.feedImageView.setVisibility(View.VISIBLE);
 
 			// image 2
 			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(1).getImage())
-					.placeholder(viewHolder.feedImageView2.getDrawable())
+					.placeholder(viewHolder.feedImageView2.getDrawable()).centerCrop()
 					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView2);
 			viewHolder.feedImageView2.setVisibility(View.VISIBLE);
 			break;
 		case 3:
 			// image 1
 			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(0).getImage())
-					.placeholder(viewHolder.feedImageView.getDrawable())
+					.placeholder(viewHolder.feedImageView.getDrawable()).centerCrop()
 					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView);
 			viewHolder.feedImageView.setVisibility(View.VISIBLE);
 
@@ -249,7 +249,7 @@ public class AnnounmentAdapter extends BaseAdapter {
 
 			// image 2
 			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(1).getImage())
-					.placeholder(viewHolder.feedImageView2.getDrawable())
+					.placeholder(viewHolder.feedImageView2.getDrawable()).centerCrop()
 					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView2);
 			viewHolder.feedImageView2.setVisibility(View.VISIBLE);
 
@@ -262,25 +262,25 @@ public class AnnounmentAdapter extends BaseAdapter {
 		case 4:
 			// image 1
 			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(0).getImage())
-					.placeholder(viewHolder.feedImageView.getDrawable())
+					.placeholder(viewHolder.feedImageView.getDrawable()).centerCrop()
 					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView);
 			viewHolder.feedImageView.setVisibility(View.VISIBLE);
 
 			// image 2
 			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(1).getImage())
-					.placeholder(viewHolder.feedImageView2.getDrawable())
+					.placeholder(viewHolder.feedImageView2.getDrawable()).centerCrop()
 					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView2);
 			viewHolder.feedImageView2.setVisibility(View.VISIBLE);
 
 			// image 3
 			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(2).getImage())
-					.placeholder(viewHolder.feedImageView3.getDrawable())
+					.placeholder(viewHolder.feedImageView3.getDrawable()).centerCrop()
 					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView3);
 			viewHolder.feedImageView3.setVisibility(View.VISIBLE);
 
 			// image 4
 			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(3).getImage())
-					.placeholder(viewHolder.feedImageView4.getDrawable())
+					.placeholder(viewHolder.feedImageView4.getDrawable()).centerCrop()
 					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView4);
 			viewHolder.feedImageView4.setVisibility(View.VISIBLE);
 			break;
