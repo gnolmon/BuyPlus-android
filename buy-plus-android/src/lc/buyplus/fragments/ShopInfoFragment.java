@@ -17,8 +17,11 @@ import com.android.volley.toolbox.Volley;
 
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -76,7 +79,7 @@ public class ShopInfoFragment extends CoreFragment {
 		initViews(view);
 		initModels();
 		initAnimations();
-		//api_get_shop_info(Store.current_shop_id);
+		// api_get_shop_info(Store.current_shop_id);
 		return view;
 	}
 
@@ -88,49 +91,69 @@ public class ShopInfoFragment extends CoreFragment {
 		switch (view.getId()) {
 		case R.id.btnAgreeTerm:
 			if (isJoin) {
-				CustomDialogClass dialog = new CustomDialogClass(mActivity,"Bạn có muốn ra khỏi Shop ?", 2);
+				CustomDialogClass dialog = new CustomDialogClass(mActivity, "Bạn có muốn ra khỏi Shop ?", 2);
 				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 				dialog.show();
 			} else {
-				CustomDialogClass dialog = new CustomDialogClass(mActivity,"Bạn có muốn tham gia shop ?", 2);
+				CustomDialogClass dialog = new CustomDialogClass(mActivity, "Bạn có muốn tham gia shop ?", 2);
 				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 				dialog.show();
 			}
 			break;
 		case R.id.tvFb:
-			uri = Uri.parse("https://www.facebook.com/" + Store.get_current_shop().getFacebook_id());
-			returnIntent = new Intent(Intent.ACTION_VIEW, uri);
-			try {
-				startActivity(returnIntent);
-			} catch (ActivityNotFoundException e) {
-				DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
-				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-				dialog.show();
-			}
+			String url = "https://www.facebook.com/" + Store.get_current_shop().getFacebook_id();
+			startActivity(newFacebookIntent(mActivity.getPackageManager(), url));
 			break;
 		case R.id.tvWeb:
-			uri = Uri.parse("https://" + Store.get_current_shop().getWebsite());
+			uri = Uri.parse("http://" + Store.get_current_shop().getWebsite());
 			returnIntent = new Intent(Intent.ACTION_VIEW, uri);
 			try {
 				startActivity(returnIntent);
 			} catch (ActivityNotFoundException e) {
-				DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+				DialogMessage dialog = new DialogMessage(mActivity,
+						mActivity.getResources().getString(R.string.connect_problem));
 				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 				dialog.show();
 			}
 			break;
-			
+
+		case R.id.tvPhone:
+			try {
+				Intent callIntent = new Intent(Intent.ACTION_CALL);
+				callIntent.setData(Uri.parse("tel:" + tvPhone.getText().toString()));
+				startActivity(callIntent);
+			} catch (ActivityNotFoundException e) {
+				DialogMessage dialog = new DialogMessage(mActivity,
+						mActivity.getResources().getString(R.string.connect_call));
+				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+				dialog.show();
+			}
+			break;
+
 		case R.id.tvName:
-			Intent mainActivity = new Intent(mActivity,MapShopActivity.class);
+			Intent mainActivity = new Intent(mActivity, MapShopActivity.class);
 			try {
 				startActivity(mainActivity);
 			} catch (ActivityNotFoundException e) {
-				DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+				DialogMessage dialog = new DialogMessage(mActivity,
+						mActivity.getResources().getString(R.string.connect_problem));
 				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 				dialog.show();
 			}
 			break;
 		}
+	}
+
+	public static Intent newFacebookIntent(PackageManager pm, String url) {
+		Uri uri = Uri.parse(url);
+		try {
+			ApplicationInfo applicationInfo = pm.getApplicationInfo("com.facebook.katana", 0);
+			if (applicationInfo.enabled) {
+				uri = Uri.parse("fb://facewebmodal/f?href=" + url);
+			}
+		} catch (PackageManager.NameNotFoundException ignored) {
+		}
+		return new Intent(Intent.ACTION_VIEW, uri);
 	}
 
 	protected void initModels() {
@@ -146,24 +169,22 @@ public class ShopInfoFragment extends CoreFragment {
 		imbannerStore = (RoundedImageView) v.findViewById(R.id.imbannerStore);
 		imbannerStore.setImageUrl(Store.current_shop.getImage_thumbnail(), imageLoader);
 		imbannerStore.buildDrawingCache();
-		
+
 		if (imbannerStore.getWidth() > 0) {
 			BitmapDrawable drawable = (BitmapDrawable) imbannerStore.getDrawable();
 			Bitmap bmap = drawable.getBitmap();
-			//blur(bmap, rlbanner);
+			// blur(bmap, rlbanner);
 		} else {
-			imbannerStore.getViewTreeObserver()
-					.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+			imbannerStore.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 				@Override
 				public void onGlobalLayout() {
 					BitmapDrawable drawable = (BitmapDrawable) imbannerStore.getDrawable();
 					Bitmap bmap = drawable.getBitmap();
-					//blur(bmap, rlbanner);
+					// blur(bmap, rlbanner);
 				}
 			});
 		}
-		
-		
+
 		rlbanner = (LinearLayout) v.findViewById(R.id.rlbanner);
 		tvName = (TextView) v.findViewById(R.id.tvName);
 		tvField = (TextView) v.findViewById(R.id.tvField);
@@ -173,8 +194,10 @@ public class ShopInfoFragment extends CoreFragment {
 		tvWeb.setOnClickListener(this);
 		tvFb.setOnClickListener(this);
 		tvName.setOnClickListener(this);
-		
-		if ((Store.current_shop.current_customer_shop_id == null) || (Store.current_shop.current_customer_shop_id == "")) {
+		tvPhone.setOnClickListener(this);
+
+		if ((Store.current_shop.current_customer_shop_id == null)
+				|| (Store.current_shop.current_customer_shop_id == "")) {
 			join_leave.setText("Tham gia");
 			join_leave.setBackground(getResources().getDrawable(R.drawable.round_button_gray));
 			isJoin = false;
@@ -184,27 +207,27 @@ public class ShopInfoFragment extends CoreFragment {
 			isJoin = true;
 		}
 
-		tvName.setHint(Store.current_shop.getAddress());
-		tvField.setHint(Store.current_shop.getName());
-		tvPhone.setHint(Store.current_shop.getPhone());
-		tvWeb.setHint(Store.current_shop.getWebsite());
-		tvFb.setHint(String.valueOf(Store.current_shop.getFacebook_id()));
+		tvName.setText(Store.current_shop.getAddress());
+		Log.d("WEB", Store.current_shop.getAddress());
+		tvField.setText(Store.current_shop.getName());
+		tvPhone.setText(Store.current_shop.getPhone());
+		tvWeb.setText(Store.current_shop.getWebsite());
+		tvFb.setText(String.valueOf(Store.current_shop.getFacebook_id()));
 
 		imbannerStore.setImageUrl(Store.current_shop.getImage_thumbnail(), imageLoader);
 		imbannerStore.buildDrawingCache();
-		
+
 		if (imbannerStore.getWidth() > 0) {
 			BitmapDrawable drawable = (BitmapDrawable) imbannerStore.getDrawable();
 			Bitmap bmap = drawable.getBitmap();
-			//blur(bmap, rlbanner);
+			// blur(bmap, rlbanner);
 		} else {
-			imbannerStore.getViewTreeObserver()
-					.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+			imbannerStore.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 				@Override
 				public void onGlobalLayout() {
 					BitmapDrawable drawable = (BitmapDrawable) imbannerStore.getDrawable();
 					Bitmap bmap = drawable.getBitmap();
-					//blur(bmap, rlbanner);
+					// blur(bmap, rlbanner);
 				}
 			});
 		}
@@ -229,28 +252,28 @@ public class ShopInfoFragment extends CoreFragment {
 					public void onResponse(JSONObject response) {
 						Log.d("api_get_shop_info", response.toString());
 						try {
-							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.end_session));
+							if (Integer.parseInt(response.getString("error")) == 2) {
+								DialogMessage dialog = new DialogMessage(mActivity,
+										mActivity.getResources().getString(R.string.end_session));
 
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
-								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
-								SharedPreferences.Editor editor=pre.edit();
-								//editor.clear();
+								SharedPreferences pre = getmContext().getSharedPreferences("buy_pus", 0);
+								SharedPreferences.Editor editor = pre.edit();
+								// editor.clear();
 								editor.putBoolean("immediate_login", false);
 								editor.commit();
-								Intent loginActivity = new Intent(mActivity,LoginActivity.class);
-							    startActivity(loginActivity);
-							    mActivity.finish();
+								Intent loginActivity = new Intent(mActivity, LoginActivity.class);
+								startActivity(loginActivity);
+								mActivity.finish();
 
-							}else
-							if (Integer.parseInt(response.getString("error"))==1){
-								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
+							} else if (Integer.parseInt(response.getString("error")) == 1) {
+								DialogMessage dialog = new DialogMessage(mActivity, response.getString("message"));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
-							}else{
+							} else {
 								shop = new Shop(response.getJSONObject("data"));
-							
+
 							}
 						} catch (JSONException e) {
 							e.printStackTrace();
@@ -259,7 +282,8 @@ public class ShopInfoFragment extends CoreFragment {
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+						DialogMessage dialog = new DialogMessage(mActivity,
+								mActivity.getResources().getString(R.string.connect_problem));
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
 					}
@@ -293,15 +317,12 @@ public class ShopInfoFragment extends CoreFragment {
 
 	}
 
-	
-
 	@SuppressLint("NewApi")
 	private void blur(Bitmap bkg, View view) {
 		long startMs = System.currentTimeMillis();
 		int radius = 20;
 
-		Bitmap overlay = Bitmap.createScaledBitmap(bkg, (int) (view.getWidth()), (int) (view.getHeight()),
-				true);
+		Bitmap overlay = Bitmap.createScaledBitmap(bkg, (int) (view.getWidth()), (int) (view.getHeight()), true);
 		Canvas canvas = new Canvas(overlay);
 		canvas.translate(-view.getLeft(), -view.getTop());
 		canvas.drawBitmap(overlay, 0, 0, null);

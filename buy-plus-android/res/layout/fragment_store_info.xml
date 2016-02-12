@@ -87,8 +87,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="@dimen/padding_shopinfo"
-                android:hint="91 Chùa Láng, Đống Đa, Hà Nội "
-                android:textColor="@color/white"
+                android:text="91 Chùa Láng, Đống Đa, Hà Nội "
+                android:textColor="@color/title"
                 android:textSize="15dp" />
         </LinearLayout>
 
@@ -121,8 +121,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="@dimen/padding_shopinfo"
-                android:hint="thời trang nam"
-                android:textColor="@color/white"
+                android:text="thời trang nam"
+                android:textColor="@color/title"
                 android:textSize="15dp" />
         </LinearLayout>
 
@@ -155,8 +155,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="@dimen/padding_shopinfo"
-                android:hint="0906 8888 8888"
-                android:textColor="@color/white"
+                android:text="0906 8888 8888"
+                android:textColor="@color/title"
                 android:textSize="15dp" />
         </LinearLayout>
 
@@ -189,8 +189,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="@dimen/padding_shopinfo"
-                android:hint="www.jacklane.com.vn"
-                android:textColor="@color/white"
+                android:text="www.jacklane.com.vn"
+                android:textColor="@color/title"
                 android:textSize="15dp" />
         </LinearLayout>
 
@@ -223,8 +223,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="@dimen/padding_shopinfo"
-                android:hint="fb.com/jacklane"
-                android:textColor="@color/white"
+                android:text="fb.com/jacklane"
+                android:textColor="@color/title"
                 android:textSize="15dp" />
         </LinearLayout>
 
