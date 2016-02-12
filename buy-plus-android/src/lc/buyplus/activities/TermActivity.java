@@ -24,8 +24,7 @@ public class TermActivity extends CoreActivity {
 		initListeners();
 		initAnimations();
 		FragmentManager mFragmentManager = getSupportFragmentManager();
-		mFragmentManager.beginTransaction()
-				.add(R.id.canvas, SettingTermFragment .getInstance(TermActivity.this))
+		mFragmentManager.beginTransaction().add(R.id.canvas, SettingTermFragment.getInstance(TermActivity.this))
 				.commit();
 	}
 
@@ -56,9 +55,10 @@ public class TermActivity extends CoreActivity {
 		Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.canvas);
 		fragment.onActivityResult(requestCode, resultCode, data);
 	}
+
 	@Override
 	public void onBackPressed() {
 		finish();
-		//moveTaskToBack(true);
+		// moveTaskToBack(true);
 	}
 }
