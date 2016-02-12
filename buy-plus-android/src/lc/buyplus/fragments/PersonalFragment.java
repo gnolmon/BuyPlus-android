@@ -112,7 +112,6 @@ public class PersonalFragment extends CoreFragment {
 		} catch (WriterException e) {
 			e.printStackTrace();
 		}
-		new LongOperation().execute("");
 		
 	}
 
@@ -157,38 +156,4 @@ public class PersonalFragment extends CoreFragment {
 		view.setBackground(new BitmapDrawable(getResources(), overlay));
 	}
 	
-	private class LongOperation extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-        	if (imAvaUser.getWidth() > 0) {
-    			BitmapDrawable drawable = (BitmapDrawable) imAvaUser.getDrawable();
-    			Bitmap bmap = drawable.getBitmap();
-    			//blur(bmap, rlBackground);
-    		} else {
-    			imAvaUser.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-    				@Override
-    				public void onGlobalLayout() {
-    					BitmapDrawable drawable = (BitmapDrawable) imAvaUser.getDrawable();
-    					Bitmap bmap = drawable.getBitmap();
-    					//blur(bmap, rlBackground);
-    				}
-    			});
-    		}
-        	
-        	
-            return "Executed";
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-
-        }
-
-        @Override
-        protected void onPreExecute() {}
-
-        @Override
-        protected void onProgressUpdate(Void... values) {}
-    }
 }

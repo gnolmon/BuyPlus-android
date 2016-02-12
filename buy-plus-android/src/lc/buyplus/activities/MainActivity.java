@@ -1,6 +1,5 @@
 package lc.buyplus.activities;
 
-import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
@@ -15,12 +14,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.fragments.SplashFragment;
-import lc.buyplus.gcm.*;
+import lc.buyplus.gcm.QuickstartPreferences;
+import lc.buyplus.gcm.RegistrationIntentService;
 
 public class MainActivity extends CoreActivity {
 	
@@ -183,27 +182,7 @@ public class MainActivity extends CoreActivity {
         super.onPause();
     }
     
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d("destroy","destroy");
-        SharedPreferences pre=getSharedPreferences("buy_pus", 0);
-    	boolean immediate_login = pre.getBoolean("immediate_login", false);
-    	if (immediate_login==false){
-    		LoginManager.getInstance().logOut();
-    	} ;
-    }
     
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d("stop","stop");
-        SharedPreferences pre=getSharedPreferences("buy_pus", 0);
-    	boolean immediate_login = pre.getBoolean("immediate_login", false);
-    	if (immediate_login==false){
-    		LoginManager.getInstance().logOut();
-    	} ;
-    }
 	
     /**
      * Check the device to make sure it has the Google Play Services APK. If
