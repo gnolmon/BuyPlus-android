@@ -81,6 +81,7 @@ public class AnnouncementDetailFragment extends CoreFragment {
 		switch (view.getId()) {
 		case R.id.fragment_canvas_back:
 			HomeAnnounmentFragment.listView.setEnabled(true);
+			ShopAnnounmentFragment.listView.setEnabled(true);
 			mActivity.finish();
 			break;
 		case R.id.fragment_canvas_home_tab:

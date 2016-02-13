@@ -49,7 +49,7 @@ import lc.buyplus.models.Notification;
 import lc.buyplus.models.Shop;
 import lc.buyplus.models.Store;
 public class ShopAnnounmentFragment extends CoreFragment implements OnRefreshListener {
-	private ListView listView;
+	public static ListView listView;
 	private ShopAnnounmentAdapter newsAdapter;
 	private LayoutInflater inflaterActivity;
 	private ArrayList<Announcement> ShopAnnouncementsList = new ArrayList<Announcement>();

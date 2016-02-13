@@ -9,6 +9,7 @@ import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.fragments.AnnouncementDetailFragment;
 import lc.buyplus.fragments.HomeAnnounmentFragment;
 import lc.buyplus.fragments.SettingTermFragment;
+import lc.buyplus.fragments.ShopAnnounmentFragment;
 
 public class AnnouncementDetailActivity extends CoreActivity {
 
@@ -37,7 +38,7 @@ public class AnnouncementDetailActivity extends CoreActivity {
 
 	@Override
 	public void initModels() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method st ub
 	}
 
 	@Override
@@ -61,6 +62,7 @@ public class AnnouncementDetailActivity extends CoreActivity {
 	@Override
 	public void onBackPressed() {
 		HomeAnnounmentFragment.listView.setEnabled(true);
+		ShopAnnounmentFragment.listView.setEnabled(true);
 		finish();
 		// moveTaskToBack(true);
 	}
