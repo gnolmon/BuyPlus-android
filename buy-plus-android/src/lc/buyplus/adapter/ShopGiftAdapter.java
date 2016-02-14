@@ -100,7 +100,7 @@ public class ShopGiftAdapter extends BaseAdapter {
 
 		viewHolder.storeName.setText("" + item.getName());
 		viewHolder.tvContentRedeem.setText("" + item.getDescription());
-		viewHolder.tvPoint.setText("Diem: " + item.getPoint());
+		viewHolder.tvPoint.setText("Điểm: " + item.getPoint());
 
 		// name.setText(item.getName());
 

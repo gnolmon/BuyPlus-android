@@ -9,6 +9,7 @@ public class Store {
 	public static ArrayList<Notification> NotificationsList = new ArrayList<Notification>();
 	public static ArrayList<Shop> MyShopsList = new ArrayList<Shop>();
 	public static ArrayList<Photo> PhotosList = new ArrayList<Photo>();
+	
 	public static ArrayList<FacebookFriend> FacebookFriendsList = new ArrayList<FacebookFriend>();
 	public static UserAccount user;
 	
@@ -17,6 +18,7 @@ public class Store {
 	public static int current_shop_id; 
 	public static Shop current_shop; 
 	public static Announcement current_announcement; 
+	public static Gift current_gift; 
 	public static Notification current_notification; 
 	public static String[] noti_params;
 	public static String Shop_Search_param = "";

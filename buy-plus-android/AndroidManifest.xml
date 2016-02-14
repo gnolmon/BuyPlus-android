@@ -126,6 +126,11 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="lc.buyplus.activities.RedeemDetailActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="lc.buyplus.activities.MapShopActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >

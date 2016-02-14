@@ -26,10 +26,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView.OnItemClickListener;
 import lc.buyplus.R;
+import lc.buyplus.activities.AnnouncementDetailActivity;
 import lc.buyplus.activities.LoginActivity;
+import lc.buyplus.activities.RedeemDetailActivity;
 import lc.buyplus.activities.ShopInfoActivity;
 import lc.buyplus.adapter.OnLoadMoreListener;
 import lc.buyplus.adapter.ShopFriendAdapter;
@@ -122,6 +126,13 @@ public class ShopGiftFragment extends CoreFragment implements OnRefreshListener 
 		    }
 		 });
 		
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Store.current_gift = (Gift) giftAdapter.getItem(position);
+				Intent mainActivity = new Intent(mActivity, RedeemDetailActivity.class);
+				startActivity(mainActivity);
+			}
+		});
 		
 	}
 

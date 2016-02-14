@@ -59,31 +59,31 @@ public class HomeAnnounmentFragment extends CoreFragment implements OnRefreshLis
 	public static Fragment homeFrg;
 	private int old_id = 0;
 	public static int current_last_id = 0;
-	private boolean isLoading,reload;
+	private boolean isLoading, reload;
 	public static String type = "all";
 	private SwipeRefreshLayout swipeView;
 	View footer;
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_announment, container, false);
 		footer = inflater.inflate(R.layout.loadmore, null);
 		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swipe_view);
 		swipeView.setOnRefreshListener(this);
-	    swipeView.setColorSchemeColors(Color.GREEN, Color.GREEN, Color.GREEN, Color.GREEN);
-	    // swipeView.setDistanceToTriggerSync(20);// in dips
-	    //swipeView.setSize(SwipeRefreshLayout.DEFAULT);// LARGE also can be used
+		swipeView.setColorSchemeColors(Color.GREEN, Color.GREEN, Color.GREEN, Color.GREEN);
+		// swipeView.setDistanceToTriggerSync(20);// in dips
+		// swipeView.setSize(SwipeRefreshLayout.DEFAULT);// LARGE also can be
+		// used
 		listView = (ListView) view.findViewById(R.id.listAnnounment);
 		inflaterActivity = inflater;
 		initViews(view);
 		initModels();
 		initAnimations();
 		mFragmentManager = getFragmentManager();
-		
-		
+
 		return view;
 	}
-	
+
 	@Override
 	public void onRefresh() {
 		reload = true;
@@ -108,47 +108,47 @@ public class HomeAnnounmentFragment extends CoreFragment implements OnRefreshLis
 		homeFrg = this.getTargetFragment();
 		newsAdapter = new AnnounmentAdapter(Store.AnnouncementsList, inflaterActivity, mActivity, mFragmentManager);
 		listView.setAdapter(newsAdapter);
-		//api_get_all_announcements(0, Store.limit, type, 0, 0);
-		
+		// api_get_all_announcements(0, Store.limit, type, 0, 0);
+
 		listView.setOnItemClickListener(new OnItemClickListener() {
-		      public void onItemClick(AdapterView<?> parent, View view,
-		          int position, long id) {
-		    	  listView.setEnabled(false);
-		    	  Store.current_announcement = (Announcement)newsAdapter.getItem(position);
-		    	  Intent mainActivity = new Intent(mActivity,AnnouncementDetailActivity.class);
-		           startActivity(mainActivity);
-		      }
-	    });
-		
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				listView.setEnabled(false);
+				Store.current_announcement = (Announcement) newsAdapter.getItem(position);
+				Intent mainActivity = new Intent(mActivity, AnnouncementDetailActivity.class);
+				startActivity(mainActivity);
+			}
+		});
+
 		newsAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-            	listView.addFooterView(footer);
-            	api_get_all_announcements(current_last_id, Store.limit, type, 0, 0);
-            }
-        });
-		
-		listView.setOnScrollListener(new OnScrollListener(){
-		    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-		    	
-		    	if (!isLoading && firstVisibleItem + visibleItemCount == totalItemCount){
-		    		isLoading = true;
-		    		newsAdapter.getOnLoadMoreListener().onLoadMore();	
-		    	}
-		    	 
-		    }
-		    public void onScrollStateChanged(AbsListView view, int scrollState) {
-		      // TODO Auto-generated method stub
-		    }
-		 });
-	
+			@Override
+			public void onLoadMore() {
+				listView.addFooterView(footer);
+				api_get_all_announcements(current_last_id, Store.limit, type, 0, 0);
+			}
+		});
+
+		listView.setOnScrollListener(new OnScrollListener() {
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+				if (!isLoading && firstVisibleItem + visibleItemCount == totalItemCount) {
+					isLoading = true;
+					newsAdapter.getOnLoadMoreListener().onLoadMore();
+				}
+
+			}
+
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				// TODO Auto-generated method stub
+			}
+		});
+
 	}
 
 	@Override
 	protected void initAnimations() {
 
 	}
-	
+
 	public void api_get_all_announcements(int last_id, int limit, String type, int mode, int search) {
 
 		Map<String, String> params = new HashMap<String, String>();
@@ -165,27 +165,28 @@ public class HomeAnnounmentFragment extends CoreFragment implements OnRefreshLis
 					@Override
 					public void onResponse(JSONObject response) {
 						try {
-							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.end_session));
+							if (Integer.parseInt(response.getString("error")) == 2) {
+								DialogMessage dialog = new DialogMessage(mActivity,
+										mActivity.getResources().getString(R.string.end_session));
 
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
-								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
-								SharedPreferences.Editor editor=pre.edit();
-								//editor.clear();
+								SharedPreferences pre = getmContext().getSharedPreferences("buy_pus", 0);
+								SharedPreferences.Editor editor = pre.edit();
+								// editor.clear();
 								editor.putBoolean("immediate_login", false);
 								editor.commit();
-								Intent loginActivity = new Intent(mActivity,LoginActivity.class);
-							    startActivity(loginActivity);
-							    mActivity.finish();
+								Intent loginActivity = new Intent(mActivity, LoginActivity.class);
+								startActivity(loginActivity);
+								mActivity.finish();
 
 							}
-							if (Integer.parseInt(response.getString("error"))==1){
-								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
+							if (Integer.parseInt(response.getString("error")) == 1) {
+								DialogMessage dialog = new DialogMessage(mActivity, response.getString("message"));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
-							}else{
-								if (reload){
+							} else {
+								if (reload) {
 									Store.AnnouncementsList.removeAll(Store.AnnouncementsList);
 									reload = false;
 								}
@@ -214,7 +215,8 @@ public class HomeAnnounmentFragment extends CoreFragment implements OnRefreshLis
 					public void onErrorResponse(VolleyError error) {
 						swipeView.setRefreshing(false);
 						isLoading = false;
-						DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+						DialogMessage dialog = new DialogMessage(mActivity,
+								mActivity.getResources().getString(R.string.connect_problem));
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
 					}
