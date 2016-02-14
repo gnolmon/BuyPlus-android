@@ -89,6 +89,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_margin="@dimen/feed_item_profile_info_padd"
+                android:visibility="invisible"
                 android:src="@drawable/edit_profile" />
         </RelativeLayout>
     </LinearLayout>

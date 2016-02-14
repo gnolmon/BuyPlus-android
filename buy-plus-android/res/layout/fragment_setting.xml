@@ -9,7 +9,7 @@
         android:layout_height="fill_parent"
         android:background="@color/white" >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#ecebeb"
@@ -116,6 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
+                android:visibility="invisible"
                 android:orientation="vertical" >
 
                 <ImageView
@@ -145,6 +146,7 @@
 
             <RelativeLayout
                 android:id="@+id/rlLogout"
+                android:layout_below="@id/rlBuyplusInfo"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
@@ -174,7 +176,7 @@
                     android:layout_marginLeft="60dp"
                     android:background="@color/title" />
             </RelativeLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 
 </LinearLayout>
