@@ -67,13 +67,14 @@
                     android:id="@+id/fragment_canvas_search"
                     android:layout_width="@dimen/actionbar_height"
                     android:layout_height="match_parent"
+                    android:visibility="invisible"
                     android:gravity="center" >
 
                     <ImageView
                         android:id="@+id/imSearch"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/search" />
+                        android:visibility="invisible"/>
                 </LinearLayout>
 
                 <lc.buyplus.customizes.MyTextView
