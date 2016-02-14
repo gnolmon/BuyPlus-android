@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_standard" >
 
-        <lc.buyplus.customizes.RoundedViewImage
+        <lc.buyplus.customizes.RoundedImageView
             android:id="@+id/imRedeem"
             android:src="@drawable/square"
             android:layout_width="80dp"

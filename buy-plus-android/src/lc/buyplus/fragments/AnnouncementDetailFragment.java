@@ -71,8 +71,6 @@ public class AnnouncementDetailFragment extends CoreFragment {
 		initModels();
 		initAnimations();
 		mFragmentManager = getFragmentManager();
-		
-		
 		return view;
 	}
 
@@ -80,8 +78,12 @@ public class AnnouncementDetailFragment extends CoreFragment {
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.fragment_canvas_back:
-			HomeAnnounmentFragment.listView.setEnabled(true);
-			ShopAnnounmentFragment.listView.setEnabled(true);
+			if (HomeAnnounmentFragment.listView != null ){
+				HomeAnnounmentFragment.listView.setEnabled(true);
+			};
+			if (ShopAnnounmentFragment.listView != null) {
+				ShopAnnounmentFragment.listView.setEnabled(true);
+			}
 			mActivity.finish();
 			break;
 		case R.id.fragment_canvas_home_tab:

@@ -40,7 +40,7 @@ public class ShopGiftAdapter extends BaseAdapter {
 		public TextView storeName;
 		public TextView tvContentRedeem;
 		public TextView tvPoint;
-		public RoundedViewImage imRedeem;
+		public RoundedImageView imRedeem;
 		public ProgressBar pbPoint;
 		public TextView tvScore;
 	}
@@ -85,7 +85,7 @@ public class ShopGiftAdapter extends BaseAdapter {
 			viewHolder.storeName = (TextView) convertView.findViewById(R.id.tvstoreTitle);
 			viewHolder.tvContentRedeem = (TextView) convertView.findViewById(R.id.tvContentRedeem);
 			viewHolder.tvPoint = (TextView) convertView.findViewById(R.id.tvPoint);
-			viewHolder.imRedeem = (RoundedViewImage) convertView.findViewById(R.id.imRedeem);
+			viewHolder.imRedeem = (RoundedImageView) convertView.findViewById(R.id.imRedeem);
 			viewHolder.pbPoint = (ProgressBar) convertView.findViewById(R.id.pbScore);
 			viewHolder.tvScore = (TextView) convertView.findViewById(R.id.tvScore);
 
@@ -105,9 +105,9 @@ public class ShopGiftAdapter extends BaseAdapter {
 		// name.setText(item.getName());
 
 		// user profile pic
-		// viewHolder.imRedeem.setImageUrl(item.getImage(), imageLoader);
-		Glide.with(CanvasFragment.mActivity).load(item.getImage()).placeholder(viewHolder.imRedeem.getDrawable()).centerCrop()
-		.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.imRedeem);
+		viewHolder.imRedeem.setImageUrl(item.getImage(), imageLoader);
+		//Glide.with(CanvasFragment.mActivity).load(item.getImage()).placeholder(viewHolder.imRedeem.getDrawable()).centerCrop()
+		//.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.imRedeem);
 
 		int myPoint = Store.current_shop.getCurrent_customer_shop_point();
 		int giftPoint = item.getPoint();

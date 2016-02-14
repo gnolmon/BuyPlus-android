@@ -61,8 +61,12 @@ public class AnnouncementDetailActivity extends CoreActivity {
 
 	@Override
 	public void onBackPressed() {
-		HomeAnnounmentFragment.listView.setEnabled(true);
-		ShopAnnounmentFragment.listView.setEnabled(true);
+		if (HomeAnnounmentFragment.listView != null ){
+			HomeAnnounmentFragment.listView.setEnabled(true);
+		};
+		if (ShopAnnounmentFragment.listView != null) {
+			ShopAnnounmentFragment.listView.setEnabled(true);
+		}
 		finish();
 		// moveTaskToBack(true);
 	}
