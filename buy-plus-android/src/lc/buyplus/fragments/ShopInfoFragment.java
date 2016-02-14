@@ -209,7 +209,7 @@ public class ShopInfoFragment extends CoreFragment {
 			tvName.setText("Đang cập nhật...");
 		}
 		Log.d("WEB", Store.current_shop.getAddress());
-		tvField.setText(Store.current_shop.getName());
+		tvField.setText(Store.current_shop.getDescription());
 		tvPhone.setText(Store.current_shop.getPhone());
 		if(!Store.current_shop.getWebsite().trim().equals("")){
 			tvWeb.setText(Store.current_shop.getWebsite());
