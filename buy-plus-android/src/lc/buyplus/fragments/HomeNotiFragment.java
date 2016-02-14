@@ -47,13 +47,12 @@ import lc.buyplus.models.Friend;
 import lc.buyplus.models.Store;
 
 public class HomeNotiFragment extends CoreFragment {
-	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab,mBack;
+	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab, mBack;
 	Display display;
 	private MyTextView mTitle;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
 	RoundedImageView avaStore;
 	private LayoutInflater inflaterActivity;
-
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -110,7 +109,7 @@ public class HomeNotiFragment extends CoreFragment {
 		mBack = (LinearLayout) v.findViewById(R.id.fragment_canvas_back);
 		mTitle = (MyTextView) v.findViewById(R.id.fragment_canvas_title);
 		mTitle.setText("Thông báo");
-		
+
 		mHomeTab.setOnClickListener(this);
 		mPersonalTab.setOnClickListener(this);
 		mLoyaltyCardTab.setOnClickListener(this);
@@ -124,12 +123,13 @@ public class HomeNotiFragment extends CoreFragment {
 		avaStore = (RoundedImageView) v.findViewById(R.id.avaStore);
 		avaStore.setImageUrl(Store.current_notification.getImage(), imageLoader);
 		TextView timestamp = (TextView) v.findViewById(R.id.tvTimestamp);
-		CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(Long.parseLong(Store.current_notification.getCreated_time()),
-				System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
+		CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
+				1000 * Long.parseLong(Store.current_notification.getCreated_time()), System.currentTimeMillis(),
+				DateUtils.SECOND_IN_MILLIS);
 		timestamp.setText(timeAgo);
-//		
-//		TextView tvStatus = (TextView) v.findViewById(R.id.tvStatus);
-//		tvStatus.setText(Store.current_announcement.getContent());
+		//
+		// TextView tvStatus = (TextView) v.findViewById(R.id.tvStatus);
+		// tvStatus.setText(Store.current_announcement.getContent());
 	}
 
 	@Override
@@ -162,5 +162,5 @@ public class HomeNotiFragment extends CoreFragment {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 }

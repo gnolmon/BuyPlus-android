@@ -48,15 +48,16 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class NotificationsFragment extends CoreFragment implements OnRefreshListener{
+public class NotificationsFragment extends CoreFragment implements OnRefreshListener {
 	private ListView listView;
 	private NotificationAdapter notiAdapter;
 	private LayoutInflater inflaterActivity;
 	private int old_id = 0;
 	private int current_last_id = 0;
-	private boolean isLoadMore,isLoading,reload;
+	private boolean isLoadMore, isLoading, reload;
 	private SwipeRefreshLayout swipeView;
 	View footer;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_notifications, container, false);
@@ -66,114 +67,123 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 		initAnimations();
 		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swipe_view);
 		swipeView.setOnRefreshListener(this);
-	    swipeView.setColorSchemeColors(Color.GREEN, Color.GREEN, Color.GREEN, Color.GREEN);
-	    // swipeView.setDistanceToTriggerSync(20);// in dips
-	    //swipeView.setSize(SwipeRefreshLayout.DEFAULT);// LARGE also can be used
+		swipeView.setColorSchemeColors(Color.GREEN, Color.GREEN, Color.GREEN, Color.GREEN);
+		// swipeView.setDistanceToTriggerSync(20);// in dips
+		// swipeView.setSize(SwipeRefreshLayout.DEFAULT);// LARGE also can be
+		// used
 		inflaterActivity = inflater;
 		isLoadMore = false;
 		isLoading = false;
-		listView = (ListView ) view.findViewById(R.id.listNoti);
+		listView = (ListView) view.findViewById(R.id.listNoti);
 		notiAdapter = new NotificationAdapter(Store.NotificationsList, inflaterActivity);
 		listView.addFooterView(footer);
 		listView.setAdapter(notiAdapter);
-		//Store.NotificationsList.removeAll(Store.NotificationsList);
-		//api_get_notifications(0, Store.limit);
+		// Store.NotificationsList.removeAll(Store.NotificationsList);
+		// api_get_notifications(0, Store.limit);
 		api_read_notifications();
 		notiAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-            	listView.addFooterView(footer);
-            	api_get_notifications(current_last_id, Store.limit);
-            }
-        });
-		
-		listView.setOnItemClickListener(new OnItemClickListener() {
-		      public void onItemClick(AdapterView<?> parent, View view,
-		          int position, long id) {
-		    	  Store.current_notification = (Notification)notiAdapter.getItem(position);
-		    	  String string = Store.current_notification.getParams();
-		    	  Store.noti_params = string.split(":");
-		    	  Intent notiActivity;
-		    	  switch (Store.current_notification.getType()) {
+			@Override
+			public void onLoadMore() {
+				listView.addFooterView(footer);
+				api_get_notifications(current_last_id, Store.limit);
+			}
+		});
 
-					case 1:
-						notiActivity = new Intent(mActivity,ShopFriendActivity.class);
-						Store.current_shop_id =  Integer.valueOf(Store.noti_params[1]);
-			            Store.current_shop_name =  Store.noti_params[4];
-			            startActivity(notiActivity);
-						break;
-					case 2:
-						Store.current_shop_id = Integer.valueOf(Store.noti_params[1]);
-			    	  	 listView.setEnabled(false);
-			    	  	 api_get_shop_info(Store.current_shop_id);
-						break;
-					case 3:
-						notiActivity = new Intent(mActivity,ShopFriendActivity.class);
-						 Store.current_shop_id =  Integer.valueOf(Store.noti_params[1]);
-			            Store.current_shop_name =  Store.noti_params[5];
-			            startActivity(notiActivity);
-						break;
-					case 4:
-						Store.current_shop_id = Integer.valueOf(Store.noti_params[0]);
-			    	  	 listView.setEnabled(false);
-			    	  	 api_get_shop_info(Store.current_shop_id);
-						break;
-					case 5:
-						notiActivity = new Intent(mActivity,HomeNotiActivity.class);
-				        startActivity(notiActivity);
-						break;
-					case 6:
-						notiActivity = new Intent(mActivity,ShopFriendActivity.class);
-						 Store.current_shop_id =  Integer.valueOf(Store.noti_params[0]);
-			            Store.current_shop_name =  Store.noti_params[4];
-			            startActivity(notiActivity);
-						break;
-					case 7:
-						notiActivity = new Intent(mActivity,HomeNotiActivity.class);
-				        startActivity(notiActivity);
-						break;
-					case 8:
-						notiActivity = new Intent(mActivity,ShopFriendActivity.class);
-						 Store.current_shop_id =  Integer.valueOf(Store.noti_params[0]);
-			            Store.current_shop_name =  Store.noti_params[4];
-			            startActivity(notiActivity);
-						break;
-					default:
-						break;
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Store.current_notification = (Notification) notiAdapter.getItem(position);
+				String string = Store.current_notification.getParams();
+				Store.noti_params = string.split(":");
+				Intent notiActivity;
+				switch (Store.current_notification.getType()) {
+
+				case 1:
+					notiActivity = new Intent(mActivity, ShopFriendActivity.class);
+					Store.current_shop_id = Integer.valueOf(Store.noti_params[1]);
+					Store.current_shop_name = Store.noti_params[4];
+					Log.d("NOTI", "1");
+					startActivity(notiActivity);
+					break;
+				case 2:
+					Store.current_shop_id = Integer.valueOf(Store.noti_params[1]);
+					listView.setEnabled(false);
+					api_get_shop_info(Store.current_shop_id);
+					Log.d("NOTI", "2");
+					break;
+				case 3:
+					notiActivity = new Intent(mActivity, ShopFriendActivity.class);
+					Store.current_shop_id = Integer.valueOf(Store.noti_params[1]);
+					Store.current_shop_name = Store.noti_params[5];
+					Log.d("NOTI", "3");
+					startActivity(notiActivity);
+					break;
+				case 4:
+					Store.current_shop_id = Integer.valueOf(Store.noti_params[0]);
+					listView.setEnabled(false);
+					api_get_shop_info(Store.current_shop_id);
+					Log.d("NOTI", "4");
+					break;
+				case 5:
+					notiActivity = new Intent(mActivity, HomeNotiActivity.class);
+					startActivity(notiActivity);
+					Log.d("NOTI", "5");
+					break;
+				case 6:
+					notiActivity = new Intent(mActivity, ShopFriendActivity.class);
+					Store.current_shop_id = Integer.valueOf(Store.noti_params[0]);
+					Store.current_shop_name = Store.noti_params[4];
+					api_get_shop_info_noti(Store.current_shop_id);
+					startActivity(notiActivity);
+					Log.d("NOTI", Integer.valueOf(Store.noti_params[0]) + "" + Store.noti_params[4] );
+					break;
+				case 7:
+					notiActivity = new Intent(mActivity, HomeNotiActivity.class);
+					startActivity(notiActivity);
+					Log.d("NOTI", "7");
+					break;
+				case 8:
+					notiActivity = new Intent(mActivity, ShopFriendActivity.class);
+					Store.current_shop_id = Integer.valueOf(Store.noti_params[0]);
+					Store.current_shop_name = Store.noti_params[4];
+					startActivity(notiActivity);
+					Log.d("NOTI", "8");
+					break;
+				default:
+					break;
+				}
+
+			}
+		});
+
+		listView.setOnScrollListener(new OnScrollListener() {
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+				if (!isLoading && firstVisibleItem + visibleItemCount == totalItemCount) {
+					isLoading = true;
+					notiAdapter.getOnLoadMoreListener().onLoadMore();
+				}
+
+			}
+
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				// TODO Auto-generated method stub
+				if (scrollState == 0) {
+					if (isLoadMore) {
 					}
-		    	 
-		      }
-	    });
-		
-		listView.setOnScrollListener(new OnScrollListener(){
-		    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-		    	
-		    	if (!isLoading && firstVisibleItem + visibleItemCount == totalItemCount){
-		    		isLoading = true;
-		    		 notiAdapter.getOnLoadMoreListener().onLoadMore();
-		    	}
-		    	 
-		    }
-		    public void onScrollStateChanged(AbsListView view, int scrollState) {
-		      // TODO Auto-generated method stub
-		      if(scrollState == 0) {
-		    	  if (isLoadMore){	
-		    	  }
-		      }
-		    }
-		 });
-		
+				}
+			}
+		});
 
 		return view;
 	}
-		
+
 	@Override
 	public void onRefresh() {
 		reload = true;
 		swipeView.setRefreshing(true);
 		api_get_notifications(0, Store.limit);
 	}
-	
+
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
@@ -207,32 +217,33 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 					@Override
 					public void onResponse(JSONObject response) {
 						Log.d("api_get_notifications", response.toString());
-						if (reload){
+						if (reload) {
 							Store.NotificationsList.removeAll(Store.NotificationsList);
-							Log.d("size",String.valueOf(Store.NotificationsList.size()));
+							Log.d("size", String.valueOf(Store.NotificationsList.size()));
 							reload = false;
 						}
 						try {
-							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.end_session));
+							if (Integer.parseInt(response.getString("error")) == 2) {
+								DialogMessage dialog = new DialogMessage(mActivity,
+										mActivity.getResources().getString(R.string.end_session));
 
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
-								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
-								SharedPreferences.Editor editor=pre.edit();
-								//editor.clear();
+								SharedPreferences pre = getmContext().getSharedPreferences("buy_pus", 0);
+								SharedPreferences.Editor editor = pre.edit();
+								// editor.clear();
 								editor.putBoolean("immediate_login", false);
 								editor.commit();
-								Intent loginActivity = new Intent(mActivity,LoginActivity.class);
-							    startActivity(loginActivity);
-							    mActivity.finish();
+								Intent loginActivity = new Intent(mActivity, LoginActivity.class);
+								startActivity(loginActivity);
+								mActivity.finish();
 
 							}
-							if (Integer.parseInt(response.getString("error"))==1){
-								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
+							if (Integer.parseInt(response.getString("error")) == 1) {
+								DialogMessage dialog = new DialogMessage(mActivity, response.getString("message"));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
-							}else{
+							} else {
 								JSONArray data_aray = response.getJSONArray("data");
 								for (int i = 0; i < data_aray.length(); i++) {
 									Notification notification = new Notification((JSONObject) data_aray.get(i));
@@ -246,7 +257,7 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 								listView.removeFooterView(footer);
 								notiAdapter.notifyDataSetChanged();
 							}
-							
+
 						} catch (JSONException e) {
 
 							e.printStackTrace();
@@ -257,41 +268,42 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						swipeView.setRefreshing(false);
-						DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+						DialogMessage dialog = new DialogMessage(mActivity,
+								mActivity.getResources().getString(R.string.connect_problem));
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
 					}
 				});
 		requestQueue.add(jsObjRequest);
 	}
-	
+
 	public void api_read_notifications() {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", CanvasFragment.mUser.getAccessToken());
 		RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
-		HandleRequest jsObjRequest = new HandleRequest(Method.POST,
-				HandleRequest.READ_NOTIFICATIONS, params,
+		HandleRequest jsObjRequest = new HandleRequest(Method.POST, HandleRequest.READ_NOTIFICATIONS, params,
 				new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
 
 						try {
-							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.end_session));
+							if (Integer.parseInt(response.getString("error")) == 2) {
+								DialogMessage dialog = new DialogMessage(mActivity,
+										mActivity.getResources().getString(R.string.end_session));
 
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
-								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
-								SharedPreferences.Editor editor=pre.edit();
-								//editor.clear();
+								SharedPreferences pre = getmContext().getSharedPreferences("buy_pus", 0);
+								SharedPreferences.Editor editor = pre.edit();
+								// editor.clear();
 								editor.putBoolean("immediate_login", false);
 								editor.commit();
-								Intent loginActivity = new Intent(mActivity,LoginActivity.class);
-							    startActivity(loginActivity);
-							    mActivity.finish();
+								Intent loginActivity = new Intent(mActivity, LoginActivity.class);
+								startActivity(loginActivity);
+								mActivity.finish();
 							}
-							if (Integer.parseInt(response.getString("error"))==1){
-								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
+							if (Integer.parseInt(response.getString("error")) == 1) {
+								DialogMessage dialog = new DialogMessage(mActivity, response.getString("message"));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 							}
@@ -299,19 +311,20 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						
+
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+						DialogMessage dialog = new DialogMessage(mActivity,
+								mActivity.getResources().getString(R.string.connect_problem));
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
 					}
 				});
 		requestQueue.add(jsObjRequest);
 	}
-	
+
 	public void api_get_shop_info(int shop_id) {
 
 		Map<String, String> params = new HashMap<String, String>();
@@ -325,30 +338,31 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 					public void onResponse(JSONObject response) {
 						Log.d("api_get_shop_info", response.toString());
 						try {
-							if (Integer.parseInt(response.getString("error"))==2){
-								DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.end_session));
+							if (Integer.parseInt(response.getString("error")) == 2) {
+								DialogMessage dialog = new DialogMessage(mActivity,
+										mActivity.getResources().getString(R.string.end_session));
 
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
-								SharedPreferences pre=getmContext().getSharedPreferences("buy_pus", 0);
-								SharedPreferences.Editor editor=pre.edit();
-								//editor.clear();
+								SharedPreferences pre = getmContext().getSharedPreferences("buy_pus", 0);
+								SharedPreferences.Editor editor = pre.edit();
+								// editor.clear();
 								editor.putBoolean("immediate_login", false);
 								editor.commit();
-								Intent loginActivity = new Intent(mActivity,LoginActivity.class);
-							    startActivity(loginActivity);
-							    mActivity.finish();
+								Intent loginActivity = new Intent(mActivity, LoginActivity.class);
+								startActivity(loginActivity);
+								mActivity.finish();
 
 							}
-							if (Integer.parseInt(response.getString("error"))==1){
-								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
+							if (Integer.parseInt(response.getString("error")) == 1) {
+								DialogMessage dialog = new DialogMessage(mActivity, response.getString("message"));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
-							}else{
+							} else {
 								Store.current_shop = new Shop(response.getJSONObject("data"));
-								Store.current_shop_name =  Store.current_shop.getName();
-								Intent shopInfoActivity = new Intent(mActivity,ShopInfoActivity.class);			            
-					            startActivity(shopInfoActivity);
+								Store.current_shop_name = Store.current_shop.getName();
+								Intent shopInfoActivity = new Intent(mActivity, ShopInfoActivity.class);
+								startActivity(shopInfoActivity);
 							}
 						} catch (JSONException e) {
 							e.printStackTrace();
@@ -359,13 +373,70 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						listView.setEnabled(true);
-						DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+						DialogMessage dialog = new DialogMessage(mActivity,
+								mActivity.getResources().getString(R.string.connect_problem));
 						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 						dialog.show();
 					}
 				});
 		requestQueue.add(jsObjRequest);
 	}
+
+	public void api_get_shop_info_noti(int shop_id) {
+
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		params.put("shop_id", String.valueOf(shop_id));
+		RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
+		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
+				HandleRequest.build_link(HandleRequest.GET_SHOP_INFO, params), params,
+				new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("api_get_shop_info", response.toString());
+						try {
+							if (Integer.parseInt(response.getString("error")) == 2) {
+								DialogMessage dialog = new DialogMessage(mActivity,
+										mActivity.getResources().getString(R.string.end_session));
+
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+								SharedPreferences pre = getmContext().getSharedPreferences("buy_pus", 0);
+								SharedPreferences.Editor editor = pre.edit();
+								// editor.clear();
+								editor.putBoolean("immediate_login", false);
+								editor.commit();
+								Intent loginActivity = new Intent(mActivity, LoginActivity.class);
+								startActivity(loginActivity);
+								mActivity.finish();
+
+							}
+							if (Integer.parseInt(response.getString("error")) == 1) {
+								DialogMessage dialog = new DialogMessage(mActivity, response.getString("message"));
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							} else {
+								Store.current_shop = new Shop(response.getJSONObject("data"));
+								Store.current_shop_name = Store.current_shop.getName();
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+						listView.setEnabled(true);
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						listView.setEnabled(true);
+						DialogMessage dialog = new DialogMessage(mActivity,
+								mActivity.getResources().getString(R.string.connect_problem));
+						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+						dialog.show();
+					}
+				});
+		requestQueue.add(jsObjRequest);
+	}
+
 	public static final long serialVersionUID = 6036846677812555352L;
 
 	public static CoreActivity mActivity;
