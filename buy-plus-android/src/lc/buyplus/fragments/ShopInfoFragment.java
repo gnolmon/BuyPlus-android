@@ -188,7 +188,7 @@ public class ShopInfoFragment extends CoreFragment {
 		tvPhone = (TextView) v.findViewById(R.id.tvPhone);
 		tvWeb = (TextView) v.findViewById(R.id.tvWeb);
 		tvFb = (TextView) v.findViewById(R.id.tvFb);
-		tvWeb.setOnClickListener(this);
+		
 		tvFb.setOnClickListener(this);
 		tvName.setOnClickListener(this);
 		tvPhone.setOnClickListener(this);
@@ -211,7 +211,13 @@ public class ShopInfoFragment extends CoreFragment {
 		Log.d("WEB", Store.current_shop.getAddress());
 		tvField.setText(Store.current_shop.getName());
 		tvPhone.setText(Store.current_shop.getPhone());
-		tvWeb.setText(Store.current_shop.getWebsite());
+		if(!Store.current_shop.getWebsite().trim().equals("")){
+			tvWeb.setText(Store.current_shop.getWebsite());
+			tvWeb.setOnClickListener(this);
+		}else {
+			tvWeb.setText("Facebook Page.");
+		}
+		
 		tvFb.setText(String.valueOf(Store.current_shop.getFacebook_id()));
 
 		imbannerStore.setImageUrl(Store.current_shop.getImage_thumbnail(), imageLoader);
