@@ -124,10 +124,15 @@ public class ShopInfoFragment extends CoreFragment {
 			break;
 
 		case R.id.tvName:
-			Intent mainActivity = new Intent(mActivity, MapShopActivity.class);
-			try {
-				startActivity(mainActivity);
-			} catch (ActivityNotFoundException e) {
+			if (!Store.current_shop.getLat().trim().equals("") && !Store.current_shop.getLng().trim().equals("")) {
+				Intent mainActivity = new Intent(mActivity, MapShopActivity.class);
+				try {
+					startActivity(mainActivity);
+				} catch (Exception e) {
+					DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.map_problem));
+					dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+					dialog.show();
+				}
 			}
 			break;
 		}
@@ -159,7 +164,6 @@ public class ShopInfoFragment extends CoreFragment {
 		rlBackground = (RelativeLayout) v.findViewById(R.id.rlBackground);
 		imbannerStore.setImageUrl(Store.current_shop.getImage_thumbnail(), imageLoader);
 		imbannerStore.buildDrawingCache();
-		
 
 		if (imbannerStore.getWidth() > 0) {
 			BitmapDrawable drawable = (BitmapDrawable) imbannerStore.getDrawable();
@@ -199,8 +203,11 @@ public class ShopInfoFragment extends CoreFragment {
 			join_leave.setBackground(getResources().getDrawable(R.drawable.round_button_green));
 			isJoin = true;
 		}
-
-		tvName.setText(Store.current_shop.getAddress());
+		if (!Store.current_shop.getLat().trim().equals("") && !Store.current_shop.getLng().trim().equals("")) {
+			tvName.setText(Store.current_shop.getAddress());
+		}else {
+			tvName.setText("Đang cập nhật...");
+		}
 		Log.d("WEB", Store.current_shop.getAddress());
 		tvField.setText(Store.current_shop.getName());
 		tvPhone.setText(Store.current_shop.getPhone());
@@ -210,7 +217,6 @@ public class ShopInfoFragment extends CoreFragment {
 		imbannerStore.setImageUrl(Store.current_shop.getImage_thumbnail(), imageLoader);
 		imbannerStore.buildDrawingCache();
 
-		
 	}
 
 	@Override
@@ -265,7 +271,8 @@ public class ShopInfoFragment extends CoreFragment {
 					public void onErrorResponse(VolleyError error) {
 						if (Store.isConnectNetwotk == true) {
 							Store.isConnectNetwotk = false;
-							DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+							DialogMessage dialog = new DialogMessage(mActivity,
+									mActivity.getResources().getString(R.string.connect_problem));
 							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 							dialog.show();
 						}

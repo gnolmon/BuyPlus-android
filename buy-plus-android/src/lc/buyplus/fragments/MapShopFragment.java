@@ -7,6 +7,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,6 +22,7 @@ import lc.buyplus.R;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
+import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.customizes.MyTextView;
 import lc.buyplus.models.Store;
 
@@ -47,12 +50,19 @@ public class MapShopFragment extends CoreFragment{
 		initModels();
 		initAnimations();
 		mFragmentManager = getFragmentManager();
+		try {
+			double lat = Double.parseDouble( Store.current_shop.getLat().replace(",",".") );
+			double lng = Double.parseDouble( Store.current_shop.getLng().replace(",",".") );
+			LatLng location = new LatLng(lat, lng);
+			mMap.addMarker(new MarkerOptions().position(location).title("Marker in Sydney"));
+			mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location , 15));
+		} catch (Exception e) {
+			DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.map_problem));
+			dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+			dialog.show();
+		}
 		
-		double lat = Double.parseDouble( Store.current_shop.getLat().replace(",",".") );
-		double lng = Double.parseDouble( Store.current_shop.getLng().replace(",",".") );
-		LatLng location = new LatLng(lat, lng);
-		mMap.addMarker(new MarkerOptions().position(location).title("Marker in Sydney"));
-		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location , 15));
+		
 		return view;
 	}
 	
