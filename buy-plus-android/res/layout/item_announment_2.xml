@@ -120,7 +120,7 @@
                 android:layout_toLeftOf="@id/devide"
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
-                android:scaleType="fitXY"
+                android:scaleType="center"
                 android:src="@drawable/loading_icon" />
 
             <ImageView
@@ -128,7 +128,7 @@
                 android:layout_toRightOf="@id/devide"
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
-                android:scaleType="fitXY"
+                android:scaleType="center"
                 android:src="@drawable/loading_icon" />
         </RelativeLayout>
     </LinearLayout>
