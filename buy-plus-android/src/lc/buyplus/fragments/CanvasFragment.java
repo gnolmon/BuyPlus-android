@@ -476,14 +476,18 @@ public void api_get_all_shop(int last_id, int limit, String search){
 						}
 						isSearching = false;
 						isHomeRefresh = false;
+						Store.isConnectNetwotk = true;
 					}
 				}, 
 				new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
-						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-						dialog.show();
+						if (Store.isConnectNetwotk == true) {
+							Store.isConnectNetwotk = false;
+							DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+							dialog.show();
+						}
 					}
 				});
 			requestQueue.add(jsObjRequest);
@@ -539,13 +543,17 @@ public void api_get_all_announcements(int last_id, int limit, String type, int m
 
 						e.printStackTrace();
 					}
+					Store.isConnectNetwotk = true;
 				}
 			}, new Response.ErrorListener() {
 				@Override
 				public void onErrorResponse(VolleyError error) {
-					DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
-					dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-					dialog.show();
+					if (Store.isConnectNetwotk == true) {
+						Store.isConnectNetwotk = false;
+						DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+						dialog.show();
+					}
 				}
 			});
 	requestQueue.add(jsObjRequest);
@@ -594,14 +602,18 @@ public void api_get_num_unread_notifications(){
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
+					Store.isConnectNetwotk = true;
 				}
 			}, 
 			new Response.ErrorListener() {
 				@Override
 				public void onErrorResponse(VolleyError error) {
-					DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
-					dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-					dialog.show();
+					if (Store.isConnectNetwotk == true) {
+						Store.isConnectNetwotk = false;
+						DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+						dialog.show();
+					}
 				}
 			});
 		requestQueue.add(jsObjRequest);

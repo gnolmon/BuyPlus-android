@@ -144,14 +144,18 @@ public class ShopImageFragment extends CoreFragment {
 
 							e.printStackTrace();
 						}	
+						Store.isConnectNetwotk = true;
 					}
 				}, 
 				new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
-						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-						dialog.show();
+						if (Store.isConnectNetwotk == true) {
+							Store.isConnectNetwotk = false;
+							DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+							dialog.show();
+						}
 					}
 				});
 			requestQueue.add(jsObjRequest);

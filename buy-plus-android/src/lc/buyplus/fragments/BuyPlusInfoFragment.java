@@ -70,9 +70,6 @@ public class BuyPlusInfoFragment  extends CoreFragment {
 			try {
 				startActivity(returnIntent);
 			} catch (ActivityNotFoundException e) {
-				DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
-				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-				dialog.show();
 			}
 			break;
 		case R.id.tvWeb:
@@ -81,9 +78,6 @@ public class BuyPlusInfoFragment  extends CoreFragment {
 			try {
 				startActivity(returnIntent);
 			} catch (ActivityNotFoundException e) {
-				DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
-				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-				dialog.show();
 			}
 			break;
 		default:

@@ -130,14 +130,18 @@ public void api_update_user_information(String name){
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+						Store.isConnectNetwotk = true;
 					}
 					}, 
 					new Response.ErrorListener() {
 						@Override
 						public void onErrorResponse(VolleyError error) {
-							DialogMessage dialog = new DialogMessage(c,c.getResources().getString(R.string.connect_problem));
-							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-							dialog.show();
+							if (Store.isConnectNetwotk == true) {
+								Store.isConnectNetwotk = false;
+								DialogMessage dialog = new DialogMessage(c,c.getResources().getString(R.string.connect_problem));
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							}
 						}
 					});
 			requestQueue.add(jsObjRequest);

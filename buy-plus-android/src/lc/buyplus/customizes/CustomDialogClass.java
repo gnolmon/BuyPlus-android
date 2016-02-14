@@ -150,13 +150,18 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
+						Store.isConnectNetwotk = true;
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						DialogMessage dialog = new DialogMessage(c,c.getResources().getString(R.string.connect_problem));
-						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-						dialog.show();
+						
+						if (Store.isConnectNetwotk == true) {
+							Store.isConnectNetwotk = false;
+							DialogMessage dialog = new DialogMessage(c,c.getResources().getString(R.string.connect_problem));
+							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+							dialog.show();
+						}
 					}
 				});
 		requestQueue.add(jsObjRequest);
@@ -201,13 +206,17 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
+						Store.isConnectNetwotk = true;
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						DialogMessage dialog = new DialogMessage(c,c.getResources().getString(R.string.connect_problem));
-						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-						dialog.show();
+						if (Store.isConnectNetwotk == true) {
+							Store.isConnectNetwotk = false;
+							DialogMessage dialog = new DialogMessage(c,c.getResources().getString(R.string.connect_problem));
+							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+							dialog.show();
+						}
 					}
 				});
 		requestQueue.add(jsObjRequest);

@@ -244,15 +244,19 @@ public class AddFriendFragment extends CoreFragment {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						
+						Store.isConnectNetwotk = true;
 					}
 					}, 
 					new Response.ErrorListener() {
 						@Override
 						public void onErrorResponse(VolleyError error) {
-							DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
-							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-							dialog.show();
+							
+							if (Store.isConnectNetwotk == true) {
+								Store.isConnectNetwotk = false;
+								DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							}
 						}
 					});
 			requestQueue.add(jsObjRequest);
@@ -309,19 +313,24 @@ public void api_search_friends_for_shop(int shop_id, String search){
 									listFriendFb.setAdapter(addFriendAdapter);
 									addFriendAdapter.notifyDataSetChanged();	
 								}
+								
 							}
 						} catch (JSONException e) {
 
 							e.printStackTrace();
-						}	
+						}
+						Store.isConnectNetwotk = true;	
 					}
 				}, 
 				new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
-						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-						dialog.show();
+						if (Store.isConnectNetwotk == true) {
+								Store.isConnectNetwotk = false;
+								DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							}
 					}
 				});
 			requestQueue.add(jsObjRequest);

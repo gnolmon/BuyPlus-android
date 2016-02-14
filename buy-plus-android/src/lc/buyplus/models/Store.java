@@ -11,6 +11,8 @@ public class Store {
 	public static ArrayList<Photo> PhotosList = new ArrayList<Photo>();
 	
 	public static ArrayList<FacebookFriend> FacebookFriendsList = new ArrayList<FacebookFriend>();
+	
+	public static boolean isConnectNetwotk = true;
 	public static UserAccount user;
 	
 	public static int limit = 8;

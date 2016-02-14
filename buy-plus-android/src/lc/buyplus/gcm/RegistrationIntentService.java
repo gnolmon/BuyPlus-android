@@ -34,6 +34,7 @@ import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.fragments.CanvasFragment;
 import lc.buyplus.fragments.LoginFragment;
+import lc.buyplus.models.Store;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -171,15 +172,18 @@ public void api_register_device_token(String device_token, String gcm_device_tok
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-
+                        Store.isConnectNetwotk = true;
 					}
 					}, 
 					new Response.ErrorListener() {
 						@Override
 						public void onErrorResponse(VolleyError error) {
-//							DialogMessage dialog = new DialogMessage(CanvasFragment.mActivity,CanvasFragment.mActivity.getResources().getString(R.string.connect_problem));
-//							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//							dialog.show();
+                            if (Store.isConnectNetwotk == true) {
+                                Store.isConnectNetwotk = false;
+                                DialogMessage dialog = new DialogMessage(CanvasFragment.mActivity,CanvasFragment.mActivity.getResources().getString(R.string.connect_problem));
+                                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                dialog.show();
+                            }
 						}
 					});
 			requestQueue.add(jsObjRequest);

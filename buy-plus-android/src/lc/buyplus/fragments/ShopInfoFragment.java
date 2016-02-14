@@ -111,10 +111,6 @@ public class ShopInfoFragment extends CoreFragment {
 			try {
 				startActivity(returnIntent);
 			} catch (ActivityNotFoundException e) {
-				DialogMessage dialog = new DialogMessage(mActivity,
-						mActivity.getResources().getString(R.string.connect_problem));
-				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-				dialog.show();
 			}
 			break;
 
@@ -124,10 +120,6 @@ public class ShopInfoFragment extends CoreFragment {
 				callIntent.setData(Uri.parse("tel:" + tvPhone.getText().toString()));
 				startActivity(callIntent);
 			} catch (ActivityNotFoundException e) {
-				DialogMessage dialog = new DialogMessage(mActivity,
-						mActivity.getResources().getString(R.string.connect_call));
-				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-				dialog.show();
 			}
 			break;
 
@@ -136,10 +128,6 @@ public class ShopInfoFragment extends CoreFragment {
 			try {
 				startActivity(mainActivity);
 			} catch (ActivityNotFoundException e) {
-				DialogMessage dialog = new DialogMessage(mActivity,
-						mActivity.getResources().getString(R.string.connect_problem));
-				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-				dialog.show();
 			}
 			break;
 		}
@@ -270,14 +258,17 @@ public class ShopInfoFragment extends CoreFragment {
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
+						Store.isConnectNetwotk = true;
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						DialogMessage dialog = new DialogMessage(mActivity,
-								mActivity.getResources().getString(R.string.connect_problem));
-						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-						dialog.show();
+						if (Store.isConnectNetwotk == true) {
+							Store.isConnectNetwotk = false;
+							DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+							dialog.show();
+						}
 					}
 				});
 		requestQueue.add(jsObjRequest);

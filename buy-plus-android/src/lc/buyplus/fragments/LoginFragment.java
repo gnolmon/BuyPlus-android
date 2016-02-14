@@ -224,10 +224,6 @@ public class LoginFragment extends CoreFragment {
 				try {
 					startActivity(returnIntent);
 				} catch (ActivityNotFoundException e) {
-					DialogMessage dialog = new DialogMessage(mActivity,
-							mActivity.getResources().getString(R.string.connect_problem));
-					dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-					dialog.show();
 				}
 			}
 		});
@@ -318,15 +314,18 @@ public class LoginFragment extends CoreFragment {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+						Store.isConnectNetwotk = true;
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						loginbtn.setEnabled(true);
-						DialogMessage dialog = new DialogMessage(mActivity,
-								mActivity.getResources().getString(R.string.connect_problem));
-						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-						dialog.show();
+						if (Store.isConnectNetwotk == true) {
+							Store.isConnectNetwotk = false;
+							DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+							dialog.show();
+						}
 					}
 				});
 		requestQueue.add(jsObjRequest);
@@ -387,15 +386,17 @@ public class LoginFragment extends CoreFragment {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+						Store.isConnectNetwotk = true;
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						Log.d("api_user_login_facebook", error.toString());
-						DialogMessage dialog = new DialogMessage(mActivity, error.toString());
-						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-						dialog.show();
-						LoginManager.getInstance().logOut();
+						if (Store.isConnectNetwotk == true) {
+							Store.isConnectNetwotk = false;
+							DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+							dialog.show();
+						}
 					}
 				});
 		requestQueue.add(jsObjRequest);

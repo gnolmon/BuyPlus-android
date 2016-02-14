@@ -169,25 +169,28 @@ public class DialogNews extends android.app.Dialog implements android.view.View.
 								dialog.show();
 							}else{
 								Store.AnnouncementsList.removeAll(Store.AnnouncementsList);
-							Log.d("api_get_all_announcements", response.toString());
-							JSONArray data_aray = response.getJSONArray("data");
-							for (int i = 0; i < data_aray.length(); i++) {
-								Announcement announcement = new Announcement((JSONObject) data_aray.get(i));
-								HomeAnnounmentFragment.current_last_id = announcement.getId();
-								Store.AnnouncementsList.add(announcement);
-							}
-							HomeAnnounmentFragment.newsAdapter.notifyDataSetChanged();
+								JSONArray data_aray = response.getJSONArray("data");
+								for (int i = 0; i < data_aray.length(); i++) {
+									Announcement announcement = new Announcement((JSONObject) data_aray.get(i));
+									HomeAnnounmentFragment.current_last_id = announcement.getId();
+									Store.AnnouncementsList.add(announcement);
+								}
+								HomeAnnounmentFragment.newsAdapter.notifyDataSetChanged();
 							}
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
+						Store.isConnectNetwotk = true;
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						DialogMessage dialog = new DialogMessage(c,c.getResources().getString(R.string.connect_problem));
-						dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-						dialog.show();
+						if (Store.isConnectNetwotk == true) {
+							Store.isConnectNetwotk = false;
+							DialogMessage dialog = new DialogMessage(c,c.getResources().getString(R.string.connect_problem));
+							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+							dialog.show();
+						}
 					}
 				});
 		requestQueue.add(jsObjRequest);
