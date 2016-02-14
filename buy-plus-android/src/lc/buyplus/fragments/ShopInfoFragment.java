@@ -164,7 +164,7 @@ public class ShopInfoFragment extends CoreFragment {
 		imbannerStore = (RoundedImageView) v.findViewById(R.id.imbannerStore);
 		rlBackground = (RelativeLayout) v.findViewById(R.id.rlBackground);
 		imbannerStore.setImageUrl(Store.current_shop.getImage(), imageLoader);
-		//imbannerStore.buildDrawingCache();
+		// imbannerStore.buildDrawingCache();
 
 		rlbanner = (LinearLayout) v.findViewById(R.id.rlbanner);
 		tvName = (TextView) v.findViewById(R.id.tvName);
@@ -188,11 +188,16 @@ public class ShopInfoFragment extends CoreFragment {
 			join_leave.setBackground(getResources().getDrawable(R.drawable.round_button_green));
 			isJoin = true;
 		}
-		if (!Store.current_shop.getLat().trim().equals("") && !Store.current_shop.getLng().trim().equals("")) {
+		if (!Store.current_shop.getAddress().trim().equals("")) {
 			tvName.setText(Store.current_shop.getAddress());
 		} else {
-			tvName.setText("Đang cập nhật...");
+			if (!Store.current_shop.getLat().trim().equals("") && !Store.current_shop.getLng().trim().equals("")) {
+				tvName.setText("Đang cập nhật -> Bản đồ");
+			} else {
+				tvName.setText("Đang cập nhật...");
+			}
 		}
+
 		Log.d("WEB", Store.current_shop.getAddress());
 		tvField.setText(Store.current_shop.getDescription());
 		tvPhone.setText(Store.current_shop.getPhone());
@@ -204,7 +209,6 @@ public class ShopInfoFragment extends CoreFragment {
 		}
 		storeName.setText(Store.current_shop.getName());
 		tvFb.setText(String.valueOf(Store.current_shop.getFacebook_id()));
-
 
 	}
 
