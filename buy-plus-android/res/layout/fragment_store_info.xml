@@ -123,6 +123,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="@dimen/padding_shopinfo"
                 android:text="thời trang nam"
+                android:singleLine="true"
                 android:textColor="@color/title"
                 android:textSize="15dp" />
         </LinearLayout>

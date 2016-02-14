@@ -66,7 +66,7 @@ public class ShopInfoFragment extends CoreFragment {
 	private ShopAnnounmentAdapter newsAdapter;
 	private LayoutInflater inflaterActivity;
 	private RelativeLayout rlBackground;
-	private TextView tvName, tvField, tvPhone, tvWeb, tvFb;
+	private TextView tvName, tvField, tvPhone, tvWeb, tvFb, storeName;
 	public static Button join_leave;
 	public static boolean isJoin;
 	Shop shop;
@@ -129,7 +129,8 @@ public class ShopInfoFragment extends CoreFragment {
 				try {
 					startActivity(mainActivity);
 				} catch (Exception e) {
-					DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.map_problem));
+					DialogMessage dialog = new DialogMessage(mActivity,
+							mActivity.getResources().getString(R.string.map_problem));
 					dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 					dialog.show();
 				}
@@ -162,25 +163,8 @@ public class ShopInfoFragment extends CoreFragment {
 		join_leave.setOnClickListener(this);
 		imbannerStore = (RoundedImageView) v.findViewById(R.id.imbannerStore);
 		rlBackground = (RelativeLayout) v.findViewById(R.id.rlBackground);
-		imbannerStore.setImageUrl(Store.current_shop.getImage_thumbnail(), imageLoader);
-		imbannerStore.buildDrawingCache();
-
-		if (imbannerStore.getWidth() > 0) {
-			BitmapDrawable drawable = (BitmapDrawable) imbannerStore.getDrawable();
-			Bitmap bmap = drawable.getBitmap();
-			rlBackground.setBackground(drawable);
-			// blur(bmap, rlbanner);
-		} else {
-			imbannerStore.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-				@Override
-				public void onGlobalLayout() {
-					BitmapDrawable drawable = (BitmapDrawable) imbannerStore.getDrawable();
-					Bitmap bmap = drawable.getBitmap();
-					rlBackground.setBackground(drawable);
-					// blur(bmap, rlbanner);
-				}
-			});
-		}
+		imbannerStore.setImageUrl(Store.current_shop.getImage(), imageLoader);
+		//imbannerStore.buildDrawingCache();
 
 		rlbanner = (LinearLayout) v.findViewById(R.id.rlbanner);
 		tvName = (TextView) v.findViewById(R.id.tvName);
@@ -188,7 +172,8 @@ public class ShopInfoFragment extends CoreFragment {
 		tvPhone = (TextView) v.findViewById(R.id.tvPhone);
 		tvWeb = (TextView) v.findViewById(R.id.tvWeb);
 		tvFb = (TextView) v.findViewById(R.id.tvFb);
-		
+		storeName = (TextView) v.findViewById(R.id.storeName);
+
 		tvFb.setOnClickListener(this);
 		tvName.setOnClickListener(this);
 		tvPhone.setOnClickListener(this);
@@ -205,23 +190,21 @@ public class ShopInfoFragment extends CoreFragment {
 		}
 		if (!Store.current_shop.getLat().trim().equals("") && !Store.current_shop.getLng().trim().equals("")) {
 			tvName.setText(Store.current_shop.getAddress());
-		}else {
+		} else {
 			tvName.setText("Đang cập nhật...");
 		}
 		Log.d("WEB", Store.current_shop.getAddress());
 		tvField.setText(Store.current_shop.getDescription());
 		tvPhone.setText(Store.current_shop.getPhone());
-		if(!Store.current_shop.getWebsite().trim().equals("")){
+		if (!Store.current_shop.getWebsite().trim().equals("")) {
 			tvWeb.setText(Store.current_shop.getWebsite());
 			tvWeb.setOnClickListener(this);
-		}else {
+		} else {
 			tvWeb.setText("Facebook Page.");
 		}
-		
+		storeName.setText(Store.current_shop.getName());
 		tvFb.setText(String.valueOf(Store.current_shop.getFacebook_id()));
 
-		imbannerStore.setImageUrl(Store.current_shop.getImage_thumbnail(), imageLoader);
-		imbannerStore.buildDrawingCache();
 
 	}
 
