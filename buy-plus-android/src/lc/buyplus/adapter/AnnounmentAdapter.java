@@ -108,7 +108,7 @@ public class AnnounmentAdapter extends BaseAdapter {
 		if (inflater == null)
 			inflater = inflaterActivity;
 		viewHolder = new ViewHolder();
-		if (item.getPhotos().size() == 1) {
+		if (item.getPhotos().size() <= 1) {
 			Log.d("IM", "Vao 1");
 			convertView = inflater.inflate(R.layout.item_announment, null);
 			viewHolder.feedImageView = (ImageView) convertView.findViewById(R.id.imFeed);
@@ -126,7 +126,7 @@ public class AnnounmentAdapter extends BaseAdapter {
 			viewHolder.feedImageView2 = (ImageView) convertView.findViewById(R.id.imFeed2);
 			viewHolder.feedImageView3 = (ImageView) convertView.findViewById(R.id.imFeed3);
 		}
-		if (item.getPhotos().size() == 4) {
+		if (item.getPhotos().size() >= 4) {
 			Log.d("IM", "Vao 4");
 			convertView = inflater.inflate(R.layout.item_announment_4, null);
 			viewHolder.feedImageView = (ImageView) convertView.findViewById(R.id.imFeed);
@@ -259,33 +259,35 @@ public class AnnounmentAdapter extends BaseAdapter {
 					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView3);
 			viewHolder.feedImageView3.setVisibility(View.VISIBLE);
 			break;
-		case 4:
+			
+		}
+		if (item.getPhotos().size() >= 4) {
 			// image 1
 			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(0).getImage())
 					.placeholder(viewHolder.feedImageView.getDrawable()).centerCrop()
 					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView);
 			viewHolder.feedImageView.setVisibility(View.VISIBLE);
+			Log.d("AN", item.getPhotos().get(0).getImage());
 
 			// image 2
 			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(1).getImage())
 					.placeholder(viewHolder.feedImageView2.getDrawable()).centerCrop()
 					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView2);
 			viewHolder.feedImageView2.setVisibility(View.VISIBLE);
-
+			Log.d("AN", item.getPhotos().get(1).getImage());
 			// image 3
 			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(2).getImage())
 					.placeholder(viewHolder.feedImageView3.getDrawable()).centerCrop()
 					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView3);
 			viewHolder.feedImageView3.setVisibility(View.VISIBLE);
-
+			Log.d("AN", item.getPhotos().get(2).getImage());
 			// image 4
 			Glide.with(CanvasFragment.mActivity).load(item.getPhotos().get(3).getImage())
 					.placeholder(viewHolder.feedImageView4.getDrawable()).centerCrop()
 					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.feedImageView4);
 			viewHolder.feedImageView4.setVisibility(View.VISIBLE);
-			break;
-		}
-
+			Log.d("AN", item.getPhotos().get(3).getImage());
+			}
 		return convertView;
 	}
 
