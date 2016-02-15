@@ -110,23 +110,30 @@
         android:background="@color/white"
         android:orientation="horizontal" >
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/idAnnouce"
             android:layout_width="@dimen/zero"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
             android:orientation="horizontal" >
 
             <TextView
                 android:id="@+id/tvStore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
                 android:text="Cửa hàng"
                 android:textColor="@color/title"
                 android:textSize="15dp" />
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/imShopDialog"
+                android:layout_width="@dimen/icon_title"
+                android:layout_height="@dimen/icon_title"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/down_gray" />
+        </RelativeLayout>
 
         <View
             android:layout_width="1dp"
@@ -135,12 +142,11 @@
             android:layout_marginTop="@dimen/margin_divide"
             android:background="@color/divider_top" />
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/idNews"
             android:layout_width="@dimen/zero"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
             android:orientation="horizontal" >
 
             <TextView
@@ -156,9 +162,11 @@
                 android:id="@+id/imNewsDialog"
                 android:layout_width="@dimen/icon_title"
                 android:layout_height="@dimen/icon_title"
-                android:layout_marginLeft="5dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:layout_centerVertical="true"
                 android:src="@drawable/down_gray" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <View
             android:layout_width="1dp"

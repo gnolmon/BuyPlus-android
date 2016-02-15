@@ -42,6 +42,7 @@ import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.customizes.DialogNews;
+import lc.buyplus.customizes.DialogShop;
 import lc.buyplus.customizes.DialogSort;
 import lc.buyplus.customizes.MyAnimations;
 import lc.buyplus.customizes.MyEditText;
@@ -54,7 +55,7 @@ import lc.buyplus.models.UserAccount;
 public class CanvasFragment extends CoreFragment {
 
 	private static final long serialVersionUID = 1L;
-	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mSettingTab, rHidAnnouce, rHidNews,rHidSort;
+	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mSettingTab,rHidSort;
 	RelativeLayout mNotiTab;
 	private LinearLayout rHomeTab;
 	private LinearLayout mSearchTab, mSortTab;
@@ -63,8 +64,9 @@ public class CanvasFragment extends CoreFragment {
 	private MyEditText mSearchEdittext;
 	private CallbackManager callbackManager;
 	private TextView tvStore, tvNews,tvNumNoti;
-	private ImageView imNewsDialog, imSearch ,imJoinShop;
+	private ImageView imNewsDialog, imSearch ,imJoinShop, imShopDialog;
 	private MyTextView mTitle;
+	private RelativeLayout rHidAnnouce, rHidNews;
 	private boolean isSearching = false;
 	private boolean isHomeRefresh = false;
 	private boolean isAnnoRefresh = false;
@@ -103,6 +105,7 @@ public class CanvasFragment extends CoreFragment {
 	}
 
 	public static DialogNews sortDialog;
+	public static DialogShop shopDialog;
 
 	@Override
 	public void onClick(View view) {
@@ -179,6 +182,13 @@ public class CanvasFragment extends CoreFragment {
 			sortDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 			sortDialog.show();
 			break;
+		case R.id.imShopDialog:
+			if (shopDialog == null) {
+				shopDialog = new DialogShop(mActivity);
+			}
+			shopDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+			shopDialog.show();
+			break;
 		default:
 			break;
 		}
@@ -232,6 +242,7 @@ public class CanvasFragment extends CoreFragment {
 
 			tvNews.setTextColor(getResources().getColor(R.color.title));
 			imNewsDialog.setImageResource(R.drawable.down_gray);
+			imShopDialog.setImageResource(R.drawable.down_green);
 			;
 		} else if (homenews) {
 
@@ -243,6 +254,7 @@ public class CanvasFragment extends CoreFragment {
 
 			tvStore.setTextColor(getResources().getColor(R.color.title));
 			imNewsDialog.setImageResource(R.drawable.down_green);
+			imShopDialog.setImageResource(R.drawable.down_gray);
 		} else {
 			mHomeTab.setBackgroundColor(getResources().getColor(R.color.maincolor));
 			rHomeTab.setVisibility(View.GONE);
@@ -338,11 +350,11 @@ public class CanvasFragment extends CoreFragment {
 		mSearchEdittext = (MyEditText) v.findViewById(R.id.fragment_canvas_search_edittext);
 		rHomeTab = (LinearLayout) v.findViewById(R.id.rhomeTab);
 		rHomeTab.setVisibility(View.VISIBLE);
-		rHidAnnouce = (LinearLayout) v.findViewById(R.id.idAnnouce);
+		rHidAnnouce = (RelativeLayout) v.findViewById(R.id.idAnnouce);
 
 		idSort = (LinearLayout) v.findViewById(R.id.idSort);
 
-		rHidNews = (LinearLayout) v.findViewById(R.id.idNews);
+		rHidNews = (RelativeLayout) v.findViewById(R.id.idNews);
 
 		// TextView, ImageView
 		tvNews = (TextView) v.findViewById(R.id.tvNews);
@@ -350,6 +362,7 @@ public class CanvasFragment extends CoreFragment {
 		tvNumNoti = (TextView) v.findViewById(R.id.tvNumNoti);
 		imJoinShop = (ImageView) v.findViewById(R.id.imJoinShop);
 		imNewsDialog = (ImageView) v.findViewById(R.id.imNewsDialog);
+		imShopDialog = (ImageView) v.findViewById(R.id.imShopDialog);
 		imSearch = (ImageView) v.findViewById(R.id.imSearch);
 		isSearching=false;
 		mSearchEdittext.setOnKeyListener(new OnKeyListener() {
@@ -386,6 +399,7 @@ public class CanvasFragment extends CoreFragment {
 		rHidAnnouce.setOnClickListener(this);
 		rHidNews.setOnClickListener(this);
 		imNewsDialog.setOnClickListener(this);
+		imShopDialog.setOnClickListener(this);
 		idSort.setOnClickListener(this);
 		imSearch.setOnClickListener(this);
 	}

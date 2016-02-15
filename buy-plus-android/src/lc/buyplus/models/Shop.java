@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-public class Shop {
+public class Shop implements Comparable<Shop> {
 	public int id;
 	public String name;
 	public String address;
@@ -310,6 +310,11 @@ public class Shop {
 
 	public void setLowestPointGift(Gift lowestPointGift) {
 		this.lowestPointGift = lowestPointGift;
+	}
+
+	@Override
+	public int compareTo(Shop another) {
+		return this.name.compareTo(another.name);
 	}
 	
 }
