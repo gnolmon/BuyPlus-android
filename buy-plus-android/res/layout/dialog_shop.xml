@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="260dp"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_dialog"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_standard" >
+
+        <ImageView
+            android:id="@+id/imShop"
+            android:layout_width="@dimen/icon_small"
+            android:layout_height="@dimen/icon_small"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/feed_item_profile_info_padd"
+            android:visibility="invisible"
+            android:src="@drawable/tick" />
+
+        <TextView
+            android:id="@+id/tvShop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_standard"
+            android:layout_marginRight="@dimen/padding_standard"
+            android:text="Tên cửa hàng"
+            android:textColor="@color/title"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+    <!-- <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_standard" >
+
+        <ImageView
+            android:id="@+id/imJoin"
+            android:layout_width="@dimen/icon_small"
+            android:layout_height="@dimen/icon_small"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/feed_item_profile_info_padd"
+            android:visibility="invisible"
+            android:src="@drawable/tick" />
+
+        <TextView
+            android:id="@+id/tvJoin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_standard"
+            android:layout_marginRight="@dimen/padding_standard"
+            android:text="Cửa hàng tham gia"
+            android:textColor="@color/title"
+            android:textSize="20dp" />
+    </LinearLayout> -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_standard" >
+
+        <ImageView
+            android:id="@+id/imAll"
+            android:layout_width="@dimen/icon_small"
+            android:layout_height="@dimen/icon_small"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/feed_item_profile_info_padd"
+            android:src="@drawable/tick" />
+
+        <TextView
+            android:id="@+id/tvAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_standard"
+            android:layout_marginRight="@dimen/padding_standard"
+            android:text="Tất cả"
+            android:textColor="@color/title"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+</LinearLayout>
