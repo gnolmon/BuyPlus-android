@@ -132,6 +132,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="5dp"
                 android:layout_centerVertical="true"
+                android:visibility="invisible"
                 android:src="@drawable/down_gray" />
         </RelativeLayout>
 
