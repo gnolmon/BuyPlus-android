@@ -1,6 +1,8 @@
 package lc.buyplus.fragments;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 
@@ -30,14 +32,14 @@ import lc.buyplus.activities.UserActivity;
 import lc.buyplus.application.MonApplication;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
+import lc.buyplus.customizes.BlurTransformation;
 import lc.buyplus.customizes.FastBlur;
 import lc.buyplus.customizes.RoundedImageView;
 
 public class PersonalFragment extends CoreFragment {
 	Display display;
 
-	private LinearLayout rlBackground;
-	private ImageView imEdit;
+	private ImageView imEdit, imbackground;
 	private RoundedImageView imAvaUser;
 	public static TextView userName;
 	ImageLoader imageLoader = MonApplication.getInstance().getImageLoader();
@@ -80,12 +82,15 @@ public class PersonalFragment extends CoreFragment {
 		});
 
 		imAvaUser = (RoundedImageView) v.findViewById(R.id.imAvaUser);
+		
 		imAvaUser.setImageUrl(CanvasFragment.mUser.getImageUrl(), imageLoader);
 		imAvaUser.buildDrawingCache();
-		rlBackground = (LinearLayout) v.findViewById(R.id.rlBackground);
 
+		imbackground = (ImageView) v.findViewById(R.id.imbackground);
+		Glide.with(CanvasFragment.mActivity).load(CanvasFragment.mUser.getImageUrl())
+		.placeholder(imbackground.getDrawable()).centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE).transform(new BlurTransformation(mActivity))
+		.into(imbackground);
 		
-
 		TextView user_id_txt = (TextView) v.findViewById(R.id.user_id);
 		user_id_txt.setText("Mã số cá nhân: " + CanvasFragment.mUser.getId());
 		

@@ -14,6 +14,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
@@ -34,6 +36,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ListView;
@@ -50,6 +53,7 @@ import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.BlurBuilder;
+import lc.buyplus.customizes.BlurTransformation;
 import lc.buyplus.customizes.CustomDialogClass;
 import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.customizes.FastBlur;
@@ -65,6 +69,7 @@ public class ShopInfoFragment extends CoreFragment {
 	private ListView listView;
 	private ShopAnnounmentAdapter newsAdapter;
 	private LayoutInflater inflaterActivity;
+	private ImageView imbackground;
 	private RelativeLayout rlBackground;
 	private TextView tvName, tvField, tvPhone, tvWeb, tvFb, storeName;
 	public static Button join_leave;
@@ -165,6 +170,11 @@ public class ShopInfoFragment extends CoreFragment {
 		rlBackground = (RelativeLayout) v.findViewById(R.id.rlBackground);
 		imbannerStore.setImageUrl(Store.current_shop.getImage(), imageLoader);
 		// imbannerStore.buildDrawingCache();
+		
+		imbackground = (ImageView) v.findViewById(R.id.imbackground);
+		Glide.with(CanvasFragment.mActivity).load(Store.current_shop.getImage())
+		.placeholder(imbackground.getDrawable()).centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE).transform(new BlurTransformation(mActivity))
+		.into(imbackground);
 
 		rlbanner = (LinearLayout) v.findViewById(R.id.rlbanner);
 		tvName = (TextView) v.findViewById(R.id.tvName);
