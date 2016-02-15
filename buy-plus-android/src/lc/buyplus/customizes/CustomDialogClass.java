@@ -12,7 +12,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
 import com.facebook.login.LoginManager;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -111,6 +111,7 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 		this.flag = flag;
 	}
 	
+	@SuppressLint("NewApi")
 	public void api_join_shop(int shop_id) {
 
 		Map<String, String> params = new HashMap<String, String>();
@@ -167,6 +168,7 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 		requestQueue.add(jsObjRequest);
 	}
 
+	@SuppressLint("NewApi")
 	public void api_leave_shop(int shop_id) {
 
 		Map<String, String> params = new HashMap<String, String>();

@@ -92,7 +92,7 @@ public class ShopInfoFragment extends CoreFragment {
 	@SuppressLint("NewApi")
 	@Override
 	public void onClick(View view) {
-		Intent returnIntent;
+		Intent returnIntent, fbIntent;
 		Uri uri;
 		switch (view.getId()) {
 		case R.id.btnAgreeTerm:
@@ -107,15 +107,38 @@ public class ShopInfoFragment extends CoreFragment {
 			}
 			break;
 		case R.id.tvFb:
-			String url = "https://www.facebook.com/" + Store.get_current_shop().getFacebook_id();
-			startActivity(newFacebookIntent(mActivity.getPackageManager(), url));
+			try {
+				if (Store.get_current_shop().getFacebook_id().contains("http")){
+					uri = Uri.parse(Store.get_current_shop().getFacebook_id());
+					fbIntent = new Intent(Intent.ACTION_VIEW, uri);
+					startActivity(fbIntent);
+				}else {
+					String url = "https://www.facebook.com/" + Store.get_current_shop().getFacebook_id();
+					startActivity(newFacebookIntent(mActivity.getPackageManager(), url));
+				}
+			} catch (Exception e) {
+				DialogMessage dialog = new DialogMessage(mActivity,
+						mActivity.getResources().getString(R.string.fb_problem));
+				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+				dialog.show();
+			}
+
 			break;
 		case R.id.tvWeb:
-			uri = Uri.parse("http://" + Store.get_current_shop().getWebsite());
-			returnIntent = new Intent(Intent.ACTION_VIEW, uri);
 			try {
+				if (Store.get_current_shop().getWebsite().contains("http")) {
+					uri = Uri.parse(Store.get_current_shop().getWebsite());
+				} else {
+					uri = Uri.parse("http://" + Store.get_current_shop().getWebsite());
+				}
+				returnIntent = new Intent(Intent.ACTION_VIEW, uri);
+
 				startActivity(returnIntent);
-			} catch (ActivityNotFoundException e) {
+			} catch (Exception e) {
+				DialogMessage dialog = new DialogMessage(mActivity,
+						mActivity.getResources().getString(R.string.web_problem));
+				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+				dialog.show();
 			}
 			break;
 
@@ -170,11 +193,11 @@ public class ShopInfoFragment extends CoreFragment {
 		rlBackground = (RelativeLayout) v.findViewById(R.id.rlBackground);
 		imbannerStore.setImageUrl(Store.current_shop.getImage(), imageLoader);
 		// imbannerStore.buildDrawingCache();
-		
+
 		imbackground = (ImageView) v.findViewById(R.id.imbackground);
-		Glide.with(CanvasFragment.mActivity).load(Store.current_shop.getImage())
-		.placeholder(imbackground.getDrawable()).centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE).transform(new BlurTransformation(mActivity))
-		.into(imbackground);
+		Glide.with(CanvasFragment.mActivity).load(Store.current_shop.getImage()).placeholder(imbackground.getDrawable())
+				.centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE).transform(new BlurTransformation(mActivity))
+				.into(imbackground);
 
 		rlbanner = (LinearLayout) v.findViewById(R.id.rlbanner);
 		tvName = (TextView) v.findViewById(R.id.tvName);
