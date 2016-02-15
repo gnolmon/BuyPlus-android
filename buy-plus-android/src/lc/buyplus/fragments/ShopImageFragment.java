@@ -69,7 +69,7 @@ public class ShopImageFragment extends CoreFragment {
 		initAnimations();
 		inflaterActivity = inflater;
 		gridView = (GridView) view.findViewById(R.id.grid_view);
-		api_get_shop_product_images(Store.current_shop_id,0,0);
+		
 	
 		return view;
 	}
@@ -87,7 +87,8 @@ public class ShopImageFragment extends CoreFragment {
 
 	@Override
 	protected void initViews(View v) {
-		PhotosList.removeAll(PhotosList);
+		Store.PhotosList.removeAll(Store.PhotosList);
+		api_get_shop_product_images(Store.current_shop_id,0,0);
 	}
 
 	@Override
@@ -134,11 +135,11 @@ public class ShopImageFragment extends CoreFragment {
 								JSONArray data_aray = response.getJSONArray("data");
 								for (int i = 0; i < data_aray.length(); i++) {
 									Photo photo = new Photo((JSONObject) data_aray.get(i));
-									PhotosList.add(photo);
+									Store.PhotosList.add(photo);
 		                        }
 						        InitilizeGridLayout();
 						        
-						        photoAdapter = new ShopPhotoAdapter(inflaterActivity, PhotosList, columnWidth);
+						        photoAdapter = new ShopPhotoAdapter(inflaterActivity, Store.PhotosList, columnWidth);
 						        gridView.setAdapter(photoAdapter);
 							}
 						} catch (JSONException e) {

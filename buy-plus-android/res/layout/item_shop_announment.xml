@@ -25,8 +25,8 @@
                 android:id="@+id/avaStore"
                 android:layout_width="@dimen/feed_item_profile_pic"
                 android:layout_height="@dimen/feed_item_profile_pic"
-                android:src="@drawable/square"
-                android:scaleType="fitCenter" >
+                android:scaleType="fitCenter"
+                android:src="@drawable/square" >
             </lc.buyplus.customizes.RoundedImageView>
 
             <LinearLayout
@@ -39,10 +39,10 @@
                     android:id="@+id/tvNameStore"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:text="JackLand"
                     android:textColor="@color/actionbar"
-                    android:background="?android:attr/selectableItemBackground"
                     android:textSize="@dimen/feed_item_profile_name" />
 
                 <TextView
