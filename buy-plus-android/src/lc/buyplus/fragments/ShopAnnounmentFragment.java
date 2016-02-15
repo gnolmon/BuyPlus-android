@@ -101,7 +101,7 @@ public class ShopAnnounmentFragment extends CoreFragment implements OnRefreshLis
 		ShopAnnouncementsList.removeAll(ShopAnnouncementsList);
 		newsAdapter = new ShopAnnounmentAdapter(ShopAnnouncementsList, inflaterActivity);
 		listView.setAdapter(newsAdapter);
-		//api_get_shop_announcements(Store.current_shop_id, 0, Store.limit, 0);
+		api_get_shop_announcements(Store.current_shop_id, 0, Store.limit, 0);
 		
 		listView.setOnItemClickListener(new OnItemClickListener() {
 		      public void onItemClick(AdapterView<?> parent, View view,

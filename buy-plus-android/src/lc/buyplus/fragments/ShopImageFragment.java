@@ -59,6 +59,7 @@ public class ShopImageFragment extends CoreFragment {
 	private GridView gridView;
 	private int columnWidth;
 	private UtilFunctions utils;
+	public ArrayList<Photo> PhotosList = new ArrayList<Photo>();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,7 +87,7 @@ public class ShopImageFragment extends CoreFragment {
 
 	@Override
 	protected void initViews(View v) {
-
+		PhotosList.removeAll(PhotosList);
 	}
 
 	@Override
@@ -133,11 +134,11 @@ public class ShopImageFragment extends CoreFragment {
 								JSONArray data_aray = response.getJSONArray("data");
 								for (int i = 0; i < data_aray.length(); i++) {
 									Photo photo = new Photo((JSONObject) data_aray.get(i));
-									Store.PhotosList.add(photo);
+									PhotosList.add(photo);
 		                        }
 						        InitilizeGridLayout();
 						        
-						        photoAdapter = new ShopPhotoAdapter(inflaterActivity, Store.PhotosList, columnWidth);
+						        photoAdapter = new ShopPhotoAdapter(inflaterActivity, PhotosList, columnWidth);
 						        gridView.setAdapter(photoAdapter);
 							}
 						} catch (JSONException e) {

@@ -110,7 +110,7 @@ public class ProductListShowAdapter extends BaseAdapter {
 		if (inflater == null)
 			inflater = inflaterActivity;
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.item_announcement_detail, null);
+			convertView = inflater.inflate(R.layout.item_product_list, null);
 			viewHolder = new ViewHolder();
 			viewHolder.avaStore = (RoundedImageView) convertView.findViewById(R.id.avaStore);
 			viewHolder.name = (TextView) convertView.findViewById(R.id.tvNameStore);
