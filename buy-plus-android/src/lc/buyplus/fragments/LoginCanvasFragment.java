@@ -61,6 +61,8 @@ public class LoginCanvasFragment extends CoreFragment {
 				return LoginFragment.getInstance(mActivity);
 			case 1:
 				return RegisterFragment.getInstance(mActivity);
+			case 2:
+				return TermFragment.getInstance(mActivity);
 			default:
 				break;
 			}

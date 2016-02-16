@@ -31,6 +31,7 @@ import lc.buyplus.cores.HandleRequest;
 import lc.buyplus.customizes.DialogMessage;
 import lc.buyplus.customizes.MyEditText;
 import lc.buyplus.customizes.MyTextView;
+import lc.buyplus.models.Store;
 
 public class RegisterFragment extends CoreFragment implements OnClickListener {
 
@@ -38,7 +39,7 @@ public class RegisterFragment extends CoreFragment implements OnClickListener {
 	private MyEditText edName, edPass, edCfPass, edEmail;
 	private MyTextView backBtn;
 	private CallbackManager callbackManager;
-
+	public static String username, password, cpassword, email;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		callbackManager = CallbackManager.Factory.create();
 		View view = inflater.inflate(R.layout.fragment_register, container, false);
@@ -80,10 +81,10 @@ public class RegisterFragment extends CoreFragment implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btnConfirm:
-			String username = edName.getText().toString();
-			String password = edPass.getText().toString();
-			String cpassword = edCfPass.getText().toString();
-			String email = edEmail.getText().toString();
+			username = edName.getText().toString();
+			password = edPass.getText().toString();
+			cpassword = edCfPass.getText().toString();
+			email = edEmail.getText().toString();
 			if (username.isEmpty()) {
 				DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.fill_name));
 				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -101,7 +102,8 @@ public class RegisterFragment extends CoreFragment implements OnClickListener {
 				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 				dialog.show();
 			} else {
-				api_user_register( email,username, cpassword);
+				mFragmentManager.beginTransaction().replace(R.id.canvas, TermFragment.getInstance(mActivity)).commit();
+				
 			}
 			break;
 		case R.id.btbBack:
@@ -112,47 +114,7 @@ public class RegisterFragment extends CoreFragment implements OnClickListener {
 		}
 	}
 	
-	public void api_user_register(String name, String login_name, String password){
-	 	
-    	Map<String, String> params = new HashMap<String, String>();
-		params.put("login_name", login_name);
-		params.put("name", name);
-		params.put("password", password);
-			RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
-			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
-					HandleRequest.USER_REGISTER, params, 
-					new Response.Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						Log.d("api_user_register",response.toString());
-						try {
-							if (Integer.parseInt(response.getString("error"))==1){
-								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
-								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-								dialog.show();
-							}else{
-								DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.register_success));
-								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-								dialog.show();
-								mFragmentManager.beginTransaction().replace(R.id.canvas, LoginFragment.getInstance(mActivity)).commit();
-							}
-						} catch (NumberFormatException | JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
-					}
-					}, 
-					new Response.ErrorListener() {
-						@Override
-						public void onErrorResponse(VolleyError error) {
-							DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra lại kết nối của bạn");
-							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-							dialog.show();
-						}
-					});
-			requestQueue.add(jsObjRequest);
-	}
+	
 	
 	public static final long serialVersionUID = 6036846677812555352L;
 	
