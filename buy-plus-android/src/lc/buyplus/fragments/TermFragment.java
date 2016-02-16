@@ -6,10 +6,13 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
+import com.android.volley.toolbox.JsonObjectRequest;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -90,9 +93,7 @@ public class TermFragment extends CoreFragment {
 
 	}
 	
-	
 	public void api_user_register(String name, String login_name, String password){
-	 	
     	Map<String, String> params = new HashMap<String, String>();
 		params.put("login_name", login_name);
 		params.put("name", name);
@@ -104,7 +105,7 @@ public class TermFragment extends CoreFragment {
 					new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
-						
+						Log.d("api_user_register_response",response.toString());
 						try {
 							if (Integer.parseInt(response.getString("error"))==1){
 								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
@@ -126,7 +127,7 @@ public class TermFragment extends CoreFragment {
 					new Response.ErrorListener() {
 						@Override
 						public void onErrorResponse(VolleyError error) {
-							Log.d("api_user_register",error.toString());
+							Log.d("api_user_register_error",error.toString());
 							if (Store.isConnectNetwotk == true) {
 								Store.isConnectNetwotk = false;
 								DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
@@ -135,6 +136,9 @@ public class TermFragment extends CoreFragment {
 							}
 						}
 					});
+			int socketTimeout = 30000;//30 seconds - change to what you want
+			RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+			jsObjRequest.setRetryPolicy(policy);
 			requestQueue.add(jsObjRequest);
 	}
 

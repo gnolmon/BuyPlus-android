@@ -179,6 +179,7 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 
 	@Override
 	public void onRefresh() {
+		api_read_notifications();
 		reload = true;
 		swipeView.setRefreshing(true);
 		api_get_notifications(0, Store.limit);
