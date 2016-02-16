@@ -85,12 +85,6 @@ public class ShopGiftFragment extends CoreFragment implements OnRefreshListener 
 		api_get_shop_gifts(Store.current_shop_id,0,Store.limit);
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-
-		}
-	}
 
 	protected void initModels() {
 		
@@ -98,6 +92,7 @@ public class ShopGiftFragment extends CoreFragment implements OnRefreshListener 
 
 	@Override
 	protected void initViews(View v) {
+		current_last_id = 0;
 		listView.addFooterView(footer);
 		isLoading = false;
 		GiftsList.removeAll(GiftsList);
@@ -126,13 +121,15 @@ public class ShopGiftFragment extends CoreFragment implements OnRefreshListener 
 		    }
 		 });
 		
+
 		listView.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Store.current_gift = (Gift) giftAdapter.getItem(position);
-				Intent mainActivity = new Intent(mActivity, RedeemDetailActivity.class);
-				startActivity(mainActivity);
-			}
-		});
+		      public void onItemClick(AdapterView<?> parent, View view,
+		          int position, long id) {
+		    	  Store.current_gift = (Gift) giftAdapter.getItem(position);
+					Intent mainActivity = new Intent(mActivity, RedeemDetailActivity.class);
+					startActivity(mainActivity);
+		      }
+		    });
 		
 	}
 
@@ -148,6 +145,7 @@ public class ShopGiftFragment extends CoreFragment implements OnRefreshListener 
 		params.put("shop_id", String.valueOf(shop_id));
 		params.put("last_id", String.valueOf(last_id));
 		params.put("limit", String.valueOf(limit));
+		Log.d("api_get_shop_gifts_params", params.toString());
 		RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 		HandleRequest jsObjRequest = new HandleRequest(Method.GET,
 				HandleRequest.build_link(HandleRequest.GET_SHOP_GIFTS, params), params,

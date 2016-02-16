@@ -99,6 +99,7 @@ public class ShopFriendFragment  extends CoreFragment implements OnRefreshListen
 
 	@Override
 	protected void initViews(View v) {
+		current_last_id = 0;
 		listView.addFooterView(footer);
 		isLoading = false;
 		FriendsList.removeAll(FriendsList);
