@@ -107,7 +107,6 @@ public class LoyaltyCardFragment extends CoreFragment implements OnRefreshListen
 
 	@Override
 	protected void initViews(View v) {
-		isResume = false;
 		listView.addFooterView(footer);
 		redeemAdapter = new RedeemAdapter(Store.MyShopsList, inflaterActivity);
 		listView.setAdapter(redeemAdapter);
