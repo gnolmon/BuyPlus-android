@@ -584,7 +584,7 @@ public void api_get_num_unread_notifications(){
 				new Response.Listener<JSONObject>() {
 				@Override
 				public void onResponse(JSONObject response) {
-					
+					Log.d("api_get_num_unread_notifications",response.toString());
 					try {
 						if (Integer.parseInt(response.getString("error"))==2){
 							DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.end_session));
@@ -610,6 +610,7 @@ public void api_get_num_unread_notifications(){
 							JSONObject data = response.getJSONObject("data");
 							tvNumNoti.setText(data.getString("total"));
 							if (Integer.parseInt(data.getString("total")) > 0) {
+								tvNumNoti.setText(data.getString("total"));
 								tvNumNoti.setVisibility(View.VISIBLE);
 								imJoinShop.setVisibility(View.VISIBLE);
 							}

@@ -213,6 +213,8 @@ public class AddFriendIdFragment extends CoreFragment {
 								DialogMessage dialog = new DialogMessage(mActivity,"Lời mời đã được gửi đi");
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
+								Store.isConnectNetwotk = true;
+								getActivity().finish();
 							}
 						} catch (NumberFormatException | JSONException e) {
 							// TODO Auto-generated catch block

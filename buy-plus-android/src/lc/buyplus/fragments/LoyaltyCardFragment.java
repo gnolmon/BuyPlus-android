@@ -86,6 +86,15 @@ public class LoyaltyCardFragment extends CoreFragment implements OnRefreshListen
 	}
 	
 	@Override
+	public void onResume(){
+	    super.onResume();
+	    Store.MyShopsList.removeAll(Store.MyShopsList);
+		if(!check){
+			api_get_my_shop(0,Store.limit,0);
+		}
+	}
+	
+	@Override
 	public void onClick(View view) {
 		switch(view.getId()) {
 
@@ -98,6 +107,7 @@ public class LoyaltyCardFragment extends CoreFragment implements OnRefreshListen
 
 	@Override
 	protected void initViews(View v) {
+		isResume = false;
 		listView.addFooterView(footer);
 		redeemAdapter = new RedeemAdapter(Store.MyShopsList, inflaterActivity);
 		listView.setAdapter(redeemAdapter);
