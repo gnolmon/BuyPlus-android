@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import lc.buyplus.R;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.fragments.AddFriendFragment;
+import lc.buyplus.fragments.AddFriendIdFragment;
 
 public class AddFriendActivity extends CoreActivity {
 	
@@ -22,7 +23,7 @@ public class AddFriendActivity extends CoreActivity {
 		initListeners();
 		initAnimations();
 		FragmentManager mFragmentManager = getSupportFragmentManager();
-		mFragmentManager.beginTransaction().add(R.id.canvas, AddFriendFragment.getInstance(AddFriendActivity.this)).commit();
+		mFragmentManager.beginTransaction().add(R.id.canvas, AddFriendIdFragment.getInstance(AddFriendActivity.this)).commit();
 	}
 	
 	@Override
