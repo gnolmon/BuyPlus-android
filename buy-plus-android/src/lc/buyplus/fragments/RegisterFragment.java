@@ -53,6 +53,7 @@ public class RegisterFragment extends CoreFragment implements OnClickListener {
 		edCfPass = (MyEditText) view.findViewById(R.id.edcfPass);
 		edEmail = (MyEditText) view.findViewById(R.id.edEmail);
 		backBtn = (MyTextView) view.findViewById(R.id.btbBack);
+		
 
 		btnRegister.setOnClickListener(this);
 		backBtn.setOnClickListener(this);;
@@ -77,6 +78,15 @@ public class RegisterFragment extends CoreFragment implements OnClickListener {
 
 	}
 
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+		edName.setText("");
+		edPass.setText("");
+		edCfPass.setText("");
+		edEmail.setText("");
+	}
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {

@@ -81,7 +81,7 @@
                     android:layout_marginLeft="@dimen/padding_standard"
                     android:layout_marginRight="@dimen/padding_standard"
                     android:background="@drawable/round_button_green"
-                    android:text="Lưu"
+                    android:text="Đồng ý"
                     android:textColor="@color/white"
                     android:textSize="15dp" />
 
