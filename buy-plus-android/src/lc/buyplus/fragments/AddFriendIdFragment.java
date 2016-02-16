@@ -20,9 +20,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -48,7 +51,7 @@ public class AddFriendIdFragment extends CoreFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_add_friend, container, false);
+		View view = inflater.inflate(R.layout.fragment_add_friend_id, container, false);
 		inflaterActivity = inflater;
 		initViews(view);
 		initModels();
@@ -112,9 +115,28 @@ public class AddFriendIdFragment extends CoreFragment {
 		mBack = (ImageView) v.findViewById(R.id.fragment_canvas_back);
 		
 		
+		edAddfriend = (EditText) v.findViewById(R.id.edAddfriend);
+		btnAddfriend = (Button) v.findViewById(R.id.btnAddfriend);
 		
+		edAddfriend.setOnKeyListener(new OnKeyListener() {
+		    public boolean onKey(View v, int keyCode, KeyEvent event) {
+		        // If the event is a key-down event on the "enter" button
+		        if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+		            (keyCode == KeyEvent.KEYCODE_ENTER)) {
+					api_send_request_join_shop_to_friend(Store.current_shop_id, String.valueOf(edAddfriend.getText()));
+		          return true;
+		        }
+		        return false;
+		    }
+		});
 		
-		
+		btnAddfriend.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				api_send_request_join_shop_to_friend(Store.current_shop_id, String.valueOf(edAddfriend.getText()));
+			}
+		});
 		
 		mHomeTab.setOnClickListener(this);
 		mPersonalTab.setOnClickListener(this);
@@ -155,7 +177,7 @@ public class AddFriendIdFragment extends CoreFragment {
 
 	}
 	
-	public void api_send_request_join_shop_to_friend(int shop_id, int temp_id){
+	public void api_send_request_join_shop_to_friend(int shop_id, String temp_id){
 	 	
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", Store.user.getAccessToken());
@@ -185,6 +207,10 @@ public class AddFriendIdFragment extends CoreFragment {
 							}else
 							if (Integer.parseInt(response.getString("error"))==1){
 								DialogMessage dialog = new DialogMessage(mActivity,response.getString("message"));
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							}else{
+								DialogMessage dialog = new DialogMessage(mActivity,"Lời mời đã được gửi đi");
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
 							}

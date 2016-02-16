@@ -80,6 +80,7 @@ public class ShopGiftFragment extends CoreFragment implements OnRefreshListener 
 	
 	@Override
 	public void onRefresh() {
+		Log.d("reload","true");
 		reload = true;
 		swipeView.setRefreshing(true);
 		api_get_shop_gifts(Store.current_shop_id,0,Store.limit);
