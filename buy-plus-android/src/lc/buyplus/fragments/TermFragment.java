@@ -14,13 +14,13 @@ import lc.buyplus.R;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
 
-public class SettingTermFragment extends CoreFragment {
+public class TermFragment extends CoreFragment {
 	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab, mBack;
 	private TextView tvTerm;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_setting_term, container, false);
+		View view = inflater.inflate(R.layout.fragment_term, container, false);
 		initViews(view);
 		initModels();
 		initAnimations();
@@ -90,19 +90,19 @@ public class SettingTermFragment extends CoreFragment {
 	public static final long serialVersionUID = 6036846677812555352L;
 
 	public static CoreActivity mActivity;
-	public static SettingTermFragment mInstance;
+	public static TermFragment mInstance;
 
-	public static SettingTermFragment getInstance(CoreActivity activity) {
+	public static TermFragment getInstance(CoreActivity activity) {
 		if (mInstance == null) {
-			mInstance = new SettingTermFragment();
+			mInstance = new TermFragment();
 		}
 		mActivity = activity;
 		return mInstance;
 	}
 
-	public static SettingTermFragment getInstance() {
+	public static TermFragment getInstance() {
 		if (mInstance == null) {
-			mInstance = new SettingTermFragment();
+			mInstance = new TermFragment();
 		}
 		return mInstance;
 	}

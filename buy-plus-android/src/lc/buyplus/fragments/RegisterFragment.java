@@ -101,7 +101,7 @@ public class RegisterFragment extends CoreFragment implements OnClickListener {
 				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 				dialog.show();
 			} else {
-				api_user_register(username, email, cpassword);
+				api_user_register( email,username, cpassword);
 			}
 			break;
 		case R.id.btbBack:
@@ -146,7 +146,7 @@ public class RegisterFragment extends CoreFragment implements OnClickListener {
 					new Response.ErrorListener() {
 						@Override
 						public void onErrorResponse(VolleyError error) {
-							DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra lại kết nốt của bạn");
+							DialogMessage dialog = new DialogMessage(mActivity,"Kiểm tra lại kết nối của bạn");
 							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 							dialog.show();
 						}
