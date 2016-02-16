@@ -41,7 +41,7 @@ public class TermFragment extends CoreFragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_term, container, false);
+		View view = inflater.inflate(R.layout.register_term_fragment, container, false);
 		initViews(view);
 		initModels();
 		initAnimations();
@@ -53,27 +53,7 @@ public class TermFragment extends CoreFragment {
 		Intent returnIntent;
 		switch (view.getId()) {
 		case R.id.fragment_canvas_back:
-			mActivity.finish();
-			break;
-		case R.id.fragment_canvas_home_tab:
-			CanvasFragment.mPager.setCurrentItem(0);
-			mActivity.finish();
-			break;
-		case R.id.fragment_canvas_personal_tab:
-			CanvasFragment.mPager.setCurrentItem(2);
-			mActivity.finish();
-			break;
-		case R.id.fragment_canvas_loyaltycard_tab:
-			CanvasFragment.mPager.setCurrentItem(3);
-			mActivity.finish();
-			break;
-		case R.id.fragment_canvas_notifications_tab:
-			CanvasFragment.mPager.setCurrentItem(4);
-			mActivity.finish();
-			break;
-		case R.id.fragment_canvas_setting_tab:
-			CanvasFragment.mPager.setCurrentItem(5);
-			mActivity.finish();
+			mFragmentManager.beginTransaction().replace(R.id.canvas, RegisterFragment.getInstance(mActivity)).commit();
 			break;
 		case R.id.btnAgreeTerm:
 			api_user_register( RegisterFragment.username, RegisterFragment.email, RegisterFragment.cpassword);
@@ -93,17 +73,8 @@ public class TermFragment extends CoreFragment {
 
 	@Override
 	protected void initViews(View v) {
-		mHomeTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_home_tab);
-		mPersonalTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_personal_tab);
-		mLoyaltyCardTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_loyaltycard_tab);
-		mNotiTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_notifications_tab);
-		mSettingTab = (LinearLayout) v.findViewById(R.id.fragment_canvas_setting_tab);
+		
 		mBack = (LinearLayout) v.findViewById(R.id.fragment_canvas_back);
-		mHomeTab.setOnClickListener(this);
-		mPersonalTab.setOnClickListener(this);
-		mLoyaltyCardTab.setOnClickListener(this);
-		mNotiTab.setOnClickListener(this);
-		mSettingTab.setOnClickListener(this);
 		mBack.setOnClickListener(this);
 		
 		btnIgnore = (Button) v.findViewById(R.id.btnIgnore);
@@ -126,6 +97,7 @@ public class TermFragment extends CoreFragment {
 		params.put("login_name", login_name);
 		params.put("name", name);
 		params.put("password", password);
+		Log.d("api_user_register",params.toString());
 			RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.USER_REGISTER, params, 
