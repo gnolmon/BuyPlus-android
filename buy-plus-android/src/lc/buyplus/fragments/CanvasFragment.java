@@ -326,6 +326,7 @@ public class CanvasFragment extends CoreFragment {
 			}
 		});
 
+		
 		mPager.setCurrentItem(firstTab);
 		changeTabState(false, false, false, true, false, false);
 

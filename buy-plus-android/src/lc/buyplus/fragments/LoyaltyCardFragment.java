@@ -57,6 +57,7 @@ public class LoyaltyCardFragment extends CoreFragment implements OnRefreshListen
 	private boolean isLoadMore,isLoading,reload;
 	private SwipeRefreshLayout swipeView;
 	private int old_id = 0;
+	public static boolean check = true;
 	View footer;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -100,6 +101,7 @@ public class LoyaltyCardFragment extends CoreFragment implements OnRefreshListen
 		listView.addFooterView(footer);
 		redeemAdapter = new RedeemAdapter(Store.MyShopsList, inflaterActivity);
 		listView.setAdapter(redeemAdapter);
+		
 		//api_get_my_shop(0,Store.limit,0);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 		      public void onItemClick(AdapterView<?> parent, View view,
@@ -187,6 +189,10 @@ public class LoyaltyCardFragment extends CoreFragment implements OnRefreshListen
 									}
 								}
 								listView.removeFooterView(footer);
+								if (Store.MyShopsList.size() < 3 && check) {
+									check = false;
+									CanvasFragment.mPager.setCurrentItem(1);
+								}
 								redeemAdapter.notifyDataSetChanged();
 								if (old_id != current_last_id) {
 									isLoading = false;
