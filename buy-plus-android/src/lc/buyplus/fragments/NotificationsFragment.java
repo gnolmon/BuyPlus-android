@@ -33,7 +33,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -199,8 +202,11 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 
 	@Override
 	protected void initViews(View v) {
+		
 
 	}
+	
+	
 
 	@Override
 	protected void initAnimations() {

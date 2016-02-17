@@ -109,7 +109,7 @@ public class RegistrationIntentService extends IntentService {
      * @param token The new token.
      */
     private void sendRegistrationToServer(String token) {
-    	TelephonyManager tManager = (TelephonyManager)CanvasFragment.mActivity.getSystemService(Context.TELEPHONY_SERVICE );
+    	//TelephonyManager tManager = (TelephonyManager)CanvasFragment.mActivity.getSystemService(Context.TELEPHONY_SERVICE );
     	String uuid = Secure.getString(this.getContentResolver(),Secure.ANDROID_ID);
         api_register_device_token(token,token,"android",uuid);
     }
@@ -139,13 +139,16 @@ public void api_register_device_token(String device_token, String gcm_device_tok
 		params.put("type", type);
 		params.put("uuid", uuid);
 		Log.i(TAG, "OK!: " + device_token);
+		Log.i(TAG, "OK2: " + CanvasFragment.mUser.getAccessToken());
+		Log.i(TAG, "OK3: " + type);
+		Log.i(TAG, "OK4: " + uuid);
 			RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
 			HandleRequest jsObjRequest = new HandleRequest(Method.POST,
 					HandleRequest.REGISTER_DIVICE_TOKEN, params, 
 					new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
-						Log.d("api_user_register",response.toString());
+						Log.d(TAG, "RE" + response.toString());
 						try {
 							if (Integer.parseInt(response.getString("error"))==2){
                                 DialogMessage dialog = new DialogMessage(CanvasFragment.mActivity,CanvasFragment.mActivity.getResources().getString(R.string.end_session));
@@ -188,6 +191,8 @@ public void api_register_device_token(String device_token, String gcm_device_tok
 							}
 						}
 					});
+			Log.d(TAG, "RE" + "G1");
 			requestQueue.add(jsObjRequest);
+			
 	}
 }

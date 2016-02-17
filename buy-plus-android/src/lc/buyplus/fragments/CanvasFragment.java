@@ -14,7 +14,10 @@ import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
 import com.facebook.CallbackManager;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -386,7 +389,15 @@ public class CanvasFragment extends CoreFragment {
 		tvNumNoti.setVisibility(View.GONE);
 		imJoinShop.setVisibility(View.GONE);
 		api_get_num_unread_notifications();
+		getActivity().registerReceiver(this.broadCastNewMessage, new IntentFilter("Notification"));
 	}
+	
+	BroadcastReceiver broadCastNewMessage = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			api_get_num_unread_notifications();
+		}
+	};
 
 	@Override
 	protected void initListener() {

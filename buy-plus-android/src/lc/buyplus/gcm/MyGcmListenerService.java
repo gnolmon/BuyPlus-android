@@ -61,7 +61,7 @@ public class MyGcmListenerService extends GcmListenerService {
          *     - Store message in local database.
          *     - Update UI.
          */
-
+        this.sendBroadcast(new Intent().setAction("Notification"));
         /**
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
@@ -78,14 +78,14 @@ public class MyGcmListenerService extends GcmListenerService {
      */
     private void sendNotification(String message) {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP  | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.buypluslogo)
-                .setContentTitle("GCM Message")
+                .setContentTitle("BuyPlus Message")
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)

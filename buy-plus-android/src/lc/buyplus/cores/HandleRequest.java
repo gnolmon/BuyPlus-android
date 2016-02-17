@@ -102,6 +102,7 @@ public class HandleRequest extends Request<JSONObject>{
 		char[] tmp = builder.toCharArray();
 		tmp[0] = '?';
 		builder = url+String.valueOf(tmp);
+		Log.i("RegIntentService", "OK1: " + builder.toString());
 		return builder;
     }
 }
