@@ -88,6 +88,7 @@ public class LoyaltyCardFragment extends CoreFragment implements OnRefreshListen
 	@Override
 	public void onResume(){
 	    super.onResume();
+	    Log.d("resume","resume");
 	    Store.MyShopsList.removeAll(Store.MyShopsList);
 		if(!check){
 			api_get_my_shop(0,Store.limit,0);

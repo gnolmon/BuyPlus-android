@@ -160,6 +160,7 @@ public class CanvasFragment extends CoreFragment {
 			mPager.setCurrentItem(3);
 			break;
 		case R.id.fragment_canvas_notifications_tab:
+			api_read_notifications();
 			tvNumNoti.setVisibility(View.GONE);
 			imJoinShop.setVisibility(View.GONE);
 			mPager.setCurrentItem(4);
@@ -634,7 +635,56 @@ public void api_get_num_unread_notifications(){
 			});
 		requestQueue.add(jsObjRequest);
 	}
-
+	
+	public void api_read_notifications() {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("access_token", CanvasFragment.mUser.getAccessToken());
+		RequestQueue requestQueue = MonApplication.getInstance().getRequestQueue();
+		HandleRequest jsObjRequest = new HandleRequest(Method.POST, HandleRequest.READ_NOTIFICATIONS, params,
+				new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Log.d("api_read_notifications", response.toString());
+						try {
+							if (Integer.parseInt(response.getString("error")) == 2) {
+								DialogMessage dialog = new DialogMessage(mActivity,
+										mActivity.getResources().getString(R.string.end_session));
+	
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+								SharedPreferences pre = getmContext().getSharedPreferences("buy_pus", 0);
+								SharedPreferences.Editor editor = pre.edit();
+								// editor.clear();
+								editor.putBoolean("immediate_login", false);
+								editor.commit();
+								Intent loginActivity = new Intent(mActivity, LoginActivity.class);
+								startActivity(loginActivity);
+								mActivity.finish();
+							}
+							if (Integer.parseInt(response.getString("error")) == 1) {
+								DialogMessage dialog = new DialogMessage(mActivity, response.getString("message"));
+								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+								dialog.show();
+							}
+						} catch (NumberFormatException | JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						Store.isConnectNetwotk = true;
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						if (Store.isConnectNetwotk == true) {
+							Store.isConnectNetwotk = false;
+							DialogMessage dialog = new DialogMessage(mActivity,mActivity.getResources().getString(R.string.connect_problem));
+							dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+							dialog.show();
+						}
+					}
+				});
+		requestQueue.add(jsObjRequest);
+	}
 	@Override
 	public void onResume(){
 	    super.onResume();

@@ -136,9 +136,8 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 								Intent loginActivity = new Intent(c,LoginActivity.class);
 								c.startActivity(loginActivity);
 							    c.finish();
-
 							}
-							else if (Integer.parseInt(response.getString("error"))==1){
+							if (Integer.parseInt(response.getString("error"))==1){
 								DialogMessage dialog = new DialogMessage(c,response.getString("message"));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();
@@ -193,9 +192,8 @@ public class CustomDialogClass extends android.app.Dialog implements android.vie
 								Intent loginActivity = new Intent(c,LoginActivity.class);
 								c.startActivity(loginActivity);
 							    c.finish();
-
 							}
-							else if (Integer.parseInt(response.getString("error"))==1){
+							if (Integer.parseInt(response.getString("error"))==1){
 								DialogMessage dialog = new DialogMessage(c,response.getString("message"));
 								dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 								dialog.show();

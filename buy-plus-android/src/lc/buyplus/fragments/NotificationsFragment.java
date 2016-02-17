@@ -80,7 +80,8 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 		listView.setAdapter(notiAdapter);
 		// Store.NotificationsList.removeAll(Store.NotificationsList);
 		// api_get_notifications(0, Store.limit);
-		api_read_notifications();
+		
+		//api_read_notifications();
 		notiAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
 			@Override
 			public void onLoadMore() {
@@ -217,10 +218,9 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 				new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
-						Log.d("api_get_notifications", response.toString());
 						if (reload) {
 							Store.NotificationsList.removeAll(Store.NotificationsList);
-							Log.d("size", String.valueOf(Store.NotificationsList.size()));
+							
 							reload = false;
 						}
 						try {
@@ -289,7 +289,7 @@ public class NotificationsFragment extends CoreFragment implements OnRefreshList
 				new Response.Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
-
+						Log.d("api_read_notifications", response.toString());
 						try {
 							if (Integer.parseInt(response.getString("error")) == 2) {
 								DialogMessage dialog = new DialogMessage(mActivity,
