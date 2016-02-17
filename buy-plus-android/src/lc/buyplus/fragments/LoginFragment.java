@@ -170,6 +170,8 @@ public class LoginFragment extends CoreFragment {
 			int active = pre.getInt("active", 0);
 			Store.user = new UserAccount(accessToken, id, phone, email, login_name, imageUrl, imageThumbnail, username,
 					active);
+			 CanvasFragment.mUser = new UserAccount(accessToken, id, phone, email, login_name, imageUrl, imageThumbnail, username,
+						active);
 			Intent mainActivity = new Intent(mActivity, MainActivity.class);
 			startActivity(mainActivity);
 			mActivity.finish();
@@ -305,6 +307,8 @@ public class LoginFragment extends CoreFragment {
 								editor.commit();
 								Store.user = new UserAccount(accessToken, id, phone, email, login_name, imageUrl,
 										imageThumbnail, username, active);
+								 CanvasFragment.mUser = new UserAccount(accessToken, id, phone, email, login_name, imageUrl,
+											imageThumbnail, username, active);
 								Intent mainActivity = new Intent(mActivity, MainActivity.class);
 								startActivity(mainActivity);
 								mActivity.finish();
@@ -378,6 +382,8 @@ public class LoginFragment extends CoreFragment {
 							editor.commit();
 
 							Store.user = new UserAccount(accessToken, id, phone, email, login_name, imageUrl,
+									imageThumbnail, username, active);
+							CanvasFragment.mUser = new UserAccount(accessToken, id, phone, email, login_name, imageUrl,
 									imageThumbnail, username, active);
 							Intent mainActivity = new Intent(mActivity, MainActivity.class);
 							startActivity(mainActivity);
