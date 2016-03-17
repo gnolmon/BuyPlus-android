@@ -194,7 +194,7 @@ public class ShopImageFragment extends CoreFragment {
 	 * columns width in grid
 	 */
 	private void InitilizeGridLayout() {
-		Resources r = getResources();
+		Resources r = mActivity.getResources();
 		float padding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, AppConfigs.GRID_PADDING,
 				r.getDisplayMetrics());
 

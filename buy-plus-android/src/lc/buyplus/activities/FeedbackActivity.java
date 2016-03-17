@@ -4,18 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import lc.buyplus.R;
 import lc.buyplus.cores.CoreActivity;
-import lc.buyplus.fragments.BuyPlusInfoFragment;
+import lc.buyplus.fragments.FeedbackFragment;
 
-public class BuyPlusInfoActivity extends CoreActivity {
-
+public class FeedbackActivity extends CoreActivity {
+	
 	private static final long serialVersionUID = 250212518535755420L;
-	// private ImageView image;
-
-	public static int current_shop_id;
-
+//	private ImageView image;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -24,16 +21,13 @@ public class BuyPlusInfoActivity extends CoreActivity {
 		initModels();
 		initListeners();
 		initAnimations();
-		Log.d("aabbbuy","fragment_share");
 		FragmentManager mFragmentManager = getSupportFragmentManager();
-		mFragmentManager.beginTransaction()
-				.add(R.id.canvas, BuyPlusInfoFragment.getInstance(BuyPlusInfoActivity.this))
-				.commit();
+		mFragmentManager.beginTransaction().add(R.id.canvas, FeedbackFragment.getInstance(FeedbackActivity.this)).commit();
 	}
-
+	
 	@Override
 	public void initViews() {
-		// image = (ImageView) findViewById(R.id.image);
+//		image = (ImageView) findViewById(R.id.image);
 	}
 
 	@Override
@@ -44,20 +38,21 @@ public class BuyPlusInfoActivity extends CoreActivity {
 	@Override
 	public void initListeners() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void initAnimations() {
 		// TODO Auto-generated method stub
-
+		
 	}
-
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.canvas);
-		fragment.onActivityResult(requestCode, resultCode, data);
+	    Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.canvas);
+	    fragment.onActivityResult(requestCode, resultCode, data);
 	}
+	
 	@Override
 	public void onBackPressed() {
 		finish();

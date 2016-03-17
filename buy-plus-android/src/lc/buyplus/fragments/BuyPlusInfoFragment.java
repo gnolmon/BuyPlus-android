@@ -2,32 +2,29 @@ package lc.buyplus.fragments;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import lc.buyplus.R;
-import lc.buyplus.activities.BuyPlusInfoActivity;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreFragment;
-import lc.buyplus.customizes.DialogMessage;
 
 public class BuyPlusInfoFragment  extends CoreFragment {
 	private LinearLayout mHomeTab, mPersonalTab, mLoyaltyCardTab, mNotiTab, mSettingTab, mBack;
-	private TextView tvFb,tvWeb,setting_term;
+	private TextView tvFb,tvWeb,setting_term,tvPhone;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_buyplus_info, container, false);
 		initViews(view);
 		initModels();
 		initAnimations();
+
+		Log.d("bbbuy","fragment_share");
 		return view;
 	}
 	
@@ -79,6 +76,15 @@ public class BuyPlusInfoFragment  extends CoreFragment {
 				startActivity(returnIntent);
 			} catch (ActivityNotFoundException e) {
 			}
+
+			break;
+		case R.id.tvPhone:
+			try {
+				Intent callIntent = new Intent(Intent.ACTION_CALL);
+				callIntent.setData(Uri.parse("tel:" + "0971854899"));
+				startActivity(callIntent);
+			} catch (ActivityNotFoundException e) {
+			}
 			break;
 		default:
 			break;
@@ -86,7 +92,7 @@ public class BuyPlusInfoFragment  extends CoreFragment {
 	}
 	
 	protected void initModels() {
-
+		
 	}
 
 	@Override
@@ -107,8 +113,10 @@ public class BuyPlusInfoFragment  extends CoreFragment {
 		mBack.setOnClickListener(this);
 		tvWeb = (TextView) v.findViewById(R.id.tvWeb);
 		tvFb = (TextView) v.findViewById(R.id.tvFb);
+		tvPhone = (TextView) v.findViewById(R.id.tvPhone);
 		tvWeb.setOnClickListener(this);
 		tvFb.setOnClickListener(this);
+		tvPhone.setOnClickListener(this);
 	}	
 
 	@Override

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/canvas"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/rlTitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        android:background="@color/actionbar"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <LinearLayout
+                android:id="@+id/fragment_canvas_title_block"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:id="@+id/fragment_canvas_back"
+                    android:layout_width="@dimen/actionbar_height"
+                    android:layout_height="match_parent"
+                    android:gravity="center" >
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/back_white" />
+                </LinearLayout>
+
+                <lc.buyplus.customizes.MyTextView
+                    android:id="@+id/fragment_canvas_title"
+                    android:layout_width="@dimen/zero"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:text="chia sẽ buy plus"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/canvas_title_text_size" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/fragment_canvas_sort"
+            android:layout_width="@dimen/actionbar_height"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="invisible" >
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/sort" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+    
+	<RelativeLayout
+        android:id="@+id/rlList"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:background="#ffffff" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/lnTab"
+        android:layout_below="@id/rlLogo"
+        android:background="@color/white" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical" >
+			
+        <RelativeLayout
+	        android:id="@+id/rlBackground"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:background="@drawable/loading_icon"
+	        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/imbackground"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="center" />
+
+            <lc.buyplus.customizes.RoundedImageView
+                android:id="@+id/imAvaUser"
+                android:layout_width="@dimen/person_ava_width"
+                android:layout_height="@dimen/person_ava_height"
+                android:layout_centerInParent="true"
+                android:src="@drawable/buyplusicon" />
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="5dp"
+                android:text="Long Mon"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </RelativeLayout>
+     <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_above="@id/btnAddfriend"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/round_edittext_tranparent"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/edFB"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/edit_padding"
+                android:background="#00000000"
+                android:hint=""
+                android:textColor="@color/title"
+                android:textSize="@dimen/size_edit" />
+        </RelativeLayout>
+        <Button
+            android:id="@+id/btnSendFB"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="70dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/round_button_green"
+            android:text="Góp ý cho buy plus"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+
+       
+        </LinearLayout>
+    </RelativeLayout>
+	<LinearLayout
+            android:id="@+id/tab"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tabbar_height"
+            android:layout_alignParentBottom="true"
+            android:background="@color/maincolor"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:id="@+id/fragment_canvas_home_tab"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="@dimen/icon_tab"
+                    android:layout_height="@dimen/icon_tab"
+                    android:src="@drawable/home_white" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_divide"
+                android:layout_marginTop="@dimen/margin_divide"
+                android:background="@color/divider_tab_bottom" />
+
+            <LinearLayout
+                android:id="@+id/fragment_canvas_personal_tab"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="@dimen/icon_tab"
+                    android:layout_height="@dimen/icon_tab"
+                    android:src="@drawable/personal_white" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_divide"
+                android:layout_marginTop="@dimen/margin_divide"
+                android:background="@color/divider_tab_bottom" />
+
+            <LinearLayout
+                android:id="@+id/fragment_canvas_loyaltycard_tab"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="@dimen/icon_tab"
+                    android:layout_height="@dimen/icon_tab"
+                    android:src="@drawable/card_white" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_divide"
+                android:layout_marginTop="@dimen/margin_divide"
+                android:background="@color/divider_tab_bottom" />
+
+            <LinearLayout
+                android:id="@+id/fragment_canvas_notifications_tab"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="@dimen/icon_tab"
+                    android:layout_height="@dimen/icon_tab"
+                    android:src="@drawable/bell_white" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_divide"
+                android:layout_marginTop="@dimen/margin_divide"
+                android:background="@color/divider_tab_bottom" />
+
+            <LinearLayout
+                android:id="@+id/fragment_canvas_setting_tab"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="@dimen/icon_tab"
+                    android:layout_height="@dimen/icon_tab"
+                    android:src="@drawable/setting_white" />
+            </LinearLayout>
+        </LinearLayout>
+        </RelativeLayout>
+</LinearLayout>

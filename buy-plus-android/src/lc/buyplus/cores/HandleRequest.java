@@ -53,6 +53,10 @@ public class HandleRequest extends Request<JSONObject>{
     public static final String UPDATE_USER_INFORMATION = "http://buyplus.vn/api/update_user_information/";
     public static final String NUM_UNREAD_NOTIFICATIONS = "http://buyplus.vn/api/get_num_unread_notification/";
     public static final String REGISTER_DIVICE_TOKEN = "http://buyplus.vn/api/register_device_token/";
+    public static final String SEND_FEEDBACK = "http://buyplus.vn/api/send_feedback/";
+    public static final String LIKE_ANNOUNCMENT = "http://buyplus.vn/api/like_announcement/";
+    public static final String UNLIKE_ANNOUNCMENT = "http://buyplus.vn/api/unlike_announcement/";
+    
     private Listener<JSONObject> listener;
     private Map<String, String> params;
     

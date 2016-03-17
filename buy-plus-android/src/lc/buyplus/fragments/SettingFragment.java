@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,10 @@ import android.widget.TextView;
 import lc.buyplus.R;
 import lc.buyplus.R;
 import lc.buyplus.activities.BuyPlusInfoActivity;
+import lc.buyplus.activities.FeedbackActivity;
 import lc.buyplus.activities.LoginActivity;
 import lc.buyplus.activities.SettingNotificationActivity;
+import lc.buyplus.activities.ShareActivity;
 import lc.buyplus.activities.UserActivity;
 import lc.buyplus.cores.CoreActivity;
 import lc.buyplus.cores.CoreActivity;
@@ -25,7 +28,7 @@ import lc.buyplus.customizes.LanguageDialog;
 
 public class SettingFragment extends CoreFragment {
 	TextView logout;
-	private RelativeLayout rlSettingNoti, rlLanguage, rlBuyplusInfo, rlSettingUser, rlLogout;
+	private RelativeLayout rlSettingNoti, rlLanguage, rlBuyplusInfo, rlSettingUser, rlLogout, rlShare, rlGopy;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,6 +64,14 @@ public class SettingFragment extends CoreFragment {
 			Intent userActivity = new Intent(mActivity, UserActivity.class);
 			startActivity(userActivity);
 			break;
+		case R.id.rlShare:
+			Intent shareActivity = new Intent(mActivity, ShareActivity.class);
+			startActivity(shareActivity);
+			break;
+		case R.id.rlGopy:
+			Intent feedbackActivity = new Intent(mActivity, FeedbackActivity.class);
+			startActivity(feedbackActivity);
+			break;
 		}
 	}
 
@@ -77,10 +88,16 @@ public class SettingFragment extends CoreFragment {
 
 		rlBuyplusInfo = (RelativeLayout) v.findViewById(R.id.rlBuyplusInfo);
 		rlBuyplusInfo.setOnClickListener(this);
-
+		
 		rlSettingUser = (RelativeLayout) v.findViewById(R.id.rlSettingUser);
 		rlSettingUser.setOnClickListener(this);
-
+		
+		rlShare = (RelativeLayout) v.findViewById(R.id.rlShare);
+		rlShare.setOnClickListener(this);
+		
+		rlGopy = (RelativeLayout) v.findViewById(R.id.rlGopy);
+		rlGopy.setOnClickListener(this);
+		
 		//rlLanguage = (RelativeLayout) v.findViewById(R.id.rlLanguage);
 		//rlLanguage.setOnClickListener(this);
 	}
